@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.5.0.761333077247">
+
+    <!-- See retype.com -->
+    <meta name="generator" content="Retype 3.5.0">
+
+    <!-- Primary Meta Tags -->
+    <title>API</title>
+    <meta name="title" content="API">
+    <meta name="description" content="API is accessed via the RPC endpoints of the node. The endpoints socket can be configured via the --rpc">
+
+    <!-- Canonical -->
+    <link rel="canonical" href="/developers/api/">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="/developers/api/">
+    <meta property="og:title" content="API">
+    <meta property="og:description" content="API is accessed via the RPC endpoints of the node. The endpoints socket can be configured via the --rpc">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="/developers/api/">
+    <meta property="twitter:title" content="API">
+    <meta property="twitter:description" content="API is accessed via the RPC endpoints of the node. The endpoints socket can be configured via the --rpc">
+
+    <script data-cfasync="false">(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
+
+    <link href="../../resources/css/retype.css?v=3.5.0.761333077247" rel="stylesheet">
+
+    <script data-cfasync="false" src="../../resources/js/config.js?v=3.5.0.761333077247" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../resources/js/retype.js?v=3.5.0" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=3.5.0.761333077247" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../../resources/js/prism.js?v=3.5.0.761333077247" defer></script>
+</head>
+<body>
+    <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
+        <div class="absolute bottom-0 left-0 bg-gray-100 dark:bg-dark-800" style="top: 5rem; right: 50%"></div>
+    
+        <header id="docs-site-header" class="sticky top-0 z-30 flex w-full h-16 bg-white border-b border-gray-200 md:h-20 dark:bg-dark-850 dark:border-dark-650">
+            <div class="container relative flex items-center justify-between pr-6 grow md:justify-start">
+                <!-- Mobile menu button skeleton -->
+                <button v-cloak class="skeleton docs-mobile-menu-button flex items-center justify-center shrink-0 overflow-hidden dark:text-white focus:outline-none rounded-full w-10 h-10 ml-3.5 md:hidden"><svg xmlns="http://www.w3.org/2000/svg" class="mb-px shrink-0" width="24" height="24" viewBox="0 0 24 24" role="presentation" style="margin-bottom: 0px;"><g fill="currentColor"><path d="M2 4h20v2H2zM2 11h20v2H2zM2 18h20v2H2z"></path></g></svg></button>
+                <div v-cloak id="docs-sidebar-toggle"></div>
+        
+                <!-- Logo -->
+                <div class="flex items-center justify-between h-full py-2 md:w-75">
+                    <div class="flex items-center px-2 md:px-6">
+                        <a id="docs-site-logo" href="../../" class="flex items-center leading-snug text-xl">
+                            <span class="dark:text-white font-semibold line-clamp-1 md:line-clamp-2">Warthog Network</span>
+                        </a><span class="hidden px-2 py-1 ml-4 text-sm font-semibold leading-none text-root-logo-label-text bg-root-logo-label-bg rounded-sm md:inline-block">Docs</span>
+                    </div>
+        
+                    <span class="hidden h-8 border-r md:inline-block dark:border-dark-650"></span>
+                </div>
+        
+                <div class="flex justify-between md:grow">
+                    <!-- Top Nav -->
+                    <nav class="hidden md:flex">
+                        <ul class="flex flex-col mb-4 md:pl-16 md:mb-0 md:flex-row md:items-center">
+                            <li class="mr-6">
+                                <a class="py-2 md:mb-0 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="http://warthog.network/">Warthog Website</a>
+                            </li>
+                            <li class="mr-6">
+                                <a class="py-2 md:mb-0 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="https://github.com/warthog-network">GitHub</a>
+                            </li>
+        
+                        </ul>
+                    </nav>
+        
+                    <!-- Header Right Skeleton -->
+                    <div v-cloak class="flex justify-end grow skeleton">
+        
+                        <!-- Search input mock -->
+                        <div class="relative hidden w-40 lg:block lg:max-w-sm lg:ml-auto">
+                            <div class="absolute flex items-center justify-center h-full pl-3 dark:text-dark-300">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon-base" width="16" height="16" viewBox="0 0 24 24" aria-labelledby="icon" role="presentation" style="margin-bottom: 1px;"><g fill="currentColor" ><path d="M21.71 20.29l-3.68-3.68A8.963 8.963 0 0020 11c0-4.96-4.04-9-9-9s-9 4.04-9 9 4.04 9 9 9c2.12 0 4.07-.74 5.61-1.97l3.68 3.68c.2.19.45.29.71.29s.51-.1.71-.29c.39-.39.39-1.03 0-1.42zM4 11c0-3.86 3.14-7 7-7s7 3.14 7 7c0 1.92-.78 3.66-2.04 4.93-.01.01-.02.01-.02.01-.01.01-.01.01-.01.02A6.98 6.98 0 0111 18c-3.86 0-7-3.14-7-7z" ></path></g></svg>
+                            </div>
+                            <input class="w-full h-10 placeholder-gray-400 transition-colors duration-200 ease-in bg-gray-200 border border-transparent rounded md:text-sm hover:bg-white hover:border-gray-300 focus:outline-none focus:bg-white focus:border-gray-500 dark:bg-dark-600 dark:border-dark-600 dark:placeholder-dark-400" style="padding: 0.625rem 0.75rem 0.625rem 2rem" type="text" placeholder="Search">
+                        </div>
+        
+                        <!-- Mobile search button -->
+                        <div class="flex items-center justify-center w-10 h-10 lg:hidden">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="shrink-0 icon-base" width="20" height="20" viewBox="0 0 24 24" aria-labelledby="icon" role="presentation" style="margin-bottom: 0px;"><g fill="currentColor" ><path d="M21.71 20.29l-3.68-3.68A8.963 8.963 0 0020 11c0-4.96-4.04-9-9-9s-9 4.04-9 9 4.04 9 9 9c2.12 0 4.07-.74 5.61-1.97l3.68 3.68c.2.19.45.29.71.29s.51-.1.71-.29c.39-.39.39-1.03 0-1.42zM4 11c0-3.86 3.14-7 7-7s7 3.14 7 7c0 1.92-.78 3.66-2.04 4.93-.01.01-.02.01-.02.01-.01.01-.01.01-.01.02A6.98 6.98 0 0111 18c-3.86 0-7-3.14-7-7z" ></path></g></svg>
+                        </div>
+        
+                        <!-- Dark mode switch placeholder -->
+                        <div class="w-10 h-10 lg:ml-2"></div>
+        
+                        <!-- History button -->
+                        <div class="flex items-center justify-center w-10 h-10" style="margin-right: -0.625rem;">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="shrink-0 icon-base" width="22" height="22" viewBox="0 0 24 24" aria-labelledby="icon" role="presentation" style="margin-bottom: 0px;"><g fill="currentColor" ><g ><path d="M12.01 6.01c-.55 0-1 .45-1 1V12a1 1 0 00.4.8l3 2.22a.985.985 0 001.39-.2.996.996 0 00-.21-1.4l-2.6-1.92V7.01c.02-.55-.43-1-.98-1z"></path><path d="M12.01 1.91c-5.33 0-9.69 4.16-10.05 9.4l-.29-.26a.997.997 0 10-1.34 1.48l1.97 1.79c.19.17.43.26.67.26s.48-.09.67-.26l1.97-1.79a.997.997 0 10-1.34-1.48l-.31.28c.34-4.14 3.82-7.41 8.05-7.41 4.46 0 8.08 3.63 8.08 8.09s-3.63 8.08-8.08 8.08c-2.18 0-4.22-.85-5.75-2.4a.996.996 0 10-1.42 1.4 10.02 10.02 0 007.17 2.99c5.56 0 10.08-4.52 10.08-10.08.01-5.56-4.52-10.09-10.08-10.09z"></path></g></g></svg>
+                        </div>
+                    </div>
+        
+                    <div v-cloak class="flex justify-end grow">
+                        <div id="docs-mobile-search-button"></div>
+                        <doc-search-desktop></doc-search-desktop>
+        
+                        <doc-theme-switch class="lg:ml-2"></doc-theme-switch>
+                        <doc-history></doc-history>
+                    </div>
+                </div>
+            </div>
+        </header>
+    
+        <div class="container relative flex bg-white">
+            <!-- Sidebar Skeleton -->
+            <div v-cloak class="fixed flex flex-col shrink-0 duration-300 ease-in-out bg-gray-100 border-gray-200 sidebar top-20 w-75 border-r h-screen md:sticky transition-transform skeleton dark:bg-dark-800 dark:border-dark-650">
+            
+                <!-- Render this div, if config.showSidebarFilter is `true` -->
+                <div class="flex items-center h-16 px-6">
+                    <input class="w-full h-8 px-3 py-2 transition-colors duration-200 ease-linear bg-white border border-gray-200 rounded shadow-none text-sm focus:outline-none focus:border-gray-600 dark:bg-dark-600 dark:border-dark-600" type="text" placeholder="Filter">
+                </div>
+            
+                <div class="pl-6 mt-1 mb-4">
+                    <div class="w-32 h-3 mb-4 bg-gray-200 rounded-full loading dark:bg-dark-600"></div>
+                    <div class="w-48 h-3 mb-4 bg-gray-200 rounded-full loading dark:bg-dark-600"></div>
+                    <div class="w-40 h-3 mb-4 bg-gray-200 rounded-full loading dark:bg-dark-600"></div>
+                    <div class="w-32 h-3 mb-4 bg-gray-200 rounded-full loading dark:bg-dark-600"></div>
+                    <div class="w-48 h-3 mb-4 bg-gray-200 rounded-full loading dark:bg-dark-600"></div>
+                    <div class="w-40 h-3 mb-4 bg-gray-200 rounded-full loading dark:bg-dark-600"></div>
+                </div>
+            
+                <div class="shrink-0 mt-auto bg-transparent dark:border-dark-650">
+                    <a class="flex items-center justify-center flex-nowrap h-16 text-gray-400 dark:text-dark-400 hover:text-gray-700 dark:hover:text-dark-300 transition-colors duration-150 ease-in docs-powered-by" target="_blank" href="https://retype.com/" rel="noopener">
+                        <span class="text-xs whitespace-nowrap">Powered by</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="ml-2" fill="currentColor" width="96" height="20" overflow="visible"><path d="M0 0v20h13.59V0H0zm11.15 17.54H2.44V2.46h8.71v15.08zM15.8 20h2.44V4.67L15.8 2.22zM20.45 6.89V20h2.44V9.34z"/><g><path d="M40.16 8.44c0 1.49-.59 2.45-1.75 2.88l2.34 3.32h-2.53l-2.04-2.96h-1.43v2.96h-2.06V5.36h3.5c1.43 0 2.46.24 3.07.73s.9 1.27.9 2.35zm-2.48 1.1c.26-.23.38-.59.38-1.09 0-.5-.13-.84-.4-1.03s-.73-.28-1.39-.28h-1.54v2.75h1.5c.72 0 1.2-.12 1.45-.35zM51.56 5.36V7.2h-4.59v1.91h4.13v1.76h-4.13v1.92h4.74v1.83h-6.79V5.36h6.64zM60.09 7.15v7.48h-2.06V7.15h-2.61V5.36h7.28v1.79h-2.61zM70.81 14.64h-2.06v-3.66l-3.19-5.61h2.23l1.99 3.45 1.99-3.45H74l-3.19 5.61v3.66zM83.99 6.19c.65.55.97 1.4.97 2.55s-.33 1.98-1 2.51-1.68.8-3.04.8h-1.23v2.59h-2.06V5.36h3.26c1.42 0 2.45.28 3.1.83zm-1.51 3.65c.25-.28.37-.69.37-1.22s-.16-.92-.48-1.14c-.32-.23-.82-.34-1.5-.34H79.7v3.12h1.38c.68 0 1.15-.14 1.4-.42zM95.85 5.36V7.2h-4.59v1.91h4.13v1.76h-4.13v1.92H96v1.83h-6.79V5.36h6.64z"/></g></svg>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Sidebar component -->
+            <doc-sidebar v-cloak>
+                <template #sidebar-footer>
+                    <div class="shrink-0 mt-auto border-t md:bg-transparent md:border-none dark:border-dark-650">
+            
+                        <div class="py-3 px-6 md:hidden border-b dark:border-dark-650">
+                            <nav>
+                                <ul class="flex flex-wrap justify-center items-center">
+                                    <li class="mr-6">
+                                        <a class="block py-1 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="http://warthog.network/">Warthog Website</a>
+                                    </li>
+                                    <li class="mr-6">
+                                        <a class="block py-1 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="https://github.com/warthog-network">GitHub</a>
+                                    </li>
+            
+                                </ul>
+                            </nav>
+                        </div>
+            
+                        <a class="flex items-center justify-center flex-nowrap h-16 text-gray-400 dark:text-dark-400 hover:text-gray-700 dark:hover:text-dark-300 transition-colors duration-150 ease-in docs-powered-by" target="_blank" href="https://retype.com/" rel="noopener">
+                            <span class="text-xs whitespace-nowrap">Powered by</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="ml-2" fill="currentColor" width="96" height="20" overflow="visible"><path d="M0 0v20h13.59V0H0zm11.15 17.54H2.44V2.46h8.71v15.08zM15.8 20h2.44V4.67L15.8 2.22zM20.45 6.89V20h2.44V9.34z"/><g><path d="M40.16 8.44c0 1.49-.59 2.45-1.75 2.88l2.34 3.32h-2.53l-2.04-2.96h-1.43v2.96h-2.06V5.36h3.5c1.43 0 2.46.24 3.07.73s.9 1.27.9 2.35zm-2.48 1.1c.26-.23.38-.59.38-1.09 0-.5-.13-.84-.4-1.03s-.73-.28-1.39-.28h-1.54v2.75h1.5c.72 0 1.2-.12 1.45-.35zM51.56 5.36V7.2h-4.59v1.91h4.13v1.76h-4.13v1.92h4.74v1.83h-6.79V5.36h6.64zM60.09 7.15v7.48h-2.06V7.15h-2.61V5.36h7.28v1.79h-2.61zM70.81 14.64h-2.06v-3.66l-3.19-5.61h2.23l1.99 3.45 1.99-3.45H74l-3.19 5.61v3.66zM83.99 6.19c.65.55.97 1.4.97 2.55s-.33 1.98-1 2.51-1.68.8-3.04.8h-1.23v2.59h-2.06V5.36h3.26c1.42 0 2.45.28 3.1.83zm-1.51 3.65c.25-.28.37-.69.37-1.22s-.16-.92-.48-1.14c-.32-.23-.82-.34-1.5-.34H79.7v3.12h1.38c.68 0 1.15-.14 1.4-.42zM95.85 5.36V7.2h-4.59v1.91h4.13v1.76h-4.13v1.92H96v1.83h-6.79V5.36h6.64z"/></g></svg>
+                        </a>
+                    </div>
+                </template>
+            </doc-sidebar>
+    
+            <div class="grow min-w-0 dark:bg-dark-850">
+                <!-- Render "toolbar" template here on api pages --><!-- Render page content -->
+                <div class="flex">
+                    <div class="min-w-0 p-4 grow md:px-16">
+                        <main class="relative pb-12 lg:pt-2">
+                            <div class="docs-markdown" id="docs-content">
+                                <!-- Rendered if sidebar right is enabled -->
+                                <div id="docs-sidebar-right-toggle"></div>
+                                <!-- Page content  -->
+<doc-anchor-target id="api" class="break-words">
+    <h1>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#api">#</doc-anchor-trigger>
+        <span>API</span>
+    </h1>
+</doc-anchor-target>
+<doc-anchor-target id="configuration">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#configuration">#</doc-anchor-trigger>
+        <span>Configuration</span>
+    </h2>
+</doc-anchor-target>
+<p>API is accessed via the RPC endpoints of the node. The endpoints socket can be configured via the <code v-pre>--rpc</code> command line option:</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-bash"><code v-pre class="language-bash">JSON RPC endpoint options:
+  -r, --rpc=IP:PORT          JSON RPC endpoint  (default=`127.0.0.1:3000')</code></pre>
+</doc-codeblock></div>
+<p>For example invoke</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-bash"><code v-pre class="language-bash">$./wart-node --rpc=0.0.0.0:3000</code></pre>
+</doc-codeblock></div>
+<p>to start the node with RPC listening on all devices on port 3000.</p>
+<div class="flex mb-6">
+    <div class="shrink-0 w-1 rounded-tl rounded-bl bg-yellow-500"></div>
+    <div class="flex w-full py-4 border border-l-0 border-gray-300 rounded-tr rounded-br doc-alert bg-white dark:bg-dark-700 dark:border-dark-700" role="alert">
+        <div class="flex items-center ml-4 h-7">
+            <svg xmlns="http://www.w3.org/2000/svg" class="mb-px text-yellow-500" width="22" height="22" viewBox="0 0 24 24" role="presentation">
+                <g fill="currentColor"><g>
+                    <path d="M22.48 15.59L14.01 1.45A2.968 2.968 0 0012.16.09c-.78-.19-1.58-.07-2.27.35-.41.25-.76.6-1.01 1.01v.01L.4 15.6c-.83 1.43-.33 3.27 1.1 4.1.45.26.95.4 1.48.4h16.95c.8-.01 1.55-.33 2.11-.9.56-.57.87-1.33.86-2.13a3.04 3.04 0 00-.42-1.48zm-1.87 2.21c-.19.19-.44.3-.69.3H2.99c-.17 0-.34-.05-.49-.13a.992.992 0 01-.37-1.35L10.6 2.48c.08-.14.2-.25.34-.33a.992.992 0 011.37.33l8.46 14.13c.09.15.13.32.13.49 0 .26-.1.51-.29.7z"></path>
+                    <path d="M11.45 12.1c.55 0 1-.45 1-1v-4c0-.55-.45-1-1-1s-1 .45-1 1v4c0 .56.45 1 1 1zM11.46 14.1c-.56 0-1 .45-1 1s.45 1 1 1 1-.45 1-1-.45-1-1-1z"></path>
+                </g></g>
+            </svg>
+        </div>
+        <div class="pr-5 ml-3 w-full">
+            <h5>Warning</h5>
+<p>The RPC endpoint should not exposed to the internet, use appropriate firewall settings.</p>
+        </div>
+    </div>
+</div>
+<p>Below we assume the RPC socket is accessible at <code v-pre>localhost:3000</code>. On startup the node reports the RPC endpoint setting:</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-bash"><code v-pre class="language-bash">[info] RPC endpoint is 127.0.0.1:3000.</code></pre>
+</doc-codeblock></div>
+<doc-anchor-target id="endpoint-overview">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#endpoint-overview">#</doc-anchor-trigger>
+        <span>Endpoint Overview</span>
+    </h2>
+</doc-anchor-target>
+<p>You can see an HTML overview of all supported RPC endpoints by opening <code v-pre>localhost:3000</code> in your browser. Currently the following endpoints are supported:</p>
+<div class="table-wrapper scrollbar overflow-hidden">
+<table class="comfortable">
+<thead>
+<tr>
+<th>METHOD</th>
+<th>PATH</th>
+<th>DESCRIPTION</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code v-pre>POST</code></td>
+<td><code v-pre>/transaction/add</code></td>
+<td>Send transactions</td>
+</tr>
+<tr>
+<td><code v-pre>GET</code></td>
+<td><code v-pre>/transaction/mempool</code></td>
+<td>Show content of mempool</td>
+</tr>
+<tr>
+<td><code v-pre>GET</code></td>
+<td><code v-pre>/transaction/lookup/:txid</code></td>
+<td>Transaction lookup</td>
+</tr>
+<tr>
+<td><code v-pre>GET</code></td>
+<td><code v-pre>/chain/head</code></td>
+<td>Show info on chain head</td>
+</tr>
+<tr>
+<td><code v-pre>GET</code></td>
+<td><code v-pre>/chain/grid</code></td>
+<td>Show header grid (used for sync)</td>
+</tr>
+<tr>
+<td><code v-pre>GET</code></td>
+<td><code v-pre>/chain/block/:id/hash</code></td>
+<td>Show hash of specific block</td>
+</tr>
+<tr>
+<td><code v-pre>GET</code></td>
+<td><code v-pre>/chain/signed_snapshot</code></td>
+<td>Show chain snapshot</td>
+</tr>
+<tr>
+<td><code v-pre>GET</code></td>
+<td><code v-pre>/chain/block/:id/header</code></td>
+<td>Show header of specific block</td>
+</tr>
+<tr>
+<td><code v-pre>GET</code></td>
+<td><code v-pre>/chain/block/:id</code></td>
+<td>Show header and body of specific block</td>
+</tr>
+<tr>
+<td><code v-pre>GET</code></td>
+<td><code v-pre>/chain/mine/:address</code></td>
+<td>Generate data required for mining</td>
+</tr>
+<tr>
+<td><code v-pre>GET</code></td>
+<td><code v-pre>/chain/txcache</code></td>
+<td>Show transaction cache</td>
+</tr>
+<tr>
+<td><code v-pre>GET</code></td>
+<td><code v-pre>/chain/hashrate</code></td>
+<td>Show current hashrate</td>
+</tr>
+<tr>
+<td><code v-pre>POST</code></td>
+<td><code v-pre>/chain/append</code></td>
+<td>Append mined block</td>
+</tr>
+<tr>
+<td><code v-pre>GET</code></td>
+<td><code v-pre>/account/:account/balance</code></td>
+<td>Show balance of specific account</td>
+</tr>
+<tr>
+<td><code v-pre>GET</code></td>
+<td><code v-pre>/account/:account/history/:beforeTxIndex</code></td>
+<td>Show transaction history of specific account</td>
+</tr>
+<tr>
+<td><code v-pre>GET</code></td>
+<td><code v-pre>/peers/ip_count</code></td>
+<td>Show peer IPs</td>
+</tr>
+<tr>
+<td><code v-pre>GET</code></td>
+<td><code v-pre>/peers/banned</code></td>
+<td>Show banned peers</td>
+</tr>
+<tr>
+<td><code v-pre>GET</code></td>
+<td><code v-pre>/peers/unban</code></td>
+<td>Unban all peers</td>
+</tr>
+<tr>
+<td><code v-pre>GET</code></td>
+<td><code v-pre>/peers/offenses/:page</code></td>
+<td>Show offenses of peers</td>
+</tr>
+<tr>
+<td><code v-pre>GET</code></td>
+<td><code v-pre>/peers/connected</code></td>
+<td>Show info of connected peers</td>
+</tr>
+<tr>
+<td><code v-pre>GET</code></td>
+<td><code v-pre>/peers/endpoints</code></td>
+<td>Show known peer endpoints</td>
+</tr>
+<tr>
+<td><code v-pre>GET</code></td>
+<td><code v-pre>/peers/connect_timers</code></td>
+<td>Show timers used for reconnect</td>
+</tr>
+<tr>
+<td><code v-pre>GET</code></td>
+<td><code v-pre>/tools/encode16bit/from_e8/:feeE8</code></td>
+<td>Round raw 64 integer to closest 16 bit representation (for fee specification)</td>
+</tr>
+<tr>
+<td><code v-pre>GET</code></td>
+<td><code v-pre>/tools/encode16bit/from_string/:feestring</code></td>
+<td>Round coin amount string to closest 16 bit representation (for fee specification)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<doc-anchor-target id="detailed-description">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#detailed-description">#</doc-anchor-trigger>
+        <span>Detailed Description</span>
+    </h2>
+</doc-anchor-target>
+<doc-anchor-target id="post-transactionadd">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#post-transactionadd">#</doc-anchor-trigger>
+        <span><code v-pre>POST /transaction/add</code></span>
+    </h3>
+</doc-anchor-target>
+<p>Send transactions in JSON format:</p>
+<div class="table-wrapper scrollbar overflow-hidden">
+<table class="comfortable">
+<thead>
+<tr>
+<th>PARAMETER</th>
+<th>TYPE</th>
+<th>DETAILS</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>pinHeight</td>
+<td>unsigned 32 bit integer</td>
+<td>Signature includes block hash at this height</td>
+</tr>
+<tr>
+<td>nonceId</td>
+<td>unsigned 32 bit integer</td>
+<td>To avoid double spend, there can only be one transaction with a specific (pinHeight,nonceId) pair. The same nonceId can be used for different pinHeight values</td>
+</tr>
+<tr>
+<td>toAddr</td>
+<td>string of length 48</td>
+<td>The address that coins shall be transferred to</td>
+</tr>
+<tr>
+<td>amount (optional)</td>
+<td>string</td>
+<td>Amount of coins to send. Format must be string, non-scientific notation with at most 8 digits after comma. &quot;1&quot; or &quot;1.00000000&quot; are valid.</td>
+</tr>
+<tr>
+<td>amountE8 (optional)</td>
+<td>unsigned 64 bit integer</td>
+<td>Amount of coins to send multiplied by 10^8. For example to send one coin this value must be 100000000.</td>
+</tr>
+<tr>
+<td>fee (optional)</td>
+<td>string</td>
+<td>Amount of coins to spend on transaction fees. This value must be exactly representable value in a 16 bit encoding, see below.</td>
+</tr>
+<tr>
+<td>feeE8 (optional)</td>
+<td>unsigned 64 bit integer</td>
+<td>Amount of coins to spend on transaction fees multiplied by 10^8. For example to send one 0.00000001 coins this value must be 1. This value must be exactly representable value in a 16 bit encoding, see below.</td>
+</tr>
+<tr>
+<td>signature65</td>
+<td>string of length 130</td>
+<td>hex-encoded 65 byte compact recoverable ECDSA signature in custom format, see below.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>NOTE</strong>:</p>
+<ul>
+<li>The transfer amount must be specified either via <code v-pre>amount</code> or via <code v-pre>amountE8</code>.</li>
+<li>The transaction fee must be specified either via <code v-pre>fee</code> or via <code v-pre>feeE8</code>.</li>
+<li>Miner fee must be exactly representable in a 16 bit encoding.</li>
+</ul>
+<doc-anchor-target id="details-on-fees">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#details-on-fees">#</doc-anchor-trigger>
+        <span>Details on fees</span>
+    </h4>
+</doc-anchor-target>
+<p>Fees are not subtracted from the amount sent in the transaction. The sender spends both, transfer amount and transaction fee, <code v-pre>toAddr</code> receives the transferred amount and the miner of the block including this transaction gets the transaction fee.</p>
+<p>For efficiency and compactness transaction fees are internally encoded as 2-byte floating-point numbers (16 bits), where the first 6 bits encode the exponent and the remaining 10 bits encode a 11 bit mantissa starting with an implicit 1. Of course not every 64 bit value can be encoded in 16 bits and only fee 64 bit values which are representable exactly in the 16 bits encoding are accepted. You can use the <code v-pre>/tools/encode16bit/from_e8/:feeE8</code> or <code v-pre>/tools/encode16bit/from_string/:feestring</code> endpoints to round an arbitrary 64-bit fee value to an accepted 64 bit value.</p>
+<doc-anchor-target id="how-to-specify-the-sender">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#how-to-specify-the-sender">#</doc-anchor-trigger>
+        <span>How to specify the sender?</span>
+    </h4>
+</doc-anchor-target>
+<p>The sender&#x27;s address is recovered from the recoverable ECDSA signature <code v-pre>signature65</code>. It is implicitly specified by creating a signature with the corresponding private key.</p>
+<doc-anchor-target id="signature-generation">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#signature-generation">#</doc-anchor-trigger>
+        <span>Signature generation</span>
+    </h4>
+</doc-anchor-target>
+<p>The following steps are required:</p>
+<ol>
+<li><p>Call the <code v-pre>/chain/head</code> endpoint and extract the  <code v-pre>pinHash</code> and <code v-pre>pinHeight</code> fields.</p>
+</li>
+<li><p>Compute transaction hash. The transaction hash is the SHA256 hash of the following bytes:</p>
+</li>
+</ol>
+<div class="table-wrapper scrollbar overflow-hidden">
+<table class="comfortable">
+<thead>
+<tr>
+<th>BYTES</th>
+<th>DESCRIPTION</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1 -32</td>
+<td><code v-pre>pinHash</code> (hash of block at height <code v-pre>pinHeight</code>)</td>
+</tr>
+<tr>
+<td>33-36</td>
+<td><code v-pre>pinHeight</code> (<code v-pre>uint32_t</code> in network byte order)</td>
+</tr>
+<tr>
+<td>37-40</td>
+<td><code v-pre>nonceId</code> (<code v-pre>uint32_t</code> in network byte order)</td>
+</tr>
+<tr>
+<td>41-43</td>
+<td><code v-pre>reserved</code> (3 bytes containing 0)</td>
+</tr>
+<tr>
+<td>44-51</td>
+<td><code v-pre>feeE8</code> (<code v-pre>uint64_t</code> in network byte order)</td>
+</tr>
+<tr>
+<td>52-71</td>
+<td><code v-pre>toAddr</code> receiving address (20 bytes without the final 4 byte checksum)</td>
+</tr>
+<tr>
+<td>72-79</td>
+<td><code v-pre>amountE8</code> (<code v-pre>uint64_t</code> in network byte order)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<ol start="3">
+<li>Generate the secp256k1-ECDSA recoverable signature of the 32-byte transaction hash using the private key corresponding to the sender&#x27;s address. The signature will have three properties:</li>
+</ol>
+<ul>
+<li><code v-pre>r</code>: 32 byte coordinate parameter</li>
+<li><code v-pre>s</code>: 32 byte coordinate parameter</li>
+<li><code v-pre>recid</code>: 1 byte recovery id, it should automatically have one of the four values 0,1,2,3.</li>
+</ul>
+<ol start="4">
+<li>Concatenate the parameters to form the 65-byte compact normalized (lower <code v-pre>s</code>) recoverable signature with the following byte structure:</li>
+</ol>
+<div class="table-wrapper scrollbar overflow-hidden">
+<table class="comfortable">
+<thead>
+<tr>
+<th>BYTES</th>
+<th>DESCRIPTION</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1 -32</td>
+<td><code v-pre>r</code></td>
+</tr>
+<tr>
+<td>33-64</td>
+<td><code v-pre>s</code></td>
+</tr>
+<tr>
+<td>65</td>
+<td><code v-pre>recid</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Note that this is not the standard compact recoverable signature representation because in Warthog, the recoverable id is the last byte of the 65 byte signature and has no offset of 27.</p>
+<doc-anchor-target id="integration-guides">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#integration-guides">#</doc-anchor-trigger>
+        <span>Integration guides</span>
+    </h4>
+</doc-anchor-target>
+<p>We provide working code snippets on how to generate and send transactions <a href="./integration_python.md">in Python3</a>, <a href="./integration_elixir.md">Elixir</a> and <a href="./integration_nodejs.md">NodeJS</a>.</p>
+<doc-anchor-target id="post-transactionadd-1">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#post-transactionadd-1">#</doc-anchor-trigger>
+        <span><code v-pre>POST /transaction/add</code></span>
+    </h3>
+</doc-anchor-target>
+<p>Send transactions in JSON format, returns transaction hash in hex format:</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-json"><code v-pre class="language-json">{
+&quot;code&quot;: 0,
+&quot;data&quot;: {
+ &quot;txHash&quot;: &lt;txhash&gt; 
+}
+}</code></pre>
+</doc-codeblock></div>
+<doc-anchor-target id="get-transactionmempool">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#get-transactionmempool">#</doc-anchor-trigger>
+        <span><code v-pre>GET /transaction/mempool</code></span>
+    </h3>
+</doc-anchor-target>
+<p>Show content of mempool. Example output:</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-json"><code v-pre class="language-json">{
+&quot;code&quot;: 0,
+&quot;data&quot;: {
+ &quot;data&quot;: []
+}
+}</code></pre>
+</doc-codeblock></div>
+<doc-anchor-target id="get-transactionlookuptxid">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#get-transactionlookuptxid">#</doc-anchor-trigger>
+        <span><code v-pre>GET /transaction/lookup/:txid</code></span>
+    </h3>
+</doc-anchor-target>
+<p>Transaction lookup by transaction id. Example output of <code v-pre>/transaction/lookup/4b3bc48295742b71ff7c3b98ede5b652fafd16c67f0d2db6226e936a1cdbf0a5</code>:</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-json"><code v-pre class="language-json">{
+&quot;code&quot;: 0,
+&quot;data&quot;: {
+ &quot;transaction&quot;: {
+  &quot;amount&quot;: &quot;3.00000000&quot;,
+  &quot;amountE8&quot;: 300000000,
+  &quot;blockHeight&quot;: 376696,
+  &quot;confirmations&quot;: 8,
+  &quot;timestamp&quot;: 1695472249,
+  &quot;toAddress&quot;: &quot;848b08b803e95640f8cb30af1b3166701b152b98c2cd70ee&quot;,
+  &quot;txHash&quot;: &quot;4b3bc48295742b71ff7c3b98ede5b652fafd16c67f0d2db6226e936a1cdbf0a5&quot;,
+  &quot;type&quot;: &quot;Reward&quot;,
+  &quot;utc&quot;: &quot;2023-09-23 12:30:49 UTC&quot;
+ }
+}
+} </code></pre>
+</doc-codeblock></div>
+<doc-anchor-target id="get-chainhead">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#get-chainhead">#</doc-anchor-trigger>
+        <span><code v-pre>GET /chain/head</code></span>
+    </h3>
+</doc-anchor-target>
+<p>Show info on chain head. Example output:</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-json"><code v-pre class="language-json">{
+&quot;code&quot;: 0,
+&quot;data&quot;: {
+ &quot;difficulty&quot;: 6139045663744.908,
+ &quot;hash&quot;: &quot;0ba161f80aad860c41f879a4096fa5dcdd7eb3f1ccb23c8ad777010000000000&quot;,
+ &quot;height&quot;: 376696,
+ &quot;pinHash&quot;: &quot;1c421a369caf7ce185b3c29d76ac8b99b75f7bdbbd6514c1e87a0b0000000000&quot;,
+ &quot;pinHeight&quot;: 376672,
+ &quot;worksum&quot;: 1.0027869358085505e+18,
+ &quot;worksumHex&quot;: &quot;0x0000000000000000000000000000000000000000000000000dea9d67b64566a0&quot;
+}
+}</code></pre>
+</doc-codeblock></div>
+<doc-anchor-target id="get-chaingrid">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#get-chaingrid">#</doc-anchor-trigger>
+        <span><code v-pre>GET /chain/grid</code></span>
+    </h3>
+</doc-anchor-target>
+<p>Show hexadecimal header grid. This grid is used for chain sync to allow nodes spot points where chains diverge. Example output (truncated):</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-json"><code v-pre class="language-json">{
+&quot;code&quot;: 0,
+&quot;data&quot;: [
+ &quot;19f65d40c6bc02a16378712bd7652eaebc925955e96c0262641314520000000021c88fbd99f0d3369f7f1ad981e11b8c6f032e13d4ef28311226ea5c8574c3fe3635b32500000001649f78127c04d23d&quot;,
+ &quot;0e43cf390ca986fabbed37a33386b4ad73723d51fab291d12013351f0000000021d1c6076e52222fb8c83fe33d55c610482cd272b7789646710510df3ba37a4f55b30e4e0000000164a221eb03577627&quot;,
+ &quot;2e92a976c5f7df4cfa26a37f534f79795d23342cd003fdaa000d28050000000021cab3fb524f9a8ca2cc60fbe97602c87079628007cedffdc35cfe9c2ee213fd065bfd890000000164a4c5ec4b03db81&quot;,
+ &quot;8473ff5f3f518d7c452cac1615bf8c9002bd8fbbbd55de46fe44093a0000000021bcc4fc5876f1e6cac619f2d8879440d1d8d12533366aae1d510b0545726e9001d3c19e0000000164a76310886953a6&quot;,
+ &quot;f0712262bd4e33de238d1e398af6b230a3d73a35b47f1594b0a937390000000021bbe95b117621d2cac808d78ec949629153d613b786ee6c36c7138648fac654ddda201f0000000164aa047487b3ac63&quot;,
+ &quot;46d35ed8925c8352ba39724f6300d722aa68647d384a1337cc1e2c0a0000000021cbd7eeb4de9855cf012681cc0136970ec2d0908f67e27e67a776b73938fd5bc028991e0000000164acb408c64731c8&quot;,
+ &quot;b519f66a8273a8e1a729b6a002fb559e6f9e8789acc4d3735650a00d0000000023d178c86190febff3340df034fe867fe19539d9a6c1715d9ce5775e5231db1c82d564ab0000000164af016a0fea6998&quot;,
+ &quot;ede75acb72ac56e888ffa70b05668e61425dd58859abaabe5e04fc040000000025d852ac6f8f2c63fda6d0de9dfa3cda237a56f3c5ffd3ac7108373e9d2890530f8f927b0000000164b174eec1703326&quot;,
+ .
+ .
+ .
+]
+} </code></pre>
+</doc-codeblock></div>
+<doc-anchor-target id="get-chainsigned_snapshot">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#get-chainsigned_snapshot">#</doc-anchor-trigger>
+        <span><code v-pre>GET /chain/signed_snapshot</code></span>
+    </h3>
+</doc-anchor-target>
+<p>Show chain snapshot. Example output</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-json"><code v-pre class="language-json">{
+&quot;code&quot;: 0,
+&quot;data&quot;: {
+ &quot;header&quot;: {
+  &quot;difficulty&quot;: 5850035871080.048,
+  &quot;hash&quot;: &quot;ac4f50ef90c0730075f4995d0b33691e9e7d69f84d2191c029371c0000000000&quot;,
+  &quot;merkleroot&quot;: &quot;a4d44aff9ebd539f2b5e758fb76df22bfd13a2e4d894752c7892f9e9c3f3d969&quot;,
+  &quot;nonce&quot;: &quot;0d8e8eab&quot;,
+  &quot;prevHash&quot;: &quot;11f2b6860910f7b544e01fd5ed5419588c29e42b305553bd492a0d0000000000&quot;,
+  &quot;raw&quot;: &quot;11f2b6860910f7b544e01fd5ed5419588c29e42b305553bd492a0d00000000002ac075d9a4d44aff9ebd539f2b5e758fb76df22bfd13a2e4d894752c7892f9e9c3f3d96900000001650bd0820d8e8eab&quot;,
+  &quot;target&quot;: &quot;d975c02a&quot;,
+  &quot;timestamp&quot;: 1695273090,
+  &quot;utc&quot;: &quot;2023-09-21 05:11:30 UTC&quot;,
+  &quot;version&quot;: &quot;00000001&quot;
+ }
+}
+}</code></pre>
+</doc-codeblock></div>
+<doc-anchor-target id="get-chainblockidhash">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#get-chainblockidhash">#</doc-anchor-trigger>
+        <span><code v-pre>GET /chain/block/:id/hash</code></span>
+    </h3>
+</doc-anchor-target>
+<p>Show hash of specific block. Example output of <code v-pre>/chain/block/366700/hash</code></p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-json"><code v-pre class="language-json">{
+&quot;code&quot;: 0,
+&quot;data&quot;: {
+ &quot;hash&quot;: &quot;ac4f50ef90c0730075f4995d0b33691e9e7d69f84d2191c029371c0000000000&quot;
+}
+}</code></pre>
+</doc-codeblock></div>
+<doc-anchor-target id="get-chainblockidheader">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#get-chainblockidheader">#</doc-anchor-trigger>
+        <span><code v-pre>GET /chain/block/:id/header</code></span>
+    </h3>
+</doc-anchor-target>
+<p>Show header of specific block.</p>
+<p>Example output of <code v-pre>/chain/block/366700/header</code></p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-json"><code v-pre class="language-json">{
+&quot;code&quot;: 0,
+&quot;data&quot;: {
+ &quot;header&quot;: {
+  &quot;difficulty&quot;: 5850035871080.048,
+  &quot;hash&quot;: &quot;ac4f50ef90c0730075f4995d0b33691e9e7d69f84d2191c029371c0000000000&quot;,
+  &quot;merkleroot&quot;: &quot;a4d44aff9ebd539f2b5e758fb76df22bfd13a2e4d894752c7892f9e9c3f3d969&quot;,
+  &quot;nonce&quot;: &quot;0d8e8eab&quot;,
+  &quot;prevHash&quot;: &quot;11f2b6860910f7b544e01fd5ed5419588c29e42b305553bd492a0d0000000000&quot;,
+  &quot;raw&quot;: &quot;11f2b6860910f7b544e01fd5ed5419588c29e42b305553bd492a0d00000000002ac075d9a4d44aff9ebd539f2b5e758fb76df22bfd13a2e4d894752c7892f9e9c3f3d96900000001650bd0820d8e8eab&quot;,
+  &quot;target&quot;: &quot;d975c02a&quot;,
+  &quot;timestamp&quot;: 1695273090,
+  &quot;utc&quot;: &quot;2023-09-21 05:11:30 UTC&quot;,
+  &quot;version&quot;: &quot;00000001&quot;
+ }
+}
+}</code></pre>
+</doc-codeblock></div>
+<doc-anchor-target id="getchainblockid">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#getchainblockid">#</doc-anchor-trigger>
+        <span><code v-pre>GET/chain/block/:id</code></span>
+    </h3>
+</doc-anchor-target>
+<p>Show header and body of specific block.
+Example output of <code v-pre>/chain/block/366700</code></p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-json"><code v-pre class="language-json">{
+&quot;code&quot;: 0,
+&quot;data&quot;: {
+ &quot;body&quot;: {
+  &quot;rewards&quot;: [
+   {
+    &quot;amount&quot;: &quot;3.00000001&quot;,
+    &quot;amountE8&quot;: 300000001,
+    &quot;toAddress&quot;: &quot;848b08b803e95640f8cb30af1b3166701b152b98c2cd70ee&quot;,
+    &quot;txHash&quot;: &quot;660b6f0883e4b295d5a3920eea9c73636787b932efd00cacc6d3a9a89f540714&quot;
+   }
+  ],
+  &quot;transfers&quot;: [
+   {
+    &quot;amount&quot;: &quot;5000.00000000&quot;,
+    &quot;amountE8&quot;: 500000000000,
+    &quot;fee&quot;: &quot;0.00000001&quot;,
+    &quot;feeE8&quot;: 1,
+    &quot;fromAddress&quot;: &quot;1711cadfe5a66a5f5f245fc78b2335f79da362178a72de2e&quot;,
+    &quot;nonceId&quot;: 131630562,
+    &quot;pinHeight&quot;: 366688,
+    &quot;toAddress&quot;: &quot;8733d0e21bc791f44785f02753bb589b8423eb56cd938fbc&quot;,
+    &quot;txHash&quot;: &quot;f364da997bf7a3c3bc8ead22041509228d6bdea39fcbcdc6be56030433d54219&quot;
+   }
+  ]
+ },
+ &quot;confirmations&quot;: 9970,
+ &quot;header&quot;: {
+  &quot;difficulty&quot;: 5850035871080.048,
+  &quot;hash&quot;: &quot;ac4f50ef90c0730075f4995d0b33691e9e7d69f84d2191c029371c0000000000&quot;,
+  &quot;merkleroot&quot;: &quot;a4d44aff9ebd539f2b5e758fb76df22bfd13a2e4d894752c7892f9e9c3f3d969&quot;,
+  &quot;nonce&quot;: &quot;0d8e8eab&quot;,
+  &quot;prevHash&quot;: &quot;11f2b6860910f7b544e01fd5ed5419588c29e42b305553bd492a0d0000000000&quot;,
+  &quot;raw&quot;: &quot;11f2b6860910f7b544e01fd5ed5419588c29e42b305553bd492a0d00000000002ac075d9a4d44aff9ebd539f2b5e758fb76df22bfd13a2e4d894752c7892f9e9c3f3d96900000001650bd0820d8e8eab&quot;,
+  &quot;target&quot;: &quot;d975c02a&quot;,
+  &quot;timestamp&quot;: 1695273090,
+  &quot;utc&quot;: &quot;2023-09-21 05:11:30 UTC&quot;,
+  &quot;version&quot;: &quot;00000001&quot;
+ },
+ &quot;height&quot;: 366700,
+ &quot;timestamp&quot;: 1695273090,
+ &quot;utc&quot;: &quot;2023-09-21 05:11:30 UTC&quot;
+}
+}</code></pre>
+</doc-codeblock></div>
+<doc-anchor-target id="get-chainmineaddress">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#get-chainmineaddress">#</doc-anchor-trigger>
+        <span><code v-pre>GET /chain/mine/:address</code></span>
+    </h3>
+</doc-anchor-target>
+<p>Generate data required for mining. Example output of <code v-pre>/chain/mine/e4145cfe3e34f206956487c2a16b65a47f05fc347ef6e287</code></p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-json"><code v-pre class="language-json">{
+ &quot;code&quot;: 0,
+ &quot;data&quot;: {
+  &quot;body&quot;: &quot;0000000000000001e4145cfe3e34f206956487c2a16b65a47f05fc34000100000000000001800000000011e1a30000000000&quot;,
+  &quot;difficulty&quot;: 6139045663744.908,
+  &quot;header&quot;: &quot;2ae4c944cae092bc9f3b93a6970e7b68d12256a641192170ef011600000000002ab7665b6a124de9367bf5c9c5775022c1cd60fbc839f6f51a671f0daed57b201ea8cb8100000001650edba500000000&quot;,
+  &quot;height&quot;: 376713
+ }
+}</code></pre>
+</doc-codeblock></div>
+<doc-anchor-target id="get-chaintxcache">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#get-chaintxcache">#</doc-anchor-trigger>
+        <span><code v-pre>GET /chain/txcache</code></span>
+    </h3>
+</doc-anchor-target>
+<p>Show transaction cache. Example output:</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-json"><code v-pre class="language-json">{
+&quot;code&quot;: 0,
+&quot;data&quot;: []
+} </code></pre>
+</doc-codeblock></div>
+<doc-anchor-target id="get-chainhashrate">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#get-chainhashrate">#</doc-anchor-trigger>
+        <span><code v-pre>GET /chain/hashrate</code></span>
+    </h3>
+</doc-anchor-target>
+<p>Show current hashrate</p>
+<p>Note this endpoint is currently deprecated since the algorithm update, it will need some research and math.</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-json"><code v-pre class="language-json">{
+&quot;code&quot;: 0,
+&quot;data&quot;: {
+ &quot;last100BlocksEstimate&quot;: 296429051797
+}
+} </code></pre>
+</doc-codeblock></div>
+<doc-anchor-target id="post-chainappend">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#post-chainappend">#</doc-anchor-trigger>
+        <span><code v-pre>POST /chain/append</code></span>
+    </h3>
+</doc-anchor-target>
+<p>Append mined block. Miners must POST mined block they received from <code v-pre>GET /chain/mine/:address</code>.
+TODO: Detailed description</p>
+<doc-anchor-target id="get-accountaccountbalance">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#get-accountaccountbalance">#</doc-anchor-trigger>
+        <span><code v-pre>GET /account/:account/balance</code></span>
+    </h3>
+</doc-anchor-target>
+<p>Show balance of specific account. Example output:</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-json"><code v-pre class="language-json">{
+&quot;code&quot;: 0,
+&quot;data&quot;: {
+ &quot;accountId&quot;: 198,
+ &quot;balance&quot;: &quot;5027.00000000&quot;,
+ &quot;balanceE8&quot;: 502700000000
+}
+}</code></pre>
+</doc-codeblock></div>
+<doc-anchor-target id="get-accountaccounthistorybeforetxindex">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#get-accountaccounthistorybeforetxindex">#</doc-anchor-trigger>
+        <span><code v-pre>GET /account/:account/history/:beforeTxIndex</code></span>
+    </h3>
+</doc-anchor-target>
+<p>Show transaction history of specific account
+Example output:</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-json"><code v-pre class="language-json">{
+&quot;code&quot;: 0,
+&quot;data&quot;: {
+ &quot;balance&quot;: &quot;5027.00000000&quot;,
+ &quot;balanceE8&quot;: 502700000000,
+ &quot;fromId&quot;: 69626,
+ &quot;perBlock&quot;: [
+  {
+   &quot;confirmations&quot;: 9949,
+   &quot;height&quot;: 366700,
+   &quot;transactions&quot;: {
+    &quot;rewards&quot;: [],
+    &quot;transfers&quot;: [
+     {
+      &quot;amount&quot;: &quot;5000.00000000&quot;,
+      &quot;amountE8&quot;: 500000000000,
+      &quot;fee&quot;: &quot;0.00000001&quot;,
+      &quot;feeE8&quot;: 1,
+      &quot;fromAddress&quot;: &quot;1711cadfe5a66a5f5f245fc78b2335f79da362178a72de2e&quot;,
+      &quot;nonceId&quot;: 131630562,
+      &quot;pinHeight&quot;: 366688,
+      &quot;toAddress&quot;: &quot;8733d0e21bc791f44785f02753bb589b8423eb56cd938fbc&quot;,
+      &quot;txHash&quot;: &quot;f364da997bf7a3c3bc8ead22041509228d6bdea39fcbcdc6be56030433d54219&quot;
+     }
+    ]
+   }
+  },
+  {
+   &quot;confirmations&quot;: 298316,
+   &quot;height&quot;: 78333,
+   &quot;transactions&quot;: {
+    &quot;rewards&quot;: [
+     {
+      &quot;amount&quot;: &quot;3.00000000&quot;,
+      &quot;amountE8&quot;: 300000000,
+      &quot;toAddress&quot;: &quot;8733d0e21bc791f44785f02753bb589b8423eb56cd938fbc&quot;,
+      &quot;txHash&quot;: &quot;bc1b3a369c63884b013ff798ecb1d964685706d25bfaa8519d301779a6566b2a&quot;
+     }
+    ],
+    &quot;transfers&quot;: []
+   }
+  },
+  .
+  .
+  .
+ ]
+}
+}</code></pre>
+</doc-codeblock></div>
+<doc-anchor-target id="get-toolsencode16bitfrom_e8feee8-round-raw-64-integer-to-closest-16-bit-representation-for-fee-specification">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#get-toolsencode16bitfrom_e8feee8-round-raw-64-integer-to-closest-16-bit-representation-for-fee-specification">#</doc-anchor-trigger>
+        <span><code v-pre>GET /tools/encode16bit/from_e8/:feeE8</code>| Round raw 64 integer to closest 16 bit representation (for fee specification)</span>
+    </h3>
+</doc-anchor-target>
+<p>Round raw fee integer representation (coin amount is this number divided by 10^8) to closest 16 bit representation. This is required for fee specification in the <code v-pre>/transaction/add</code> endpoint. Example output of <code v-pre>/tools/encode16bit/from_e8/5002</code></p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-json"><code v-pre class="language-json">{
+ &quot;code&quot;: 0,
+ &quot;data&quot;: {
+  &quot;16bit&quot;: 12514,
+  &quot;originalAmount&quot;: &quot;0.00005002&quot;,
+  &quot;originalE8&quot;: 5002,
+  &quot;roundedAmount&quot;: &quot;0.00005000&quot;,
+  &quot;roundedE8&quot;: 5000
+ }
+}</code></pre>
+</doc-codeblock></div>
+<doc-anchor-target id="get-toolsencode16bitfrom_stringfeestring">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#get-toolsencode16bitfrom_stringfeestring">#</doc-anchor-trigger>
+        <span><code v-pre>GET /tools/encode16bit/from_string/:feestring</code></span>
+    </h3>
+</doc-anchor-target>
+<p>Round fee amount string to closest 16 bit representation. This is required for fee specification in the <code v-pre>/transaction/add</code> endpoint. Example output of <code v-pre>/tools/encode16bit/from_string/0.001</code>:</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-json"><code v-pre class="language-json">{
+ &quot;code&quot;: 0,
+ &quot;data&quot;: {
+  &quot;16bit&quot;: 16922,
+  &quot;originalAmount&quot;: &quot;0.00100000&quot;,
+  &quot;originalE8&quot;: 100000,
+  &quot;roundedAmount&quot;: &quot;0.00099968&quot;,
+  &quot;roundedE8&quot;: 99968
+ }
+}</code></pre>
+</doc-codeblock></div>
+<doc-anchor-target id="wip-websocket">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#wip-websocket">#</doc-anchor-trigger>
+        <span><code v-pre>WIP Websocket</code></span>
+    </h3>
+</doc-anchor-target>
+<p>Raw blocks, so rollbacks are not tracked, this must be added in future to have complete incremental chain change feed.</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-bash"><code v-pre class="language-bash">wscat -c ws://localhost:3000/ws_sneak_peek</code></pre>
+</doc-codeblock></div>
+<p>Exemple output :</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-bash"><code v-pre class="language-bash">
+&lt; {&quot;body&quot;:{&quot;rewards&quot;:[{&quot;amount&quot;:&quot;3.00000000&quot;,&quot;amountE8&quot;:300000000,&quot;toAddress&quot;:&quot;8b263f767fb3bb97eb4c51371cc418f0c1ebc58ff29d38de&quot;,&quot;txHash&quot;:&quot;e9b9c4e9b4675c26aaa67f507d824943f7204dfab86775c21f009ebfff878b30&quot;}],&quot;transfers&quot;:[]},&quot;confirmations&quot;:0,&quot;header&quot;:{&quot;difficulty&quot;:12416803050367.305,&quot;hash&quot;:&quot;97d7572245923377cd972657994013e9bcbe8d07251db053be7a8603c4c2325f&quot;,&quot;merkleroot&quot;:&quot;a893cfcab30cb30bd374b2862b8f253cbf7899c8dd43a2082413dddbfc7b1fcb&quot;,&quot;nonce&quot;:&quot;4eaebc09&quot;,&quot;prevHash&quot;:&quot;3eb6fc536af5dd035c568d9148d6f21e71fb6340ffbb1958b60038090fb11751&quot;,&quot;raw&quot;:&quot;3eb6fc536af5dd035c568d9148d6f21e71fb6340ffbb1958b60038090fb117510aed5677a893cfcab30cb30bd374b2862b8f253cbf7899c8dd43a2082413dddbfc7b1fcb000000026580b4b84eaebc09&quot;,&quot;target&quot;:&quot;0aed5677&quot;,&quot;timestamp&quot;:1702933688,&quot;utc&quot;:&quot;2023-12-18 21:08:08 UTC&quot;,&quot;version&quot;:&quot;00000002&quot;},&quot;height&quot;:746726,&quot;timestamp&quot;:1702933688,&quot;utc&quot;:&quot;2023-12-18 21:08:08 UTC&quot;}
+&lt; {&quot;body&quot;:{&quot;rewards&quot;:[{&quot;amount&quot;:&quot;3.00000000&quot;,&quot;amountE8&quot;:300000000,&quot;toAddress&quot;:&quot;7711106fc68ac806df7e9c628934b5c018b907663866dd2e&quot;,&quot;txHash&quot;:&quot;f6889c6d21e1cbb1a8de6c6fc2f9a89196b9d39647509a1d7dd2e130d1307cd3&quot;}],&quot;transfers&quot;:[]},&quot;confirmations&quot;:0,&quot;header&quot;:{&quot;difficulty&quot;:12416803050367.305,&quot;hash&quot;:&quot;a235342bab7ff6a10ff47e6ba07392946b152785cd6a45e9fbaeb4bd8a9abe11&quot;,&quot;merkleroot&quot;:&quot;607773e58740a6161b1338bbf51ceea97a76431707c44c6dc0a8143267b7fcb5&quot;,&quot;nonce&quot;:&quot;e36e3bc8&quot;,&quot;prevHash&quot;:&quot;97d7572245923377cd972657994013e9bcbe8d07251db053be7a8603c4c2325f&quot;,&quot;raw&quot;:&quot;97d7572245923377cd972657994013e9bcbe8d07251db053be7a8603c4c2325f0aed5677607773e58740a6161b1338bbf51ceea97a76431707c44c6dc0a8143267b7fcb5000000026580b4bce36e3bc8&quot;,&quot;target&quot;:&quot;0aed5677&quot;,&quot;timestamp&quot;:1702933692,&quot;utc&quot;:&quot;2023-12-18 21:08:12 UTC&quot;,&quot;version&quot;:&quot;00000002&quot;},&quot;height&quot;:746727,&quot;timestamp&quot;:1702933692,&quot;utc&quot;:&quot;2023-12-18 21:08:12 UTC&quot;}
+</code></pre>
+</doc-codeblock></div>
+
+                                
+                                <!-- Required only on API pages -->
+                                <doc-toolbar-member-filter-no-results></doc-toolbar-member-filter-no-results>
+                            </div>
+                            <footer class="clear-both">
+                            
+                                <nav class="flex mt-14">
+                                    <div class="w-1/2">
+                                        <a class="px-5 py-4 h-full flex items-center break-normal font-medium text-blue-500 dark:text-blue-400 border border-gray-300 hover:border-gray-400 dark:border-dark-650 dark:hover:border-dark-450 rounded-l-lg transition-colors duration-150 relative hover:z-5" href="../../developers/integrations/wallet-integration/">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="mr-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19 11H7.41l5.29-5.29a.996.996 0 10-1.41-1.41l-7 7a1 1 0 000 1.42l7 7a1.024 1.024 0 001.42-.01.996.996 0 000-1.41L7.41 13H19c.55 0 1-.45 1-1s-.45-1-1-1z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
+                                            <span>
+                                                <span class="block text-xs font-normal text-gray-400 dark:text-dark-400">Previous</span>
+                                                <span class="block mt-1">Wallet integration</span>
+                                            </span>
+                                        </a>
+                                    </div>
+                            
+                                    <div class="w-1/2">
+                                        <a class="px-5 py-4 -mx-px h-full flex items-center justify-end break-normal font-medium text-blue-500 dark:text-blue-400 border border-gray-300 hover:border-gray-400 dark:border-dark-650 dark:hover:border-dark-450 rounded-r-lg transition-colors duration-150 relative hover:z-5" href="../../guides/systemd/">
+                                            <span>
+                                                <span class="block text-xs font-normal text-right text-gray-400 dark:text-dark-400">Next</span>
+                                                <span class="block mt-1">How to start a Warthog node as a systemd service</span>
+                                            </span>
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="ml-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19.92 12.38a1 1 0 00-.22-1.09l-7-7a.996.996 0 10-1.41 1.41l5.3 5.3H5c-.55 0-1 .45-1 1s.45 1 1 1h11.59l-5.29 5.29a.996.996 0 000 1.41c.19.2.44.3.7.3s.51-.1.71-.29l7-7c.09-.09.16-.21.21-.33z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
+                                        </a>
+                                    </div>
+                                </nav>
+                            </footer>
+                        </main>
+                
+                        <div class="border-t dark:border-dark-650 pt-6 mb-8">
+                            <footer class="flex flex-wrap items-center justify-between">
+                                <div>
+                                    <ul class="flex flex-wrap items-center text-sm">
+                                    </ul>
+                                </div>
+                                <div class="docs-copyright py-2 text-gray-500 dark:text-dark-350 text-sm leading-relaxed"><p>© Warthog Network 2024. All rights reserved.</p></div>
+                            </footer>
+                        </div>
+                    </div>
+                
+                    <!-- Rendered if sidebar right is enabled -->
+                    <!-- Sidebar right skeleton-->
+                    <div v-cloak class="fixed top-0 bottom-0 right-0 translate-x-full bg-white border-gray-200 lg:sticky lg:border-l lg:shrink-0 lg:pt-6 lg:transform-none sm:w-1/2 lg:w-64 lg:z-0 md:w-104 sidebar-right skeleton dark:bg-dark-850 dark:border-dark-650">
+                        <div class="pl-5">
+                            <div class="w-32 h-3 mb-4 bg-gray-200 dark:bg-dark-600 rounded-full loading"></div>
+                            <div class="w-48 h-3 mb-4 bg-gray-200 dark:bg-dark-600 rounded-full loading"></div>
+                            <div class="w-40 h-3 mb-4 bg-gray-200 dark:bg-dark-600 rounded-full loading"></div>
+                        </div>
+                    </div>
+                
+                    <!-- User should be able to hide sidebar right -->
+                    <doc-sidebar-right v-cloak></doc-sidebar-right>
+                </div>
+
+            </div>
+        </div>
+    
+        <doc-search-mobile></doc-search-mobile>
+        <doc-back-to-top></doc-back-to-top>
+    </div>
+
+
+    <div id="docs-overlay-target"></div>
+
+    <script data-cfasync="false">window.__DOCS__ = { "title": "API", level: 2, icon: "file", hasPrism: true, hasMermaid: false, hasMath: false, tocDepth: 23 }</script>
+</body>
+</html>
