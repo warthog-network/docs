@@ -38,9 +38,7 @@ Recall that $x$ and $y$ are less than 1. This means $-\log(x)$ and $-\log(y)$ ar
 
 The following figure depicts the situation in log scale, the acceptance region $A_{\tau}$ is colored light blue:
 
-<p align="center">
-  <img src="/img/acceptance_region.svg" alt="Acceptance Region"/>
-</p>
+![Acceptance Region](/img/acceptance_region.svg)
 
 ## Pushforward measure on log scale.
 

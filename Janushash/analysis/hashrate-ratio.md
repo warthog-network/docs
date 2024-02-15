@@ -20,9 +20,8 @@ $$
 
 
 for $a\ge 1$ (again mind the small range $[1,(1-c)^{-1}$] where the reasoning is not correct). We therefore call $\gamma(a)$ the *hashrate ratio boost* for hashrate ratio $a$. It is a multiplicative factor applied to a hypothetical reference Janusscore $S(\mathfrak{h}_X,\mathfrak{h}_X)$ to express $S(\mathfrak{h}_X,\mathfrak{h}_Y)$. The function $\gamma$ looks like this:
-<p align="center">
-  <img src="/img/miningratio_boost.png" alt="Acceptance Region"/>
-</p>
+
+![Acceptance Region](/img/miningratio_boost.png)
 
 
 ==- Julia code to plot this function

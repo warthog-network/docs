@@ -23,9 +23,8 @@ Therefore it is expected that the most efficient way to mine Janushash is a CPU/
 The goal of using this PoBW mining algorithm is to avoid harmful centralization in mining, neither GPU farms with poor CPUs nor CPU mining farms shall be able to efficiently mine this algorithm, instead the "little guys" shall be in the focus of mining.
 
 From a high-level perspective computing a Janushash works by first computing both, the triple SHA256 hash and the Verushash v2.1 of an input byte sequence, and finally combining these two hashes into a new hash by multiplication:
-<p align="center">
-  <img src="/img/janus.svg" style="width:500px;"/>
-</p>
+
+![Janus diagram](/img/janus.svg)
 
 The multiplication is done as if the two computed hashes were floating-point numbers between 0 and 1. The next section explains how exactly this is done.
 
