@@ -155,4 +155,4 @@ For efficiency and compactness transaction fees are encoded as 2-byte floating-p
 * [GitHub](https://github.com/ByPumbaa/Warthog)
 * [Discord](https://discord.gg/QMDV8bGTdQ)
 * [Website](https://warthog.network)
-* [Explorer](https:explorer.warthog.network)
+* [Explorer](https://wart.0xf10.com/)
