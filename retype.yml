@@ -1,0 +1,13 @@
+input: .
+output: .retype
+url: # Add your website address here
+branding:
+  title: Warthog Network
+  label: Docs
+links:
+- text: Warthog Website
+  link: http://warthog.network/
+- text: GitHub
+  link: https://github.com/warthog-network
+footer:
+  copyright: "&copy; Warthog Network {{ year }}. All rights reserved."
