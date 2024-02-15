@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="turbo-root" content="/docs">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.5.0.761334740276">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.5.0.761336256139">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 3.5.0">
@@ -22,21 +22,23 @@
     <meta property="og:url" content="https://www.warthog.network/docs/janushash/analysis/hashrate-ratio/">
     <meta property="og:title" content="Hashrate Ratio">
     <meta property="og:description" content="The hashrate ratio is the quotient a of Sha256t hashrate \\mathfrak{h}_Y and Verushash v2.1 \\mathfrak{h}_X">
+    <meta property="og:image" content="https://www.warthog.network/docs/img/miningratio_boost.png">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://www.warthog.network/docs/janushash/analysis/hashrate-ratio/">
     <meta property="twitter:title" content="Hashrate Ratio">
     <meta property="twitter:description" content="The hashrate ratio is the quotient a of Sha256t hashrate \\mathfrak{h}_Y and Verushash v2.1 \\mathfrak{h}_X">
+    <meta property="twitter:image" content="https://www.warthog.network/docs/img/miningratio_boost.png">
 
     <script data-cfasync="false">(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
-    <link href="../../../resources/css/retype.css?v=3.5.0.761334740276" rel="stylesheet">
+    <link href="../../../resources/css/retype.css?v=3.5.0.761336256139" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../../resources/js/config.js?v=3.5.0.761334740276" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../../resources/js/config.js?v=3.5.0.761336256139" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../../resources/js/retype.js?v=3.5.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=3.5.0.761334740276" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../../../resources/js/prism.js?v=3.5.0.761334740276" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=3.5.0.761336256139" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../../../resources/js/prism.js?v=3.5.0.761336256139" defer></script>
     <link href="../../../resources/css/katex.css?v=3.5.0" rel="stylesheet">
     <script id="katex-js" data-cfasync="false" src="../../../resources/js/katex.js?v=3.5.0" defer></script>
 </head>
@@ -193,8 +195,10 @@
 <div class="math"><pre>\gamma(a) := 
 \frac{ a\big((c+1/a)^{0.3}-c^{0.3}\big)}{(c+1)^{0.3}-c^{0.3}}</pre></div>
 <p>for <span class="math">a\ge 1</span> (again mind the small range <span class="math">[1,(1-c)^{-1}</span>] where the reasoning is not correct). We therefore call <span class="math">\gamma(a)</span> the <em>hashrate ratio boost</em> for hashrate ratio <span class="math">a</span>. It is a multiplicative factor applied to a hypothetical reference Janusscore <span class="math">S(\mathfrak{h}_X,\mathfrak{h}_X)</span> to express <span class="math">S(\mathfrak{h}_X,\mathfrak{h}_Y)</span>. The function <span class="math">\gamma</span> looks like this:</p>
-<p align="center">
-  <img src="/img/miningratio_boost.png" alt="Acceptance Region"/>
+<p><figure class="content-center">
+    <img src="../../../img/miningratio_boost.png" alt="Acceptance Region">
+    <figcaption class="caption">Acceptance Region</figcaption>
+</figure>
 </p>
 <doc-panel id="julia-code-to-plot-this-function" collapsed>
     <template #title>Julia code to plot this function</template>

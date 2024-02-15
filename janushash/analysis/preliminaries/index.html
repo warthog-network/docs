@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="turbo-root" content="/docs">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.5.0.761334740276">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.5.0.761336256139">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 3.5.0">
@@ -22,20 +22,22 @@
     <meta property="og:url" content="https://www.warthog.network/docs/janushash/analysis/preliminaries/">
     <meta property="og:title" content="Preliminaries">
     <meta property="og:description" content="A proper hash function should be random in the sense that each output bit cannot be predicted from the input and also cannot be predicted from other...">
+    <meta property="og:image" content="https://www.warthog.network/docs/img/acceptance_region.svg">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://www.warthog.network/docs/janushash/analysis/preliminaries/">
     <meta property="twitter:title" content="Preliminaries">
     <meta property="twitter:description" content="A proper hash function should be random in the sense that each output bit cannot be predicted from the input and also cannot be predicted from other...">
+    <meta property="twitter:image" content="https://www.warthog.network/docs/img/acceptance_region.svg">
 
     <script data-cfasync="false">(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
-    <link href="../../../resources/css/retype.css?v=3.5.0.761334740276" rel="stylesheet">
+    <link href="../../../resources/css/retype.css?v=3.5.0.761336256139" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../../resources/js/config.js?v=3.5.0.761334740276" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../../resources/js/config.js?v=3.5.0.761336256139" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../../resources/js/retype.js?v=3.5.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=3.5.0.761334740276" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=3.5.0.761336256139" data-turbo-eval="false" defer></script>
     <link href="../../../resources/css/katex.css?v=3.5.0" rel="stylesheet">
     <script id="katex-js" data-cfasync="false" src="../../../resources/js/katex.js?v=3.5.0" defer></script>
 </head>
@@ -220,8 +222,10 @@ An equivalent formulation is to require that <span class="math">(X(h),Y(h))</spa
 <div class="math"><pre>-\log(x)+0.7(-\log(y)) &gt;-\log(\tau)\land -\log(y)&lt;-\log(c) </pre></div>
 <p>Recall that <span class="math">x</span> and <span class="math">y</span> are less than 1. This means <span class="math">-\log(x)</span> and <span class="math">-\log(y)</span> are positive. We can therefore visualize the acceptance region <span class="math">A_{\tau}</span> in the first <a href="https://en.wikipedia.org/wiki/Quadrant_(plane_geometry)">quadrant</a> of a <a href="https://en.wikipedia.org/wiki/Cartesian_coordinate_system">Cartesian coordinate system</a> representing <span class="math">-\log(x)</span> and <span class="math">-\log(y)</span> along its axes.</p>
 <p>The following figure depicts the situation in log scale, the acceptance region <span class="math">A_{\tau}</span> is colored light blue:</p>
-<p align="center">
-  <img src="/img/acceptance_region.svg" alt="Acceptance Region"/>
+<p><figure class="content-center">
+    <img src="../../../img/acceptance_region.svg" alt="Acceptance Region">
+    <figcaption class="caption">Acceptance Region</figcaption>
+</figure>
 </p>
 <doc-anchor-target id="pushforward-measure-on-log-scale">
     <h2>
