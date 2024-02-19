@@ -88,4 +88,4 @@ In the last step we append the 10 byte extranonce space from the beginning of th
 [!ref](../wallet-integration.md)
 
 ## Miners for Testing
-[!ref](/readme.md)
+[!ref](/links.md)

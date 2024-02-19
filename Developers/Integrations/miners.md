@@ -17,4 +17,4 @@ Miners should report Sha256t and Verushash v2.1 measured hashrates and in additi
 [!ref](/janushash/analysis/janusscore.md)
 
 ## Pools for testing
-[!ref](/readme.md)
+[!ref](/links.md)
