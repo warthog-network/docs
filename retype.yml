@@ -6,7 +6,8 @@ branding:
   label: Docs
   logo: img/warthog_logo.png
 edit:
-  repo: "https://github.com/warthog-network/warthog-network.github.io"
+  repo: "https://github.com/warthog-network/docs"
+  branch: master
   label: Edit on GitHub
 links:
 - text: Warthog Website
