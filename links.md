@@ -19,6 +19,7 @@ order: 10
 
 ## Miners
 * [Janusminer](https://github.com/CoinFuMasterShifu/janusminer) (open source)
+* [BzMiner](https://www.bzminer.com/betas/) (closed source and currently in beta testing)
 
 ## Wallets
 * [wart-wallet](https://github.com/andrewcrypto777/wart-wallet) (open source)
