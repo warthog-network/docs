@@ -24,3 +24,8 @@ order: 10
 ## Wallets
 * [wart-wallet](https://github.com/andrewcrypto777/wart-wallet) (open source)
 * [Warthog-network-dapp](https://github.com/I-luk-I/Warthog-network-dapp) (open source)
+
+## Exchanges 
+
+* [Exbitron](https://exbitron.com/trade?market=wart-usdt)
+* Xeggex (Coming Soon)
