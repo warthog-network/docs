@@ -23,7 +23,7 @@ order: 10
 
 ## Wallets
 * [wart-wallet](https://github.com/andrewcrypto777/wart-wallet) (open source)
-* [Warthog-network-dapp](https://github.com/I-luk-I/Warthog-network-dapp) (open source)
+* [Warthog-network-dapp](https://github.com/warthog-network/wart-dapp) (open source)
 
 ## Exchanges 
 
