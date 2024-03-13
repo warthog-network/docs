@@ -44,7 +44,8 @@ METHOD| PATH | DESCRIPTION
 `GET`   |`/chain/block/:id`| Show header and body of specific block
 `GET`   |`/chain/mine/:address`| Generate data required for mining
 `GET`   |`/chain/txcache`| Show transaction cache
-`GET`   |`/chain/hashrate/:n`| Show current hashrate based on latest `n` blocks
+`GET`   |`/chain/hashrate/:windows`| Show current hashrate based on latest `n` blocks
+`GET`   |`/chain/hashrate/chart/:from/:to/:window`| 
 `POST`  |`/chain/append`| Append mined block
 `GET`   |`/account/:account/balance`| Show balance of specific account
 `GET`   |`/account/:account/history/:beforeTxIndex`| Show transaction history of specific account
