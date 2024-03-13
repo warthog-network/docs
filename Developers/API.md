@@ -44,7 +44,7 @@ METHOD| PATH | DESCRIPTION
 `GET`   |`/chain/block/:id`| Show header and body of specific block
 `GET`   |`/chain/mine/:address`| Generate data required for mining
 `GET`   |`/chain/txcache`| Show transaction cache
-`GET`   |`/chain/hashrate`| Show current hashrate
+`GET`   |`/chain/hashrate/:n`| Show current hashrate based on latest `n` blocks
 `POST`  |`/chain/append`| Append mined block
 `GET`   |`/account/:account/balance`| Show balance of specific account
 `GET`   |`/account/:account/history/:beforeTxIndex`| Show transaction history of specific account
@@ -362,17 +362,20 @@ Send transactions in JSON format, returns transaction hash in hex format:
 } 
  ```
 
-### `GET /chain/hashrate`
+### `GET /chain/hashrate/:n`
 
- Show current hashrate
+ Show current hashrate based on latest `n` blocks
 
 Note this endpoint is currently deprecated since the algorithm update, it will need some research and math.
+
+Example output of `/chain/hashrate/100`
 
  ```json
 {
  "code": 0,
  "data": {
-  "last100BlocksEstimate": 296429051797
+  "lastNBlocksEstimate": 296429051797,
+  "N": 100
  }
 } 
  ```
