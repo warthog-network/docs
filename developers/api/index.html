@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="turbo-root" content="/docs">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.5.0.763313058554">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.5.0.763672318893">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 3.5.0">
@@ -31,12 +31,12 @@
 
     <script data-cfasync="false">(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
-    <link href="../../resources/css/retype.css?v=3.5.0.763313058554" rel="stylesheet">
+    <link href="../../resources/css/retype.css?v=3.5.0.763672318893" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../resources/js/config.js?v=3.5.0.763313058554" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../resources/js/config.js?v=3.5.0.763672318893" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../resources/js/retype.js?v=3.5.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=3.5.0.763313058554" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../../resources/js/prism.js?v=3.5.0.763313058554" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=3.5.0.763672318893" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../../resources/js/prism.js?v=3.5.0.763672318893" defer></script>
 </head>
 <body>
     <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -292,8 +292,8 @@
 </tr>
 <tr>
 <td><code v-pre>GET</code></td>
-<td><code v-pre>/chain/hashrate</code></td>
-<td>Show current hashrate</td>
+<td><code v-pre>/chain/hashrate/:n</code></td>
+<td>Show current hashrate based on latest <code v-pre>n</code> blocks</td>
 </tr>
 <tr>
 <td><code v-pre>POST</code></td>
@@ -795,19 +795,21 @@ Example output of <code v-pre>/chain/block/366700</code></p>
 &quot;data&quot;: []
 } </code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="get-chainhashrate">
+<doc-anchor-target id="get-chainhashraten">
     <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#get-chainhashrate">#</doc-anchor-trigger>
-        <span><code v-pre>GET /chain/hashrate</code></span>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#get-chainhashraten">#</doc-anchor-trigger>
+        <span><code v-pre>GET /chain/hashrate/:n</code></span>
     </h3>
 </doc-anchor-target>
-<p>Show current hashrate</p>
+<p>Show current hashrate based on latest <code v-pre>n</code> blocks</p>
 <p>Note this endpoint is currently deprecated since the algorithm update, it will need some research and math.</p>
+<p>Example output of <code v-pre>/chain/hashrate/100</code></p>
 <div class="codeblock-wrapper"><doc-codeblock>
 <pre class="language-json"><code v-pre class="language-json">{
 &quot;code&quot;: 0,
 &quot;data&quot;: {
- &quot;last100BlocksEstimate&quot;: 296429051797
+ &quot;lastNBlocksEstimate&quot;: 296429051797,
+ &quot;N&quot;: 100
 }
 } </code></pre>
 </doc-codeblock></div>
