@@ -30,7 +30,7 @@ Inbound connections could be realized via WebRTC. Later WebRTC might be added to
 
 - [ ] Rewrite node communication code in an abstract way (using C++'s virtual methods)
 - [ ] Add Websocket communication capability to nodes. This requires adding websocket server to listen for incoming websocket connections.
-- [ ] Make code modifications to compile node's code using Emscripten. This requires conditionally disabling TCP network libraries and also Websocket server support for webassembly target and conditionally using libraries supporting browser's built websocket support.
+- [ ] Make code modifications to compile node's code using Emscripten. This requires conditionally disabling TCP network libraries and also Websocket server support for webassembly target and conditionally using libraries supporting browser's built-in websocket support.
 - [ ] Figure out a way to extract relevant code from [SQLite's Wasm extension](https://sqlite.org/wasm/doc/trunk/index.md) which is actually a Javascript library. This requires
     - Dissecting [the extension's code](https://sqlite.org/src/dir/ext/wasm) and throwing away all Javascript code to distill the essential things to implant into Warthog codebase.
     - Retrieving relevant compilation flags from the Makefiles.
