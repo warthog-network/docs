@@ -12,7 +12,7 @@ We are working on Warthog in our free time and there is always the risk that we 
 
 Mainly one can describe this project as an experiment to try out new things and learn how blockchain technology works in detail. But at the same time we want to be as transparent and fair as possible and avoid as much as possible fishy and questionable practice currently seen in most other new projects.
 
-The code is freshly written in C++20 and is not a cheap fork of any other project. Therefore there is always the risk of serious or unfixable bugs. But at the same time there is real effort put into this project which sets it apart from most competitors.
+The code is freshly written in C++20 and is not a cheap fork of any other project. Therefore there is a risk of bugs but at the same time real effort is put into this project which sets it apart from most competitors.
 
 The community is welcome to take actively part in the evolution of Warthog, the logo and the explorer are made by volunteers and also possible choices for a mining algorithm are proposed. The connection with the community shall be preserved and extended in the future. If you want to join, please do so!
 
