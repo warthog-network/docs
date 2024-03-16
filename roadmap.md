@@ -21,7 +21,7 @@ Current browsers [allow to store persistent data (OPFS) in the 3-digit gigabyte 
 ### Communication between nodes
 Since raw TCP connections are not supported in web browsers, communication can only be implemented over websocket and WebRTC. 
 
-In a first step nodes need to be equipped with websocket communication capabilities. Since browsers cannot act as websocket servers in-browser nodes will first act as leechers, i.e. they will only connect to public nodes but cannot accept inbound connections. 
+In a first step nodes need to be equipped with websocket communication capabilities. Since browsers cannot act as websocket servers, in-browser nodes will first act as leechers, i.e. they will only connect to public nodes but cannot accept inbound connections. 
 
 Inbound connections could be realized via WebRTC. Later WebRTC might be added to allow nodes accept inbound connections from other in-browser nodes.
 
