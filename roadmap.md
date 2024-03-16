@@ -23,7 +23,7 @@ Since raw TCP connections are not supported in web browsers, communication can o
 
 In a first step nodes need to be equipped with websocket communication capabilities. Since browsers cannot act as websocket servers in-browser nodes will first act as leechers, i.e. they will only connect to public nodes but cannot accept inbound connections. 
 
-Inbound connection could be realized via WebRTC. Later WebRTC might be added to allow nodes accept inbound connections from other in-browser nodes.
+Inbound connections could be realized via WebRTC. Later WebRTC might be added to allow nodes accept inbound connections from other in-browser nodes.
 
 
 ### Road to in-browser nodes
@@ -34,9 +34,9 @@ Inbound connection could be realized via WebRTC. Later WebRTC might be added to 
 - [ ] Figure out a way to extract relevant code from [SQLite's Wasm extension](https://sqlite.org/wasm/doc/trunk/index.md) which is actually a Javascript library. This requires
     - Dissecting [the extension's code](https://sqlite.org/src/dir/ext/wasm) and throwing away all Javascript code to distill the essential things to implant into Warthog codebase.
     - Retrieving relevant compilation flags from the Makefiles.
-    - Testing everything with the 
+    - Testing everything with the C++ wrapper for sqlite.
 - [ ] Find a way to disallow concurrent access to the database from multiple instances in different tabs. Two nodes should not run against the same database.
-- [ ] Mess around with Emscripten peculiarities and additionally required compilation flags (`-sPROXY_TO_PTHREAD`, allow dynamic memory growth, allow shared memories between threads enabling C++ exceptions etc.).
+- [ ] Mess around with Emscripten peculiarities and additionally required compilation flags (`-sPROXY_TO_PTHREAD`, allow dynamic memory growth, allow shared memories between threads, enabling C++ exceptions etc.).
 - [ ] Mess around with browser security (for example special HTTP headers COOP+COEP are required to be sent to support `SharedArrayBuffer`).
 
 
