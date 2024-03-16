@@ -1,6 +1,6 @@
 # Welcome
 
-Warthog is an experimental L1-cryptocurrency implementation without specific focus. Don't take this project seriously, it is just our hobby experiment. This project is not a dumb fork of something else. It was developed completely from scratch!
+Warthog is an experimental L1-cryptocurrency implementation without specific focus. This project is not a dumb fork of something else. It was developed completely from scratch!
 
 Warthog's *Janushash* mining algorithm is unique across the crypto space, it is the world's first [Proof of Balanced Work (PoBW) algorithm](https://github.com/CoinFuMasterShifu/ProofOfBalancedWork/blob/main/PoBW.pdf), which requires CPU and GPU hash power for mining.
 
