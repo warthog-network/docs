@@ -10,24 +10,24 @@
     <meta name="generator" content="Retype 3.5.0">
 
     <!-- Primary Meta Tags -->
-    <title>Version History</title>
-    <meta name="title" content="Version History">
-    <meta name="description" content="v0.4.5: Solo Stratum pool integrated into node, use --stratum=0.0.0.0:3456 to enable on port 3456">
+    <title>Roadmap</title>
+    <meta name="title" content="Roadmap">
+    <meta name="description" content="Warthog is an experimental cryptocurrency where we try to push the boundaries of what is possible in crypto.">
 
     <!-- Canonical -->
-    <link rel="canonical" href="https://www.warthog.network/docs/version_history/">
+    <link rel="canonical" href="https://www.warthog.network/docs/roadmap/">
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://www.warthog.network/docs/version_history/">
-    <meta property="og:title" content="Version History">
-    <meta property="og:description" content="v0.4.5: Solo Stratum pool integrated into node, use --stratum=0.0.0.0:3456 to enable on port 3456">
+    <meta property="og:url" content="https://www.warthog.network/docs/roadmap/">
+    <meta property="og:title" content="Roadmap">
+    <meta property="og:description" content="Warthog is an experimental cryptocurrency where we try to push the boundaries of what is possible in crypto.">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://www.warthog.network/docs/version_history/">
-    <meta property="twitter:title" content="Version History">
-    <meta property="twitter:description" content="v0.4.5: Solo Stratum pool integrated into node, use --stratum=0.0.0.0:3456 to enable on port 3456">
+    <meta property="twitter:url" content="https://www.warthog.network/docs/roadmap/">
+    <meta property="twitter:title" content="Roadmap">
+    <meta property="twitter:description" content="Warthog is an experimental cryptocurrency where we try to push the boundaries of what is possible in crypto.">
 
     <script data-cfasync="false">(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
@@ -174,16 +174,68 @@
                                 <!-- Rendered if sidebar right is enabled -->
                                 <div id="docs-sidebar-right-toggle"></div>
                                 <!-- Page content  -->
-<doc-anchor-target id="version-history" class="break-words">
+<doc-anchor-target id="roadmap" class="break-words">
     <h1>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#version-history">#</doc-anchor-trigger>
-        <span>Version History</span>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#roadmap">#</doc-anchor-trigger>
+        <span>Roadmap</span>
     </h1>
 </doc-anchor-target>
+<doc-anchor-target id="q2---full-nodes-in-web-browsers">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#q2---full-nodes-in-web-browsers">#</doc-anchor-trigger>
+        <span>Q2 - Full nodes in web browsers</span>
+    </h2>
+</doc-anchor-target>
+<p>Warthog is an experimental cryptocurrency where we try to push the boundaries of what is possible in crypto. After having successfully implemented the world&#x27;s first Proof of Balanced Work mining algorithm we try to port full nodes to the web browser. This has several advantages:</p>
 <ul>
-<li>v0.4.5: Solo Stratum pool integrated into node, use <code v-pre>--stratum=0.0.0.0:3456</code> to enable on port <code v-pre>3456</code></li>
-<li>v0.4.1-2: increase max transactions mined into blocks + mempool sorted by fee</li>
-<li>v0.4.0: fix mempool bug</li>
+<li>Full nodes can be easily spawned on a smartphone just by loading a website.</li>
+<li>This lowers the entry-barrier for new users.</li>
+<li>The stability of the network benefits from more nodes.</li>
+<li>In connection with the light-weight DeFi, ease-of-use on smartphones will be of particular interest.</li>
+</ul>
+<p>As of now, to the best of our knowledge there is no other cryptocurrency supporting in-browser full nodes. This may be due to the fact that the technological foundations needed to persist a blockchain in the web browser were only recently developed.</p>
+<doc-anchor-target id="persisting-the-blockchain">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#persisting-the-blockchain">#</doc-anchor-trigger>
+        <span>Persisting the Blockchain</span>
+    </h3>
+</doc-anchor-target>
+<p>The fact that Warthog relies on SQLite to persist state makes it possible to store the database in the Origin Private File System using WasmFS. The technology is very new:</p>
+<ul>
+<li><a href="https://emscripten.org/docs/api_reference/Filesystem-API.html#new-file-system-wasmfs">Emscripten&#x27;s WasmFS</a> is &quot;Current Status: Work in Progress&quot;.</li>
+<li><a href="https://webkit.org/blog/12257/the-file-system-access-api-with-origin-private-file-system/">Origin Private File System</a> was only supported since recently by major browsers.</li>
+<li><a href="https://sqlite.org/wasm/doc/trunk/persistence.md#opfs-wasmfs">Support of SQLite for WasmFS</a> was only recently added in version 0.3.43.</li>
+</ul>
+<p>Current browsers <a href="https://developer.mozilla.org/en-US/docs/Web/API/Storage_API/Storage_quotas_and_eviction_criteria">allow to store persistent data (OPFS) in the 3-digit gigabyte range</a> when there is enough disk space available. This is sufficient for blockchain applications.</p>
+<doc-anchor-target id="communication-between-nodes">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#communication-between-nodes">#</doc-anchor-trigger>
+        <span>Communication between nodes</span>
+    </h3>
+</doc-anchor-target>
+<p>Since raw TCP connections are not supported in web browsers, communication can only be implemented over websocket and WebRTC.</p>
+<p>In a first step nodes need to be equipped with websocket communication capabilities. Since browsers cannot act as websocket servers in-browser nodes will first act as leechers, i.e. they will only connect to public nodes but cannot accept inbound connections.</p>
+<p>Inbound connection could be realized via WebRTC. Later WebRTC might be added to allow nodes accept inbound connections from other in-browser nodes.</p>
+<doc-anchor-target id="road-to-in-browser-nodes">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#road-to-in-browser-nodes">#</doc-anchor-trigger>
+        <span>Road to in-browser nodes</span>
+    </h3>
+</doc-anchor-target>
+<ul class="contains-task-list">
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Rewrite node communication code in an abstract way (using C++&#x27;s virtual methods)</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Add Websocket communication capability to nodes. This requires adding websocket server to listen for incoming websocket connections.</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Make code modifications to compile node&#x27;s code using Emscripten. This requires conditionally disabling TCP network libraries and also Websocket server support for webassembly target and conditionally using libraries supporting browser&#x27;s built websocket support.</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Figure out a way to extract relevant code from <a href="https://sqlite.org/wasm/doc/trunk/index.md">SQLite&#x27;s Wasm extension</a> which is actually a Javascript library. This requires
+<ul>
+<li>Dissecting <a href="https://sqlite.org/src/dir/ext/wasm">the extension&#x27;s code</a> and throwing away all Javascript code to distill the essential things to implant into Warthog codebase.</li>
+<li>Retrieving relevant compilation flags from the Makefiles.</li>
+<li>Testing everything with the</li>
+</ul>
+</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Find a way to disallow concurrent access to the database from multiple instances in different tabs. Two nodes should not run against the same database.</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Mess around with Emscripten peculiarities and additionally required compilation flags (<code v-pre>-sPROXY_TO_PTHREAD</code>, allow dynamic memory growth, allow shared memories between threads enabling C++ exceptions etc.).</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Mess around with browser security (for example special HTTP headers COOP+COEP are required to be sent to support <code v-pre>SharedArrayBuffer</code>).</li>
 </ul>
 
                                 
@@ -192,7 +244,7 @@
                             </div>
                             <footer class="clear-both">
                                 <div class="flex flex-wrap items-center justify-between mt-14">
-                                    <a class="my-2.5 inline-flex items-center text-sm whitespace-nowrap text-blue-500 dark:text-blue-400 hover:text-blue-700 hover:underline" href="https://github.com/warthog-network/docs/blob/master/version_history.md" target="_blank" rel="noopener">
+                                    <a class="my-2.5 inline-flex items-center text-sm whitespace-nowrap text-blue-500 dark:text-blue-400 hover:text-blue-700 hover:underline" href="https://github.com/warthog-network/docs/blob/master/roadmap.md" target="_blank" rel="noopener">
                                         <svg class="mr-1.5" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M20 12c-.55 0-1 .45-1 1v7c0 .55-.45 1-1 1H4c-.55 0-1-.45-1-1V6c0-.55.45-1 1-1h7c.55 0 1-.45 1-1s-.45-1-1-1H4C2.35 3 1 4.35 1 6v14c0 1.65 1.35 3 3 3h14c1.65 0 3-1.35 3-3v-7c0-.55-.45-1-1-1z" /><path d="M22.21 1.79c-1.18-1.18-3.24-1.18-4.41 0l-9.5 9.5c-.13.13-.22.29-.26.46l-1 4c-.08.34.01.7.26.95.18.2.44.3.7.3.08 0 .16-.01.24-.03l4-1c.18-.04.34-.13.46-.26l9.5-9.5c1.22-1.22 1.22-3.2.01-4.42zm-1.42 3l-9.3 9.3-2.11.53.53-2.11 9.3-9.3c.42-.42 1.16-.42 1.59 0 .43.43.43 1.15-.01 1.58z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
                                         <span>Edit on GitHub</span>
                                     </a>
@@ -200,20 +252,20 @@
                             
                                 <nav class="flex mt-14">
                                     <div class="w-1/2">
-                                        <a class="px-5 py-4 h-full flex items-center break-normal font-medium text-blue-500 dark:text-blue-400 border border-gray-300 hover:border-gray-400 dark:border-dark-650 dark:hover:border-dark-450 rounded-l-lg transition-colors duration-150 relative hover:z-5" href="../roadmap/">
+                                        <a class="px-5 py-4 h-full flex items-center break-normal font-medium text-blue-500 dark:text-blue-400 border border-gray-300 hover:border-gray-400 dark:border-dark-650 dark:hover:border-dark-450 rounded-l-lg transition-colors duration-150 relative hover:z-5" href="../developers/api/">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="mr-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19 11H7.41l5.29-5.29a.996.996 0 10-1.41-1.41l-7 7a1 1 0 000 1.42l7 7a1.024 1.024 0 001.42-.01.996.996 0 000-1.41L7.41 13H19c.55 0 1-.45 1-1s-.45-1-1-1z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
                                             <span>
                                                 <span class="block text-xs font-normal text-gray-400 dark:text-dark-400">Previous</span>
-                                                <span class="block mt-1">Roadmap</span>
+                                                <span class="block mt-1">API</span>
                                             </span>
                                         </a>
                                     </div>
                             
                                     <div class="w-1/2">
-                                        <a class="px-5 py-4 -mx-px h-full flex items-center justify-end break-normal font-medium text-blue-500 dark:text-blue-400 border border-gray-300 hover:border-gray-400 dark:border-dark-650 dark:hover:border-dark-450 rounded-r-lg transition-colors duration-150 relative hover:z-5" href="../wart-dapp/">
+                                        <a class="px-5 py-4 -mx-px h-full flex items-center justify-end break-normal font-medium text-blue-500 dark:text-blue-400 border border-gray-300 hover:border-gray-400 dark:border-dark-650 dark:hover:border-dark-450 rounded-r-lg transition-colors duration-150 relative hover:z-5" href="../version_history/">
                                             <span>
                                                 <span class="block text-xs font-normal text-right text-gray-400 dark:text-dark-400">Next</span>
-                                                <span class="block mt-1">Wart Dapp</span>
+                                                <span class="block mt-1">Version History</span>
                                             </span>
                                             <svg xmlns="http://www.w3.org/2000/svg" class="ml-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19.92 12.38a1 1 0 00-.22-1.09l-7-7a.996.996 0 10-1.41 1.41l5.3 5.3H5c-.55 0-1 .45-1 1s.45 1 1 1h11.59l-5.29 5.29a.996.996 0 000 1.41c.19.2.44.3.7.3s.51-.1.71-.29l7-7c.09-.09.16-.21.21-.33z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
                                         </a>
@@ -257,6 +309,6 @@
 
     <div id="docs-overlay-target"></div>
 
-    <script data-cfasync="false">window.__DOCS__ = { "title": "Version History", level: 1, icon: "file", hasPrism: false, hasMermaid: false, hasMath: false, tocDepth: 23 }</script>
+    <script data-cfasync="false">window.__DOCS__ = { "title": "Roadmap", level: 1, icon: "file", hasPrism: false, hasMermaid: false, hasMath: false, tocDepth: 23 }</script>
 </body>
 </html>
