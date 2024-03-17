@@ -12,8 +12,8 @@ order: 10
 * [Reddit](https://www.reddit.com/r/warthognetwork/)
 
 ## Explorers
-
 * [wart.0xf10.com](https://wart.0xf10.com/)
+  
 ## Pools
 * [acc-pool](https://warthog.acc-pool.pw/)
 
@@ -26,6 +26,5 @@ order: 10
 * [Warthog-network-dapp](https://github.com/warthog-network/wart-dapp) (open source)
 
 ## Exchanges 
-
 * [Exbitron](https://exbitron.com/trade?market=wart-usdt)
-* Xeggex (Coming Soon)
+* [Xeggex](https://xeggex.com/market/WART_USDT) 
