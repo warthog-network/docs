@@ -27,4 +27,5 @@ order: 10
 
 ## Exchanges 
 * [Exbitron](https://exbitron.com/trade?market=wart-usdt)
-* [Xeggex](https://xeggex.com/market/WART_USDT) 
+* [Xeggex](https://xeggex.com/market/WART_USDT)
+* [TradeOgre](https://tradeogre.com/exchange/WART-USDT)
