@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="turbo-root" content="/docs">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.5.0.764113697352">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.5.0.764625330974">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 3.5.0">
@@ -31,12 +31,12 @@
 
     <script data-cfasync="false">(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
-    <link href="../../resources/css/retype.css?v=3.5.0.764113697352" rel="stylesheet">
+    <link href="../../resources/css/retype.css?v=3.5.0.764625330974" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../resources/js/config.js?v=3.5.0.764113697352" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../resources/js/config.js?v=3.5.0.764625330974" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../resources/js/retype.js?v=3.5.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=3.5.0.764113697352" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../../resources/js/prism.js?v=3.5.0.764113697352" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=3.5.0.764625330974" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../../resources/js/prism.js?v=3.5.0.764625330974" defer></script>
 </head>
 <body>
     <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -359,6 +359,11 @@
 <td><code v-pre>GET</code></td>
 <td><code v-pre>/tools/encode16bit/from_string/:feestring</code></td>
 <td>Round coin amount string to closest 16 bit representation (for fee specification)</td>
+</tr>
+<tr>
+<td><code v-pre>WEBSOCKET</code></td>
+<td><code v-pre>/ws/chain_delta</code></td>
+<td>Get chain delta events</td>
 </tr>
 </tbody>
 </table>
@@ -938,22 +943,25 @@ Example output:</p>
  }
 }</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="wip-websocket">
+<doc-anchor-target id="websocket-wschain_delta">
     <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#wip-websocket">#</doc-anchor-trigger>
-        <span><code v-pre>WIP Websocket</code></span>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#websocket-wschain_delta">#</doc-anchor-trigger>
+        <span><code v-pre>WEBSOCKET /ws/chain_delta</code></span>
     </h3>
 </doc-anchor-target>
-<p>Raw blocks, so rollbacks are not tracked, this must be added in future to have complete incremental chain change feed.</p>
+<p>Get chain delta events. There are 2 types of events:</p>
+<ul>
+<li><code v-pre>blockAppend</code>: The <code v-pre>data</code> object is as returned by <code v-pre>/chain/block/:id</code>.</li>
+<li><code v-pre>rollback</code>: The <code v-pre>data</code> object is <code v-pre>{&quot;length&quot;: &lt;length&gt;}</code> specifying chain length after rollback.</li>
+</ul>
+<p>Example:</p>
 <div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-bash"><code v-pre class="language-bash">wscat -c ws://localhost:3000/ws_sneak_peek</code></pre>
+<pre class="language-bash"><code v-pre class="language-bash">wscat -c ws://localhost:3000/ws/chain_delta</code></pre>
 </doc-codeblock></div>
-<p>Exemple output :</p>
+<p>Example output :</p>
 <div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-bash"><code v-pre class="language-bash">
-&lt; {&quot;body&quot;:{&quot;rewards&quot;:[{&quot;amount&quot;:&quot;3.00000000&quot;,&quot;amountE8&quot;:300000000,&quot;toAddress&quot;:&quot;8b263f767fb3bb97eb4c51371cc418f0c1ebc58ff29d38de&quot;,&quot;txHash&quot;:&quot;e9b9c4e9b4675c26aaa67f507d824943f7204dfab86775c21f009ebfff878b30&quot;}],&quot;transfers&quot;:[]},&quot;confirmations&quot;:0,&quot;header&quot;:{&quot;difficulty&quot;:12416803050367.305,&quot;hash&quot;:&quot;97d7572245923377cd972657994013e9bcbe8d07251db053be7a8603c4c2325f&quot;,&quot;merkleroot&quot;:&quot;a893cfcab30cb30bd374b2862b8f253cbf7899c8dd43a2082413dddbfc7b1fcb&quot;,&quot;nonce&quot;:&quot;4eaebc09&quot;,&quot;prevHash&quot;:&quot;3eb6fc536af5dd035c568d9148d6f21e71fb6340ffbb1958b60038090fb11751&quot;,&quot;raw&quot;:&quot;3eb6fc536af5dd035c568d9148d6f21e71fb6340ffbb1958b60038090fb117510aed5677a893cfcab30cb30bd374b2862b8f253cbf7899c8dd43a2082413dddbfc7b1fcb000000026580b4b84eaebc09&quot;,&quot;target&quot;:&quot;0aed5677&quot;,&quot;timestamp&quot;:1702933688,&quot;utc&quot;:&quot;2023-12-18 21:08:08 UTC&quot;,&quot;version&quot;:&quot;00000002&quot;},&quot;height&quot;:746726,&quot;timestamp&quot;:1702933688,&quot;utc&quot;:&quot;2023-12-18 21:08:08 UTC&quot;}
-&lt; {&quot;body&quot;:{&quot;rewards&quot;:[{&quot;amount&quot;:&quot;3.00000000&quot;,&quot;amountE8&quot;:300000000,&quot;toAddress&quot;:&quot;7711106fc68ac806df7e9c628934b5c018b907663866dd2e&quot;,&quot;txHash&quot;:&quot;f6889c6d21e1cbb1a8de6c6fc2f9a89196b9d39647509a1d7dd2e130d1307cd3&quot;}],&quot;transfers&quot;:[]},&quot;confirmations&quot;:0,&quot;header&quot;:{&quot;difficulty&quot;:12416803050367.305,&quot;hash&quot;:&quot;a235342bab7ff6a10ff47e6ba07392946b152785cd6a45e9fbaeb4bd8a9abe11&quot;,&quot;merkleroot&quot;:&quot;607773e58740a6161b1338bbf51ceea97a76431707c44c6dc0a8143267b7fcb5&quot;,&quot;nonce&quot;:&quot;e36e3bc8&quot;,&quot;prevHash&quot;:&quot;97d7572245923377cd972657994013e9bcbe8d07251db053be7a8603c4c2325f&quot;,&quot;raw&quot;:&quot;97d7572245923377cd972657994013e9bcbe8d07251db053be7a8603c4c2325f0aed5677607773e58740a6161b1338bbf51ceea97a76431707c44c6dc0a8143267b7fcb5000000026580b4bce36e3bc8&quot;,&quot;target&quot;:&quot;0aed5677&quot;,&quot;timestamp&quot;:1702933692,&quot;utc&quot;:&quot;2023-12-18 21:08:12 UTC&quot;,&quot;version&quot;:&quot;00000002&quot;},&quot;height&quot;:746727,&quot;timestamp&quot;:1702933692,&quot;utc&quot;:&quot;2023-12-18 21:08:12 UTC&quot;}
-</code></pre>
+<pre class="language-bash"><code v-pre class="language-bash">&lt; {&quot;data&quot;:{&quot;body&quot;:{&quot;rewards&quot;:[{&quot;amount&quot;:&quot;3.00000000&quot;,&quot;amountE8&quot;:300000000,&quot;toAddress&quot;:&quot;964fbeee369074497488802c28d17808d272234ff039cae9&quot;,&quot;txHash&quot;:&quot;111213cbac99133211b52fe3b41dbb967a10a7d8964a457709d97802eb9747fa&quot;}],&quot;transfers&quot;:[]},&quot;confirmations&quot;:0,&quot;header&quot;:{&quot;difficulty&quot;:30111651631922.598,&quot;hash&quot;:&quot;a909326a248b483b806f7c3b030e3d6d38e68f9490926940cbb79ec83c661c82&quot;,&quot;merkleroot&quot;:&quot;4bab43f17223007529fa95c427d90129b03d2b983d0391de57fe4649c3937f62&quot;,&quot;nonce&quot;:&quot;37bda412&quot;,&quot;pow&quot;:{&quot;floatSha256t&quot;:0.01571174245327711,&quot;floatVerus&quot;:1.8061993453792364e-13,&quot;hashSha256t&quot;:&quot;0405af4cc71e4518d940cf6a02d977b0a9eba07f57598f3f9000a62a0a8d476b&quot;,&quot;hashVerus&quot;:&quot;000000000032d709b537d47bbf34f643b26672cd79d9f0e5d39a5f6057ba4e9e&quot;},&quot;prevHash&quot;:&quot;5897e530bab6da0ffa2db7afbcba3caee90b6d62e4bf91a7ccd8fdd81c33212f&quot;,&quot;raw&quot;:&quot;5897e530bab6da0ffa2db7afbcba3caee90b6d62e4bf91a7ccd8fdd81c33212f0b25640e4bab43f17223007529fa95c427d90129b03d2b983d0391de57fe4649c3937f6200000002660082fd37bda412&quot;,&quot;target&quot;:&quot;0b25640e&quot;,&quot;timestamp&quot;:1711309565,&quot;utc&quot;:&quot;2024-03-24 19:46:05 UTC&quot;,&quot;version&quot;:&quot;00000002&quot;},&quot;height&quot;:1165554,&quot;timestamp&quot;:1711309565,&quot;utc&quot;:&quot;2024-03-24 19:46:05 UTC&quot;},&quot;type&quot;:&quot;blockAppend&quot;}
+&lt; {&quot;data&quot;:{&quot;length&quot;: 1165554},&quot;type&quot;:&quot;rollback&quot;}</code></pre>
 </doc-codeblock></div>
 
                                 
