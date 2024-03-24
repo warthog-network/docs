@@ -58,6 +58,7 @@ METHOD| PATH | DESCRIPTION
 `GET`   |`/peers/connect_timers`| Show timers used for reconnect
 `GET`  |`/tools/encode16bit/from_e8/:feeE8`| Round raw 64 integer to closest 16 bit representation (for fee specification)
 `GET`   |`/tools/encode16bit/from_string/:feestring`| Round coin amount string to closest 16 bit representation (for fee specification)
+`WEBSOCKET`   |`/ws/chain_delta`| Get chain delta events
 
 ## Detailed Description
 
@@ -489,19 +490,20 @@ Example output of `/chain/hashrate/100`
 }
 ```
 
-### `WIP Websocket`
+### `WEBSOCKET /ws/chain_delta`
 
-  Raw blocks, so rollbacks are not tracked, this must be added in future to have complete incremental chain change feed.
+Get chain delta events. There are 2 types of events: 
+- `blockAppend`: The `data` object is as returned by `/chain/block/:id`.
+- `rollback`: The `data` object is `{"length": <length>}` specifying chain length after rollback.
 
+Example:
 ```bash
-wscat -c ws://localhost:3000/ws_sneak_peek
+wscat -c ws://localhost:3000/ws/chain_delta
 ```
 
-Exemple output :
+Example output :
 
 ```bash
-
-< {"body":{"rewards":[{"amount":"3.00000000","amountE8":300000000,"toAddress":"8b263f767fb3bb97eb4c51371cc418f0c1ebc58ff29d38de","txHash":"e9b9c4e9b4675c26aaa67f507d824943f7204dfab86775c21f009ebfff878b30"}],"transfers":[]},"confirmations":0,"header":{"difficulty":12416803050367.305,"hash":"97d7572245923377cd972657994013e9bcbe8d07251db053be7a8603c4c2325f","merkleroot":"a893cfcab30cb30bd374b2862b8f253cbf7899c8dd43a2082413dddbfc7b1fcb","nonce":"4eaebc09","prevHash":"3eb6fc536af5dd035c568d9148d6f21e71fb6340ffbb1958b60038090fb11751","raw":"3eb6fc536af5dd035c568d9148d6f21e71fb6340ffbb1958b60038090fb117510aed5677a893cfcab30cb30bd374b2862b8f253cbf7899c8dd43a2082413dddbfc7b1fcb000000026580b4b84eaebc09","target":"0aed5677","timestamp":1702933688,"utc":"2023-12-18 21:08:08 UTC","version":"00000002"},"height":746726,"timestamp":1702933688,"utc":"2023-12-18 21:08:08 UTC"}
-< {"body":{"rewards":[{"amount":"3.00000000","amountE8":300000000,"toAddress":"7711106fc68ac806df7e9c628934b5c018b907663866dd2e","txHash":"f6889c6d21e1cbb1a8de6c6fc2f9a89196b9d39647509a1d7dd2e130d1307cd3"}],"transfers":[]},"confirmations":0,"header":{"difficulty":12416803050367.305,"hash":"a235342bab7ff6a10ff47e6ba07392946b152785cd6a45e9fbaeb4bd8a9abe11","merkleroot":"607773e58740a6161b1338bbf51ceea97a76431707c44c6dc0a8143267b7fcb5","nonce":"e36e3bc8","prevHash":"97d7572245923377cd972657994013e9bcbe8d07251db053be7a8603c4c2325f","raw":"97d7572245923377cd972657994013e9bcbe8d07251db053be7a8603c4c2325f0aed5677607773e58740a6161b1338bbf51ceea97a76431707c44c6dc0a8143267b7fcb5000000026580b4bce36e3bc8","target":"0aed5677","timestamp":1702933692,"utc":"2023-12-18 21:08:12 UTC","version":"00000002"},"height":746727,"timestamp":1702933692,"utc":"2023-12-18 21:08:12 UTC"}
-
+< {"data":{"body":{"rewards":[{"amount":"3.00000000","amountE8":300000000,"toAddress":"964fbeee369074497488802c28d17808d272234ff039cae9","txHash":"111213cbac99133211b52fe3b41dbb967a10a7d8964a457709d97802eb9747fa"}],"transfers":[]},"confirmations":0,"header":{"difficulty":30111651631922.598,"hash":"a909326a248b483b806f7c3b030e3d6d38e68f9490926940cbb79ec83c661c82","merkleroot":"4bab43f17223007529fa95c427d90129b03d2b983d0391de57fe4649c3937f62","nonce":"37bda412","pow":{"floatSha256t":0.01571174245327711,"floatVerus":1.8061993453792364e-13,"hashSha256t":"0405af4cc71e4518d940cf6a02d977b0a9eba07f57598f3f9000a62a0a8d476b","hashVerus":"000000000032d709b537d47bbf34f643b26672cd79d9f0e5d39a5f6057ba4e9e"},"prevHash":"5897e530bab6da0ffa2db7afbcba3caee90b6d62e4bf91a7ccd8fdd81c33212f","raw":"5897e530bab6da0ffa2db7afbcba3caee90b6d62e4bf91a7ccd8fdd81c33212f0b25640e4bab43f17223007529fa95c427d90129b03d2b983d0391de57fe4649c3937f6200000002660082fd37bda412","target":"0b25640e","timestamp":1711309565,"utc":"2024-03-24 19:46:05 UTC","version":"00000002"},"height":1165554,"timestamp":1711309565,"utc":"2024-03-24 19:46:05 UTC"},"type":"blockAppend"}
+< {"data":{"length": 1165554},"type":"rollback"}
 ```
