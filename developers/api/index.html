@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="turbo-root" content="/docs">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.5.0.765050668692">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.5.0.765052304603">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 3.5.0">
@@ -31,12 +31,12 @@
 
     <script data-cfasync="false">(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
-    <link href="../../resources/css/retype.css?v=3.5.0.765050668692" rel="stylesheet">
+    <link href="../../resources/css/retype.css?v=3.5.0.765052304603" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../resources/js/config.js?v=3.5.0.765050668692" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../resources/js/config.js?v=3.5.0.765052304603" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../resources/js/retype.js?v=3.5.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=3.5.0.765050668692" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../../resources/js/prism.js?v=3.5.0.765050668692" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=3.5.0.765052304603" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../../resources/js/prism.js?v=3.5.0.765052304603" defer></script>
 </head>
 <body>
     <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -780,15 +780,21 @@ Example output of <code v-pre>/chain/block/366700</code></p>
         <span><code v-pre>GET /chain/mine/:address</code></span>
     </h3>
 </doc-anchor-target>
-<p>Generate data required for mining. Example output of <code v-pre>/chain/mine/e4145cfe3e34f206956487c2a16b65a47f05fc347ef6e287</code></p>
+<p>Generate data required for mining. Example output of <code v-pre>/chain/mine/a1314e4d0a6d6436c15470a5194bda6c7e631ec405965198</code></p>
 <div class="codeblock-wrapper"><doc-codeblock>
 <pre class="language-json"><code v-pre class="language-json">{
  &quot;code&quot;: 0,
  &quot;data&quot;: {
-  &quot;body&quot;: &quot;0000000000000001e4145cfe3e34f206956487c2a16b65a47f05fc34000100000000000001800000000011e1a30000000000&quot;,
-  &quot;difficulty&quot;: 6139045663744.908,
-  &quot;header&quot;: &quot;2ae4c944cae092bc9f3b93a6970e7b68d12256a641192170ef011600000000002ab7665b6a124de9367bf5c9c5775022c1cd60fbc839f6f51a671f0daed57b201ea8cb8100000001650edba500000000&quot;,
-  &quot;height&quot;: 376713
+  &quot;blockReward&quot;: &quot;3.00000000&quot;,
+  &quot;blockRewardE8&quot;: 300000000,
+  &quot;body&quot;: &quot;000000000000000000000001a1314e4d0a6d6436c15470a5194bda6c7e631ec400000000000000010000000011e1a300&quot;,
+  &quot;difficulty&quot;: 536871040.0000305,
+  &quot;header&quot;: &quot;b29988793c29118a842ba38ea4ab13d43e3dce3f04511ba6ca3340542dfd8537077fffff17367a901f3ea9799eb18861c80369b9c588ceb13db7c2c57c657deb88755440000000026607062100000000&quot;,
+  &quot;height&quot;: 1,
+  &quot;merklePrefix&quot;: &quot;059651982486a9fc0f9dcd477d7866916a8915a54ee16cf801c03852eb7a308a7922d9c006a9e4bcd3c1ccfe70f80050fd712dfdfdc7a3bcb03fab8d7999ac40&quot;,
+  &quot;testnet&quot;: true,
+  &quot;totalTxFee&quot;: &quot;0&quot;,
+  &quot;totalTxFeeE8&quot;: 0
  }
 }</code></pre>
 </doc-codeblock></div>
