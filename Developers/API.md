@@ -339,16 +339,22 @@ Send transactions in JSON format, returns transaction hash in hex format:
 
 ### `GET /chain/mine/:address`
 
- Generate data required for mining. Example output of `/chain/mine/e4145cfe3e34f206956487c2a16b65a47f05fc347ef6e287`
+ Generate data required for mining. Example output of `/chain/mine/a1314e4d0a6d6436c15470a5194bda6c7e631ec405965198`
 
 ```json
 {
  "code": 0,
  "data": {
-  "body": "0000000000000001e4145cfe3e34f206956487c2a16b65a47f05fc34000100000000000001800000000011e1a30000000000",
-  "difficulty": 6139045663744.908,
-  "header": "2ae4c944cae092bc9f3b93a6970e7b68d12256a641192170ef011600000000002ab7665b6a124de9367bf5c9c5775022c1cd60fbc839f6f51a671f0daed57b201ea8cb8100000001650edba500000000",
-  "height": 376713
+  "blockReward": "3.00000000",
+  "blockRewardE8": 300000000,
+  "body": "000000000000000000000001a1314e4d0a6d6436c15470a5194bda6c7e631ec400000000000000010000000011e1a300",
+  "difficulty": 536871040.0000305,
+  "header": "b29988793c29118a842ba38ea4ab13d43e3dce3f04511ba6ca3340542dfd8537077fffff17367a901f3ea9799eb18861c80369b9c588ceb13db7c2c57c657deb88755440000000026607062100000000",
+  "height": 1,
+  "merklePrefix": "059651982486a9fc0f9dcd477d7866916a8915a54ee16cf801c03852eb7a308a7922d9c006a9e4bcd3c1ccfe70f80050fd712dfdfdc7a3bcb03fab8d7999ac40",
+  "testnet": true,
+  "totalTxFee": "0",
+  "totalTxFeeE8": 0
  }
 }
 ```
