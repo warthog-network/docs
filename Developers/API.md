@@ -58,6 +58,7 @@ METHOD| PATH | DESCRIPTION
 `GET`   |`/peers/connect_timers`| Show timers used for reconnect
 `GET`  |`/tools/encode16bit/from_e8/:feeE8`| Round raw 64 integer to closest 16 bit representation (for fee specification)
 `GET`   |`/tools/encode16bit/from_string/:feestring`| Round coin amount string to closest 16 bit representation (for fee specification)
+`GET`    | `/tools/janushash_number/:headerhex`| Show number interpretation of a header's janushash
 `WEBSOCKET`   |`/ws/chain_delta`| Get chain delta events
 
 ## Detailed Description
@@ -495,6 +496,19 @@ Example output of `/chain/hashrate/100`
  }
 }
 ```
+
+### `GET /tools/janushash_number/:headerhex`
+
+Show number interpretation of a header's janushash. Header is specified in hexadecimal encoding.
+
+Example output of `tools/janushash_number/<some 160 character hex string>`:
+
+```json
+0.06597094470635056
+```
+!!!info Info
+We do not use JSON encoding in this endpiont for performance reasons to support use of this endpoint by pool share validation. If the input `:headerhex` cannot be parsed, the result is an empty string.
+!!!
 
 ### `WEBSOCKET /ws/chain_delta`
 
