@@ -59,6 +59,8 @@ METHOD| PATH | DESCRIPTION
 `GET`  |`/tools/encode16bit/from_e8/:feeE8`| Round raw 64 integer to closest 16 bit representation (for fee specification)
 `GET`   |`/tools/encode16bit/from_string/:feestring`| Round coin amount string to closest 16 bit representation (for fee specification)
 `GET`    | `/tools/janushash_number/:headerhex`| Show number interpretation of a header's janushash
+`GET`   |`/tools/wallet/new`| Create a new wallet
+`GET`    | `/tools/wallet/from_privkey/:privkey`| Restore wallet from a private key
 `WEBSOCKET`   |`/ws/chain_delta`| Get chain delta events
 
 ## Detailed Description
@@ -189,16 +191,18 @@ Send transactions in JSON format, returns transaction hash in hex format:
 {
  "code": 0,
  "data": {
-  "difficulty": 6139045663744.908,
-  "hash": "0ba161f80aad860c41f879a4096fa5dcdd7eb3f1ccb23c8ad777010000000000",
-  "height": 376696,
-  "pinHash": "1c421a369caf7ce185b3c29d76ac8b99b75f7bdbbd6514c1e87a0b0000000000",
-  "pinHeight": 376672,
-  "worksum": 1.0027869358085505e+18,
-  "worksumHex": "0x0000000000000000000000000000000000000000000000000dea9d67b64566a0"
+  "difficulty": 30866431555762.105,
+  "hash": "e9dfdcfdeec3c5376dd682e09cce909dc255d611e9cb36974bcbcbcecb6fb432",
+  "height": 1198931,
+  "is_janushash": true,
+  "pinHash": "a7bd097d9c10dc393239f169f6dd5352e0b4e28e942aaa78b54c57ed1ec7315b",
+  "pinHeight": 1198912,
+  "synced": true,
+  "worksum": 1.008584641271857e+19,
+  "worksumHex": "0x0000000000000000000000000000000000000000000000008bf81fe0113cf6a0"
  }
 }
- ```
+```
 
 ### `GET /chain/grid`
 
@@ -340,7 +344,7 @@ Send transactions in JSON format, returns transaction hash in hex format:
 
 ### `GET /chain/mine/:address`
 
- Generate data required for mining. Example output of `/chain/mine/a1314e4d0a6d6436c15470a5194bda6c7e631ec405965198`
+ Generate data required for mining. Example output of `/chain/mine/11c6c0f7148a845cc899360a38fa839ba3d5e719293bb5c6`
 
 ```json
 {
@@ -348,17 +352,17 @@ Send transactions in JSON format, returns transaction hash in hex format:
  "data": {
   "blockReward": "3.00000000",
   "blockRewardE8": 300000000,
-  "body": "000000000000000000000001a1314e4d0a6d6436c15470a5194bda6c7e631ec400000000000000010000000011e1a300",
-  "difficulty": 536871040.0000305,
-  "header": "b29988793c29118a842ba38ea4ab13d43e3dce3f04511ba6ca3340542dfd8537077fffff17367a901f3ea9799eb18861c80369b9c588ceb13db7c2c57c657deb88755440000000026607062100000000",
-  "height": 1,
-  "merklePrefix": "059651982486a9fc0f9dcd477d7866916a8915a54ee16cf801c03852eb7a308a7922d9c006a9e4bcd3c1ccfe70f80050fd712dfdfdc7a3bcb03fab8d7999ac40",
-  "testnet": true,
+  "body": "000000000000000000000001e94f274f08cf64bd76688ffb34012269e045b737000000000000098d0000000011e1a300",
+  "difficulty": 30866431555762.105,
+  "header": "50eaaf1453c84cabef749af9064d73d881174a44d7f165122400604e71342f9d0b2479fd6ec2b44e00bed326c9116b2f85f9f72bdd2157cc521cf49d0cf360fad91b881e00000002660ab00400000000",
+  "height": 1198924,
+  "merklePrefix": "72aa3aa84afd92af788b750d28ed9fe247d8788956bbdddc5a92cbdcb5925e4fbe20dcff8dc31364a524061ff0235bd78c9786d6d29dd2a73b49efacb57966d6",
+  "synced": true,
+  "testnet": false,
   "totalTxFee": "0",
   "totalTxFeeE8": 0
  }
-}
-```
+}```
 
 ### `GET /chain/txcache`
 
@@ -403,6 +407,22 @@ Example output of `/chain/hashrate/100`
   "accountId": 198,
   "balance": "5027.00000000",
   "balanceE8": 502700000000
+ }
+}
+{
+ "code": 0,
+ "data": {
+  "blockReward": "3.00000000",
+  "blockRewardE8": 300000000,
+  "body": "000000000000000000000001e94f274f08cf64bd76688ffb34012269e045b737000000000000098d0000000011e1a300",
+  "difficulty": 30866431555762.105,
+  "header": "50eaaf1453c84cabef749af9064d73d881174a44d7f165122400604e71342f9d0b2479fd6ec2b44e00bed326c9116b2f85f9f72bdd2157cc521cf49d0cf360fad91b881e00000002660ab00400000000",
+  "height": 1198924,
+  "merklePrefix": "72aa3aa84afd92af788b750d28ed9fe247d8788956bbdddc5a92cbdcb5925e4fbe20dcff8dc31364a524061ff0235bd78c9786d6d29dd2a73b49efacb57966d6",
+  "synced": true,
+  "testnet": false,
+  "totalTxFee": "0",
+  "totalTxFeeE8": 0
  }
 }
 ```
@@ -463,7 +483,7 @@ Example output of `/chain/hashrate/100`
 }
 ```
 
-### `GET /tools/encode16bit/from_e8/:feeE8`| Round raw 64 integer to closest 16 bit representation (for fee specification)
+### `GET /tools/encode16bit/from_e8/:feeE8`
 
  Round raw fee integer representation (coin amount is this number divided by 10^8) to closest 16 bit representation. This is required for fee specification in the `/transaction/add` endpoint. Example output of `/tools/encode16bit/from_e8/5002`
 
@@ -501,13 +521,54 @@ Example output of `/chain/hashrate/100`
 
 Show number interpretation of a header's janushash. Header is specified in hexadecimal encoding.
 
-Example output of `tools/janushash_number/<some 160 character hex string>`:
+Example output of `/tools/janushash_number/<some 160 character hex string>`:
 
 ```json
 0.06597094470635056
 ```
 !!!info Info
 We do not use JSON encoding in this endpiont for performance reasons to support use of this endpoint by pool share validation. If the input `:headerhex` cannot be parsed, the result is an empty string.
+!!!
+
+### `GET /tools/wallet/new`
+
+Create a new wallet.
+
+Example output of `/tools/wallet/new`:
+
+```json
+{
+ "code": 0,
+ "data": {
+  "address": "11c6c0f7148a845cc899360a38fa839ba3d5e719293bb5c6",
+  "privKey": "d711913bea313c7a9007e115a5969d9e1127f119d7ec72b3d713f698ab591488",
+  "pubKey": "03a907038c8aba55cecf71b242c18d4c92e2a37ff83b8779444f10ceb720fe4551"
+ }
+}
+```
+
+!!!warning Warning
+This endpoint should only be used for testing purposes. For security reasons the node should not be involved in wallet-related operations involving a private key.
+!!!
+
+### `GET /tools/wallet/from_privkey/:privkey`
+Restore wallet from a private key. 
+
+Example output of `/tools/wallet/from_privkey/d3ce2210adf0fccabe31b61309e2b80c029a7e4e305aeed29432edd428d35c3d`:
+
+```json
+{
+ "code": 0,
+ "data": {
+  "address": "31bfdc6b23b22130edc05073cffa29be793a32518769180e",
+  "privKey": "d3ce2210adf0fccabe31b61309e2b80c029a7e4e305aeed29432edd428d35c3d",
+  "pubKey": "022ad688a8ccc4898b2b923088e9f297785e8852a6bdc33b7e87ffea3d3e63e32b"
+ }
+}
+```
+
+!!!warning Warning
+This endpoint should only be used for testing purposes. For security reasons the node should not be involved in wallet-related operations involving a private key.
 !!!
 
 ### `WEBSOCKET /ws/chain_delta`
