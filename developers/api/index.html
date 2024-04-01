@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="turbo-root" content="/docs">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.5.0.765121099802">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.5.0.765292674804">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 3.5.0">
@@ -31,12 +31,12 @@
 
     <script data-cfasync="false">(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
-    <link href="../../resources/css/retype.css?v=3.5.0.765121099802" rel="stylesheet">
+    <link href="../../resources/css/retype.css?v=3.5.0.765292674804" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../resources/js/config.js?v=3.5.0.765121099802" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../resources/js/config.js?v=3.5.0.765292674804" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../resources/js/retype.js?v=3.5.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=3.5.0.765121099802" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../../resources/js/prism.js?v=3.5.0.765121099802" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=3.5.0.765292674804" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../../resources/js/prism.js?v=3.5.0.765292674804" defer></script>
 </head>
 <body>
     <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -366,6 +366,16 @@
 <td>Show number interpretation of a header&#x27;s janushash</td>
 </tr>
 <tr>
+<td><code v-pre>GET</code></td>
+<td><code v-pre>/tools/wallet/new</code></td>
+<td>Create a new wallet</td>
+</tr>
+<tr>
+<td><code v-pre>GET</code></td>
+<td><code v-pre>/tools/wallet/from_privkey/:privkey</code></td>
+<td>Restore wallet from a private key</td>
+</tr>
+<tr>
 <td><code v-pre>WEBSOCKET</code></td>
 <td><code v-pre>/ws/chain_delta</code></td>
 <td>Get chain delta events</td>
@@ -622,13 +632,15 @@
 <pre class="language-json"><code v-pre class="language-json">{
 &quot;code&quot;: 0,
 &quot;data&quot;: {
- &quot;difficulty&quot;: 6139045663744.908,
- &quot;hash&quot;: &quot;0ba161f80aad860c41f879a4096fa5dcdd7eb3f1ccb23c8ad777010000000000&quot;,
- &quot;height&quot;: 376696,
- &quot;pinHash&quot;: &quot;1c421a369caf7ce185b3c29d76ac8b99b75f7bdbbd6514c1e87a0b0000000000&quot;,
- &quot;pinHeight&quot;: 376672,
- &quot;worksum&quot;: 1.0027869358085505e+18,
- &quot;worksumHex&quot;: &quot;0x0000000000000000000000000000000000000000000000000dea9d67b64566a0&quot;
+ &quot;difficulty&quot;: 30866431555762.105,
+ &quot;hash&quot;: &quot;e9dfdcfdeec3c5376dd682e09cce909dc255d611e9cb36974bcbcbcecb6fb432&quot;,
+ &quot;height&quot;: 1198931,
+ &quot;is_janushash&quot;: true,
+ &quot;pinHash&quot;: &quot;a7bd097d9c10dc393239f169f6dd5352e0b4e28e942aaa78b54c57ed1ec7315b&quot;,
+ &quot;pinHeight&quot;: 1198912,
+ &quot;synced&quot;: true,
+ &quot;worksum&quot;: 1.008584641271857e+19,
+ &quot;worksumHex&quot;: &quot;0x0000000000000000000000000000000000000000000000008bf81fe0113cf6a0&quot;
 }
 }</code></pre>
 </doc-codeblock></div>
@@ -785,35 +797,33 @@ Example output of <code v-pre>/chain/block/366700</code></p>
         <span><code v-pre>GET /chain/mine/:address</code></span>
     </h3>
 </doc-anchor-target>
-<p>Generate data required for mining. Example output of <code v-pre>/chain/mine/a1314e4d0a6d6436c15470a5194bda6c7e631ec405965198</code></p>
+<p>Generate data required for mining. Example output of <code v-pre>/chain/mine/11c6c0f7148a845cc899360a38fa839ba3d5e719293bb5c6</code></p>
 <div class="codeblock-wrapper"><doc-codeblock>
 <pre class="language-json"><code v-pre class="language-json">{
  &quot;code&quot;: 0,
  &quot;data&quot;: {
   &quot;blockReward&quot;: &quot;3.00000000&quot;,
   &quot;blockRewardE8&quot;: 300000000,
-  &quot;body&quot;: &quot;000000000000000000000001a1314e4d0a6d6436c15470a5194bda6c7e631ec400000000000000010000000011e1a300&quot;,
-  &quot;difficulty&quot;: 536871040.0000305,
-  &quot;header&quot;: &quot;b29988793c29118a842ba38ea4ab13d43e3dce3f04511ba6ca3340542dfd8537077fffff17367a901f3ea9799eb18861c80369b9c588ceb13db7c2c57c657deb88755440000000026607062100000000&quot;,
-  &quot;height&quot;: 1,
-  &quot;merklePrefix&quot;: &quot;059651982486a9fc0f9dcd477d7866916a8915a54ee16cf801c03852eb7a308a7922d9c006a9e4bcd3c1ccfe70f80050fd712dfdfdc7a3bcb03fab8d7999ac40&quot;,
-  &quot;testnet&quot;: true,
+  &quot;body&quot;: &quot;000000000000000000000001e94f274f08cf64bd76688ffb34012269e045b737000000000000098d0000000011e1a300&quot;,
+  &quot;difficulty&quot;: 30866431555762.105,
+  &quot;header&quot;: &quot;50eaaf1453c84cabef749af9064d73d881174a44d7f165122400604e71342f9d0b2479fd6ec2b44e00bed326c9116b2f85f9f72bdd2157cc521cf49d0cf360fad91b881e00000002660ab00400000000&quot;,
+  &quot;height&quot;: 1198924,
+  &quot;merklePrefix&quot;: &quot;72aa3aa84afd92af788b750d28ed9fe247d8788956bbdddc5a92cbdcb5925e4fbe20dcff8dc31364a524061ff0235bd78c9786d6d29dd2a73b49efacb57966d6&quot;,
+  &quot;synced&quot;: true,
+  &quot;testnet&quot;: false,
   &quot;totalTxFee&quot;: &quot;0&quot;,
   &quot;totalTxFeeE8&quot;: 0
  }
-}</code></pre>
-</doc-codeblock></div>
-<doc-anchor-target id="get-chaintxcache">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#get-chaintxcache">#</doc-anchor-trigger>
-        <span><code v-pre>GET /chain/txcache</code></span>
-    </h3>
-</doc-anchor-target>
-<p>Show transaction cache. Example output:</p>
-<div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-json"><code v-pre class="language-json">{
-&quot;code&quot;: 0,
-&quot;data&quot;: []
+}```
+
+### `GET /chain/txcache`
+
+ Show transaction cache. Example output:
+
+ ```json
+{
+ &quot;code&quot;: 0,
+ &quot;data&quot;: []
 } </code></pre>
 </doc-codeblock></div>
 <doc-anchor-target id="get-chainhashratewindow">
@@ -855,6 +865,22 @@ TODO: Detailed description</p>
  &quot;accountId&quot;: 198,
  &quot;balance&quot;: &quot;5027.00000000&quot;,
  &quot;balanceE8&quot;: 502700000000
+}
+}
+{
+&quot;code&quot;: 0,
+&quot;data&quot;: {
+ &quot;blockReward&quot;: &quot;3.00000000&quot;,
+ &quot;blockRewardE8&quot;: 300000000,
+ &quot;body&quot;: &quot;000000000000000000000001e94f274f08cf64bd76688ffb34012269e045b737000000000000098d0000000011e1a300&quot;,
+ &quot;difficulty&quot;: 30866431555762.105,
+ &quot;header&quot;: &quot;50eaaf1453c84cabef749af9064d73d881174a44d7f165122400604e71342f9d0b2479fd6ec2b44e00bed326c9116b2f85f9f72bdd2157cc521cf49d0cf360fad91b881e00000002660ab00400000000&quot;,
+ &quot;height&quot;: 1198924,
+ &quot;merklePrefix&quot;: &quot;72aa3aa84afd92af788b750d28ed9fe247d8788956bbdddc5a92cbdcb5925e4fbe20dcff8dc31364a524061ff0235bd78c9786d6d29dd2a73b49efacb57966d6&quot;,
+ &quot;synced&quot;: true,
+ &quot;testnet&quot;: false,
+ &quot;totalTxFee&quot;: &quot;0&quot;,
+ &quot;totalTxFeeE8&quot;: 0
 }
 }</code></pre>
 </doc-codeblock></div>
@@ -916,10 +942,10 @@ Example output:</p>
 }
 }</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="get-toolsencode16bitfrom_e8feee8-round-raw-64-integer-to-closest-16-bit-representation-for-fee-specification">
+<doc-anchor-target id="get-toolsencode16bitfrom_e8feee8">
     <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#get-toolsencode16bitfrom_e8feee8-round-raw-64-integer-to-closest-16-bit-representation-for-fee-specification">#</doc-anchor-trigger>
-        <span><code v-pre>GET /tools/encode16bit/from_e8/:feeE8</code>| Round raw 64 integer to closest 16 bit representation (for fee specification)</span>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#get-toolsencode16bitfrom_e8feee8">#</doc-anchor-trigger>
+        <span><code v-pre>GET /tools/encode16bit/from_e8/:feeE8</code></span>
     </h3>
 </doc-anchor-target>
 <p>Round raw fee integer representation (coin amount is this number divided by 10^8) to closest 16 bit representation. This is required for fee specification in the <code v-pre>/transaction/add</code> endpoint. Example output of <code v-pre>/tools/encode16bit/from_e8/5002</code></p>
@@ -961,7 +987,7 @@ Example output:</p>
     </h3>
 </doc-anchor-target>
 <p>Show number interpretation of a header&#x27;s janushash. Header is specified in hexadecimal encoding.</p>
-<p>Example output of <code v-pre>tools/janushash_number/&lt;some 160 character hex string&gt;</code>:</p>
+<p>Example output of <code v-pre>/tools/janushash_number/&lt;some 160 character hex string&gt;</code>:</p>
 <div class="codeblock-wrapper"><doc-codeblock>
 <pre class="language-json"><code v-pre class="language-json">0.06597094470635056</code></pre>
 </doc-codeblock></div>
@@ -980,6 +1006,76 @@ Example output:</p>
         <div class="pr-5 ml-3 w-full">
             <h5>Info</h5>
 <p>We do not use JSON encoding in this endpiont for performance reasons to support use of this endpoint by pool share validation. If the input <code v-pre>:headerhex</code> cannot be parsed, the result is an empty string.</p>
+        </div>
+    </div>
+</div>
+<doc-anchor-target id="get-toolswalletnew">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#get-toolswalletnew">#</doc-anchor-trigger>
+        <span><code v-pre>GET /tools/wallet/new</code></span>
+    </h3>
+</doc-anchor-target>
+<p>Create a new wallet.</p>
+<p>Example output of <code v-pre>/tools/wallet/new</code>:</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-json"><code v-pre class="language-json">{
+ &quot;code&quot;: 0,
+ &quot;data&quot;: {
+  &quot;address&quot;: &quot;11c6c0f7148a845cc899360a38fa839ba3d5e719293bb5c6&quot;,
+  &quot;privKey&quot;: &quot;d711913bea313c7a9007e115a5969d9e1127f119d7ec72b3d713f698ab591488&quot;,
+  &quot;pubKey&quot;: &quot;03a907038c8aba55cecf71b242c18d4c92e2a37ff83b8779444f10ceb720fe4551&quot;
+ }
+}</code></pre>
+</doc-codeblock></div>
+<div class="flex mb-6">
+    <div class="shrink-0 w-1 rounded-tl rounded-bl bg-yellow-500"></div>
+    <div class="flex w-full py-4 border border-l-0 border-gray-300 rounded-tr rounded-br doc-alert bg-white dark:bg-dark-700 dark:border-dark-700" role="alert">
+        <div class="flex items-center ml-4 h-7">
+            <svg xmlns="http://www.w3.org/2000/svg" class="mb-px text-yellow-500" width="22" height="22" viewBox="0 0 24 24" role="presentation">
+                <g fill="currentColor"><g>
+                    <path d="M22.48 15.59L14.01 1.45A2.968 2.968 0 0012.16.09c-.78-.19-1.58-.07-2.27.35-.41.25-.76.6-1.01 1.01v.01L.4 15.6c-.83 1.43-.33 3.27 1.1 4.1.45.26.95.4 1.48.4h16.95c.8-.01 1.55-.33 2.11-.9.56-.57.87-1.33.86-2.13a3.04 3.04 0 00-.42-1.48zm-1.87 2.21c-.19.19-.44.3-.69.3H2.99c-.17 0-.34-.05-.49-.13a.992.992 0 01-.37-1.35L10.6 2.48c.08-.14.2-.25.34-.33a.992.992 0 011.37.33l8.46 14.13c.09.15.13.32.13.49 0 .26-.1.51-.29.7z"></path>
+                    <path d="M11.45 12.1c.55 0 1-.45 1-1v-4c0-.55-.45-1-1-1s-1 .45-1 1v4c0 .56.45 1 1 1zM11.46 14.1c-.56 0-1 .45-1 1s.45 1 1 1 1-.45 1-1-.45-1-1-1z"></path>
+                </g></g>
+            </svg>
+        </div>
+        <div class="pr-5 ml-3 w-full">
+            <h5>Warning</h5>
+<p>This endpoint should only be used for testing purposes. For security reasons the node should not be involved in wallet-related operations involving a private key.</p>
+        </div>
+    </div>
+</div>
+<doc-anchor-target id="get-toolswalletfrom_privkeyprivkey">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#get-toolswalletfrom_privkeyprivkey">#</doc-anchor-trigger>
+        <span><code v-pre>GET /tools/wallet/from_privkey/:privkey</code></span>
+    </h3>
+</doc-anchor-target>
+<p>Restore wallet from a private key.</p>
+<p>Example output of <code v-pre>/tools/wallet/from_privkey/d3ce2210adf0fccabe31b61309e2b80c029a7e4e305aeed29432edd428d35c3d</code>:</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-json"><code v-pre class="language-json">{
+ &quot;code&quot;: 0,
+ &quot;data&quot;: {
+  &quot;address&quot;: &quot;31bfdc6b23b22130edc05073cffa29be793a32518769180e&quot;,
+  &quot;privKey&quot;: &quot;d3ce2210adf0fccabe31b61309e2b80c029a7e4e305aeed29432edd428d35c3d&quot;,
+  &quot;pubKey&quot;: &quot;022ad688a8ccc4898b2b923088e9f297785e8852a6bdc33b7e87ffea3d3e63e32b&quot;
+ }
+}</code></pre>
+</doc-codeblock></div>
+<div class="flex mb-6">
+    <div class="shrink-0 w-1 rounded-tl rounded-bl bg-yellow-500"></div>
+    <div class="flex w-full py-4 border border-l-0 border-gray-300 rounded-tr rounded-br doc-alert bg-white dark:bg-dark-700 dark:border-dark-700" role="alert">
+        <div class="flex items-center ml-4 h-7">
+            <svg xmlns="http://www.w3.org/2000/svg" class="mb-px text-yellow-500" width="22" height="22" viewBox="0 0 24 24" role="presentation">
+                <g fill="currentColor"><g>
+                    <path d="M22.48 15.59L14.01 1.45A2.968 2.968 0 0012.16.09c-.78-.19-1.58-.07-2.27.35-.41.25-.76.6-1.01 1.01v.01L.4 15.6c-.83 1.43-.33 3.27 1.1 4.1.45.26.95.4 1.48.4h16.95c.8-.01 1.55-.33 2.11-.9.56-.57.87-1.33.86-2.13a3.04 3.04 0 00-.42-1.48zm-1.87 2.21c-.19.19-.44.3-.69.3H2.99c-.17 0-.34-.05-.49-.13a.992.992 0 01-.37-1.35L10.6 2.48c.08-.14.2-.25.34-.33a.992.992 0 011.37.33l8.46 14.13c.09.15.13.32.13.49 0 .26-.1.51-.29.7z"></path>
+                    <path d="M11.45 12.1c.55 0 1-.45 1-1v-4c0-.55-.45-1-1-1s-1 .45-1 1v4c0 .56.45 1 1 1zM11.46 14.1c-.56 0-1 .45-1 1s.45 1 1 1 1-.45 1-1-.45-1-1-1z"></path>
+                </g></g>
+            </svg>
+        </div>
+        <div class="pr-5 ml-3 w-full">
+            <h5>Warning</h5>
+<p>This endpoint should only be used for testing purposes. For security reasons the node should not be involved in wallet-related operations involving a private key.</p>
         </div>
     </div>
 </div>
