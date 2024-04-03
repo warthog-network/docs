@@ -17,6 +17,7 @@ order: 10
 ## Pools
 * [acc-pool](https://warthog.acc-pool.pw/)
 * [WartPool](https://www.wartpool.io/)
+* [WoolyPooly](https://woolypooly.com/en/coin/wart)
 
 ## Miners
 * [Janusminer](https://github.com/CoinFuMasterShifu/janusminer) (open source)
