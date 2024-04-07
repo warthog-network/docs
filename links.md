@@ -21,7 +21,7 @@ order: 10
 
 ## Miners
 * [Janusminer](https://github.com/CoinFuMasterShifu/janusminer) (open source)
-* [BzMiner](https://www.bzminer.com/betas/) (closed source and currently in beta testing)
+* [BzMiner](https://www.bzminer.com/) (closed source)
 
 ## Wallets
 * [wart-wallet](https://github.com/andrewcrypto777/wart-wallet) (open source)
@@ -31,3 +31,10 @@ order: 10
 * [Exbitron](https://exbitron.com/trade?market=wart-usdt)
 * [Xeggex](https://xeggex.com/market/WART_USDT)
 * [TradeOgre](https://tradeogre.com/exchange/WART-USDT)
+
+## Tutorials / Other Content
+
+* [Warthog Presentation](https://www.youtube.com/watch?v=0lB2KQAjy8s) by Onur Akbaşoğlu (in turkish)
+* [Mining tutorial](https://www.youtube.com/watch?v=rIWc19lH9PQ) by BearMarketMiner (in english)
+* [Mining tutorial](https://www.youtube.com/watch?v=ZtlFF5ieexU) by Luketherock868 Mining (in english)
+* [Mining tutorial](https://www.youtube.com/watch?v=GMjIKUsW9j8) by Makertronic (in french)
