@@ -38,3 +38,7 @@ order: 10
 * [Mining tutorial](https://www.youtube.com/watch?v=rIWc19lH9PQ) by BearMarketMiner (in english)
 * [Mining tutorial](https://www.youtube.com/watch?v=ZtlFF5ieexU) by Luketherock868 Mining (in english)
 * [Mining tutorial](https://www.youtube.com/watch?v=GMjIKUsW9j8) by Makertronic (in french)
+
+**NOTE**:
+
+- If a link is missing, don't hesitate to make a PR or tell us on discord.
