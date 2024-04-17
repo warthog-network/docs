@@ -13,7 +13,7 @@ Exemple you can add this type of arguments to run a node with stratum enabled
 ```sh
 docker run --expose 3456 zzjulien/warthog_node:latest --stratum=0.0.0.0:3456
 ```
-## Run a public node
+## Run a (RPC) public node
 
 ```sh
 docker run --expose 3001 zzjulien/warthog_node:latest --enable-public
