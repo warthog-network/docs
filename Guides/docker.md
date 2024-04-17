@@ -22,3 +22,7 @@ docker run --expose 3001 zzjulien/warthog_node:latest --enable-public
 !!!info Info
 We advise you not to use the latest image, but rather to choose a stable version (latest release), currently zzjulien/warthog_node:0.4.24
 !!!
+
+!!!info Info
+Warthog image is whitelisted on [runonFlux](https://runonflux.io/)
+!!!
