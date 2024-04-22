@@ -65,6 +65,9 @@ Sous BZminer, possibilité d'utiliser les extra arguments d'overclocking.
 
 ## Minage en solo (pour ceux qui le souhaitent. Pools dispo sinon) :
 
+La récompense de bloc est actuellement de **3 WART**
+Si vous connaissez votre hashrate janusscore, vous pouvez utiliser le calculateur pour estimer le nombre de blocs que vous pouvez espérer miner en solo : https://wartscan.io/calculator
+
 ### Télécharger le node :
 Ici : https://github.com/warthog-network/Warthog/releases
 
