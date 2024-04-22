@@ -13,7 +13,7 @@
 
 ### wart-dapp
 
-![Overview](./img/dapp/02-overview.png)
+![Overview](/img/dapp/02-overview.png)
 
 - Wallet GUI (Graphique)
 - prêt à l'emploi
@@ -76,10 +76,12 @@ créez un .bat dans le dossier du .exe contenant : `wart-node-windows.exe --stra
 ### Lancer votre mineur en solo sur votre node : 
 Pool à renseigner sur votre mineur solo : `stratum+tcp://ip-du_node:3456`
 
-### FS hiveos :
+### Exemple de flight sheet Hiveos :
 
-![bzminer-hiveos](https://github.com/Tintin-BZH/docs/blob/master/img/bzminer_hiveos.png)
+(Sur node solo, avec overclocking)
+
+![bzminer-hiveos](/img/bzminer_hiveos.png)
 
 ### Mining profil mmpOS :
 
-![bzminer-mmpOS](https://github.com/Tintin-BZH/docs/blob/master/img/bzminer_mmpos.png)
+![bzminer-mmpOS](/img/bzminer_mmpos.png)
