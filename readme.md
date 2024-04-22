@@ -18,15 +18,7 @@ You can join the Warthog community on [Discord](https://discord.com/invite/QMDV8
 
 ## Starting a node
 
-Download the latest version from [here](https://github.com/warthog-network/Warthog/releases).
-
-The node does not have external dependencies, it can be started via command line:
-```
-./wart-node
-```
-![](img/get-started/09-node.png)
-
-The node starts syncing. The node needs to be running and synced while we are using the wallet and miner.
+Doc available here : https://github.com/Tintin-BZH/docs/blob/master/Guides/node.md
 
 ## Using the CLI Wallet
 We explain how to use the command line wallet. If you don't know how to use the command line, you should use a graphical wallet such as [wart-wallet](https://github.com/andrewcrypto777/wart-wallet) or [Warthog-network-dapp](https://github.com/I-luk-I/Warthog-network-dapp).
