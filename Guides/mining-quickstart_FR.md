@@ -13,6 +13,8 @@
 
 ### wart-dapp
 
+![Overview](./img/dapp/02-overview.png)
+
 - Wallet GUI (Graphique)
 - prêt à l'emploi
 - connexion auto à node public possible (installation d'un node pas nécessaire)
@@ -76,8 +78,8 @@ Pool à renseigner sur votre mineur solo : `stratum+tcp://ip-du_node:3456`
 
 ### FS hiveos :
 
-https://github.com/Tintin-BZH/docs/blob/master/img/bzminer_hiveos.png
+![bzminer-hiveos](./img/bzminer_hiveos.png)
 
 ### Mining profil mmpOS :
 
-https://github.com/Tintin-BZH/docs/blob/master/img/bzminer_mmpos.png
+![bzminer-mmpOS](./img/bzminer_mmpos.png)
