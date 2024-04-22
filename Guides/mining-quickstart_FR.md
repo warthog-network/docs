@@ -1,10 +1,12 @@
 # Warthog - Tutoriel de minage - Mis à jour le 22/04/2024
 
+Ce guide contient toutes les infos nécessaires pour vous lancer immédiatement dans le minage de Warthog, en pool ou en solo.
+
 ## Liens :
 
 - Site : http://www.warthog.network/
 - Liens : https://wartscan.io/links
-- Pools/exchanges : https://miningpoolstats.stream/warthog
+- Pools et exchanges : https://miningpoolstats.stream/warthog
 - Calculateur de minage : https://wartscan.io/calculator
 
 ## Créer votre wallet :
