@@ -13,7 +13,7 @@
 
 ### wart-dapp
 
-![Overview](/img/dapp/02-overview.png)
+![wart-dapp](/img/dapp/02-overview.png)
 
 - Wallet GUI (Graphique)
 - prêt à l'emploi
@@ -23,6 +23,8 @@
 - Guide d'utilisation : https://www.warthog.network/docs/wart-dapp/
 
 ### wart-wallet
+
+![wart-wllet](/img/get-started/10-wallet.png)
 
 - Wallet CLI (en ligne de commande)
 - Nécessite l'installation d'un node local
