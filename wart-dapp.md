@@ -1,5 +1,5 @@
 # Wart Dapp
-Download [here](https://github.com/I-luk-I/Warthog-network-dapp/releases).
+Download [here](https://github.com/warthog-network/wart-dapp/releases).
 
 At the very beginning, you are taken to the window for selecting a connection method. If you don’t want to, don’t know how, or for some other reason don’t have your own node running, then click on ‘Connect public node’ and the application will automatically connect to the public node.If you want to use a connection to your own node, enter the node’s IP address and port.
 
