@@ -9,8 +9,8 @@ The [core repository](https://github.com/warthog-network) offers two application
 * Command line Wallet
 
 Furthermore there are two third-party wallets:
-* [wart-wallet](https://github.com/andrewcrypto777/wart-wallet) (open source)
-* [Warthog-network-dapp](https://github.com/I-luk-I/Warthog-network-dapp) (open source)
+* [Wart-dapp](https://github.com/warthog-network/wart-dapp) (open source)
+* [wart-wallet](https://github.com/warthog-network/wart-wallet) (open source)
 
 You can join the Warthog community on [Discord](https://discord.com/invite/QMDV8bGTdQ).
 
@@ -21,7 +21,7 @@ You can join the Warthog community on [Discord](https://discord.com/invite/QMDV8
 Doc available here : https://github.com/Tintin-BZH/docs/blob/master/Guides/node.md
 
 ## Using the CLI Wallet
-We explain how to use the command line wallet. If you don't know how to use the command line, you should use a graphical wallet such as [wart-wallet](https://github.com/andrewcrypto777/wart-wallet) or [Warthog-network-dapp](https://github.com/I-luk-I/Warthog-network-dapp).
+We explain how to use the command line wallet. If you don't know how to use the command line, you should use a graphical wallet such as [Wart-dapp](https://github.com/warthog-network/wart-dapp) or [wart-wallet](https://github.com/warthog-network/wart-wallet).
 
 Let's create a new wallet
 ```
