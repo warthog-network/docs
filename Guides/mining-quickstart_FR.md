@@ -1,34 +1,65 @@
-# Warthog - Update 05/04/2024 @here
+# Warthog - Tutoriel de minage - Mis à jour le 22/04/2024
 
 ## Liens :
 
 - Site : http://www.warthog.network/
 - Liens : https://wartscan.io/links
 - Pools/exchanges : https://miningpoolstats.stream/warthog
+- Calculateur de minage : https://wartscan.io/calculator
 
-## Wallets :
-- wart-dapp (GUI, prêt à l'emploi, connexion auto à node public possible) : https://github.com/warthog-network/wart-dapp/releases
-- en ligne de commande (avec node) : https://github.com/warthog-network/Warthog/releases
+## Créer votre wallet :
 
-## Miner :
-L'algo janushash en Proof of Balanced Work favorise les configs type PC gamer (bon CPU impératif + bon GPU) plutôt que les rigs multi-GPU. Le mineur vous donnera le hashrate GPU, le hashrate CPU, et le janusscore qui dépend des deux. C'est ce dernier qui est votre "vrai" hashrate et apparaît sur la pool.
+:warning: Il est déconseillé de miner sur une adresse d'exchange. Vous pouvez potentiellement perdre vos coins minés. Installez votre propre wallet.
+
+### wart-dapp
+
+- Wallet GUI (Graphique)
+- prêt à l'emploi
+- connexion auto à node public possible (installation d'un node pas nécessaire)
+
+- Téléchargement : https://github.com/warthog-network/wart-dapp/releases
+- Guide d'utilisation : https://www.warthog.network/docs/wart-dapp/
+
+### wart-wallet
+
+- Wallet CLI (en ligne de commande)
+- Nécessite l'installation d'un node local
+
+- Téléchargement : https://github.com/warthog-network/Warthog/releases
+( Guide d'utilisation : https://www.warthog.network/docs/
+
+## Hardware pour miner :
+L'algo janushash en Proof of Balanced Work favorise les configs type PC gamer (bon CPU impératif + bon GPU) plutôt que les rigs multi-GPU. Le mineur vous donnera le hashrate GPU, le hashrate CPU, et le janus hr qui dépend des deux. C'est ce dernier qui est votre "vrai" hashrate et apparaît sur la pool.
 
 :warning:  **Utilisation de risers déconseillée**
 
-### BZminer (recommandé) :  https://www.bzminer.com/
+## Mineurs compatibles :
+
+### bzminer (recommandé) :  https://www.bzminer.com/
+- En développement actif
+- Recommandé pour la plupart des cas
+- Support du Warthog sur les **versions 21.0.3 et supérieures**
+
+### Janusminer : https://github.com/CoinFuMasterShifu/janusminer
+- Mineur historique du projet
+- open-source
+- développement arrêté depuis le support de bzminer
+- Instable sous Windows
+- Pas optimisé pour GPU Nvidia
+
 
 ## Hiveos :
 
-- Passage à Hiveos Beta : ` hive-replace -y --beta`
-- MAJ de BZminer :
-```
-wget https://bzminer.com/downloads/bzminer_v21.0.3_linux.tar.gz; tar -xvf bzminer_v21.0.3_linux.tar.gz; miner stop; cp bzminer_v21.0.3_linux/bzminer /hive/miners/bzminer/20.0.0/; miner start
-```
+Version Beta conseillée. Passage à Hiveos Beta : ` hive-replace -y --beta`
 
-## OC GPU
+## Overclocking GPU
 
-Core intensif : mêmes OC que Radiant, Kaspa, Alph...
-Sous BZminer, possibilité d'utiliser les extra arguments.
+L'algo de minage GPU utilisé est le  Sha256t. Cet algo est core intensif : mêmes OC que Radiant, Kaspa, Alph...
+
+Pour connaitre le hashrate et l'overclocking de votre GPU sur https://hashrate.no/ , référez-vous au données de votre GPU sur le coin NOVO.
+Exemple pour une RTX 3070 : https://hashrate.no/gpus/3070/NOVO
+
+Sous BZminer, possibilité d'utiliser les extra arguments d'overclocking.
 
 ## Minage en solo (pour ceux qui le souhaitent. Pools dispo sinon) :
 Télécharger le node : https://github.com/warthog-network/Warthog/releases
@@ -38,9 +69,15 @@ Télécharger le node : https://github.com/warthog-network/Warthog/releases
   - sous Linux :`wart-node-linux --stratum=0.0.0.0:3456` (stratum nécessaire pour minage solo avec bzminer)
 
  ### Lancer le node sous Windows :
-créez un .bat dans le dossier du .exe contenant : `wart-node-windows.exe --stratum=0.0.0.0:3456`  et lancez-le :slight_smile:
-- Pool à renseigner sur votre mineur solo : `stratum+tcp://ip-du_node:3456`
+créez un .bat dans le dossier du .exe contenant : `wart-node-windows.exe --stratum=0.0.0.0:3456`  et lancez-le.
+
+### Lancer votre mineur en solo sur votre node : 
+Pool à renseigner sur votre mineur solo : `stratum+tcp://ip-du_node:3456`
 
 ### FS hiveos :
-Le force algo ne sera plus nécessaire une fois warthog proposé directement comme algo.
-URL de la pool de votre choix à renseigner, ou IP de votre node.
+
+https://github.com/Tintin-BZH/docs/blob/master/img/bzminer_hiveos.png
+
+### Mining profil mmpOS :
+
+https://github.com/Tintin-BZH/docs/blob/master/img/bzminer_mmpos.png
