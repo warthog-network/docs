@@ -35,7 +35,7 @@
 ## Hardware pour miner :
 L'algo janushash en Proof of Balanced Work favorise les configs type PC gamer (bon CPU impératif + bon GPU) plutôt que les rigs multi-GPU. Le mineur vous donnera le hashrate GPU, le hashrate CPU, et le janus hr qui dépend des deux. C'est ce dernier qui est votre "vrai" hashrate et apparaît sur la pool.
 
-:warning:  **Utilisation de risers déconseillée**
+:warning:  **Utilisation de risers déconseillée** : perte de hashrate possible. Faites des tests avec et sans si besoin.
 
 ## Mineurs compatibles :
 
@@ -52,13 +52,13 @@ L'algo janushash en Proof of Balanced Work favorise les configs type PC gamer (b
 - Pas optimisé pour GPU Nvidia
 
 
-## Hiveos :
+## Minage sous Hiveos :
 
 Version Beta conseillée. Passage à Hiveos Beta : ` hive-replace -y --beta`
 
 ## Overclocking GPU
 
-L'algo de minage GPU utilisé est le  Sha256t. Cet algo est core intensif : mêmes OC que Radiant, Kaspa, Alph...
+L'algo de minage GPU utilisé est le Sha256t. Cet algo est core intensif : mêmes OC que Radiant, Kaspa, Alph...
 
 Pour connaitre le hashrate et l'overclocking de votre GPU sur https://hashrate.no/ , référez-vous au données de votre GPU sur le coin NOVO.
 Exemple pour une RTX 3070 : https://hashrate.no/gpus/3070/NOVO
@@ -66,11 +66,13 @@ Exemple pour une RTX 3070 : https://hashrate.no/gpus/3070/NOVO
 Sous BZminer, possibilité d'utiliser les extra arguments d'overclocking.
 
 ## Minage en solo (pour ceux qui le souhaitent. Pools dispo sinon) :
-Télécharger le node : https://github.com/warthog-network/Warthog/releases
+
+### Télécharger le node :
+Ici : https://github.com/warthog-network/Warthog/releases
 
 ### Lancer le node sous Linux :
   - Le rendre exécutable : `chmod +x wart-node-linux`
-  - sous Linux :`wart-node-linux --stratum=0.0.0.0:3456` (stratum nécessaire pour minage solo avec bzminer)
+  - sous Linux :`screen ./wart-node-linux --stratum=0.0.0.0:3456` (stratum nécessaire pour minage solo avec bzminer)
 
  ### Lancer le node sous Windows :
 créez un .bat dans le dossier du .exe contenant : `wart-node-windows.exe --stratum=0.0.0.0:3456`  et lancez-le.
