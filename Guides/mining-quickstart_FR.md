@@ -78,8 +78,8 @@ Pool à renseigner sur votre mineur solo : `stratum+tcp://ip-du_node:3456`
 
 ### FS hiveos :
 
-![bzminer-hiveos](./img/bzminer_hiveos.png)
+![bzminer-hiveos](https://github.com/Tintin-BZH/docs/blob/master/img/bzminer_hiveos.png)
 
 ### Mining profil mmpOS :
 
-![bzminer-mmpOS](./img/bzminer_mmpos.png)
+![bzminer-mmpOS](https://github.com/Tintin-BZH/docs/blob/master/img/bzminer_mmpos.png)
