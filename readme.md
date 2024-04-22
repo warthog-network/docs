@@ -15,47 +15,22 @@ Furthermore there are two third-party wallets:
 You can join the Warthog community on [Discord](https://discord.com/invite/QMDV8bGTdQ).
 
 
-
 ## Starting a node
 
-Doc available here : https://github.com/Tintin-BZH/docs/blob/master/Guides/node.md
+Doc available [here](https://github.com/Tintin-BZH/docs/blob/master/Guides/node.md)
 
-## Using the CLI Wallet
-We explain how to use the command line wallet. If you don't know how to use the command line, you should use a graphical wallet such as [Wart-dapp](https://github.com/warthog-network/wart-dapp) or [wart-wallet](https://github.com/warthog-network/wart-wallet).
+## Using a wallet :
 
-Let's create a new wallet
-```
-./wart-wallet -c
-```
-A new wallet called `wallet.json` file is created. It is not encrypted and other malicious programs you run on your computer can steal it. Back it up. Don't show it to anyone. The private key can be used to restore the wallet. 
-To print your address use the command 
-```
-./wart-wallet -a
-```
+Doc available here :
+- [wart-dapp (GUI)](https://github.com/Tintin-BZH/docs/blob/master/wart-dapp.md)
+- [wart-wallet (CLI)](https://github.com/Tintin-BZH/docs/blob/master/Guides/wart-wallet.md)
 
-To check your balance use
-```
-./wart-wallet -b
-```
-
-You can send some coins with
-```
-./wart-wallet -s
-```
-The wallet asks for the address you want to send to, the fee and the amount. You can type in values like these:
-Then confirm with "y" and press enter. Of course you cannot send because your wallet address has no coins yet.
-
-![](img/get-started/10-wallet.png)
-
-For more information on how to use the wallet read the `--help` section:
-```
-./wart-wallet --help
-```
-![](img/get-started/11-wallet-help.png)
 
 ## Mining
-Mining Warthog's Janushash algorithm requires both, a good CPU and a GPU. Solo and pool miners can be found here:
-* [Janusminer](https://github.com/CoinFuMasterShifu/janusminer) (open source)
+Mining Warthog's Janushash algorithm requires both, a good CPU and a GPU.
+
+Docs available here :
+- [Mining quick start guide FRENCH](https://github.com/Tintin-BZH/docs/blob/master/Guides/mining-quickstart_FR.md)
 
 We have a guide on how to install OpenCL:
 [!ref](Guides/installing-opencl.md)
