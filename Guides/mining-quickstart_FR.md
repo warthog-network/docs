@@ -40,11 +40,17 @@ L'algo janushash en Proof of Balanced Work favorise les configs type PC gamer (b
 ## Mineurs compatibles :
 
 ### bzminer (recommandé) :  https://www.bzminer.com/
+
+![bzminer](/img/screen_bzminer.png)
+
 - En développement actif
 - Recommandé pour la plupart des cas
 - Support du Warthog sur les **versions 21.0.3 et supérieures**
 
 ### Janusminer : https://github.com/CoinFuMasterShifu/janusminer
+
+![janusminer](/img/screen_janusminer.png)
+
 - Mineur historique du projet
 - open-source
 - développement arrêté depuis le support de bzminer
