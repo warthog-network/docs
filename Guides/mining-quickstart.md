@@ -28,7 +28,7 @@ This guide contains all needed information to start mining Warthog, on your own 
 
 - GUI (Graphical) : Easier for beginners
 - Node needed (local or [public](https://github.com/warthog-network/public-nodes))
-- Download : https://github.com/warthog-network/wart-wallet
+- Download : https://github.com/warthog-network/wart-wallet/releases
 
 ### wart-wallet (CLI)
 
