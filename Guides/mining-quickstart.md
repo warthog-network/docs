@@ -81,7 +81,7 @@ Here : https://github.com/warthog-network/Warthog/releases
 
 ### Run the node on Linux :
   - Make it executable : `chmod +x wart-node-linux`
-  - Run it on a screen :`screen ./wart-node-linux --stratum=0.0.0.0:3456` (stratum nécessaire pour minage solo avec bzminer)
+  - Run it on a screen :`screen ./wart-node-linux --stratum=0.0.0.0:3456` (stratum argument needed to mine solo with bzminer)
 
  ### Run the node on Windows :
 Create a .bat file on the .exe folder, containing : `wart-node-windows.exe --stratum=0.0.0.0:3456`  and run it.
