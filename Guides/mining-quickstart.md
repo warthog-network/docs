@@ -1,6 +1,6 @@
 # Warthog - Mining quick start guide - Updated 2024-04-22
 
-This guide contains all needed information to start mining Warthog, on your own node or on pool.
+This guide contains all needed information to start mining Warthog, on your own node (solo) or on pool.
 
 ## Links :
 
@@ -51,9 +51,9 @@ The janushash Proof of Balanced Work algo works better with gaming PC hardware (
 ![janusminer](/img/screen_janusminer.png)
 
 - First miner of the project
-- open-source
-- developement stopped since bzminer support
-- Instable on Windows
+- Open-source
+- Development stopped since bzminer support
+- Unstable on Windows
 - Not optimized for Nvidia GPUs
 
 
@@ -71,30 +71,30 @@ Example with RTX 3070 : https://hashrate.no/gpus/3070/NOVO
 On BZminer, you can use the overclocking extra arguments.
 For that, you can use the config generator : https://www.bzminer.com/config-generator/
 
-## Minage en solo (pour ceux qui le souhaitent. Pools dispo sinon) :
+## Solo mining (For those who want it. Pools are available else) :
 
-La récompense de bloc est actuellement de **3 WART**
-Si vous connaissez votre hashrate Janusscore, vous pouvez utiliser le calculateur pour estimer le nombre de blocs que vous pouvez espérer miner en solo : https://wartscan.io/calculator
+The current block reward **3 WART**
+If you know your Janusscore hashrate, you can use the calculator to estimate the number of blocks you can hope to mine on solo : https://wartscan.io/calculator
 
-### Télécharger le node :
-Ici : https://github.com/warthog-network/Warthog/releases
+### Download the node :
+Here : https://github.com/warthog-network/Warthog/releases
 
-### Lancer le node sous Linux :
-  - Le rendre exécutable : `chmod +x wart-node-linux`
-  - L'exécuter dans un screen :`screen ./wart-node-linux --stratum=0.0.0.0:3456` (stratum nécessaire pour minage solo avec bzminer)
+### Run the node on Linux :
+  - Make it executable : `chmod +x wart-node-linux`
+  - Run it on a screen :`screen ./wart-node-linux --stratum=0.0.0.0:3456` (stratum nécessaire pour minage solo avec bzminer)
 
- ### Lancer le node sous Windows :
-créez un fichier .bat dans le dossier du .exe contenant : `wart-node-windows.exe --stratum=0.0.0.0:3456`  et lancez-le.
+ ### Run the node on Windows :
+Create a .bat file on the .exe folder, containing : `wart-node-windows.exe --stratum=0.0.0.0:3456`  and run it.
 
-### Lancer votre mineur en solo sur votre node : 
-Pool à renseigner sur votre mineur solo : `stratum+tcp://ip-du_node:3456`
+### Run your miner on your node (solo) : 
+Pool syntax to write on your solo miner : `stratum+tcp://your-node-local-ip:3456`
 
-### Exemple de flight sheet Hiveos :
+### Hiveos example of flight sheet :
 
-(Sur node solo, avec overclocking)
+(On a solo node, with overclocking)
 
 ![bzminer-hiveos](/img/bzminer_hiveos.png)
 
-### Mining profil mmpOS :
+### mmpOS example of mining profile :
 
 ![bzminer-mmpOS](/img/bzminer_mmpos.png)
