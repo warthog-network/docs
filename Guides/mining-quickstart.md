@@ -63,13 +63,13 @@ Beta version is adviced. Command to upgrade : ` hive-replace -y --beta`
 
 ## GPU Overclocking
 
-L'algo de minage GPU utilisé est le SHA256t. Cet algo est core intensif : mêmes OC que Radiant, Kaspa, Alph...
+The GPU mining algo is SHA256t. It is a core intensive algo : use same OC than Radiant, Kaspa, Alph...
 
-Pour connaitre le hashrate et l'overclocking de votre GPU sur https://hashrate.no/ , référez-vous au données de votre GPU sur le coin NOVO.
-Exemple pour une RTX 3070 : https://hashrate.no/gpus/3070/NOVO
+To know your GPU hashrate and overclocking on https://hashrate.no/ ,you can use your GPU data on the NOVO coin.
+Example with RTX 3070 : https://hashrate.no/gpus/3070/NOVO
 
-Sous BZminer, possibilité d'utiliser les extra arguments d'overclocking.
-Vous pouvezpour cela utiliser le générateur de config : https://www.bzminer.com/config-generator/
+On BZminer, you can use the overclocking extra arguments.
+For that, you can use the config generator : https://www.bzminer.com/config-generator/
 
 ## Minage en solo (pour ceux qui le souhaitent. Pools dispo sinon) :
 
