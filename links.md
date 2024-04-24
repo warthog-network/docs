@@ -13,7 +13,14 @@ order: 10
 
 ## Explorers
 * [wartscan.io](https://wartscan.io/)
-  
+
+## Trackers
+* [Coingecko](https://www.coingecko.com/en/coins/warthog/)
+* [Coinstats](https://coinstats.app/coins/warthog/)
+* [hashrate.no](https://www.hashrate.no/coins/WART/)
+* [Livecoinwatch](https://www.livecoinwatch.com/price/WarthogNetwork-WART/)
+* [Miningpoolstats](https://miningpoolstats.stream/warthog/)
+
 ## Pools
 * [acc-pool](https://warthog.acc-pool.pw/)
 * [WartPool](https://www.wartpool.io/)
@@ -24,8 +31,8 @@ order: 10
 * [BzMiner](https://www.bzminer.com/) (closed source)
 
 ## Wallets
-* [wart-wallet](https://github.com/andrewcrypto777/wart-wallet) (open source)
-* [Warthog-network-dapp](https://github.com/warthog-network/wart-dapp) (open source)
+* [Wart-dapp](https://github.com/warthog-network/wart-dapp) (open source, GUI)
+* [wart-wallet](https://github.com/andrewcrypto777/wart-wallet) (open source, CLI)
 
 ## Exchanges 
 * [Exbitron](https://exbitron.com/trade?market=wart-usdt)
