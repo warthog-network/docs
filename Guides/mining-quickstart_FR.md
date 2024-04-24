@@ -84,7 +84,7 @@ Ici : https://github.com/warthog-network/Warthog/releases
   - L'exécuter dans un screen :`screen ./wart-node-linux --stratum=0.0.0.0:3456` (stratum nécessaire pour minage solo avec bzminer)
 
  ### Lancer le node sous Windows :
-créez un fichier .bat dans le dossier du .exe contenant : `wart-node-windows.exe --stratum=0.0.0.0:3456`  et lancez-le.
+Créez un fichier .bat dans le dossier du .exe contenant : `wart-node-windows.exe --stratum=0.0.0.0:3456`  et lancez-le.
 
 ### Lancer votre mineur en solo sur votre node : 
 Pool à renseigner sur votre mineur solo : `stratum+tcp://ip-du_node:3456`
