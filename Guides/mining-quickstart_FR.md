@@ -18,16 +18,24 @@ Ce guide contient toutes les infos nécessaires pour vous lancer immédiatement 
 ![wart-dapp](/img/dapp/02-overview.png)
 
 - Wallet GUI (Graphique) : conseillé aux débutants
-- Connexion auto à node public possible (installation d'un node pas nécessaire)
+- Node nécessaire (local ou [publique](https://github.com/warthog-network/public-nodes)), connexion rapide à un node publique possible
 - Téléchargement : https://github.com/warthog-network/wart-dapp/releases
 - Guide d'utilisation : https://www.warthog.network/docs/wart-dapp/
 
-### wart-wallet
+### wart-wallet (GUI)
+
+![wart-wallet-GUI](/img/wart-wallet-GUI.png)
+
+- Wallet GUI (Graphique) : conseillé aux débutants
+- Node nécessaire (local ou [publique](https://github.com/warthog-network/public-nodes))
+- Téléchargement : https://github.com/warthog-network/wart-wallet/releases
+
+### wart-wallet (CLI)
 
 ![wart-wllet](/img/get-started/10-wallet.png)
 
 - Wallet CLI (en ligne de commande)
-- Nécessite l'installation d'un node local
+- Node nécessaire (local ou [publique](https://github.com/warthog-network/public-nodes))
 - Téléchargement : https://github.com/warthog-network/Warthog/releases
 - Guide d'utilisation : https://www.warthog.network/docs/
 
