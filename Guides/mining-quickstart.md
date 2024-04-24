@@ -9,59 +9,59 @@ This guide contains all needed information to start mining Warthog, on your own 
 - Pools and exchanges : https://miningpoolstats.stream/warthog
 - Mining calculator : https://wartscan.io/calculator
 
-## Créer votre wallet :
+## Create your wallet :
 
-:warning: Il est déconseillé de miner sur une adresse d'exchange. Vous pouvez potentiellement perdre vos coins minés. Installez votre propre wallet.
+:warning: Mining on an exchange address is risky. You can potentially lose your mined coins. Install your own wallet.
 
 ### wart-dapp
 
 ![wart-dapp](/img/dapp/02-overview.png)
 
-- Wallet GUI (Graphique) : conseillé aux débutants
-- Connexion auto à node public possible (installation d'un node pas nécessaire)
-- Téléchargement : https://github.com/warthog-network/wart-dapp/releases
-- Guide d'utilisation : https://www.warthog.network/docs/wart-dapp/
+- GUI (Graphical) : Easier for beginners
+- Can be connected to a public node (No need to install a local node)
+- Download : https://github.com/warthog-network/wart-dapp/releases
+- Guide : https://www.warthog.network/docs/wart-dapp/
 
 ### wart-wallet
 
 ![wart-wllet](/img/get-started/10-wallet.png)
 
-- Wallet CLI (en ligne de commande)
-- Nécessite l'installation d'un node local
-- Téléchargement : https://github.com/warthog-network/Warthog/releases
-- Guide d'utilisation : https://www.warthog.network/docs/
+- CLI (command-line)
+- Local node needed
+- Download : https://github.com/warthog-network/Warthog/releases
+- Guide : https://www.warthog.network/docs/
 
-## Hardware pour miner :
-L'algo janushash en Proof of Balanced Work favorise les configs type PC gamer (bon CPU impératif + bon GPU) plutôt que les rigs multi-GPU. Le mineur vous donnera le hashrate GPU, le hashrate CPU, et le janus hr qui dépend des deux. C'est ce dernier qui est votre "vrai" hashrate et apparaît sur la pool.
+## Mining hardware :
+The janushash Proof of Balanced Work algo works better with gaming PC hardware (Good CPU needed + good GPU) than with multi-GPU rigs. The miner will give you the GPU hashrate, the CPU hashrate, and the janus hashrate with depend of the two of them. The janus hashrate is your "real" hashrate and the one you will see on your pool.
 
-:warning:  **Utilisation de risers déconseillée** : perte de hashrate possible. Faites des tests avec et sans si besoin.
+:warning:  **Avoid to use GPU risers** : They can cause low GPU hashrate. Do tests with and without if needed.
 
-## Mineurs compatibles :
+## Compatible miners :
 
-### bzminer (recommandé) :  https://www.bzminer.com/
+### bzminer (recommanded) :  https://www.bzminer.com/
 
 ![bzminer](/img/screen_bzminer.png)
 
-- En développement actif
-- Recommandé pour la plupart des cas
-- Support du Warthog sur les **versions 21.0.3 et supérieures**
+- Active development
+- Recommended for most cases
+- Warthog is supported on **versions 21.0.3 and higher**
 
 ### Janusminer : https://github.com/CoinFuMasterShifu/janusminer
 
 ![janusminer](/img/screen_janusminer.png)
 
-- Mineur historique du projet
+- First miner of the project
 - open-source
-- développement arrêté depuis le support de bzminer
-- Instable sous Windows
-- Pas optimisé pour GPU Nvidia
+- developement stopped since bzminer support
+- Instable on Windows
+- Not optimized for Nvidia GPUs
 
 
-## Minage sous Hiveos :
+## Mining on Hiveos :
 
-Version Beta conseillée. Passage à Hiveos Beta : ` hive-replace -y --beta`
+Beta version is adviced. Command to upgrade : ` hive-replace -y --beta`
 
-## Overclocking GPU
+## GPU Overclocking
 
 L'algo de minage GPU utilisé est le SHA256t. Cet algo est core intensif : mêmes OC que Radiant, Kaspa, Alph...
 
