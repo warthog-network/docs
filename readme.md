@@ -31,5 +31,6 @@ Doc available here :
 Mining Warthog's Janushash algorithm requires both, a good CPU and a GPU.
 
 Docs available here :
+- [Mining quick start guide](/Guides/mining-quickstart.md)
 - [Mining quick start guide FRENCH](/Guides/mining-quickstart_FR.md)
 - [Installing opencl](Guides/installing-opencl.md)
