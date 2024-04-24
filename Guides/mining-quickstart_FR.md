@@ -1,4 +1,4 @@
-# Warthog - Tutoriel de minage - Mis à jour le 22/04/2024
+# Warthog - Tutoriel de minage - Mis à jour le 24/04/2024
 
 Ce guide contient toutes les infos nécessaires pour vous lancer immédiatement dans le minage de Warthog, en pool ou en solo.
 
