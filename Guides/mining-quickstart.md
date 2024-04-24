@@ -13,21 +13,29 @@ This guide contains all needed information to start mining Warthog, on your own 
 
 :warning: Mining on an exchange address is risky. You can potentially lose your mined coins. Install your own wallet.
 
-### wart-dapp
+### wart-dapp (GUI)
 
 ![wart-dapp](/img/dapp/02-overview.png)
 
 - GUI (Graphical) : Easier for beginners
-- Can be connected to a public node (No need to install a local node)
+- Node needed (local or [public](https://github.com/warthog-network/public-nodes)), quick connection to public node available
 - Download : https://github.com/warthog-network/wart-dapp/releases
 - Guide : https://www.warthog.network/docs/wart-dapp/
 
-### wart-wallet
+### wart-wallet (GUI)
+
+![wart-wallet-GUI](/img/wart-wallet-GUI.png)
+
+- GUI (Graphical) : Easier for beginners
+- Node needed (local or [public](https://github.com/warthog-network/public-nodes))
+- Download : https://github.com/warthog-network/wart-wallet
+
+### wart-wallet (CLI)
 
 ![wart-wllet](/img/get-started/10-wallet.png)
 
 - CLI (command-line)
-- Local node needed
+- Node needed (local or [public](https://github.com/warthog-network/public-nodes))
 - Download : https://github.com/warthog-network/Warthog/releases
 - Guide : https://www.warthog.network/docs/
 
