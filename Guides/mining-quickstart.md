@@ -32,7 +32,7 @@ This guide contains all needed information to start mining Warthog, on your own 
 
 ### wart-wallet (CLI)
 
-![wart-wllet](/img/get-started/10-wallet.png)
+![wart-wallet](/img/get-started/10-wallet.png)
 
 - CLI (command-line)
 - Node needed (local or [public](https://github.com/warthog-network/public-nodes))
