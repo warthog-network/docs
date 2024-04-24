@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="turbo-root" content="/docs">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.5.0.767290161321">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.5.0.767309213404">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 3.5.0">
@@ -12,7 +12,7 @@
     <!-- Primary Meta Tags -->
     <title>Create a CLI wallet</title>
     <meta name="title" content="Create a CLI wallet">
-    <meta name="description" content="First, you need to run a node. See the guide here">
+    <meta name="description" content="First, you need a node : You can follow this guide to run a local node here">
 
     <!-- Canonical -->
     <link rel="canonical" href="https://www.warthog.network/docs/guides/wart-wallet/">
@@ -21,23 +21,23 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://www.warthog.network/docs/guides/wart-wallet/">
     <meta property="og:title" content="Create a CLI wallet">
-    <meta property="og:description" content="First, you need to run a node. See the guide here">
+    <meta property="og:description" content="First, you need a node : You can follow this guide to run a local node here">
     <meta property="og:image" content="https://www.warthog.network/docs/img/get-started/10-wallet.png">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://www.warthog.network/docs/guides/wart-wallet/">
     <meta property="twitter:title" content="Create a CLI wallet">
-    <meta property="twitter:description" content="First, you need to run a node. See the guide here">
+    <meta property="twitter:description" content="First, you need a node : You can follow this guide to run a local node here">
     <meta property="twitter:image" content="https://www.warthog.network/docs/img/get-started/10-wallet.png">
 
     <script data-cfasync="false">(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
-    <link href="../../resources/css/retype.css?v=3.5.0.767290161321" rel="stylesheet">
+    <link href="../../resources/css/retype.css?v=3.5.0.767309213404" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../resources/js/config.js?v=3.5.0.767290161321" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../resources/js/config.js?v=3.5.0.767309213404" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../resources/js/retype.js?v=3.5.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=3.5.0.767290161321" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=3.5.0.767309213404" data-turbo-eval="false" defer></script>
 </head>
 <body>
     <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -182,7 +182,14 @@
         <span>Create a CLI wallet</span>
     </h1>
 </doc-anchor-target>
-<p>First, you need to run a node. See the guide <a href="/docs/blob/master/guides/node.md">here</a></p>
+<p>First, you need a node :
+You can follow this guide to run a local node <a href="/docs/blob/master/guides/node.md">here</a></p>
+<p>Or you can connect your wallet to a <a href="https://github.com/warthog-network/public-nodes">public node</a>
+Then, to connect to a public node, you will have to add on your commands the arguments <code v-pre>-h</code> for the node IP or URL and <code v-pre>-p</code> for the node port.</p>
+<p>For example :</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-none"><code v-pre class="language-none">./wart-wallet -b -h 193.218.118.57 -p 3001</code></pre>
+</doc-codeblock></div>
 <p>Let&#x27;s create a new wallet</p>
 <div class="codeblock-wrapper"><doc-codeblock>
 <pre class="language-none"><code v-pre class="language-none">./wart-wallet -c</code></pre>
