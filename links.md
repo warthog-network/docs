@@ -31,7 +31,7 @@ order: 10
 * [BzMiner](https://www.bzminer.com/) (closed source)
 
 ## Wallets
-* [Wart-dapp](https://github.com/warthog-network/wart-dapp) (open source, GUI)
+* [wart-dapp](https://github.com/warthog-network/wart-dapp) (open source, GUI)
 * [wart-wallet](https://github.com/andrewcrypto777/wart-wallet) (open source, CLI)
 
 ## Exchanges 
