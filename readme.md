@@ -1,6 +1,6 @@
 # Welcome
 
-Warthog is an experimental L1-cryptocurrency implementation without specific focus. This project is not a dumb fork of something else. It was developed completely from scratch!
+Warthog is an experimental cryptocurrency with world's first Proof of Balanced Work algorithm written by a group of crypto enthusiasts. It is meant to be a community effort and everyone is more than welcome to join and contribute. Who knows how big this project will be? This project is not a dumb fork of something else. It was developed completely from scratch!
 
 Warthog's *Janushash* mining algorithm is unique across the crypto space, it is the world's first [Proof of Balanced Work (PoBW) algorithm](https://github.com/CoinFuMasterShifu/ProofOfBalancedWork/blob/main/PoBW.pdf), which requires CPU and GPU hash power for mining.
 
@@ -17,20 +17,19 @@ You can join the Warthog community on [Discord](https://discord.com/invite/QMDV8
 
 ## Starting a node
 
-Doc available [here](https://github.com/Tintin-BZH/docs/blob/master/Guides/node.md)
+Doc available here :
+- [wart-node](/Guides/node.md)
 
 ## Using a wallet :
 
 Doc available here :
-- [wart-dapp (GUI)](https://github.com/Tintin-BZH/docs/blob/master/wart-dapp.md)
-- [wart-wallet (CLI)](https://github.com/Tintin-BZH/docs/blob/master/Guides/wart-wallet.md)
+- [wart-dapp (GUI)](/Guides/wart-dapp.md)
+- [wart-wallet (CLI)](/Guides/wart-wallet.md)
 
 
 ## Mining
 Mining Warthog's Janushash algorithm requires both, a good CPU and a GPU.
 
 Docs available here :
-- [Mining quick start guide FRENCH](https://github.com/Tintin-BZH/docs/blob/master/Guides/mining-quickstart_FR.md)
-
-We have a guide on how to install OpenCL:
-[!ref](Guides/installing-opencl.md)
+- [Mining quick start guide FRENCH](/Guides/mining-quickstart_FR.md)
+- [Installing opencl](Guides/installing-opencl.md)
