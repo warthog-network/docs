@@ -65,11 +65,11 @@ Version Beta conseillée. Passage à Hiveos Beta : ` hive-replace -y --beta`
 
 L'algo de minage GPU utilisé est le SHA256t. Cet algo est core intensif : mêmes OC que Radiant, Kaspa, Alph...
 
-Pour connaitre le hashrate et l'overclocking de votre GPU sur https://hashrate.no/ , référez-vous au données de votre GPU sur le coin NOVO.
+Pour connaître le hashrate et l'overclocking de votre GPU sur https://hashrate.no/ , référez-vous au données de votre GPU sur le coin NOVO.
 Exemple pour une RTX 3070 : https://hashrate.no/gpus/3070/NOVO
 
 Sous BZminer, possibilité d'utiliser les extra arguments d'overclocking.
-Vous pouvezpour cela utiliser le générateur de config : https://www.bzminer.com/config-generator/
+Vous pouvez pour cela utiliser le générateur de config : https://www.bzminer.com/config-generator/
 
 ## Minage en solo (pour ceux qui le souhaitent. Pools dispo sinon) :
 
