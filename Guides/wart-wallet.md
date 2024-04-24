@@ -1,6 +1,15 @@
 # Create a CLI wallet
 
-First, you need to run a node. See the guide [here](/docs/blob/master/Guides/node.md)
+First, you need a node :
+You can follow this guide to run a local node [here](/docs/blob/master/Guides/node.md)
+
+Or you can connect your wallet to a [public node](https://github.com/warthog-network/public-nodes)
+Then, to connect to a public node, you will have to add on your commands the arguments `-h` for the node IP or URL and `-p` for the node port.
+
+For example :
+```
+./wart-wallet -b -h 193.218.118.57 -p 3001
+```
 
 Let's create a new wallet
 ```
