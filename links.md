@@ -12,7 +12,7 @@ order: 10
 * [Reddit](https://www.reddit.com/r/warthognetwork/)
 
 ## Explorers
-* [wartscan](https://wartscan.io/))
+* [wartscan](https://wartscan.io/)
   
 ## Pools
 * [acc-pool](https://warthog.acc-pool.pw/)
