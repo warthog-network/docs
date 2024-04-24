@@ -17,9 +17,8 @@ Ce guide contient toutes les infos nécessaires pour vous lancer immédiatement 
 
 ![wart-dapp](/img/dapp/02-overview.png)
 
-- Wallet GUI (Graphique)
-- prêt à l'emploi
-- connexion auto à node public possible (installation d'un node pas nécessaire)
+- Wallet GUI (Graphique) : conseillé aux débutants
+- Connexion auto à node public possible (installation d'un node pas nécessaire)
 - Téléchargement : https://github.com/warthog-network/wart-dapp/releases
 - Guide d'utilisation : https://www.warthog.network/docs/wart-dapp/
 
@@ -64,27 +63,28 @@ Version Beta conseillée. Passage à Hiveos Beta : ` hive-replace -y --beta`
 
 ## Overclocking GPU
 
-L'algo de minage GPU utilisé est le Sha256t. Cet algo est core intensif : mêmes OC que Radiant, Kaspa, Alph...
+L'algo de minage GPU utilisé est le SHA256t. Cet algo est core intensif : mêmes OC que Radiant, Kaspa, Alph...
 
 Pour connaitre le hashrate et l'overclocking de votre GPU sur https://hashrate.no/ , référez-vous au données de votre GPU sur le coin NOVO.
 Exemple pour une RTX 3070 : https://hashrate.no/gpus/3070/NOVO
 
 Sous BZminer, possibilité d'utiliser les extra arguments d'overclocking.
+Vous pouvezpour cela utiliser le générateur de config : https://www.bzminer.com/config-generator/
 
 ## Minage en solo (pour ceux qui le souhaitent. Pools dispo sinon) :
 
 La récompense de bloc est actuellement de **3 WART**
-Si vous connaissez votre hashrate janusscore, vous pouvez utiliser le calculateur pour estimer le nombre de blocs que vous pouvez espérer miner en solo : https://wartscan.io/calculator
+Si vous connaissez votre hashrate Janusscore, vous pouvez utiliser le calculateur pour estimer le nombre de blocs que vous pouvez espérer miner en solo : https://wartscan.io/calculator
 
 ### Télécharger le node :
 Ici : https://github.com/warthog-network/Warthog/releases
 
 ### Lancer le node sous Linux :
   - Le rendre exécutable : `chmod +x wart-node-linux`
-  - sous Linux :`screen ./wart-node-linux --stratum=0.0.0.0:3456` (stratum nécessaire pour minage solo avec bzminer)
+  - L'exécuter dans un screen :`screen ./wart-node-linux --stratum=0.0.0.0:3456` (stratum nécessaire pour minage solo avec bzminer)
 
  ### Lancer le node sous Windows :
-créez un .bat dans le dossier du .exe contenant : `wart-node-windows.exe --stratum=0.0.0.0:3456`  et lancez-le.
+créez un fichier .bat dans le dossier du .exe contenant : `wart-node-windows.exe --stratum=0.0.0.0:3456`  et lancez-le.
 
 ### Lancer votre mineur en solo sur votre node : 
 Pool à renseigner sur votre mineur solo : `stratum+tcp://ip-du_node:3456`
