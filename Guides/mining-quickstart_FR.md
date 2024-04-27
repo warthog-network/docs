@@ -53,6 +53,7 @@ L'algo janushash en Proof of Balanced Work favorise les configs type PC gamer (b
 - En développement actif
 - Recommandé pour la plupart des cas
 - Support du Warthog sur les **versions 21.0.3 et supérieures**
+- ℹ️ Versions beta disponibles [ici](https://www.bzminer.com/betas/). Elles peuvent vous donner de meilleurs performances en avance par rapport à la version stable. (faites des essais)
 
 ### Janusminer : https://github.com/CoinFuMasterShifu/janusminer
 
