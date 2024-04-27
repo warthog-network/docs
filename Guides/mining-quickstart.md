@@ -53,7 +53,7 @@ The janushash Proof of Balanced Work algo works better with gaming PC hardware (
 - Active development
 - Recommended for most cases
 - Warthog is supported on **versions 21.0.3 and higher**
-- ℹ️ Find beta versions [here](https://www.bzminer.com/betas/). They can give you better performances early before stable releases. (do some testing)
+- ℹ️ Find beta versions [here](https://www.bzminer.com/betas/). They can give you early better performances compared to stable release. (do some testing)
 
 ### Janusminer : https://github.com/CoinFuMasterShifu/janusminer
 
