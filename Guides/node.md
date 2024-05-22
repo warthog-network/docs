@@ -2,6 +2,11 @@
 
 For some actions on the Warthog network (using a wallet or solo mining), you need to run an instance of the node on your computer. Currently, the pre-compiled node executable file are availabe for Windows, macOS (only arm), Linux (Ubuntu, Debian). Аfter launch, node will start synchronizing the blockchain, after it is completed, it will be possible to perform operations with the wallet and start solo mining.
 
+## Public nodes
+
+If for some reasons, you cannot use a local node, you can use existing public nodes. They can be found [here](https://github.com/warthog-network/public-nodes)
+You can use them to connect your wallet without installing a local node, but **don't use public nodes for solo mining**
+
 ## Starting the node
 
 Download the latest version from [here](https://github.com/warthog-network/Warthog/releases).
@@ -10,7 +15,7 @@ The node does not have external dependencies, it can be started via command line
 ```
 ./wart-node-linux
 ```
-![](img/get-started/09-node.png)
+![](/img/get-started/09-node.png)
 
 The node starts syncing. The node needs to be running and synced while we are using the wallet and miner.
 
