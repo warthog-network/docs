@@ -22,6 +22,14 @@ To create the wallet, just run this command:
 ./wart-wallet -c
 ```
 In output you get wallet address, private and public keys. This information will be saved to the wallet.json file. It is not encrypted and other malicious programs you run on your computer can steal it. Back it up. Don't show it to anyone. The private key can be used to restore the wallet.
+```
+Wallet file created.
+{
+   "address": "5fe016f874698e11f36a2b2f4dd759d53b55d5520c255e64",
+   "privateKey": "2cc2cbe28cb665d540c949aef5d1a3484a960740338780ec82a9ae1414bcc18a",
+   "publicKey": "0285a33afacea56262b44b8b96f4affa8f31cc51d3065eb37e43c0d0cf979a2872"
+}
+```
 
 To print your address use the command 
 ```
