@@ -4,40 +4,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="turbo-root" content="/docs">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.5.0.768931159725">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.5.0.769800671714">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 3.5.0">
 
     <!-- Primary Meta Tags -->
-    <title>Create a CLI wallet</title>
-    <meta name="title" content="Create a CLI wallet">
+    <title>Use a CLI wallet</title>
+    <meta name="title" content="Use a CLI wallet">
     <meta name="description" content="First, you need a node : You can follow this guide to run a local node here">
 
     <!-- Canonical -->
-    <link rel="canonical" href="https://www.warthog.network/docs/guides/wart-wallet/">
+    <link rel="canonical" href="https://www.warthog.network/docs/guides/wart-wallet-cli/">
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://www.warthog.network/docs/guides/wart-wallet/">
-    <meta property="og:title" content="Create a CLI wallet">
+    <meta property="og:url" content="https://www.warthog.network/docs/guides/wart-wallet-cli/">
+    <meta property="og:title" content="Use a CLI wallet">
     <meta property="og:description" content="First, you need a node : You can follow this guide to run a local node here">
     <meta property="og:image" content="https://www.warthog.network/docs/img/get-started/10-wallet.png">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://www.warthog.network/docs/guides/wart-wallet/">
-    <meta property="twitter:title" content="Create a CLI wallet">
+    <meta property="twitter:url" content="https://www.warthog.network/docs/guides/wart-wallet-cli/">
+    <meta property="twitter:title" content="Use a CLI wallet">
     <meta property="twitter:description" content="First, you need a node : You can follow this guide to run a local node here">
     <meta property="twitter:image" content="https://www.warthog.network/docs/img/get-started/10-wallet.png">
 
     <script data-cfasync="false">(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
-    <link href="../../resources/css/retype.css?v=3.5.0.768931159725" rel="stylesheet">
+    <link href="../../resources/css/retype.css?v=3.5.0.769800671714" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../resources/js/config.js?v=3.5.0.768931159725" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../resources/js/config.js?v=3.5.0.769800671714" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../resources/js/retype.js?v=3.5.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=3.5.0.768931159725" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=3.5.0.769800671714" data-turbo-eval="false" defer></script>
 </head>
 <body>
     <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -176,11 +176,22 @@
                                 <!-- Rendered if sidebar right is enabled -->
                                 <div id="docs-sidebar-right-toggle"></div>
                                 <!-- Page content  -->
-<doc-anchor-target id="create-a-cli-wallet" class="break-words">
+<doc-anchor-target id="use-a-cli-wallet" class="break-words">
     <h1>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#create-a-cli-wallet">#</doc-anchor-trigger>
-        <span>Create a CLI wallet</span>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#use-a-cli-wallet">#</doc-anchor-trigger>
+        <span>Use a CLI wallet</span>
     </h1>
+</doc-anchor-target>
+<p><figure class="content-center">
+    <img src="../../img/get-started/10-wallet.png" alt="">
+    <figcaption class="caption"></figcaption>
+</figure>
+</p>
+<doc-anchor-target id="connect-to-node-local-or-public">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#connect-to-node-local-or-public">#</doc-anchor-trigger>
+        <span>Connect to node (local or public)</span>
+    </h2>
 </doc-anchor-target>
 <p>First, you need a node :
 You can follow this guide to run a local node <a href="/docs/blob/master/guides/node.md">here</a></p>
@@ -190,30 +201,108 @@ Then, to connect to a public node, you will have to add on your commands the arg
 <div class="codeblock-wrapper"><doc-codeblock>
 <pre class="language-none"><code v-pre class="language-none">./wart-wallet -b -h 193.218.118.57 -p 3001</code></pre>
 </doc-codeblock></div>
-<p>Let&#x27;s create a new wallet</p>
+<doc-anchor-target id="create-wallet">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#create-wallet">#</doc-anchor-trigger>
+        <span>Create wallet</span>
+    </h2>
+</doc-anchor-target>
+<p>To create the wallet, just run this command:</p>
 <div class="codeblock-wrapper"><doc-codeblock>
 <pre class="language-none"><code v-pre class="language-none">./wart-wallet -c</code></pre>
 </doc-codeblock></div>
-<p>A new wallet called <code v-pre>wallet.json</code> file is created. It is not encrypted and other malicious programs you run on your computer can steal it. Back it up. Don&#x27;t show it to anyone. The private key can be used to restore the wallet.
-To print your address use the command</p>
+<p>In output you get wallet address, private and public keys. This information will be saved to the wallet.json file. It is not encrypted and other malicious programs you run on your computer can steal it. Back it up. Don&#x27;t show it to anyone. The private key can be used to restore the wallet.</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-none"><code v-pre class="language-none">Wallet file created.
+{
+   &quot;address&quot;: &quot;5fe016f874698e11f36a2b2f4dd759d53b55d5520c255e64&quot;,
+   &quot;privateKey&quot;: &quot;2cc2cbe28cb665d540c949aef5d1a3484a960740338780ec82a9ae1414bcc18a&quot;,
+   &quot;publicKey&quot;: &quot;0285a33afacea56262b44b8b96f4affa8f31cc51d3065eb37e43c0d0cf979a2872&quot;
+}</code></pre>
+</doc-codeblock></div>
+<p>To print your address use the command</p>
 <div class="codeblock-wrapper"><doc-codeblock>
 <pre class="language-none"><code v-pre class="language-none">./wart-wallet -a</code></pre>
 </doc-codeblock></div>
+<doc-anchor-target id="check-balance">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#check-balance">#</doc-anchor-trigger>
+        <span>Check balance</span>
+    </h2>
+</doc-anchor-target>
 <p>To check your balance use</p>
 <div class="codeblock-wrapper"><doc-codeblock>
 <pre class="language-none"><code v-pre class="language-none">./wart-wallet -b</code></pre>
 </doc-codeblock></div>
-<p>You can send some coins with</p>
+<doc-anchor-target id="send-coins">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#send-coins">#</doc-anchor-trigger>
+        <span>Send coins</span>
+    </h2>
+</doc-anchor-target>
+<p>To send some coins, use command:</p>
 <div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-none"><code v-pre class="language-none">./wart-wallet -s</code></pre>
+<pre class="language-none"><code v-pre class="language-none">./wart-walet -s --to=%address% --amount %count% --fee 0</code></pre>
 </doc-codeblock></div>
-<p>The wallet asks for the address you want to send to, the fee and the amount. You can type in values like these:
-Then confirm with &quot;y&quot; and press enter. Of course you cannot send because your wallet address has no coins yet.</p>
-<p><figure class="content-center">
-    <img src="../../img/get-started/10-wallet.png" alt="">
-    <figcaption class="caption"></figcaption>
-</figure>
-</p>
+<p>Example :</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-none"><code v-pre class="language-none">./wart-walet -s --to=9da0dc31d0c3bcaaeaf422be6499fbf451b314fa622be978 --amount 0.00000001 --fee 0</code></pre>
+</doc-codeblock></div>
+<p>Next, you will be shown the details of the transaction and if you agree with them, you need to confirm it</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-none"><code v-pre class="language-none">Summary:
+   To:     9da0dc31d0c3bcaaeaf422be6499fbf451b314fa622be978
+   Fee:    0.00000001
+   Amount: 0.00000001
+   Nonce: 4262777042
+Confirm with &quot;y&quot;: y</code></pre>
+</doc-codeblock></div>
+<p>And your transaction added to blockchain</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-none"><code v-pre class="language-none">Get pin
+Got pin
+NonceId: 4262777042
+pinHeight: 896450
+pinHeight: 896450
+pinHash: 2452592e211a10b97da31e4b681aafe49b93321776580278b0c39fc5bae84558
+=====DEBUG INFO TRANSACTION JSON=====
+{
+   &quot;amount&quot;: &quot;0.00000001&quot;,
+   &quot;fee&quot;: &quot;0.00000001&quot;,
+   &quot;nonceId&quot;: 4262777042,
+   &quot;pinHeight&quot;: 896450,
+   &quot;signature65&quot;: &quot;53d429fa34ef05f9f413b4eb57...9c189ae3078894cb01aee91eda2201&quot;,
+   &quot;toAddr&quot;: &quot;9929fdce19b2a71cf0950263baa71478ef1980f8c7d9ccb3&quot;
+}
+=====================================
+Transaction accepted.</code></pre>
+</doc-codeblock></div>
+<doc-anchor-target id="restore">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#restore">#</doc-anchor-trigger>
+        <span>Restore</span>
+    </h2>
+</doc-anchor-target>
+<p>To restore your wallet.json file, you can run command:</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-none"><code v-pre class="language-none">./wart-wallet -r %your private key%</code></pre>
+</doc-codeblock></div>
+<p>In output you get wallet address, private and public keys and</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-none"><code v-pre class="language-none">./wart-wallet -r 2cc2cbe28cb665d540c949aef5d1a3484a960740338780ec82a9ae1414bcc18a
+Wallet file created.
+{
+   &quot;address&quot;: &quot;5fe016f874698e11f36a2b2f4dd759d53b55d5520c255e64&quot;,
+   &quot;privateKey&quot;: &quot;2cc2cbe28cb665d540c949aef5d1a3484a960740338780ec82a9ae1414bcc18a&quot;,
+   &quot;publicKey&quot;: &quot;0285a33afacea56262b44b8b96f4affa8f31cc51d3065eb37e43c0d0cf979a2872&quot;
+}</code></pre>
+</doc-codeblock></div>
+<doc-anchor-target id="get-more-help">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#get-more-help">#</doc-anchor-trigger>
+        <span>Get more help</span>
+    </h2>
+</doc-anchor-target>
 <p>For more information on how to use the wallet read the <code v-pre>--help</code> section:</p>
 <div class="codeblock-wrapper"><doc-codeblock>
 <pre class="language-none"><code v-pre class="language-none">./wart-wallet --help</code></pre>
@@ -230,7 +319,7 @@ Then confirm with &quot;y&quot; and press enter. Of course you cannot send becau
                             </div>
                             <footer class="clear-both">
                                 <div class="flex flex-wrap items-center justify-between mt-14">
-                                    <a class="my-2.5 inline-flex items-center text-sm whitespace-nowrap text-blue-500 dark:text-blue-400 hover:text-blue-700 hover:underline" href="https://github.com/warthog-network/docs/blob/master/Guides/wart-wallet.md" target="_blank" rel="noopener">
+                                    <a class="my-2.5 inline-flex items-center text-sm whitespace-nowrap text-blue-500 dark:text-blue-400 hover:text-blue-700 hover:underline" href="https://github.com/warthog-network/docs/blob/master/Guides/wart-wallet-cli.md" target="_blank" rel="noopener">
                                         <svg class="mr-1.5" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M20 12c-.55 0-1 .45-1 1v7c0 .55-.45 1-1 1H4c-.55 0-1-.45-1-1V6c0-.55.45-1 1-1h7c.55 0 1-.45 1-1s-.45-1-1-1H4C2.35 3 1 4.35 1 6v14c0 1.65 1.35 3 3 3h14c1.65 0 3-1.35 3-3v-7c0-.55-.45-1-1-1z" /><path d="M22.21 1.79c-1.18-1.18-3.24-1.18-4.41 0l-9.5 9.5c-.13.13-.22.29-.26.46l-1 4c-.08.34.01.7.26.95.18.2.44.3.7.3.08 0 .16-.01.24-.03l4-1c.18-.04.34-.13.46-.26l9.5-9.5c1.22-1.22 1.22-3.2.01-4.42zm-1.42 3l-9.3 9.3-2.11.53.53-2.11 9.3-9.3c.42-.42 1.16-.42 1.59 0 .43.43.43 1.15-.01 1.58z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
                                         <span>Edit on GitHub</span>
                                     </a>
@@ -238,20 +327,20 @@ Then confirm with &quot;y&quot; and press enter. Of course you cannot send becau
                             
                                 <nav class="flex mt-14">
                                     <div class="w-1/2">
-                                        <a class="px-5 py-4 h-full flex items-center break-normal font-medium text-blue-500 dark:text-blue-400 border border-gray-300 hover:border-gray-400 dark:border-dark-650 dark:hover:border-dark-450 rounded-l-lg transition-colors duration-150 relative hover:z-5" href="../../guides/compiling/">
+                                        <a class="px-5 py-4 h-full flex items-center break-normal font-medium text-blue-500 dark:text-blue-400 border border-gray-300 hover:border-gray-400 dark:border-dark-650 dark:hover:border-dark-450 rounded-l-lg transition-colors duration-150 relative hover:z-5" href="../../guides/installing-opencl/">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="mr-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19 11H7.41l5.29-5.29a.996.996 0 10-1.41-1.41l-7 7a1 1 0 000 1.42l7 7a1.024 1.024 0 001.42-.01.996.996 0 000-1.41L7.41 13H19c.55 0 1-.45 1-1s-.45-1-1-1z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
                                             <span>
                                                 <span class="block text-xs font-normal text-gray-400 dark:text-dark-400">Previous</span>
-                                                <span class="block mt-1">Compiling from Source</span>
+                                                <span class="block mt-1">Open​CL Installation</span>
                                             </span>
                                         </a>
                                     </div>
                             
                                     <div class="w-1/2">
-                                        <a class="px-5 py-4 -mx-px h-full flex items-center justify-end break-normal font-medium text-blue-500 dark:text-blue-400 border border-gray-300 hover:border-gray-400 dark:border-dark-650 dark:hover:border-dark-450 rounded-r-lg transition-colors duration-150 relative hover:z-5" href="../../guides/systemd/">
+                                        <a class="px-5 py-4 -mx-px h-full flex items-center justify-end break-normal font-medium text-blue-500 dark:text-blue-400 border border-gray-300 hover:border-gray-400 dark:border-dark-650 dark:hover:border-dark-450 rounded-r-lg transition-colors duration-150 relative hover:z-5" href="../../guides/node/">
                                             <span>
                                                 <span class="block text-xs font-normal text-right text-gray-400 dark:text-dark-400">Next</span>
-                                                <span class="block mt-1">How to start a Warthog node as a systemd service</span>
+                                                <span class="block mt-1">Using a node</span>
                                             </span>
                                             <svg xmlns="http://www.w3.org/2000/svg" class="ml-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19.92 12.38a1 1 0 00-.22-1.09l-7-7a.996.996 0 10-1.41 1.41l5.3 5.3H5c-.55 0-1 .45-1 1s.45 1 1 1h11.59l-5.29 5.29a.996.996 0 000 1.41c.19.2.44.3.7.3s.51-.1.71-.29l7-7c.09-.09.16-.21.21-.33z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
                                         </a>
@@ -295,6 +384,6 @@ Then confirm with &quot;y&quot; and press enter. Of course you cannot send becau
 
     <div id="docs-overlay-target"></div>
 
-    <script data-cfasync="false">window.__DOCS__ = { "title": "Create a CLI wallet", level: 2, icon: "file", hasPrism: false, hasMermaid: false, hasMath: false, tocDepth: 23 }</script>
+    <script data-cfasync="false">window.__DOCS__ = { "title": "Use a CLI wallet", level: 2, icon: "file", hasPrism: false, hasMermaid: false, hasMath: false, tocDepth: 23 }</script>
 </body>
 </html>
