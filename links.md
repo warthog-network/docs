@@ -13,6 +13,7 @@ order: 10
 
 ## Explorers
 * [wartscan.io](https://wartscan.io/)
+* [Epoch Data](https://www.node-s.com/average) by JohnnyB
 
 ## Trackers
 * [Coingecko](https://www.coingecko.com/en/coins/warthog/)
@@ -33,6 +34,7 @@ order: 10
 ## Wallets
 * [wart-dapp](https://github.com/warthog-network/wart-dapp) (open source, GUI)
 * [wart-wallet](https://github.com/andrewcrypto777/wart-wallet) (open source, CLI)
+* [Public Node](https://github.com/warthog-network/public-nodes/) by Team
 
 ## Exchanges 
 * [Exbitron](https://exbitron.com/trade?market=wart-usdt)
@@ -47,6 +49,7 @@ order: 10
 * [Mining tutorial](https://www.youtube.com/watch?v=GMjIKUsW9j8) by Makertronic (in french)
 * [Janushash Calculator](https://docs.google.com/spreadsheets/d/1OPzuxMgxYoNAc7GXUpSqF5quSfJemL0-G9UOYSWJ030/edit#gid=0) by Krzys
 * [Mining Guide](https://www.youtube.com/watch?v=nHa9ohcIYCE) by Son Of a Tech (in english)
+
 
 **NOTE**:
 
