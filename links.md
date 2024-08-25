@@ -49,6 +49,7 @@ order: 10
 * [Mining tutorial](https://www.youtube.com/watch?v=GMjIKUsW9j8) by Makertronic (in french)
 * [Janushash Calculator](https://docs.google.com/spreadsheets/d/1OPzuxMgxYoNAc7GXUpSqF5quSfJemL0-G9UOYSWJ030/edit#gid=0) by Krzys
 * [Mining Guide](https://www.youtube.com/watch?v=nHa9ohcIYCE) by Son Of a Tech (in english)
+* [Brand Kit](https://github.com/warthog-network/brand-kit) by BalkyBot
 
 
 **NOTE**:
