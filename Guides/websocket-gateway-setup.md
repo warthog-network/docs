@@ -9,9 +9,15 @@ A bridge node should accept incoming connections from the public internet. It is
 !!!
 
 # Setting up the node
+We can either use the precompiled binary, compile from scratch or use the Dockerfile. The only relevant difference from starting a node normally is to add two command line flags `--ws-x-forwarded-for` and `--ws-port=10001` (or any other port you like to use).
+
+## Using the precompiled binary
+Nodes of version 0.7.x and higher support the bridge feature. Download an appropriate release from [here](https://github.com/warthog-network/Warthog/releases).
+
+In order to support incoming websocket connections from browser nodes we need to start the node with the `--ws-x-forwarded-for` and `--ws-port=10001` flags. 
 
 ## Get the Warthog Node from the `network_refactor` branch
-Right now we do not offer precompiled binaries for the `network_refactor` branch, so you have to build your own. 
+Right now only the `network_refactor` branch supports bridge nodes so you need to check out this branch: 
 
 Firstly, you need to clone the Warthog core repository:
 ```
