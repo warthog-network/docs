@@ -1,11 +1,11 @@
-# Websocket Gateway Setup
+# Bridge Node Setup
 In this guide we will set up start a Warthog node with websocket support to support incoming connections from browser nodes. 
 
 Due to browser restrictions, TLS encryption is required on the browser side. To address this issue we will need to use a reverse proxy for websocket connections that is hosted a public server that and pointed to by a domain name.
 This reverse proxy will forward websocket traffic to the node and perform the TLS encryption.
 
 !!!
-A gateway node should accept incoming connections from the public internet. It is recommended to use a virtual or dedicated server for this purpose.
+A bridge node should accept incoming connections from the public internet. It is recommended to use a virtual or dedicated server for this purpose.
 !!!
 
 # Setting up the node
@@ -34,7 +34,7 @@ docker run -it --mount src="$HOME"/.warthog/,target=/warthog/.warthog/,type=bind
 # Setting up the nginx
 Nginx can be installed with the command
 ```console
-root@bookworm:~# apt install nginx -y
+$ sudo apt install nginx -y
 ```
 ## Getting a domain name
 You can use your own domain name or contact us to create an A or AAA record for a subdomain of the form `node<x>.warthog.network`.
@@ -80,10 +80,40 @@ When uncommented, this configuration sets up a virtual server for the host `node
 ## Obtaining a certificate
 Either get a certificate from your domain registrar and adapt the certificate paths accordingly or get a free certificate using certbot.
 
+Type the following command:
 ```
 $ sudo certbot certonly --nginx --register-unsafely-without-email
+```
+
+
+!!!
+If you see this error
+```console
+Saving debug log to /var/log/letsencrypt/letsencrypt.log
+Could not choose appropriate plugin: The requested nginx plugin does not appear to be installed
+The requested nginx plugin does not appear to be installed
+```
+
+you need to install the nginx certbot plugin:
+```console
+$ sudo apt-get install python3-certbot-nginx
+```
+!!!
+
+You should see this output:
+```
+certbot certonly --nginx --register-unsafely-without-email
 Saving debug log to /var/log/letsencrypt/letsencrypt.log
 Plugins selected: Authenticator nginx, Installer nginx
+Registering without email!
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Please read the Terms of Service at
+https://letsencrypt.org/documents/LE-SA-v1.4-April-3-2024.pdf. You must agree in
+order to register with the ACME server at
+https://acme-v02.api.letsencrypt.org/directory
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+(A)gree/(C)ancel: A
 
 Which names would you like to activate HTTPS for?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -91,17 +121,26 @@ Which names would you like to activate HTTPS for?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Select the appropriate numbers separated by commas and/or spaces, or leave input
 blank to select all options shown (Enter 'c' to cancel): 1
-Requesting a certificate for node2.warthog.network
+Obtaining a new certificate
+Performing the following challenges:
+http-01 challenge for node2.warthog.network
+Waiting for verification...
+Cleaning up challenges
 
 IMPORTANT NOTES:
  - Congratulations! Your certificate and chain have been saved at:
    /etc/letsencrypt/live/node2.warthog.network/fullchain.pem
    Your key file has been saved at:
    /etc/letsencrypt/live/node2.warthog.network/privkey.pem
-   Your certificate will expire on 2024-11-24. To obtain a new or
-   tweaked version of this certificate in the future, simply run
-   certbot again. To non-interactively renew *all* of your
-   certificates, run "certbot renew"
+   Your cert will expire on 2024-11-25. To obtain a new or tweaked
+   version of this certificate in the future, simply run certbot
+   again. To non-interactively renew *all* of your certificates, run
+   "certbot renew"
+ - Your account credentials have been saved in your Certbot
+   configuration directory at /etc/letsencrypt. You should make a
+   secure backup of this folder now. This configuration directory will
+   also contain certificates and private keys obtained by Certbot so
+   making regular backups of this folder is ideal.
  - If you like Certbot, please consider supporting our work by:
 
    Donating to ISRG / Let's Encrypt:   https://letsencrypt.org/donate
@@ -117,4 +156,4 @@ systemctl restart nginx
 
 When your node is running with the `--ws-x-forwarded-for` and `--ws-port=10001` flags you should be able to accept websocket connections on `<your domain>/ws` from browser nodes. 
 
-You now have successfully set up a gateway node which connects browser nodes with the normal nodes. Thank you! Please inform us about your node and domain such that we can include your node in the list of gateway nodes.
+You now have successfully set up a bridge node which connects browser nodes with the normal nodes. Thank you! Please inform us about your node and domain such that we can include your node in the list of bridge nodes.
