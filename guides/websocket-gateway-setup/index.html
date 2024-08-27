@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="turbo-root" content="/docs">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.5.0.777979187473">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.5.0.778077217678">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 3.5.0">
 
     <!-- Primary Meta Tags -->
-    <title>Websocket Gateway Setup</title>
-    <meta name="title" content="Websocket Gateway Setup">
+    <title>Bridge Node Setup</title>
+    <meta name="title" content="Bridge Node Setup">
     <meta name="description" content="In this guide we will set up start a Warthog node with websocket support to support incoming connections from browser nodes.">
 
     <!-- Canonical -->
@@ -20,23 +20,23 @@
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://www.warthog.network/docs/guides/websocket-gateway-setup/">
-    <meta property="og:title" content="Websocket Gateway Setup">
+    <meta property="og:title" content="Bridge Node Setup">
     <meta property="og:description" content="In this guide we will set up start a Warthog node with websocket support to support incoming connections from browser nodes.">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://www.warthog.network/docs/guides/websocket-gateway-setup/">
-    <meta property="twitter:title" content="Websocket Gateway Setup">
+    <meta property="twitter:title" content="Bridge Node Setup">
     <meta property="twitter:description" content="In this guide we will set up start a Warthog node with websocket support to support incoming connections from browser nodes.">
 
     <script data-cfasync="false">(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
-    <link href="../../resources/css/retype.css?v=3.5.0.777979187473" rel="stylesheet">
+    <link href="../../resources/css/retype.css?v=3.5.0.778077217678" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../resources/js/config.js?v=3.5.0.777979187473" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../resources/js/config.js?v=3.5.0.778077217678" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../resources/js/retype.js?v=3.5.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=3.5.0.777979187473" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../../resources/js/prism.js?v=3.5.0.777979187473" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=3.5.0.778077217678" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../../resources/js/prism.js?v=3.5.0.778077217678" defer></script>
 </head>
 <body>
     <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -175,10 +175,10 @@
                                 <!-- Rendered if sidebar right is enabled -->
                                 <div id="docs-sidebar-right-toggle"></div>
                                 <!-- Page content  -->
-<doc-anchor-target id="websocket-gateway-setup" class="break-words">
+<doc-anchor-target id="bridge-node-setup" class="break-words">
     <h1>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#websocket-gateway-setup">#</doc-anchor-trigger>
-        <span>Websocket Gateway Setup</span>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#bridge-node-setup">#</doc-anchor-trigger>
+        <span>Bridge Node Setup</span>
     </h1>
 </doc-anchor-target>
 <p>In this guide we will set up start a Warthog node with websocket support to support incoming connections from browser nodes.</p>
@@ -197,7 +197,7 @@ This reverse proxy will forward websocket traffic to the node and perform the TL
             </svg>
         </div>
         <div class="pr-5 ml-3 w-full">
-<p>A gateway node should accept incoming connections from the public internet. It is recommended to use a virtual or dedicated server for this purpose.</p>
+<p>A bridge node should accept incoming connections from the public internet. It is recommended to use a virtual or dedicated server for this purpose.</p>
         </div>
     </div>
 </div>
@@ -236,7 +236,7 @@ This reverse proxy will forward websocket traffic to the node and perform the TL
 </doc-anchor-target>
 <p>Nginx can be installed with the command</p>
 <div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-shell-session"><code v-pre class="language-shell-session">root@bookworm:~# apt install nginx -y</code></pre>
+<pre class="language-shell-session"><code v-pre class="language-shell-session">$ sudo apt install nginx -y</code></pre>
 </doc-codeblock></div>
 <doc-anchor-target id="getting-a-domain-name">
     <h2>
@@ -292,10 +292,50 @@ server {
     </h2>
 </doc-anchor-target>
 <p>Either get a certificate from your domain registrar and adapt the certificate paths accordingly or get a free certificate using certbot.</p>
+<p>Type the following command:</p>
 <div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-none"><code v-pre class="language-none">$ sudo certbot certonly --nginx --register-unsafely-without-email
+<pre class="language-none"><code v-pre class="language-none">$ sudo certbot certonly --nginx --register-unsafely-without-email</code></pre>
+</doc-codeblock></div>
+<div class="flex mb-6">
+    <div class="shrink-0 w-1 rounded-tl rounded-bl bg-blue-500 dark:bg-blue-400"></div>
+    <div class="flex w-full py-4 border border-l-0 border-gray-300 rounded-tr rounded-br doc-alert bg-white dark:bg-dark-700 dark:border-dark-700" role="alert">
+        <div class="flex items-center ml-4 h-7">
+            <svg xmlns="http://www.w3.org/2000/svg" class="mb-px text-blue-500 dark:text-blue-400" width="22" height="22" viewBox="0 0 24 24" role="presentation">
+                <g fill="currentColor"><g>
+                    <path d="M12 1C5.93 1 1 5.93 1 12s4.93 11 11 11 11-4.93 11-11S18.07 1 12 1zm0 20c-4.96 0-9-4.04-9-9s4.04-9 9-9 9 4.04 9 9-4.04 9-9 9z"></path>
+                    <path d="M12 11c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1s1-.45 1-1v-4c0-.55-.45-1-1-1zM12.01 7c-.56 0-1 .45-1 1s.45 1 1 1 1-.45 1-1-.45-1-1-1z"></path>
+                    <path fill="none" d="M0 0h24v24H0z"></path>
+                </g></g>
+            </svg>
+        </div>
+        <div class="pr-5 ml-3 w-full">
+<p>If you see this error</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-shell-session"><code v-pre class="language-shell-session">Saving debug log to /var/log/letsencrypt/letsencrypt.log
+Could not choose appropriate plugin: The requested nginx plugin does not appear to be installed
+The requested nginx plugin does not appear to be installed</code></pre>
+</doc-codeblock></div>
+<p>you need to install the nginx certbot plugin:</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-shell-session"><code v-pre class="language-shell-session">$ sudo apt-get install python3-certbot-nginx</code></pre>
+</doc-codeblock></div>
+        </div>
+    </div>
+</div>
+<p>You should see this output:</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-none"><code v-pre class="language-none">certbot certonly --nginx --register-unsafely-without-email
 Saving debug log to /var/log/letsencrypt/letsencrypt.log
 Plugins selected: Authenticator nginx, Installer nginx
+Registering without email!
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Please read the Terms of Service at
+https://letsencrypt.org/documents/LE-SA-v1.4-April-3-2024.pdf. You must agree in
+order to register with the ACME server at
+https://acme-v02.api.letsencrypt.org/directory
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+(A)gree/(C)ancel: A
 
 Which names would you like to activate HTTPS for?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -303,17 +343,26 @@ Which names would you like to activate HTTPS for?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Select the appropriate numbers separated by commas and/or spaces, or leave input
 blank to select all options shown (Enter 'c' to cancel): 1
-Requesting a certificate for node2.warthog.network
+Obtaining a new certificate
+Performing the following challenges:
+http-01 challenge for node2.warthog.network
+Waiting for verification...
+Cleaning up challenges
 
 IMPORTANT NOTES:
  - Congratulations! Your certificate and chain have been saved at:
    /etc/letsencrypt/live/node2.warthog.network/fullchain.pem
    Your key file has been saved at:
    /etc/letsencrypt/live/node2.warthog.network/privkey.pem
-   Your certificate will expire on 2024-11-24. To obtain a new or
-   tweaked version of this certificate in the future, simply run
-   certbot again. To non-interactively renew *all* of your
-   certificates, run &quot;certbot renew&quot;
+   Your cert will expire on 2024-11-25. To obtain a new or tweaked
+   version of this certificate in the future, simply run certbot
+   again. To non-interactively renew *all* of your certificates, run
+   &quot;certbot renew&quot;
+ - Your account credentials have been saved in your Certbot
+   configuration directory at /etc/letsencrypt. You should make a
+   secure backup of this folder now. This configuration directory will
+   also contain certificates and private keys obtained by Certbot so
+   making regular backups of this folder is ideal.
  - If you like Certbot, please consider supporting our work by:
 
    Donating to ISRG / Let's Encrypt:   https://letsencrypt.org/donate
@@ -325,7 +374,7 @@ IMPORTANT NOTES:
 <pre class="language-none"><code v-pre class="language-none">systemctl restart nginx</code></pre>
 </doc-codeblock></div>
 <p>When your node is running with the <code v-pre>--ws-x-forwarded-for</code> and <code v-pre>--ws-port=10001</code> flags you should be able to accept websocket connections on <code v-pre>&lt;your domain&gt;/ws</code> from browser nodes.</p>
-<p>You now have successfully set up a gateway node which connects browser nodes with the normal nodes. Thank you! Please inform us about your node and domain such that we can include your node in the list of gateway nodes.</p>
+<p>You now have successfully set up a bridge node which connects browser nodes with the normal nodes. Thank you! Please inform us about your node and domain such that we can include your node in the list of bridge nodes.</p>
 
                                 
                                 <!-- Required only on API pages -->
@@ -341,20 +390,20 @@ IMPORTANT NOTES:
                             
                                 <nav class="flex mt-14">
                                     <div class="w-1/2">
-                                        <a class="px-5 py-4 h-full flex items-center break-normal font-medium text-blue-500 dark:text-blue-400 border border-gray-300 hover:border-gray-400 dark:border-dark-650 dark:hover:border-dark-450 rounded-l-lg transition-colors duration-150 relative hover:z-5" href="../../guides/mining-quickstart_fr/">
+                                        <a class="px-5 py-4 h-full flex items-center break-normal font-medium text-blue-500 dark:text-blue-400 border border-gray-300 hover:border-gray-400 dark:border-dark-650 dark:hover:border-dark-450 rounded-l-lg transition-colors duration-150 relative hover:z-5" href="../../janushash/analysis/hashrate-ratio/">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="mr-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19 11H7.41l5.29-5.29a.996.996 0 10-1.41-1.41l-7 7a1 1 0 000 1.42l7 7a1.024 1.024 0 001.42-.01.996.996 0 000-1.41L7.41 13H19c.55 0 1-.45 1-1s-.45-1-1-1z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
                                             <span>
                                                 <span class="block text-xs font-normal text-gray-400 dark:text-dark-400">Previous</span>
-                                                <span class="block mt-1">Warthog - Tutoriel de minage - Mis à jour le 24/04/2024</span>
+                                                <span class="block mt-1">Hashrate Ratio</span>
                                             </span>
                                         </a>
                                     </div>
                             
                                     <div class="w-1/2">
-                                        <a class="px-5 py-4 -mx-px h-full flex items-center justify-end break-normal font-medium text-blue-500 dark:text-blue-400 border border-gray-300 hover:border-gray-400 dark:border-dark-650 dark:hover:border-dark-450 rounded-r-lg transition-colors duration-150 relative hover:z-5" href="../../developers/integrations/pools/">
+                                        <a class="px-5 py-4 -mx-px h-full flex items-center justify-end break-normal font-medium text-blue-500 dark:text-blue-400 border border-gray-300 hover:border-gray-400 dark:border-dark-650 dark:hover:border-dark-450 rounded-r-lg transition-colors duration-150 relative hover:z-5" href="../../guides/compiling/">
                                             <span>
                                                 <span class="block text-xs font-normal text-right text-gray-400 dark:text-dark-400">Next</span>
-                                                <span class="block mt-1">Pool Integration</span>
+                                                <span class="block mt-1">Compiling from Source</span>
                                             </span>
                                             <svg xmlns="http://www.w3.org/2000/svg" class="ml-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19.92 12.38a1 1 0 00-.22-1.09l-7-7a.996.996 0 10-1.41 1.41l5.3 5.3H5c-.55 0-1 .45-1 1s.45 1 1 1h11.59l-5.29 5.29a.996.996 0 000 1.41c.19.2.44.3.7.3s.51-.1.71-.29l7-7c.09-.09.16-.21.21-.33z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
                                         </a>
@@ -398,6 +447,6 @@ IMPORTANT NOTES:
 
     <div id="docs-overlay-target"></div>
 
-    <script data-cfasync="false">window.__DOCS__ = { "title": "Websocket Gateway Setup", level: 2, icon: "file", hasPrism: true, hasMermaid: false, hasMath: false, tocDepth: 23 }</script>
+    <script data-cfasync="false">window.__DOCS__ = { "title": "Bridge Node Setup", level: 2, icon: "file", hasPrism: true, hasMermaid: false, hasMath: false, tocDepth: 23 }</script>
 </body>
 </html>
