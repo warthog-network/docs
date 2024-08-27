@@ -1,7 +1,7 @@
 # Bridge Node Setup
-In this guide we will set up start a Warthog node with websocket support to support incoming connections from browser nodes. 
+In this guide we will set up start a Warthog bridge node with websocket support to support incoming connections from browser nodes. This results in a bridge nodes which connect the core network (using TCP) to browser nodes (using Websocket protocol). 
 
-Due to browser restrictions, TLS encryption is required on the browser side. To address this issue we will need to use a reverse proxy for websocket connections that is hosted a public server that and pointed to by a domain name.
+Due to browser restrictions, TLS encryption is required on the browser side. To address this issue we will need to use a reverse proxy for websocket connections that is hosted on a public server and pointed to by a domain name.
 This reverse proxy will forward websocket traffic to the node and perform the TLS encryption.
 
 !!!
@@ -9,12 +9,12 @@ A bridge node should accept incoming connections from the public internet. It is
 !!!
 
 # Setting up the node
-We can either use the precompiled binary, compile from scratch or use the Dockerfile. The only relevant difference from starting a node normally is to add two command line flags `--ws-x-forwarded-for` and `--ws-port=10001` (or any other port you like to use).
+We can either use the precompiled binary, compile from scratch or use the Dockerfile. The only relevant difference from starting a node normally is to add two command line flags `--ws-x-forwarded-for` and `--ws-port=10001` (or any other port you like to use), and an additional flag `--ws-bind-localhost` when NOT using docker.
 
 ## Using the precompiled binary
 Nodes of version 0.7.x and higher support the bridge feature. Download an appropriate release from [here](https://github.com/warthog-network/Warthog/releases).
 
-In order to support incoming websocket connections from browser nodes we need to start the node with the `--ws-x-forwarded-for` and `--ws-port=10001` flags. 
+In order to support proxied incoming websocket connections from browser nodes we need to start the node with the `--ws-x-forwarded-for`, `--ws-port=10001` and `--ws-bind-localhost` flags. 
 
 ## Get the Warthog Node from the `network_refactor` branch
 Right now only the `network_refactor` branch supports bridge nodes so you need to check out this branch: 
@@ -34,8 +34,9 @@ docker build . -f dockerfiles/build_linux -t warthog
 
 We can now run the container with the `--ws-x-forwarded-for` and `--ws-port=10001` flags and also map the websocket port `-p 10001:10001`:
 ```shell
-docker run -it --mount src="$HOME"/.warthog/,target=/warthog/.warthog/,type=bind -p 10001:10001 -p 3000:3000 warthog --ws-x-forwarded-for --ws-port=10001
+docker run -it --mount src="$HOME"/.warthog/,target=/warthog/.warthog/,type=bind -p 127.0.0.1:10001:10001 -p 3000:3000 warthog --ws-x-forwarded-for --ws-port=10001
 ```
+Note that we did not use the `--ws-bind-localhost` flag because within the docker container the proxied websocket connection does not originate from localhost. However we have used the `-p 127.0.0.1:10001:10001` flag when running the docker container such that we achieve the same effect: on the host machine, only requests from localhost to 10001 are forwarded to the docker container's (and warthog node's) port 10001.
 
 # Setting up the nginx
 Nginx can be installed with the command
@@ -82,6 +83,19 @@ server {
  Note that some part of the configuration is commented out because we do not have the `ssl_certificate` and `ssl_certificate_key` files yet. We will uncomment that part later when we have these files (see next step).
 
 When uncommented, this configuration sets up a virtual server for the host `node2.warthog.network`. Websocket connections to `node2.warthog.network/ws` are proxied to the node which should listen on localhost port 10001. 
+!!!
+
+When using Cloudflare there are two things to consider.
+
+Firstly, `X-Forwarded-For` header is already populated with the correct IP. We should trust this header and to avoid appending Cloudflare's IP to the header, we should **not** uncomment these two lines:
+```
+#             proxy_set_header X-Real-IP $remote_addr;
+#             proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+```
+Secondly you must use [zone level authentication](https://developers.cloudflare.com/ssl/origin-configuration/authenticated-origin-pull/set-up/zone-level/) to reject direct websocket connections bypassing Cloudflare because they could contain a fake `X-Forwarded-For` header that we should not trust.
+
+When asking us for forwarding a domain `node<x>.warthog.network` to your IP also specify whether you want Cloudflare proxying to get this right.
+!!!
 
 ## Obtaining a certificate
 Either get a certificate from your domain registrar and adapt the certificate paths accordingly or get a free certificate using certbot.
