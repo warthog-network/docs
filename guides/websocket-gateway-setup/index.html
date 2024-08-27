@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="turbo-root" content="/docs">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.5.0.778077217678">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.5.0.778079643975">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 3.5.0">
@@ -31,12 +31,12 @@
 
     <script data-cfasync="false">(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
-    <link href="../../resources/css/retype.css?v=3.5.0.778077217678" rel="stylesheet">
+    <link href="../../resources/css/retype.css?v=3.5.0.778079643975" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../resources/js/config.js?v=3.5.0.778077217678" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../resources/js/config.js?v=3.5.0.778079643975" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../resources/js/retype.js?v=3.5.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=3.5.0.778077217678" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../../resources/js/prism.js?v=3.5.0.778077217678" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=3.5.0.778079643975" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../../resources/js/prism.js?v=3.5.0.778079643975" defer></script>
 </head>
 <body>
     <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -207,13 +207,22 @@ This reverse proxy will forward websocket traffic to the node and perform the TL
         <span>Setting up the node</span>
     </h1>
 </doc-anchor-target>
+<p>We can either use the precompiled binary, compile from scratch or use the Dockerfile. The only relevant difference from starting a node normally is to add two command line flags <code v-pre>--ws-x-forwarded-for</code> and <code v-pre>--ws-port=10001</code> (or any other port you like to use).</p>
+<doc-anchor-target id="using-the-precompiled-binary">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#using-the-precompiled-binary">#</doc-anchor-trigger>
+        <span>Using the precompiled binary</span>
+    </h2>
+</doc-anchor-target>
+<p>Nodes of version 0.7.x and higher support the bridge feature. Download an appropriate release from <a href="https://github.com/warthog-network/Warthog/releases">here</a>.</p>
+<p>In order to support incoming websocket connections from browser nodes we need to start the node with the <code v-pre>--ws-x-forwarded-for</code> and <code v-pre>--ws-port=10001</code> flags.</p>
 <doc-anchor-target id="get-the-warthog-node-from-the-network_refactor-branch">
     <h2>
         <doc-anchor-trigger class="header-anchor-trigger" to="#get-the-warthog-node-from-the-network_refactor-branch">#</doc-anchor-trigger>
         <span>Get the Warthog Node from the <code v-pre>network_refactor</code> branch</span>
     </h2>
 </doc-anchor-target>
-<p>Right now we do not offer precompiled binaries for the <code v-pre>network_refactor</code> branch, so you have to build your own.</p>
+<p>Right now only the <code v-pre>network_refactor</code> branch supports bridge nodes so you need to check out this branch:</p>
 <p>Firstly, you need to clone the Warthog core repository:</p>
 <div class="codeblock-wrapper"><doc-codeblock>
 <pre class="language-none"><code v-pre class="language-none">git clone https://github.com/warthog-network/Warthog.git</code></pre>
