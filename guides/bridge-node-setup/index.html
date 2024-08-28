@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="turbo-root" content="/docs">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.5.0.778107607269">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.5.0.778150946672">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 3.5.0">
@@ -31,12 +31,12 @@
 
     <script data-cfasync="false">(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
-    <link href="../../resources/css/retype.css?v=3.5.0.778107607269" rel="stylesheet">
+    <link href="../../resources/css/retype.css?v=3.5.0.778150946672" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../resources/js/config.js?v=3.5.0.778107607269" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../resources/js/config.js?v=3.5.0.778150946672" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../resources/js/retype.js?v=3.5.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=3.5.0.778107607269" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../../resources/js/prism.js?v=3.5.0.778107607269" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=3.5.0.778150946672" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../../resources/js/prism.js?v=3.5.0.778150946672" defer></script>
 </head>
 <body>
     <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -314,7 +314,7 @@ server {
 <pre class="language-none"><code v-pre class="language-none">#             proxy_set_header X-Real-IP $remote_addr;
 #             proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</code></pre>
 </doc-codeblock></div>
-<p>Secondly you must use <a href="https://developers.cloudflare.com/ssl/origin-configuration/authenticated-origin-pull/set-up/zone-level/">zone level authentication</a> to reject direct websocket connections bypassing Cloudflare because they could contain a fake <code v-pre>X-Forwarded-For</code> header that we should not trust.</p>
+<p>Secondly you must <a href="https://developers.cloudflare.com/ssl/origin-configuration/authenticated-origin-pull/set-up/zone-level/">enable verification of client certificates</a> in nginx to only allow websocket connections proxied by Cloudflare because direct connections bypassing Cloudflare could contain a fake <code v-pre>X-Forwarded-For</code> header that we should not trust.</p>
 <p>When asking us for forwarding a domain <code v-pre>node&lt;x&gt;.warthog.network</code> to your IP also specify whether you want Cloudflare proxying to get this right.</p>
         </div>
     </div>
