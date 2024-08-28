@@ -92,7 +92,7 @@ Firstly, `X-Forwarded-For` header is already populated with the correct IP. We s
 #             proxy_set_header X-Real-IP $remote_addr;
 #             proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
 ```
-Secondly you must use [zone level authentication](https://developers.cloudflare.com/ssl/origin-configuration/authenticated-origin-pull/set-up/zone-level/) to reject direct websocket connections bypassing Cloudflare because they could contain a fake `X-Forwarded-For` header that we should not trust.
+Secondly you must [enable verification of client certificates](https://developers.cloudflare.com/ssl/origin-configuration/authenticated-origin-pull/set-up/zone-level/) in nginx to only allow websocket connections proxied by Cloudflare because direct connections bypassing Cloudflare could contain a fake `X-Forwarded-For` header that we should not trust.
 
 When asking us for forwarding a domain `node<x>.warthog.network` to your IP also specify whether you want Cloudflare proxying to get this right.
 !!!
