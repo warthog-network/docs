@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="turbo-root" content="/docs">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.5.0.778150946672">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.6.0.780780865733">
 
     <!-- See retype.com -->
-    <meta name="generator" content="Retype 3.5.0">
+    <meta name="generator" content="Retype 3.6.0">
 
     <!-- Primary Meta Tags -->
     <title>API</title>
@@ -31,12 +31,12 @@
 
     <script data-cfasync="false">(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
-    <link href="../../resources/css/retype.css?v=3.5.0.778150946672" rel="stylesheet">
+    <link href="../../resources/css/retype.css?v=3.6.0.780780865733" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../resources/js/config.js?v=3.5.0.778150946672" data-turbo-eval="false" defer></script>
-    <script data-cfasync="false" src="../../resources/js/retype.js?v=3.5.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=3.5.0.778150946672" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../../resources/js/prism.js?v=3.5.0.778150946672" defer></script>
+    <script data-cfasync="false" src="../../resources/js/config.js?v=3.6.0.780780865733" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../resources/js/retype.js?v=3.6.0" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=3.6.0.780780865733" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../../resources/js/prism.js?v=3.6.0.780780865733" defer></script>
 </head>
 <body>
     <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -1005,7 +1005,7 @@ Example output:</p>
         </div>
         <div class="pr-5 ml-3 w-full">
             <h5>Info</h5>
-<p>We do not use JSON encoding in this endpiont for performance reasons to support use of this endpoint by pool share validation. If the input <code v-pre>:headerhex</code> cannot be parsed, the result is an empty string.</p>
+<p>We do not use JSON encoding in this endpoint for performance reasons to support use of this endpoint by pool share validation. If the input <code v-pre>:headerhex</code> cannot be parsed, the result is an empty string.</p>
         </div>
     </div>
 </div>
@@ -1062,43 +1062,357 @@ Example output:</p>
  }
 }</code></pre>
 </doc-codeblock></div>
-<div class="flex mb-6">
-    <div class="shrink-0 w-1 rounded-tl rounded-bl bg-yellow-500"></div>
-    <div class="flex w-full py-4 border border-l-0 border-gray-300 rounded-tr rounded-br doc-alert bg-white dark:bg-dark-700 dark:border-dark-700" role="alert">
-        <div class="flex items-center ml-4 h-7">
-            <svg xmlns="http://www.w3.org/2000/svg" class="mb-px text-yellow-500" width="22" height="22" viewBox="0 0 24 24" role="presentation">
-                <g fill="currentColor"><g>
-                    <path d="M22.48 15.59L14.01 1.45A2.968 2.968 0 0012.16.09c-.78-.19-1.58-.07-2.27.35-.41.25-.76.6-1.01 1.01v.01L.4 15.6c-.83 1.43-.33 3.27 1.1 4.1.45.26.95.4 1.48.4h16.95c.8-.01 1.55-.33 2.11-.9.56-.57.87-1.33.86-2.13a3.04 3.04 0 00-.42-1.48zm-1.87 2.21c-.19.19-.44.3-.69.3H2.99c-.17 0-.34-.05-.49-.13a.992.992 0 01-.37-1.35L10.6 2.48c.08-.14.2-.25.34-.33a.992.992 0 011.37.33l8.46 14.13c.09.15.13.32.13.49 0 .26-.1.51-.29.7z"></path>
-                    <path d="M11.45 12.1c.55 0 1-.45 1-1v-4c0-.55-.45-1-1-1s-1 .45-1 1v4c0 .56.45 1 1 1zM11.46 14.1c-.56 0-1 .45-1 1s.45 1 1 1 1-.45 1-1-.45-1-1-1z"></path>
-                </g></g>
-            </svg>
-        </div>
-        <div class="pr-5 ml-3 w-full">
-            <h5>Warning</h5>
-<p>This endpoint should only be used for testing purposes. For security reasons the node should not be involved in wallet-related operations involving a private key.</p>
-        </div>
-    </div>
-</div>
-<doc-anchor-target id="websocket-wschain_delta">
+<doc-anchor-target id="websocket-stream">
     <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#websocket-wschain_delta">#</doc-anchor-trigger>
-        <span><code v-pre>WEBSOCKET /ws/chain_delta</code></span>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#websocket-stream">#</doc-anchor-trigger>
+        <span><code v-pre>WEBSOCKET /stream</code></span>
     </h3>
 </doc-anchor-target>
-<p>Get chain delta events. There are 2 types of events:</p>
-<ul>
-<li><code v-pre>blockAppend</code>: The <code v-pre>data</code> object is as returned by <code v-pre>/chain/block/:id</code>.</li>
-<li><code v-pre>rollback</code>: The <code v-pre>data</code> object is <code v-pre>{&quot;length&quot;: &lt;length&gt;}</code> specifying chain length after rollback.</li>
-</ul>
-<p>Example:</p>
+<p>This websocket endpoint allows real-time data streams on several topics such as <code v-pre>chain</code>, <code v-pre>account</code> and <code v-pre>connection</code> related information. Subscribe with a message containing <code v-pre>&quot;action&quot;: &quot;subscribe&quot;</code> and unsubscribe similarly with <code v-pre>&quot;action&quot;: &quot;unsubscribe&quot;</code>, as shown below.</p>
+<doc-panel id="chain" collapsed>
+    <template #title>Chain</template>
+<p>Subscribe to 10 latest blocks. Upon subscription, the 10 latest blocks are provided in a <code v-pre>chain.state</code> message. When chain is appended (no rollback), <em>either</em> incremental updates are given (i.e. new blocks) as a <code v-pre>chain.append</code> message <em>or</em> (in case of more than 10 new blocks) the latest 10 blocks are provided in a <code v-pre>chain.state</code> message. When chain is appended with rollback, a <code v-pre>chain.fork</code> message is sent over the websocket connection.</p>
+<p><strong>Subscribe</strong></p>
 <div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-bash"><code v-pre class="language-bash">wscat -c ws://localhost:3000/ws/chain_delta</code></pre>
+<pre class="language-json"><code v-pre class="language-json">{&quot;action&quot;: &quot;subscribe&quot;, &quot;topic&quot;: &quot;account&quot;, &quot;params&quot;: {&quot;address&quot;: &quot;f07353f22a59c6a98042f29ec87d1fc0f44a6c3ceea24797&quot;}}</code></pre>
 </doc-codeblock></div>
-<p>Example output :</p>
+<p><strong>Event types</strong></p>
+<ol>
+<li><code v-pre>chain.state</code>
+Receive 10 latest blocks.</li>
+</ol>
 <div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-bash"><code v-pre class="language-bash">&lt; {&quot;data&quot;:{&quot;body&quot;:{&quot;rewards&quot;:[{&quot;amount&quot;:&quot;3.00000000&quot;,&quot;amountE8&quot;:300000000,&quot;toAddress&quot;:&quot;964fbeee369074497488802c28d17808d272234ff039cae9&quot;,&quot;txHash&quot;:&quot;111213cbac99133211b52fe3b41dbb967a10a7d8964a457709d97802eb9747fa&quot;}],&quot;transfers&quot;:[]},&quot;confirmations&quot;:0,&quot;header&quot;:{&quot;difficulty&quot;:30111651631922.598,&quot;hash&quot;:&quot;a909326a248b483b806f7c3b030e3d6d38e68f9490926940cbb79ec83c661c82&quot;,&quot;merkleroot&quot;:&quot;4bab43f17223007529fa95c427d90129b03d2b983d0391de57fe4649c3937f62&quot;,&quot;nonce&quot;:&quot;37bda412&quot;,&quot;pow&quot;:{&quot;floatSha256t&quot;:0.01571174245327711,&quot;floatVerus&quot;:1.8061993453792364e-13,&quot;hashSha256t&quot;:&quot;0405af4cc71e4518d940cf6a02d977b0a9eba07f57598f3f9000a62a0a8d476b&quot;,&quot;hashVerus&quot;:&quot;000000000032d709b537d47bbf34f643b26672cd79d9f0e5d39a5f6057ba4e9e&quot;},&quot;prevHash&quot;:&quot;5897e530bab6da0ffa2db7afbcba3caee90b6d62e4bf91a7ccd8fdd81c33212f&quot;,&quot;raw&quot;:&quot;5897e530bab6da0ffa2db7afbcba3caee90b6d62e4bf91a7ccd8fdd81c33212f0b25640e4bab43f17223007529fa95c427d90129b03d2b983d0391de57fe4649c3937f6200000002660082fd37bda412&quot;,&quot;target&quot;:&quot;0b25640e&quot;,&quot;timestamp&quot;:1711309565,&quot;utc&quot;:&quot;2024-03-24 19:46:05 UTC&quot;,&quot;version&quot;:&quot;00000002&quot;},&quot;height&quot;:1165554,&quot;timestamp&quot;:1711309565,&quot;utc&quot;:&quot;2024-03-24 19:46:05 UTC&quot;},&quot;type&quot;:&quot;blockAppend&quot;}
-&lt; {&quot;data&quot;:{&quot;length&quot;: 1165554},&quot;type&quot;:&quot;rollback&quot;}</code></pre>
+<pre class="language-json"><code v-pre class="language-json">{
+  &quot;blockHistory&quot;: [
+    {
+      &quot;body&quot;: {
+        &quot;rewards&quot;: [
+          {
+            &quot;amount&quot;: &quot;3.00000000&quot;,
+            &quot;amountE8&quot;: 300000000,
+            &quot;toAddress&quot;: &quot;f07353f22a59c6a98042f29ec87d1fc0f44a6c3ceea24797&quot;,
+            &quot;txHash&quot;: &quot;fe33577de3186c1869f9084bfe0aeaee2e92c8fe10f87eedb438036b341b98ef&quot;
+          }
+        ],
+        &quot;transfers&quot;: []
+      },
+      &quot;confirmations&quot;: 11,
+      &quot;header&quot;: {
+        &quot;difficulty&quot;: 14142941042437.885,
+        &quot;hash&quot;: &quot;80b200a9ac37d7c41d98ad1cc2d6add8ab50a3905bf52d8347b56955923c28bc&quot;,
+        &quot;merkleroot&quot;: &quot;f3c41bf363fe94eb448bf924f791f77c22a2ebd6a3a5d8948f8aff019f072bea&quot;,
+        &quot;nonce&quot;: &quot;2719fef5&quot;,
+        &quot;pow&quot;: {
+          &quot;floatSha256t&quot;: 0.010330632328987122,
+          &quot;floatVerus&quot;: 6.267357060779177e-13,
+          &quot;hashSha256t&quot;: &quot;02a507400db273886cd1bdc61e05bc4bde6978d74ce6e48d33a46fa705c59ae1&quot;,
+          &quot;hashVerus&quot;: &quot;0000000000b069112cc0caf14507169f6adf1e5278a2ef286cddc89f1162d7ca&quot;,
+          &quot;verusV2.2&quot;: true
+        },
+        &quot;prevHash&quot;: &quot;05b42d206f8a4b2b8094199fd28423151af8aa54a5073ac6e6805f42096dc3a2&quot;,
+        &quot;raw&quot;: &quot;05b42d206f8a4b2b8094199fd28423151af8aa54a5073ac6e6805f42096dc3a20ae7cde7f3c41bf363fe94eb448bf924f791f77c22a2ebd6a3a5d8948f8aff019f072bea0000000366f2fefb2719fef5&quot;,
+        &quot;target&quot;: &quot;0ae7cde7&quot;,
+        &quot;timestamp&quot;: 1727201019,
+        &quot;utc&quot;: &quot;2024-09-24 18:03:39 UTC&quot;,
+        &quot;version&quot;: &quot;00000003&quot;
+      },
+      &quot;height&quot;: 1949766,
+      &quot;timestamp&quot;: 1727201019,
+      &quot;utc&quot;: &quot;2024-09-24 18:03:39 UTC&quot;
+    },
+    ...
+    {
+      &quot;body&quot;: {
+        &quot;rewards&quot;: [
+          {
+            &quot;amount&quot;: &quot;3.00000000&quot;,
+            &quot;amountE8&quot;: 300000000,
+            &quot;toAddress&quot;: &quot;e4f3052d8c5858ddeca667b2130eec5886c8e9d7fcdea3ec&quot;,
+            &quot;txHash&quot;: &quot;fab8b317590c011ba4fbfcc27824892fd4d822bd194d373c7ea21da05e22f10b&quot;
+          }
+        ],
+        &quot;transfers&quot;: []
+      },
+      &quot;confirmations&quot;: 1,
+      &quot;header&quot;: {
+        &quot;difficulty&quot;: 14142941042437.885,
+        &quot;hash&quot;: &quot;cbaa8aefc5c5df6a4cfa8134bb6780895c0389f40a8c0f8ca9c627e1177ea2df&quot;,
+        &quot;merkleroot&quot;: &quot;ac7e68f57176e65e1ff9263d47a28e898d1cac505d57e28665f236bf126d3f6d&quot;,
+        &quot;nonce&quot;: &quot;023fdc6a&quot;,
+        &quot;pow&quot;: {
+          &quot;floatSha256t&quot;: 0.014122519874945283,
+          &quot;floatVerus&quot;: 6.624495242688164e-14,
+          &quot;hashSha256t&quot;: &quot;039d8891ce3ef0432b9efb50d527b62496f4892a7f0594fcc71957b99cd41434&quot;,
+          &quot;hashVerus&quot;: &quot;000000000012a573afadcbac539deda01718c3fdac34099569fd71bb3dfb14d8&quot;,
+          &quot;verusV2.2&quot;: true
+        },
+        &quot;prevHash&quot;: &quot;bf788e2e5a82ee12859d0f9d6c0543233c4f6af1f29f99dcd93042e4c9398471&quot;,
+        &quot;raw&quot;: &quot;bf788e2e5a82ee12859d0f9d6c0543233c4f6af1f29f99dcd93042e4c93984710ae7cde7ac7e68f57176e65e1ff9263d47a28e898d1cac505d57e28665f236bf126d3f6d0000000366f3003b023fdc6a&quot;,
+        &quot;target&quot;: &quot;0ae7cde7&quot;,
+        &quot;timestamp&quot;: 1727201339,
+        &quot;utc&quot;: &quot;2024-09-24 18:08:59 UTC&quot;,
+        &quot;version&quot;: &quot;00000003&quot;
+      },
+      &quot;height&quot;: 1949776,
+      &quot;timestamp&quot;: 1727201339,
+      &quot;utc&quot;: &quot;2024-09-24 18:08:59 UTC&quot;
+    }
+  ],
+  &quot;eventName&quot;: &quot;chain.state&quot;,
+  &quot;head&quot;: {
+    &quot;difficulty&quot;: 14142941042437.885,
+    &quot;hash&quot;: &quot;cbaa8aefc5c5df6a4cfa8134bb6780895c0389f40a8c0f8ca9c627e1177ea2df&quot;,
+    &quot;height&quot;: 1949776,
+    &quot;is_janushash&quot;: true,
+    &quot;pinHash&quot;: &quot;568e30a9abdbc510c9a21ec2dcb636e66cd4d1fb60028a31c65906069114e988&quot;,
+    &quot;pinHeight&quot;: 1949760,
+    &quot;worksum&quot;: 29360669698622464000,
+    &quot;worksumHex&quot;: &quot;0x00000000000000000000000000000000000000000000000197760d8809f796a0&quot;
+  }
+}</code></pre>
 </doc-codeblock></div>
+<ol start="2">
+<li><code v-pre>chain.append</code></li>
+</ol>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-json"><code v-pre class="language-json">{
+  &quot;eventName&quot;: &quot;chain.append&quot;,
+  &quot;head&quot;: {
+    &quot;difficulty&quot;: 14142941042437.885,
+    &quot;hash&quot;: &quot;1edd2043a92ac4747487aecaa7dc8145b6bf8ae4509c3bae4e4d9ad9727fe4ee&quot;,
+    &quot;height&quot;: 1950121,
+    &quot;is_janushash&quot;: true,
+    &quot;pinHash&quot;: &quot;ae8e35d5e0ab86b4a30612b37717e29ea2d4d21f039abe130fcb94b03079e073&quot;,
+    &quot;pinHeight&quot;: 1950112,
+    &quot;worksum&quot;: 29365549013281480000,
+    &quot;worksumHex&quot;: &quot;0x0000000000000000000000000000000000000000000000019787633e02f726a0&quot;
+  },
+  &quot;newBlocks&quot;: {
+    &quot;data&quot;: [
+      {
+        &quot;body&quot;: {
+          &quot;rewards&quot;: [],
+          &quot;transfers&quot;: []
+        },
+        &quot;confirmations&quot;: 0,
+        &quot;header&quot;: {
+          &quot;difficulty&quot;: 14142941042437.885,
+          &quot;hash&quot;: &quot;1edd2043a92ac4747487aecaa7dc8145b6bf8ae4509c3bae4e4d9ad9727fe4ee&quot;,
+          &quot;merkleroot&quot;: &quot;dcfeba982307da35c0098709c20f4ea0a4f04e0bbcd1b0c34c8ecc30157159eb&quot;,
+          &quot;nonce&quot;: &quot;1aace551&quot;,
+          &quot;pow&quot;: {
+            &quot;floatSha256t&quot;: 0.012002777308225632,
+            &quot;floatVerus&quot;: 6.341241019439662e-13,
+            &quot;hashSha256t&quot;: &quot;03129d3047448ed01936f206d4a5f59de702a35df450d36706ef93545cf03c36&quot;,
+            &quot;hashVerus&quot;: &quot;0000000000b27d750524493e994e98b7dea83af149ae7673dfc3d21935c1ae05&quot;,
+            &quot;verusV2.2&quot;: true
+          },
+          &quot;prevHash&quot;: &quot;8c8811ee10a9c5c7d23f6f4791cbf03b781531574d53f224278cb78531a4c2fe&quot;,
+          &quot;raw&quot;: &quot;8c8811ee10a9c5c7d23f6f4791cbf03b781531574d53f224278cb78531a4c2fe0ae7cde7dcfeba982307da35c0098709c20f4ea0a4f04e0bbcd1b0c34c8ecc30157159eb0000000366f31e3c1aace551&quot;,
+          &quot;target&quot;: &quot;0ae7cde7&quot;,
+          &quot;timestamp&quot;: 1727209020,
+          &quot;utc&quot;: &quot;2024-09-24 20:17:00 UTC&quot;,
+          &quot;version&quot;: &quot;00000003&quot;
+        },
+        &quot;height&quot;: 1950121,
+        &quot;timestamp&quot;: 1727209020,
+        &quot;utc&quot;: &quot;2024-09-24 20:17:00 UTC&quot;
+      }
+    ]
+  }
+}</code></pre>
+</doc-codeblock></div>
+<ol start="3">
+<li><code v-pre>chain.fork</code></li>
+</ol>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-json"><code v-pre class="language-json">{
+  &quot;eventName&quot;: &quot;chain.fork&quot;,
+  &quot;head&quot;: {
+    &quot;difficulty&quot;: 14142941042437.885,
+    &quot;hash&quot;: &quot;8bb4c08b71a496921d121460c55041678943c89107a59306fda948dfc2c8dc8a&quot;,
+    &quot;height&quot;: 1950129,
+    &quot;is_janushash&quot;: true,
+    &quot;pinHash&quot;: &quot;ae8e35d5e0ab86b4a30612b37717e29ea2d4d21f039abe130fcb94b03079e073&quot;,
+    &quot;pinHeight&quot;: 1950112,
+    &quot;worksum&quot;: 29365662156809806000,
+    &quot;worksumHex&quot;: &quot;0x0000000000000000000000000000000000000000000000019787ca254ac7a6a0&quot;
+  },
+  &quot;latestBlocks&quot;: {
+    &quot;data&quot;: [
+      {
+        &quot;body&quot;: {
+          &quot;rewards&quot;: [
+            {
+              &quot;amount&quot;: &quot;3.00000000&quot;,
+              &quot;amountE8&quot;: 300000000,
+              &quot;toAddress&quot;: &quot;e4f3052d8c5858ddeca667b2130eec5886c8e9d7fcdea3ec&quot;,
+              &quot;txHash&quot;: &quot;a19c2b9410440e569c670ca223504379aa09697f7b061e8dbf04c2a7870fd9b1&quot;
+            }
+          ],
+          &quot;transfers&quot;: []
+        },
+        &quot;confirmations&quot;: 11,
+        &quot;header&quot;: {
+          &quot;difficulty&quot;: 14142941042437.885,
+          &quot;hash&quot;: &quot;10b5ed6868f0e5c4fbd859a8dd5a68d7cf4c9038025acde37a004e9f02e7c85e&quot;,
+          &quot;merkleroot&quot;: &quot;9205c8127aabd555acb7ff3f95733bd6ec19cb110c2878c55ae77b893fdec7ec&quot;,
+          &quot;nonce&quot;: &quot;46f6a275&quot;,
+          &quot;pow&quot;: {
+            &quot;floatSha256t&quot;: 0.012585171731188893,
+            &quot;floatVerus&quot;: 3.504885418321763e-15,
+            &quot;hashSha256t&quot;: &quot;0338c8258ed30e6088b4b81cba45f5c40553be12af0323abb7418e2cf63becd7&quot;,
+            &quot;hashVerus&quot;: &quot;000000000000fc8db96d150937429ce192e0ad69458311c4d8415b720e59b6c0&quot;,
+            &quot;verusV2.2&quot;: true
+          },
+          &quot;prevHash&quot;: &quot;30537a679be7d6082cc905be4a717ea7985f0853403a40dedea1be4e224916dd&quot;,
+          &quot;raw&quot;: &quot;30537a679be7d6082cc905be4a717ea7985f0853403a40dedea1be4e224916dd0ae7cde79205c8127aabd555acb7ff3f95733bd6ec19cb110c2878c55ae77b893fdec7ec0000000366f31e0c46f6a275&quot;,
+          &quot;target&quot;: &quot;0ae7cde7&quot;,
+          &quot;timestamp&quot;: 1727208972,
+          &quot;utc&quot;: &quot;2024-09-24 20:16:12 UTC&quot;,
+          &quot;version&quot;: &quot;00000003&quot;
+        },
+        &quot;height&quot;: 1950119,
+        &quot;timestamp&quot;: 1727208972,
+        &quot;utc&quot;: &quot;2024-09-24 20:16:12 UTC&quot;
+      },
+      ...
+    ]
+  },
+  &quot;rollbackLength&quot;: 1950127
+}</code></pre>
+</doc-codeblock></div>
+</doc-panel>
+<doc-panel id="account" collapsed>
+    <template #title>Account</template>
+<p>Subscribe to account updates such as new transactions and balance changes. Address is specified in the <code v-pre>message[&quot;params&quot;][&quot;address&quot;]</code> field. To unsubscribe, this parameter has be specified again.</p>
+<p><strong>Subscribe</strong></p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-json"><code v-pre class="language-json">{&quot;action&quot;: &quot;subscribe&quot;, &quot;topic&quot;: &quot;account&quot;, &quot;params&quot;: {&quot;address&quot;: &quot;f07353f22a59c6a98042f29ec87d1fc0f44a6c3ceea24797&quot;}}</code></pre>
+</doc-codeblock></div>
+<p><strong>Event types</strong></p>
+<ol>
+<li><code v-pre>account.state</code></li>
+</ol>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-json"><code v-pre class="language-json">{
+  &quot;address&quot;: &quot;f07353f22a59c6a98042f29ec87d1fc0f44a6c3ceea24797&quot;,
+  &quot;balance&quot;: &quot;51557.99973680&quot;,
+  &quot;balanceE8&quot;: 5155799973680,
+  &quot;eventName&quot;: &quot;account.state&quot;,
+  &quot;history&quot;: []
+}</code></pre>
+</doc-codeblock></div>
+<ol start="2">
+<li><code v-pre>account.delta</code></li>
+</ol>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-json"><code v-pre class="language-json">{
+  &quot;address&quot;: &quot;f07353f22a59c6a98042f29ec87d1fc0f44a6c3ceea24797&quot;,
+  &quot;balance&quot;: &quot;51551.99973680&quot;,
+  &quot;balanceE8&quot;: 5155199973680,
+  &quot;eventName&quot;: &quot;account.delta&quot;,
+  &quot;history&quot;: {
+    &quot;data&quot;: [
+      {
+        &quot;body&quot;: {
+          &quot;rewards&quot;: [
+            {
+              &quot;amount&quot;: &quot;3.00000000&quot;,
+              &quot;amountE8&quot;: 300000000,
+              &quot;toAddress&quot;: &quot;f07353f22a59c6a98042f29ec87d1fc0f44a6c3ceea24797&quot;,
+              &quot;txHash&quot;: &quot;fe33577de3186c1869f9084bfe0aeaee2e92c8fe10f87eedb438036b341b98ef&quot;
+            }
+          ],
+          &quot;transfers&quot;: []
+        },
+        &quot;confirmations&quot;: 0,
+        &quot;header&quot;: {
+          &quot;difficulty&quot;: 14142941042437.885,
+          &quot;hash&quot;: &quot;80b200a9ac37d7c41d98ad1cc2d6add8ab50a3905bf52d8347b56955923c28bc&quot;,
+          &quot;merkleroot&quot;: &quot;f3c41bf363fe94eb448bf924f791f77c22a2ebd6a3a5d8948f8aff019f072bea&quot;,
+          &quot;nonce&quot;: &quot;2719fef5&quot;,
+          &quot;pow&quot;: {
+            &quot;floatSha256t&quot;: 0.010330632328987122,
+            &quot;floatVerus&quot;: 6.267357060779177e-13,
+            &quot;hashSha256t&quot;: &quot;02a507400db273886cd1bdc61e05bc4bde6978d74ce6e48d33a46fa705c59ae1&quot;,
+            &quot;hashVerus&quot;: &quot;0000000000b069112cc0caf14507169f6adf1e5278a2ef286cddc89f1162d7ca&quot;,
+            &quot;verusV2.2&quot;: true
+          },
+          &quot;prevHash&quot;: &quot;05b42d206f8a4b2b8094199fd28423151af8aa54a5073ac6e6805f42096dc3a2&quot;,
+          &quot;raw&quot;: &quot;05b42d206f8a4b2b8094199fd28423151af8aa54a5073ac6e6805f42096dc3a20ae7cde7f3c41bf363fe94eb448bf924f791f77c22a2ebd6a3a5d8948f8aff019f072bea0000000366f2fefb2719fef5&quot;,
+          &quot;target&quot;: &quot;0ae7cde7&quot;,
+          &quot;timestamp&quot;: 1727201019,
+          &quot;utc&quot;: &quot;2024-09-24 18:03:39 UTC&quot;,
+          &quot;version&quot;: &quot;00000003&quot;
+        },
+        &quot;height&quot;: 1949766,
+        &quot;timestamp&quot;: 1727201019,
+        &quot;utc&quot;: &quot;2024-09-24 18:03:39 UTC&quot;
+      }
+    ]
+  }
+}</code></pre>
+</doc-codeblock></div>
+</doc-panel>
+<doc-panel id="connection" collapsed>
+    <template #title>Connection</template>
+<p>Subscribe to connection state and deltas. After subscription, a <code v-pre>connection.state</code> message is sent. New connections trigger a <code v-pre>connection.add</code> message while removed connections trigger a <code v-pre>connection.remove</code> message.</p>
+<p><strong>Subscribe</strong></p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-json"><code v-pre class="language-json">{&quot;action&quot;: &quot;subscribe&quot;, &quot;topic&quot;: &quot;connection&quot;}</code></pre>
+</doc-codeblock></div>
+<p><strong>Event types</strong></p>
+<ol>
+<li><code v-pre>connection.state</code></li>
+</ol>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-json"><code v-pre class="language-json">{
+  &quot;connections&quot;: [
+    {
+      &quot;id&quot;: 22,
+      &quot;inbound&quot;: false,
+      &quot;peerAddr&quot;: &quot;tcp://213.199.59.252:20016&quot;,
+      &quot;since&quot;: 0
+    },
+    ...
+    {
+      &quot;id&quot;: 1261,
+      &quot;inbound&quot;: false,
+      &quot;peerAddr&quot;: &quot;tcp://51.222.248.202:9186&quot;,
+      &quot;since&quot;: 0
+    }
+  ],
+  &quot;eventName&quot;: &quot;connection.state&quot;,
+  &quot;total&quot;: 16
+}</code></pre>
+</doc-codeblock></div>
+<ol start="2">
+<li><code v-pre>connection.add</code></li>
+</ol>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-json"><code v-pre class="language-json">{
+  &quot;connection&quot;: {
+    &quot;id&quot;: 83,
+    &quot;inbound&quot;: false,
+    &quot;peerAddr&quot;: &quot;tcp://65.21.76.159:9186&quot;,
+    &quot;since&quot;: 0
+  },
+  &quot;eventName&quot;: &quot;connection.add&quot;,
+  &quot;total&quot;: 3
+}</code></pre>
+</doc-codeblock></div>
+<ol start="3">
+<li><code v-pre>connection.remove</code></li>
+</ol>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-json"><code v-pre class="language-json">{
+  &quot;eventName&quot;: &quot;connection.remove&quot;,
+  &quot;id&quot;: 83,
+  &quot;total&quot;: 2
+}</code></pre>
+</doc-codeblock></div>
+</doc-panel>
 
                                 
                                 <!-- Required only on API pages -->
