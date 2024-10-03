@@ -582,7 +582,7 @@ Subscribe to 10 latest blocks. Upon subscription, the 10 latest blocks are provi
 Receive 10 latest blocks.
 ```json
 {
-  "blockHistory": [
+  "latestBlocks": [
     {
       "body": {
         "rewards": [
