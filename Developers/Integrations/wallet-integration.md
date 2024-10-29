@@ -282,19 +282,18 @@ var toSign = Buffer.concat([buf1, buf2, buf3, buf4])
 const secp256k1 = require("secp256k1");
 var signHash = crypto.createHash('sha256').update(toSign).digest()
 var signed = secp256k1.ecdsaSign(signHash, Buffer.from(pkhex,"hex"));
-var signatureWithoutRecid = signed.signature
-var recid = signed.recid
-
+var signatureWithoutRecid = Buffer.from(signed.signature);
+var signatureWithoutRecidNormalized = secp256k1.signatureNormalize(signed.signature);
+var recid = signed.recid;
 
 // normalize to lower s
-if (!secp256k1.signatureNormalize(signatureWithoutRecid))
-    recid = recid ^ 1
-var recidBuffer = Buffer.allocUnsafe(1)
-recidBuffer.writeUint8(recid)
-
+if (Buffer.compare(signatureWithoutRecid, signatureWithoutRecidNormalized) !== 0)
+    recid = recid ^ 1;
+var recidBuffer = Buffer.alloc(1);
+recidBuffer.writeUint8(recid);
 
 // form full signature
-var signature65 = Buffer.concat([signatureWithoutRecid, recidBuffer])
+var signature65 = Buffer.concat([signatureWithoutRecidNormalized, recidBuffer]);
 
 // post transaction request to warthog node
 var postdata = {
