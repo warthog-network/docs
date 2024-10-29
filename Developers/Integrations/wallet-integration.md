@@ -265,7 +265,7 @@ feeE8 = encode16bit_result["data"]["roundedE8"] // 9992
 
 // generate bytes to sign
 var buf1 = Buffer.from(pinHash,"hex")
-var buf2 = Buffer.allocUnsafe(19)
+var buf2 = Buffer.alloc(19)
 buf2.writeUInt32BE(pinHeight,0)
 buf2.writeUInt32BE(nonceId,4)
 buf2.writeUInt8(0,8)
@@ -273,7 +273,7 @@ buf2.writeUInt8(0,9)
 buf2.writeUInt8(0,10)
 buf2.writeBigUInt64BE(BigInt(feeE8),11)
 var buf3 = Buffer.from(toAddr.slice(0,40),"hex")
-var buf4 = Buffer.allocUnsafe(8)
+var buf4 = Buffer.alloc(8)
 buf4.writeBigUInt64BE(BigInt(amountE8),0)
 var toSign = Buffer.concat([buf1, buf2, buf3, buf4])
 
