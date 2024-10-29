@@ -234,61 +234,70 @@ Javascript does not support 64 bit integers natively, one has to resort to `BigI
 //////////////////////////////
 // Generate a signed transaction
 //////////////////////////////
-var request = require('sync-request');
-var baseurl = 'http://localhost:3000'
+var crypto = require("crypto");
+var request = require("sync-request");
+var secp256k1 = require("secp256k1");
+
+var baseurl = "http://localhost:3000";
 
 // get pinHash and pinHeight from warthog node
-var head = JSON.parse(request('GET', baseurl + '/chain/head').body.toString())
-var pinHeight = head.data.pinHeight
-var pinHash = head.data.pinHash
-
+var head = JSON.parse(request("GET", baseurl + "/chain/head").body.toString());
+var pinHeight = head.data.pinHeight;
+var pinHash = head.data.pinHash;
 
 // send parameters
-var nonceId = 0 // 32 bit number, unique per pinHash and pinHeight
-var toAddr = '0000000000000000000000000000000000000000de47c9b2' // burn destination address
-var amountE8 = 100000000 // 1 WART, this must be an integer, coin amount * 10E8
-
+var nonceId = 0; // 32 bit number, unique per pinHash and pinHeight
+var toAddr = "0000000000000000000000000000000000000000de47c9b2"; // burn destination address
+var amountE8 = 100000000; // 1 WART, this must be an integer, coin amount * 10E8
 
 // round fee from WART amount
-var rawFee = "0.00009999" // this needs to be rounded, WARNING: NO SCIENTIFIC NOTATION
-var result = request('GET',baseurl + '/tools/encode16bit/from_string/'+rawFee).body.toString()
-var encode16bit_result = JSON.parse(result)
-var feeE8 = encode16bit_result["data"]["roundedE8"] // 9992
-
+var rawFee = "0.00009999"; // this needs to be rounded, WARNING: NO SCIENTIFIC NOTATION
+var result = request(
+  "GET",
+  baseurl + "/tools/encode16bit/from_string/" + rawFee
+).body.toString();
+var encode16bit_result = JSON.parse(result);
+var feeE8 = encode16bit_result["data"]["roundedE8"]; // 9992
 
 // alternative: round fee from E8 amount
-var rawFeeE8 = "9999" // this needs to be rounded
-result = request('GET',baseurl + '/tools/encode16bit/from_e8/'+rawFeeE8).body.toString()
-encode16bit_result = JSON.parse(result)
-feeE8 = encode16bit_result["data"]["roundedE8"] // 9992
-
+var rawFeeE8 = "9999"; // this needs to be rounded
+result = request(
+  "GET",
+  baseurl + "/tools/encode16bit/from_e8/" + rawFeeE8
+).body.toString();
+encode16bit_result = JSON.parse(result);
+feeE8 = encode16bit_result["data"]["roundedE8"]; // 9992
 
 // generate bytes to sign
-var buf1 = Buffer.from(pinHash,"hex")
-var buf2 = Buffer.alloc(19)
-buf2.writeUInt32BE(pinHeight,0)
-buf2.writeUInt32BE(nonceId,4)
-buf2.writeUInt8(0,8)
-buf2.writeUInt8(0,9)
-buf2.writeUInt8(0,10)
-buf2.writeBigUInt64BE(BigInt(feeE8),11)
-var buf3 = Buffer.from(toAddr.slice(0,40),"hex")
-var buf4 = Buffer.alloc(8)
-buf4.writeBigUInt64BE(BigInt(amountE8),0)
-var toSign = Buffer.concat([buf1, buf2, buf3, buf4])
-
+var buf1 = Buffer.from(pinHash, "hex");
+var buf2 = Buffer.alloc(19);
+buf2.writeUInt32BE(pinHeight, 0);
+buf2.writeUInt32BE(nonceId, 4);
+buf2.writeUInt8(0, 8);
+buf2.writeUInt8(0, 9);
+buf2.writeUInt8(0, 10);
+buf2.writeBigUInt64BE(BigInt(feeE8), 11);
+var buf3 = Buffer.from(toAddr.slice(0, 40), "hex");
+var buf4 = Buffer.alloc(8);
+buf4.writeBigUInt64BE(BigInt(amountE8), 0);
+var toSign = Buffer.concat([buf1, buf2, buf3, buf4]);
 
 // sign with recovery id
-const secp256k1 = require("secp256k1");
-var signHash = crypto.createHash('sha256').update(toSign).digest()
-var signed = secp256k1.ecdsaSign(signHash, Buffer.from(pkhex,"hex"));
+var signHash = crypto.createHash("sha256").update(toSign).digest();
+var signed = secp256k1.ecdsaSign(signHash, Buffer.from(pkhex, "hex"));
 var signatureWithoutRecid = Buffer.from(signed.signature);
-var signatureWithoutRecidNormalized = secp256k1.signatureNormalize(signed.signature);
+var signatureWithoutRecidNormalized = secp256k1.signatureNormalize(
+  signed.signature
+);
 var recid = signed.recid;
 
 // normalize to lower s
-if (Buffer.compare(signatureWithoutRecid, signatureWithoutRecidNormalized) !== 0)
-    recid = recid ^ 1;
+if (
+  Buffer.compare(signatureWithoutRecid, signatureWithoutRecidNormalized) !== 0
+) {
+  recid = recid ^ 1;
+}
+
 var recidBuffer = Buffer.alloc(1);
 recidBuffer.writeUint8(recid);
 
@@ -297,16 +306,18 @@ var signature65 = Buffer.concat([signatureWithoutRecidNormalized, recidBuffer]);
 
 // post transaction request to warthog node
 var postdata = {
- "pinHeight": pinHeight,
- "nonceId": nonceId,
- "toAddr": toAddr,
- "amountE8": amountE8,
- "feeE8": feeE8,
- "signature65": signature65.toString("hex")
-}
+  pinHeight: pinHeight,
+  nonceId: nonceId,
+  toAddr: toAddr,
+  amountE8: amountE8,
+  feeE8: feeE8,
+  signature65: signature65.toString("hex"),
+};
 
-var res = request('POST', baseurl+'/transaction/add', { json: postdata }).body.toString()
-console.log("send result: ", res)
+var res = request("POST", baseurl + "/transaction/add", {
+  json: postdata,
+}).body.toString();
+console.log("send result:", res);
 ```
 +++ Elixir
 ```elixir
