@@ -21,7 +21,7 @@ $$
 
 for $a\ge 1$ (again mind the small range $[1,(1-c)^{-1}$] where the reasoning is not correct). We therefore call $\gamma(a)$ the *hashrate ratio boost* for hashrate ratio $a$. It is a multiplicative factor applied to a hypothetical reference Janusscore $S(\mathfrak{h}_X,\mathfrak{h}_X)$ to express $S(\mathfrak{h}_X,\mathfrak{h}_Y)$. The function $\gamma$ looks like this:
 
-![Acceptance Region](/img/miningratio_boost.png)
+![Mining Ratio Boost](/img/miningratio_boost.png)
 
 
 ==- Julia code to plot this function
@@ -32,7 +32,8 @@ beta = 0.7
 f(a) = a*((c+1/a)^(1-beta)-c^(1-beta))
 g(x)=f(x)/f(1)
 using Plots
-p = plot(g, xlim=[1,200], label = "\$\\gamma\$")
+p = plot(g, xlim=[1,2000], label = "\$\\gamma\$", ylabel = "Hashrate Ratio Boost", xlabel = "Hashrate Ratio \$\\mathfrak{h}_X/\\mathfrak{h}_Y\$")
+hline!([15.35], label="limit")
 ```
 ===
 
@@ -51,6 +52,21 @@ $$
 where we used [L'Hôpital's rule](https://en.wikipedia.org/wiki/L%27H%C3%B4pital%27s_rule) in the third step and finally plugged in the constant $c = 0.005$. This means that hashrate ratio boost cannot go above $\approx 15.35$ no matter how much Sha256t hashrate is thrown into the game. The higher the hashrate ratio of GPU/CPU hashrates, the more CPU, i.e. Verushash v2.1 hashrate becomes the bottleneck. 
 
 This is intended and protects Warthog against ASICs applied to Sha256t. Such mining behavior will suffer heavily from being bottlenecked by CPU hashrate.
+
+For example in the setting where the CPU hashrate is 40mh/s we have the following Janusscore curve and no ASIC on SHA256t can increase it above the limit of $\approx 1632.15$ mh/s.
+![Janusscore for fixed Verus hashrate 40mh/s](/img/janusscore_demo_40mh.png)
+
+==- Julia code to plot this function
+
+```julia
+c = 0.005
+hx = 40
+S(hx, hy) = hy * 10 * ((c + hx/hy)^0.3 - c^0.3)/3
+p = plot(hy->S(hx,hy), xlim=[1,6000], label = "Janusscore", ylabel = "mh/s", xlabel = "GPU hashrate in mh/s")
+hline!([15.35*S(hx,hx)], label="limit")
+```
+===
+
 
 ## Estimating Hashrate Ratio from mined blocks
 
