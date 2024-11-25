@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="turbo-root" content="/docs">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.6.0.785597766702">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.6.0.785880282650">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 3.6.0">
@@ -33,12 +33,12 @@
 
     <script data-cfasync="false">(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
-    <link href="../../../resources/css/retype.css?v=3.6.0.785597766702" rel="stylesheet">
+    <link href="../../../resources/css/retype.css?v=3.6.0.785880282650" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../../resources/js/config.js?v=3.6.0.785597766702" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../../resources/js/config.js?v=3.6.0.785880282650" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../../resources/js/retype.js?v=3.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=3.6.0.785597766702" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../../../resources/js/prism.js?v=3.6.0.785597766702" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=3.6.0.785880282650" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../../../resources/js/prism.js?v=3.6.0.785880282650" defer></script>
     <link href="../../../resources/css/katex.css?v=3.6.0" rel="stylesheet">
     <script id="katex-js" data-cfasync="false" src="../../../resources/js/katex.js?v=3.6.0" defer></script>
 </head>
@@ -200,8 +200,8 @@
 \frac{ a\big((c+1/a)^{0.3}-c^{0.3}\big)}{(c+1)^{0.3}-c^{0.3}}</pre></div>
 <p>for <span class="math">a\ge 1</span> (again mind the small range <span class="math">[1,(1-c)^{-1}</span>] where the reasoning is not correct). We therefore call <span class="math">\gamma(a)</span> the <em>hashrate ratio boost</em> for hashrate ratio <span class="math">a</span>. It is a multiplicative factor applied to a hypothetical reference Janusscore <span class="math">S(\mathfrak{h}_X,\mathfrak{h}_X)</span> to express <span class="math">S(\mathfrak{h}_X,\mathfrak{h}_Y)</span>. The function <span class="math">\gamma</span> looks like this:</p>
 <p><figure class="content-center">
-    <img src="../../../img/miningratio_boost.png" alt="Acceptance Region">
-    <figcaption class="caption">Acceptance Region</figcaption>
+    <img src="../../../img/miningratio_boost.png" alt="Mining Ratio Boost">
+    <figcaption class="caption">Mining Ratio Boost</figcaption>
 </figure>
 </p>
 <doc-panel id="julia-code-to-plot-this-function" collapsed>
@@ -212,7 +212,8 @@ beta = 0.7
 f(a) = a*((c+1/a)^(1-beta)-c^(1-beta))
 g(x)=f(x)/f(1)
 using Plots
-p = plot(g, xlim=[1,200], label = &quot;\$\\gamma\$&quot;)</code></pre>
+p = plot(g, xlim=[1,2000], label = &quot;\$\\gamma\$&quot;, ylabel = &quot;Hashrate Ratio Boost&quot;, xlabel = &quot;Hashrate Ratio \$\\mathfrak{h}_X/\\mathfrak{h}_Y\$&quot;)
+hline!([15.35], label=&quot;limit&quot;)</code></pre>
 </doc-codeblock></div>
 </doc-panel>
 <p>There is a limit on the hashrate ratio boost:</p>
@@ -225,6 +226,22 @@ p = plot(g, xlim=[1,200], label = &quot;\$\\gamma\$&quot;)</code></pre>
 \end{align*}</pre></div>
 <p>where we used <a href="https://en.wikipedia.org/wiki/L%27H%C3%B4pital%27s_rule">L&#x27;Hôpital&#x27;s rule</a> in the third step and finally plugged in the constant <span class="math">c = 0.005</span>. This means that hashrate ratio boost cannot go above <span class="math">\approx 15.35</span> no matter how much Sha256t hashrate is thrown into the game. The higher the hashrate ratio of GPU/CPU hashrates, the more CPU, i.e. Verushash v2.1 hashrate becomes the bottleneck.</p>
 <p>This is intended and protects Warthog against ASICs applied to Sha256t. Such mining behavior will suffer heavily from being bottlenecked by CPU hashrate.</p>
+<p>For example in the setting where the CPU hashrate is 40mh/s we have the following Janusscore curve and no ASIC on SHA256t can increase it above the limit of <span class="math">\approx 1632.15</span> mh/s.
+<figure class="content-center">
+    <img src="../../../img/janusscore_demo_40mh.png" alt="Janusscore for fixed Verus hashrate 40mh/s">
+    <figcaption class="caption">Janusscore for fixed Verus hashrate 40mh/s</figcaption>
+</figure>
+</p>
+<doc-panel id="julia-code-to-plot-this-function" collapsed>
+    <template #title>Julia code to plot this function</template>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-julia"><code v-pre class="language-julia">c = 0.005
+hx = 40
+S(hx, hy) = hy * 10 * ((c + hx/hy)^0.3 - c^0.3)/3
+p = plot(hy-&gt;S(hx,hy), xlim=[1,6000], label = &quot;Janusscore&quot;, ylabel = &quot;mh/s&quot;, xlabel = &quot;GPU hashrate in mh/s&quot;)
+hline!([15.35*S(hx,hx)], label=&quot;limit&quot;)</code></pre>
+</doc-codeblock></div>
+</doc-panel>
 <doc-anchor-target id="estimating-hashrate-ratio-from-mined-blocks">
     <h2>
         <doc-anchor-trigger class="header-anchor-trigger" to="#estimating-hashrate-ratio-from-mined-blocks">#</doc-anchor-trigger>
