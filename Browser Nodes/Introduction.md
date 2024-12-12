@@ -24,7 +24,7 @@ Question   | Answer
 ---    | ---
 *What are browser nodes?* | Browser nodes are Warthog nodes that should run on every modern browser and run by just opening the website https://node.warthog.network .
 *Are browser nodes full nodes?* | Yes. They save and verify the whole chain.
-*How much data is used by a browser node?* | Browsers nodes are full nodes and need the same amount of space as normal nodoes. This is currently around 1.3 GB of data.
+*How much data is used by a browser node?* | Browsers nodes are full nodes and need the same amount of space as normal nodes. This is currently around 1.3 GB of data.
 *Where do browser nodes save the chain data?* | Browsers support the [Origin Private File System](https://developer.mozilla.org/en-US/docs/Web/API/File_System_API/Origin_private_file_system) (OPFS) which contains the chain.db3 file.
 *How can I access the OPFS file system?* | OPFS is very new and browsers don't offer a method to browse and access it easily. For Chrome browser there exists the [OPFS explorer](https://chromewebstore.google.com/detail/opfs-explorer/acndjpgkpaclldomagafnognkcgjignd) to view files.
 *Does the browser node need to be fully synchronized, or can I copy the chain.db3 from another node?* | Not now, maybe in the future browsers offer a way to copy files into your browser's OPFS.
