@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="turbo-root" content="/docs">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.6.0.786911800815">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.6.0.787608257600">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 3.6.0">
@@ -31,11 +31,11 @@
 
     <script data-cfasync="false">(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
-    <link href="../../resources/css/retype.css?v=3.6.0.786911800815" rel="stylesheet">
+    <link href="../../resources/css/retype.css?v=3.6.0.787608257600" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../resources/js/config.js?v=3.6.0.786911800815" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../resources/js/config.js?v=3.6.0.787608257600" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../resources/js/retype.js?v=3.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=3.6.0.786911800815" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=3.6.0.787608257600" data-turbo-eval="false" defer></script>
 </head>
 <body>
     <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -206,7 +206,7 @@ The difficulty can then be seen as a maximal threshold value for hashed number f
     </h3>
 </doc-anchor-target>
 <p>Instead of using one hash function to generate a number between 0 and 1 we can take many hash functions and multiply their outputs. This gives again a number between 0 and 1 because a product of many numbers between 0 and 1 is again between 0 and 1.</p>
-<p>Compared to classical mining, this number will not be uniformly random because values close to 1 are less likely to occur in such a product. Luckily uniform randomness is not required for mining to work. Only for retargeting the difficulty it can make a difference but we show in <a href="https://github.com/CoinFuMasterShifu/ProofOfBalancedWork/blob/main/PoBW.pdf">our paper</a> that in this absolutely nothing has to change and the every cryptocurrency would just work normally when their mining algorithm changed from a single hash function to the product of several hash functions.</p>
+<p>Compared to classical mining, this number will not be uniformly random because values close to 1 are less likely to occur in such a product. Luckily uniform randomness is not required for mining to work. Only for retargeting the difficulty it can make a difference but we show in <a href="https://github.com/CoinFuMasterShifu/ProofOfBalancedWork/blob/main/PoBW.pdf">our paper</a> that in this setting absolutely nothing has to change and the every cryptocurrency would just work normally when their mining algorithm changed from a single hash function to the product of several hash functions.</p>
 <doc-anchor-target id="mining-pobw">
     <h3>
         <doc-anchor-trigger class="header-anchor-trigger" to="#mining-pobw">#</doc-anchor-trigger>
@@ -214,7 +214,7 @@ The difficulty can then be seen as a maximal threshold value for hashed number f
     </h3>
 </doc-anchor-target>
 <p>Mining such a product is a bit different from classical mining: Assuming that the involved hash functions are computed in parallel at fixed possibly different hash rates, it makes sense to use a <em>filtering approach</em> during mining, i.e. to start with the fastest hash function and only compute the second fastest hash function on the candidates with most promising fastest hash function result, then compute the third fastest hash function only on the candidates with most promising second fastest hash result etc. It can be shown that this approach is optimal.</p>
-<p>The above strategy is for fixed hashrates. When they are not fixed, but instead we can also choose the proportion of hardware allocated for the evaluation of each hash function, optimizing these proportions such that the combined hashrate gets maximal can be done numerically. As we have shown in our paper, it out that for best results the hashrates must be balanced, hence the name <em>Proof of Balanced Work</em> (PoBW).</p>
+<p>The above strategy is for fixed hashrates. When they are not fixed, but instead we can also choose the proportion of hardware allocated for the evaluation of each hash function, optimizing these proportions such that the combined hashrate gets maximal can be done numerically. As we have shown in our paper, it turns out that for best results the hashrates must be balanced, hence the name <em>Proof of Balanced Work</em> (PoBW).</p>
 <doc-anchor-target id="decentralization-through-breaking-specialization">
     <h3>
         <doc-anchor-trigger class="header-anchor-trigger" to="#decentralization-through-breaking-specialization">#</doc-anchor-trigger>
