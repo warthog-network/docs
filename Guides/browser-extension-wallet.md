@@ -152,8 +152,8 @@ Always lock your wallet when it’s not in use to prevent unauthorized access, e
 
 ### **Security First**  
 Always ensure the security of your wallet and private information.  
-- **Back up your private key** and **mnemonic phrase** in multiple secure locations.  
-- **Never share your private key** or password with anyone.  
+- **Back up your mnemonic phrase** in multiple secure locations.  
+- **Never share your mnemonic phrase** or password with anyone.  
 - **Use strong passwords** and enable additional security features like two-factor authentication if available.
 
 ### **Customer Support**  
