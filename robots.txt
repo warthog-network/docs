@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.warthog.network/docs/sitemap.xml.gz
+Sitemap: https://docs.warthog.network/sitemap.xml.gz
