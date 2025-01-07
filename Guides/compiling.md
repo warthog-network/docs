@@ -53,7 +53,7 @@ ninja
 Note that now meson reports it has set `buildtype: release`.
 ![](/img/get-started/07-ninja-release.png)
 
-After compilation finished successfully we can have a look at the compiled artifacts: Warthog currently compiles a node and a wallet. They are generated in the `src` directory within the build directory. Since the algo update miner is no longer in this main repo, you can see the available miner [here](http://www.warthog.network/docs/links/#miners). Have a look:
+After compilation finished successfully we can have a look at the compiled artifacts: Warthog currently compiles a node and a wallet. They are generated in the `src` directory within the build directory. Since the algo update miner is no longer in this main repo, you can see the available miner [here](https://docs.warthog.network/links/#miners). Have a look:
 ```
 cd src/
 ls

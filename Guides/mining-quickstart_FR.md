@@ -20,7 +20,7 @@ Ce guide contient toutes les infos nécessaires pour vous lancer immédiatement 
 - Wallet GUI (Graphique) : conseillé aux débutants
 - Node nécessaire (local ou [publique](https://github.com/warthog-network/public-nodes)), connexion rapide à un node publique possible
 - Téléchargement : https://github.com/warthog-network/wart-dapp/releases
-- Guide d'utilisation : https://www.warthog.network/docs/wart-dapp/
+- Guide d'utilisation : https://docs.warthog.network/guides/wart-dapp/
 
 ### wart-wallet (GUI)
 
@@ -37,7 +37,7 @@ Ce guide contient toutes les infos nécessaires pour vous lancer immédiatement 
 - Wallet CLI (en ligne de commande)
 - Node nécessaire (local ou [publique](https://github.com/warthog-network/public-nodes))
 - Téléchargement : https://github.com/warthog-network/Warthog/releases
-- Guide d'utilisation : https://www.warthog.network/docs/
+- Guide d'utilisation : https://docs.warthog.network/guides/wart-wallet-cli/
 
 ## Hardware pour miner :
 L'algo janushash en Proof of Balanced Work favorise les configs type PC gamer (bon CPU impératif + bon GPU) plutôt que les rigs multi-GPU. Le mineur vous donnera le hashrate GPU, le hashrate CPU, et le janus hr qui dépend des deux. C'est ce dernier qui est votre "vrai" hashrate et apparaît sur la pool.
