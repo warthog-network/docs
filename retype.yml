@@ -1,6 +1,6 @@
 input: .
 output: .retype
-url: www.warthog.network/docs/
+url: docs.warthog.network
 branding:
   title: Warthog Network
   label: Docs

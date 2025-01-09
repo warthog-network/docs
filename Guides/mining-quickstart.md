@@ -20,7 +20,7 @@ This guide contains all needed information to start mining Warthog, on your own 
 - GUI (Graphical) : Easier for beginners
 - Node needed (local or [public](https://github.com/warthog-network/public-nodes)), quick connection to public node available
 - Download : https://github.com/warthog-network/wart-dapp/releases
-- Guide : https://www.warthog.network/docs/wart-dapp/
+- Guide : https://docs.warthog.network/guides/wart-dapp/
 
 ### wart-wallet (GUI)
 
@@ -37,7 +37,7 @@ This guide contains all needed information to start mining Warthog, on your own 
 - CLI (command-line)
 - Node needed (local or [public](https://github.com/warthog-network/public-nodes))
 - Download : https://github.com/warthog-network/Warthog/releases
-- Guide : https://www.warthog.network/docs/
+- Guide : https://docs.warthog.network/guides/wart-wallet-cli/
 
 ## Mining hardware :
 The janushash Proof of Balanced Work algo works better with gaming PC hardware (Good CPU needed + good GPU) than with multi-GPU rigs. The miner will give you the GPU hashrate, the CPU hashrate, and the janus hashrate with depend of the two of them. The janus hashrate is your "real" hashrate and the one you will see on your pool.

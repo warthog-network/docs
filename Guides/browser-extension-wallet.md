@@ -157,7 +157,7 @@ Always ensure the security of your wallet and private information.
 - **Use strong passwords** and enable additional security features like two-factor authentication if available.
 
 ### **Customer Support**  
-If you encounter any issues or have any questions, please please ask in [the warthog discord](https://discord.com/invite/QMDV8bGTdQ).
+If you encounter any issues or have any questions, please ask in [the warthog discord](https://discord.com/invite/QMDV8bGTdQ).
 
 ---
 
