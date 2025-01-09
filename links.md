@@ -28,6 +28,7 @@ order: 10
 * [Miningpoolstats](https://miningpoolstats.stream/warthog/)
 
 ## Pools
+* [ViporNet](https://vipor.net/mine/wart)
 * [Herominers](https://warthog.herominers.com/)
 * [acc-pool](https://warthog.acc-pool.pw/)
 * [WartPool](https://www.wartpool.io/)
