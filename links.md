@@ -11,7 +11,7 @@ order: 10
 * [X/Twitter France](https://x.com/WarthogFrance)
 * [X/Twitter China](https://x.com/wart_chinese)
 * [Telegram](https://t.me/warthognetwork)
-* Telegram China
+* [Telegram China](https://t.me/warthog_cn)
 * [Bitcointalk](https://bitcointalk.org/index.php?topic=5458046.0)
 * [Reddit](https://www.reddit.com/r/warthognetwork/)
 
