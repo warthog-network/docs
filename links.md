@@ -6,8 +6,12 @@ order: 10
 * [Algorithm whitepaper](https://github.com/CoinFuMasterShifu/ProofOfBalancedWork/blob/main/PoBW.pdf)
 
 ## Socials
-* [Discord](https://discord.com/invite/QMDV8bGTdQ)
+* [Discord](https://discord.com/invite/QMDV8bGTdQ) (most active, ask here for support)
+* [X/Twitter](https://x.com/warthognetwork)
+* [X/Twitter France](https://x.com/WarthogFrance)
+* [X/Twitter China](https://x.com/wart_chinese)
 * [Telegram](https://t.me/warthognetwork)
+* Telegram China
 * [Bitcointalk](https://bitcointalk.org/index.php?topic=5458046.0)
 * [Reddit](https://www.reddit.com/r/warthognetwork/)
 
@@ -17,19 +21,21 @@ order: 10
 
 ## Trackers
 * [Coingecko](https://www.coingecko.com/en/coins/warthog/)
+* [Coinpaprika](https://coinpaprika.com/coin/wart-warthog/)
 * [Coinstats](https://coinstats.app/coins/warthog/)
 * [hashrate.no](https://www.hashrate.no/coins/WART/)
 * [Livecoinwatch](https://www.livecoinwatch.com/price/WarthogNetwork-WART/)
 * [Miningpoolstats](https://miningpoolstats.stream/warthog/)
 
 ## Pools
+* [Herominers](https://warthog.herominers.com/)
 * [acc-pool](https://warthog.acc-pool.pw/)
 * [WartPool](https://www.wartpool.io/)
 * [WoolyPooly](https://woolypooly.com/en/coin/wart)
 
 ## Miners
-* [Janusminer](https://github.com/CoinFuMasterShifu/janusminer) (open source)
 * [BzMiner](https://www.bzminer.com/) (closed source)
+* [Janusminer](https://github.com/CoinFuMasterShifu/janusminer) (open source, discontinued)
 
 ## Wallets
 * [wart-dapp](https://github.com/warthog-network/wart-dapp) (open source, GUI)
@@ -37,9 +43,13 @@ order: 10
 * [Public Node](https://github.com/warthog-network/public-nodes/) by Team
 
 ## Exchanges 
-* [Exbitron](https://exbitron.com/trade?market=wart-usdt)
+
 * [Xeggex](https://xeggex.com/market/WART_USDT)
+* [CoinEx](https://www.coinex.com/en/exchange/WART-USDT)
 * [TradeOgre](https://tradeogre.com/exchange/WART-USDT)
+* [Bit.com](https://www.bit.com/spot?pair=WART-USDT)
+* [Exbitron](https://exbitron.com/trade?market=wart-usdt)
+
 
 ## Tutorials / Other Content
 
