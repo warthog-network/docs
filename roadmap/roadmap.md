@@ -20,6 +20,7 @@
 - [x] [Listing on Bit.com](https://www.bit.com/spot?pair=WART-USDT)
 - [x] [New website based on Astro](https://warthog.network)
 - [x] [Support blogs on the website](https://warthog.network/news/)
+- [x] [Publish Warthog browser wallet extension](https://github.com/warthog-network/warthog-extension)
 
 ## Q1 2025
 - [x] Create [demo of custom matching engine](https://warthog.network/defi-demo/)
