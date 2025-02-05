@@ -24,7 +24,7 @@
 
 ## Q1 2025
 - [x] Create [demo of custom matching engine](https://warthog.network/defi-demo/)
-- [ ] Write scientific paper about Sandwich-Proof DeFi 
+- [x] Write [scientific paper about Sandwich-Proof DeFi](https://github.com/CoinFuMasterShifu/FairBatchMatching/blob/main/FairBatchMatching.pdf) 
 - [ ] List Warthog on Coinmarketcap
 - [ ] Add nice UI for Browser Nodes
 
