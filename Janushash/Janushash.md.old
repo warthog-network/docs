@@ -16,13 +16,13 @@ Miner developers are strongly encouraged to read this paper since it describes h
 
 
 ## What is Janushash?
-Janushash is a particularly simple incarnation of Proof of Balanced Work because it only combines two different hash functions via a product. We have chosen two fast hash functions: Triple SHA256 and VerusHash v2.1. VerusHash v2.1 is mined particularly efficiently on smartphones, or generally ARM based devices and also on CPUs. On the other hand Triple SHA256 can be most efficiently computed on ASICS, however the multiplicative combination with VerusHash v2.1 will force miners to resort to GPUs since high bandwidth between the hardware mining VerusHash v2.1 is necessary to form hash products at high rate.
+Janushash is a particularly simple incarnation of Proof of Balanced Work because it only combines two different hash functions via a product. We have chosen two fast hash functions: Triple SHA256 and VerusHash v2.2. VerusHash v2.2 is mined particularly efficiently on smartphones, or generally ARM based devices and also on CPUs. On the other hand Triple SHA256 can be most efficiently computed on ASICS, however the multiplicative combination with VerusHash v2.2 will force miners to resort to GPUs since high bandwidth between the hardware mining VerusHash v2.2 is necessary to form hash products at high rate.
 
 Therefore it is expected that the most efficient way to mine Janushash is a CPU/GPU combination. In this sense Janushash is the first proof of work algorithm which requires both, CPU and GPU capabilities at the same time. This fact coined the name "Janushash". 
 
 The goal of using this PoBW mining algorithm is to avoid harmful centralization in mining, neither GPU farms with poor CPUs nor CPU mining farms shall be able to efficiently mine this algorithm, instead the "little guys" shall be in the focus of mining.
 
-From a high-level perspective computing a Janushash works by first computing both, the triple SHA256 hash and the Verushash v2.1 of an input byte sequence, and finally combining these two hashes into a new hash by multiplication:
+From a high-level perspective computing a Janushash works by first computing both, the triple SHA256 hash and the Verushash v2.2 of an input byte sequence, and finally combining these two hashes into a new hash by multiplication:
 
 ![Janus diagram](/img/janus.svg)
 
@@ -30,9 +30,9 @@ The multiplication is done as if the two computed hashes were floating-point num
 
 ## Specific implementation in Warthog
 
-For PoBW verification a both hashes, Triple SHA256 and Verushash v2.1 are computed. Then both are converted into a custom floating-point format called `HashExponentialDigest`:
+For PoBW verification a both hashes, Triple SHA256 and Verushash v2.2 are computed. Then both are converted into a custom floating-point format called `HashExponentialDigest`:
 
-Warthog Network uses a [Proof of Balanced Work](https://github.com/CoinFuMasterShifu/ProofOfBalancedWork/blob/main/PoBW.pdf) mining algorithm. This is a completely new concept in the crypto space. It is possible to combine two or more proof of work algorithms multiplicatively. We have chosen two: Sha256t and Verushash v2.1. The specific mining algorithm that is used by Warthog is [Janushash](https://github.com/CoinFuMasterShifu/Janushash). For a block to be valid the following two conditions must be met:
+Warthog Network uses a [Proof of Balanced Work](https://github.com/CoinFuMasterShifu/ProofOfBalancedWork/blob/main/PoBW.pdf) mining algorithm. This is a completely new concept in the crypto space. It is possible to combine two or more proof of work algorithms multiplicatively. We have chosen two: Sha256t and Verushash v2.2. The specific mining algorithm that is used by Warthog is [Janushash](https://github.com/CoinFuMasterShifu/Janushash). For a block to be valid the following two conditions must be met:
 
 1. Sha256t(header) > c for some hard-coded constant c.
 2. Verushash(header)*Sha256t(header)^0.7 < t for the target t.

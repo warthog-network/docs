@@ -1,6 +1,6 @@
 
 # Hashrate Ratio
-The hashrate ratio is the quotient $a$ of Sha256t hashrate $\mathfrak{h}_Y$ and Verushash v2.1 $\mathfrak{h}_X$:
+The hashrate ratio is the quotient $a$ of Sha256t hashrate $\mathfrak{h}_Y$ and Verushash v2.2 $\mathfrak{h}_X$:
 $$
 a = \frac{\mathfrak{h}_Y}{\mathfrak{h}_X}
 $$
@@ -49,7 +49,7 @@ $$
 \end{align*}
 $$
 
-where we used [L'Hôpital's rule](https://en.wikipedia.org/wiki/L%27H%C3%B4pital%27s_rule) in the third step and finally plugged in the constant $c = 0.005$. This means that hashrate ratio boost cannot go above $\approx 15.35$ no matter how much Sha256t hashrate is thrown into the game. The higher the hashrate ratio of GPU/CPU hashrates, the more CPU, i.e. Verushash v2.1 hashrate becomes the bottleneck. 
+where we used [L'Hôpital's rule](https://en.wikipedia.org/wiki/L%27H%C3%B4pital%27s_rule) in the third step and finally plugged in the constant $c = 0.005$. This means that hashrate ratio boost cannot go above $\approx 15.35$ no matter how much Sha256t hashrate is thrown into the game. The higher the hashrate ratio of GPU/CPU hashrates, the more CPU, i.e. Verushash v2.2 hashrate becomes the bottleneck. 
 
 This is intended and protects Warthog against ASICs applied to Sha256t. Such mining behavior will suffer heavily from being bottlenecked by CPU hashrate.
 

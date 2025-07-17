@@ -4,7 +4,7 @@ order: 80
 ---
 
 # Janusscore - a combined hashrate equivalent
-We define the *Janusscore* $S(\mathfrak{h}_X,\mathfrak{h}_Y)$ for Verushash v2.1 hashrate $\mathfrak{h}_X$ and Sha256t hashrate $\mathfrak{h}_Y$ by
+We define the *Janusscore* $S(\mathfrak{h}_X,\mathfrak{h}_Y)$ for Verushash v2.2 hashrate $\mathfrak{h}_X$ and Sha256t hashrate $\mathfrak{h}_Y$ by
 
 $$
 S(\mathfrak{h}_X,\mathfrak{h}_Y)= \tfrac{10}{3}\big((c+\tfrac{\mathfrak{h}_X}{\mathfrak{h}_Y})^{0.3}-c^{0.3}\big)\mathfrak{h}_Y.

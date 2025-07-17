@@ -14,7 +14,7 @@ Combining different hash functions multiplicatively has the advantage that
 Essentially, Proof of Balanced Work algorithms are simply the multiplicative combinations of existing hash functions. Warthog Janushash algorithm combines two hash functions:
 
 1. triple Sha256 (Sha256t) and
-2. Verushash v2.1
+2. Verushash v2.2
 
 ### Balancing
 Energy-efficient mining of Proof of Balanced Work algorithms requires finding a good balance between Sha256t and Verushash hashrates. The best combination depends on hardware and energy cost but it is clear that mining without a GPU or with a weak CPU won't be competitive. The balancing requirement coined the name "Proof of Balanced Work".
@@ -55,7 +55,7 @@ As technology advances, so does specialized mining hardware, especially when pot
 
 When it comes to ASIC resistance, Proof of Balanced Work is stronger than its strongest ingredient. To accelerate mining, an ASIC would need to be able accelerate computation of all combined hash functions to avoid a bottleneck effect. In addition an ASIC would need enough bandwidth between the hardware sections computing different hash functions as well as calibration and tuning to optimize their intercommunication and coordination.
 
-In particular, Janushash inherits ASIC-resistance from Verushash v2.1 which is currently mined on CPUs and GPUs, but not on FPGAs/ASICs, and the need to also require SHA256t hashrate makes Janushash even more ASIC-resistant.
+In particular, Janushash inherits ASIC-resistance from Verushash v2.2 which is currently mined on CPUs and GPUs, but not on FPGAs/ASICs, and the need to also require SHA256t hashrate makes Janushash even more ASIC-resistant.
 
 ### Detection of suspicious hashrate
 
@@ -76,7 +76,7 @@ This means that if ASICs really join the network one day, we can simply exchange
 Warthog tries to revive the good old days when mining was fun. The unique properties of the Janushash algorithm help to achieve this goal:
 
 ### Escaping one-dimensional mining boredom
-In a way, traditional mining in cryptocurrency is one-dimensional, the goal is simply to find the best hardware for evaluating some hash function. In contrast, mining Warthog is two-dimensional: there are two hash functions Sha256t and Verushash v2.1, and both hashrates are relevant for the mining efficiency. This leads to much more versatile options and motivates miners to experiment with endless hardware setups. Vivid discussions about the best combinations bring Warthog mining to life.
+In a way, traditional mining in cryptocurrency is one-dimensional, the goal is simply to find the best hardware for evaluating some hash function. In contrast, mining Warthog is two-dimensional: there are two hash functions Sha256t and Verushash v2.2, and both hashrates are relevant for the mining efficiency. This leads to much more versatile options and motivates miners to experiment with endless hardware setups. Vivid discussions about the best combinations bring Warthog mining to life.
 
 
 ### Robin Hood: Steal from the farms to feed the gamers
@@ -87,7 +87,7 @@ On the other hand gamers usually have systems with modern platforms and CPUs pai
 # TLDR Summary
 
 - Proof of Balanced Work (PoBW) was invented for Warthog and might have a tremendous impact on the whole crypto space.
-- Janushash is a PoBW algorithm combining Sha256t and Verushash v2.1
+- Janushash is a PoBW algorithm combining Sha256t and Verushash v2.2
 - Efficiently mining Janushash requires both, a GPU and a CPU.
 - Miners have to find a good balance of GPU and CPU hardware. Too many GPUs paired with one CPU won't perform well.
 - GPU farms cannot easily compete because they usually have weak CPUs. They would need to adapt their motherboards and CPUs just for mining Warthog.

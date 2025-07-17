@@ -3,9 +3,9 @@ order: 85
 ---
 # Mining
 
-Optimally mining janushash exhausts both, a system's CPU and GPU to their limits. GPU is more efficient at Sha256t computations while CPU is more efficient at Verushash v2.1. Since Sha256t hashrate will usually be larger than Verushash v2.1 hashrate by orders of magnitude, it is important to decide optimally on which headers we evaluate the Verushash v2.1 hash function.
+Optimally mining janushash exhausts both, a system's CPU and GPU to their limits. GPU is more efficient at Sha256t computations while CPU is more efficient at Verushash v2.2. Since Sha256t hashrate will usually be larger than Verushash v2.2 hashrate by orders of magnitude, it is important to decide optimally on which headers we evaluate the Verushash v2.2 hash function.
 
-Since Sha256t and Verushash v2.1 are different proper hash functions the result of one does not correlate with the result of the other (mathematically we can model the two hash functions' outcomes as *independent*). Therefore to minimize the janushash value  (which needs to be below the target to mine a block)
+Since Sha256t and Verushash v2.2 are different proper hash functions the result of one does not correlate with the result of the other (mathematically we can model the two hash functions' outcomes as *independent*). Therefore to minimize the janushash value  (which needs to be below the target to mine a block)
 
 `verushash(header)*sha256t(header)^0.7`
 
@@ -21,7 +21,7 @@ This gives us the following approach:
 
 1. Mine sha256t of headers on GPU
 2. Send those headers with sha256t > c and smaller than c + hr_CPU/hr_GPU into a queue that is processed by CPU to evaluate verushash on them.
-3. Compute Verushash v2.1 on these headers
+3. Compute Verushash v2.2 on these headers
 4. Evaluate janushash number representation `verushash(header)*sha256t(header)^0.7` and check if it is smaller than the target `t`.
 
 !!!
