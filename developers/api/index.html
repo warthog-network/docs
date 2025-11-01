@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.11.0.815307357831">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.11.0.815309325352">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 3.11.0">
@@ -30,12 +30,12 @@
 
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../resources/css/retype.css?v=3.11.0.815307357831" rel="stylesheet">
+    <link href="../../resources/css/retype.css?v=3.11.0.815309325352" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../resources/js/config.js?v=3.11.0.815307357831" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../resources/js/config.js?v=3.11.0.815309325352" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../resources/js/retype.js?v=3.11.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=3.11.0.815307357831" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../../resources/js/prism.js?v=3.11.0.815307357831" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=3.11.0.815309325352" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../../resources/js/prism.js?v=3.11.0.815309325352" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -248,6 +248,16 @@
 <td><code v-pre>GET</code></td>
 <td><code v-pre>/transaction/lookup/:txid</code></td>
 <td>Transaction lookup</td>
+</tr>
+<tr>
+<td><code v-pre>GET</code></td>
+<td><code v-pre>/transaction/minfee</code></td>
+<td>Show the minimum fee required by this node</td>
+</tr>
+<tr>
+<td><code v-pre>GET</code></td>
+<td><code v-pre>/settings/mempool/minfee/:feeE8</code></td>
+<td>Adjust the minimum transaction fee</td>
 </tr>
 <tr>
 <td><code v-pre>GET</code></td>
@@ -576,7 +586,7 @@
 <pre translate="no" class="language-json"><code v-pre class="language-json">{
 &quot;code&quot;: 0,
 &quot;data&quot;: {
- &quot;txHash&quot;: &lt;txhash&gt; 
+ &quot;txHash&quot;: &lt;txhash&gt;
 }
 }</code></pre>
 </doc-codeblock></div>
@@ -618,7 +628,46 @@
   &quot;utc&quot;: &quot;2023-09-23 12:30:49 UTC&quot;
  }
 }
-} </code></pre>
+}</code></pre>
+</doc-codeblock></div>
+<doc-anchor-target id="get-transactionminfee">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#get-transactionminfee">#</doc-anchor-trigger>
+        <span><code v-pre>GET /transaction/minfee</code></span>
+    </h3>
+</doc-anchor-target>
+<p>Show the minimum fee required by this node. Transactions with a lower fee will not be accepted or requested by the node.</p>
+<p>Exemple output :</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-json"><code v-pre class="language-json">{
+ &quot;code&quot;: 0,
+ &quot;data&quot;: {
+  &quot;16bit&quot;: 13537,
+  &quot;E8&quot;: 9992,
+  &quot;amount&quot;: &quot;0.00009992&quot;
+ }
+}</code></pre>
+</doc-codeblock></div>
+<doc-anchor-target id="get-settingsmempoolminfeefeee8">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#get-settingsmempoolminfeefeee8">#</doc-anchor-trigger>
+        <span><code v-pre>GET /settings/mempool/minfee/:feeE8</code></span>
+    </h3>
+</doc-anchor-target>
+<p>Adjust the minimum transaction fee. The desired new minimum transaction fee should be specified.</p>
+<p>Exemple output:</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-json"><code v-pre class="language-json">{
+ &quot;code&quot;: 0,
+ &quot;data&quot;: {
+  &quot;deleted&quot;: 0
+ }
+}</code></pre>
+</doc-codeblock></div>
+<p>You can also set the min fee when launching your node.</p>
+<p>Exemple:</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-bash"><code v-pre class="language-bash">$./wart-node --minfee=&quot;0.00009992&quot;</code></pre>
 </doc-codeblock></div>
 <doc-anchor-target id="get-chainhead">
     <h3>
@@ -666,7 +715,7 @@
  .
  .
 ]
-} </code></pre>
+}</code></pre>
 </doc-codeblock></div>
 <doc-anchor-target id="get-chainsigned_snapshot">
     <h3>
@@ -823,7 +872,7 @@ Example output of <code v-pre>/chain/block/366700</code></p>
 {
  &quot;code&quot;: 0,
  &quot;data&quot;: []
-} </code></pre>
+}</code></pre>
 </doc-codeblock></div>
 <doc-anchor-target id="get-chainhashratewindow">
     <h3>
@@ -840,7 +889,7 @@ Example output of <code v-pre>/chain/block/366700</code></p>
  &quot;lastNBlocksEstimate&quot;: 296429051797,
  &quot;N&quot;: 100
 }
-} </code></pre>
+}</code></pre>
 </doc-codeblock></div>
 <doc-anchor-target id="post-chainappend">
     <h3>
