@@ -37,6 +37,7 @@ METHOD| PATH | DESCRIPTION
 `GET`   |`/transaction/mempool`| Show content of mempool
 `GET`   |`/transaction/lookup/:txid`| Transaction lookup
 `GET`   |`/transaction/minfee` | Show the minimum fee required by this node
+`GET`   |`/settings/mempool/minfee/:feeE8` | Adjust the minimum transaction fee
 `GET`   |`/chain/head`| Show info on chain head
 `GET`   |`/chain/grid`| Show header grid (used for sync)
 `GET`   |`/chain/block/:id/hash`| Show hash of specific block
@@ -200,6 +201,30 @@ Send transactions in JSON format, returns transaction hash in hex format:
   }
  }
  ```
+
+ ### `GET /settings/mempool/minfee/:feeE8`
+
+ Adjust the minimum transaction fee. The desired new minimum transaction fee should be specified.
+
+ Exemple output:
+
+ ```json
+ {
+  "code": 0,
+  "data": {
+   "deleted": 0
+  }
+ }
+ ```
+
+ You can also set the min fee when launching your node.
+
+ Exemple:
+
+ ```bash
+ $./wart-node --minfee="0.00009992"
+ ```
+
 
 ### `GET /chain/head`
 
