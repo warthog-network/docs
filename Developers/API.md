@@ -36,6 +36,7 @@ METHOD| PATH | DESCRIPTION
 `POST`  |`/transaction/add`| Send transactions
 `GET`   |`/transaction/mempool`| Show content of mempool
 `GET`   |`/transaction/lookup/:txid`| Transaction lookup
+`GET`   |`/transaction/minfee` | Show the minimum fee required by this node
 `GET`   |`/chain/head`| Show info on chain head
 `GET`   |`/chain/grid`| Show header grid (used for sync)
 `GET`   |`/chain/block/:id/hash`| Show hash of specific block
@@ -45,7 +46,7 @@ METHOD| PATH | DESCRIPTION
 `GET`   |`/chain/mine/:address`| Generate data required for mining
 `GET`   |`/chain/txcache`| Show transaction cache
 `GET`   |`/chain/hashrate/:windows`| Show current hashrate based on latest `n` blocks
-`GET`   |`/chain/hashrate/chart/:from/:to/:window`| 
+`GET`   |`/chain/hashrate/chart/:from/:to/:window`|
 `POST`  |`/chain/append`| Append mined block
 `GET`   |`/account/:account/balance`| Show balance of specific account
 `GET`   |`/account/:account/history/:beforeTxIndex`| Show transaction history of specific account
@@ -142,7 +143,7 @@ Send transactions in JSON format, returns transaction hash in hex format:
 {
  "code": 0,
  "data": {
-  "txHash": <txhash> 
+  "txHash": <txhash>
  }
 }
 ```
@@ -180,7 +181,24 @@ Send transactions in JSON format, returns transaction hash in hex format:
    "utc": "2023-09-23 12:30:49 UTC"
   }
  }
-} 
+}
+ ```
+
+ ### `GET /transaction/minfee`
+
+ Show the minimum fee required by this node. Transactions with a lower fee will not be accepted or requested by the node.
+
+ Exemple output :
+
+ ```json
+ {
+  "code": 0,
+  "data": {
+   "16bit": 13537,
+   "E8": 9992,
+   "amount": "0.00009992"
+  }
+ }
  ```
 
 ### `GET /chain/head`
@@ -224,7 +242,7 @@ Send transactions in JSON format, returns transaction hash in hex format:
   .
   .
  ]
-} 
+}
  ```
 
 ### `GET /chain/signed_snapshot`
@@ -372,7 +390,7 @@ Send transactions in JSON format, returns transaction hash in hex format:
 {
  "code": 0,
  "data": []
-} 
+}
  ```
 
 ### `GET /chain/hashrate/:window`
@@ -388,7 +406,7 @@ Example output of `/chain/hashrate/100`
   "lastNBlocksEstimate": 296429051797,
   "N": 100
  }
-} 
+}
  ```
 
 ### `POST /chain/append`
@@ -552,7 +570,7 @@ This endpoint should only be used for testing purposes. For security reasons the
 !!!
 
 ### `GET /tools/wallet/from_privkey/:privkey`
-Restore wallet from a private key. 
+Restore wallet from a private key.
 
 Example output of `/tools/wallet/from_privkey/d3ce2210adf0fccabe31b61309e2b80c029a7e4e305aeed29432edd428d35c3d`:
 
@@ -567,7 +585,7 @@ Example output of `/tools/wallet/from_privkey/d3ce2210adf0fccabe31b61309e2b80c02
 }
 ```
 
-### `WEBSOCKET /stream` 
+### `WEBSOCKET /stream`
 This websocket endpoint allows real-time data streams on several topics such as `chain`, `account` and `connection` related information. Subscribe with a message containing `"action": "subscribe"` and unsubscribe similarly with `"action": "unsubscribe"`, as shown below.
 
 ==- Chain
@@ -903,4 +921,3 @@ Subscribe to connection state and deltas. After subscription, a `connection.stat
   "total": 2
 }
 ```
-
