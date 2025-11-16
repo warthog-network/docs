@@ -214,6 +214,7 @@ signature65 = r.to_bytes(32,byteorder='big')+s.to_bytes(32,byteorder='big')+rec_
 
 # post transaction request to warthog node
 postdata = {
+ "type": "wartTransfer",
  "pinHeight": pinHeight,
  "nonceId": nonceId,
  "toAddr": toAddr,
@@ -306,6 +307,7 @@ var signature65 = Buffer.concat([signatureWithoutRecidNormalized, recidBuffer]);
 
 // post transaction request to warthog node
 var postdata = {
+  type: 'wartTransfer',
   pinHeight: pinHeight,
   nonceId: nonceId,
   toAddr: toAddr,
@@ -370,6 +372,7 @@ signature65 = rs <> <<(recid-31) ::8>>
 
 # post transaction request to warthog node
 postdata = %{
+ type: "wartTransfer",
  pinHeight: pinHeight,
  nonceId: nonceId,
  toAddr: toAddr,
@@ -380,3 +383,5 @@ postdata = %{
 HTTPoison.post!(baseurl <> "/transaction/add", Jason.encode!(postdata)).body
 ```
 +++
+For reference how to send otehr transaction types other transac
+[!ref Sending other transactions](

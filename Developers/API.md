@@ -69,75 +69,7 @@ METHOD| PATH | DESCRIPTION
 
 ### `POST /transaction/add`
 
- Send transactions in JSON format:
-
- PARAMETER | TYPE | DETAILS
- ----------|------|--------
- pinHeight | unsigned 32 bit integer | Signature includes block hash at this height
- nonceId   | unsigned 32 bit integer | To avoid double spend, there can only be one transaction with a specific (pinHeight,nonceId) pair. The same nonceId can be used for different pinHeight values
- toAddr    | string of length 48| The address that coins shall be transferred to
- amount (optional) | string | Amount of coins to send. Format must be string, non-scientific notation with at most 8 digits after comma. "1" or "1.00000000" are valid.
- amountE8 (optional) | unsigned 64 bit integer | Amount of coins to send multiplied by 10^8. For example to send one coin this value must be 100000000.
- fee (optional) | string | Amount of coins to spend on transaction fees. This value must be exactly representable value in a 16 bit encoding, see below.
- feeE8 (optional) | unsigned 64 bit integer | Amount of coins to spend on transaction fees multiplied by 10^8. For example to send one 0.00000001 coins this value must be 1. This value must be exactly representable value in a 16 bit encoding, see below.
- signature65| string of length 130 | hex-encoded 65 byte compact recoverable ECDSA signature in custom format, see below.
-
-**NOTE**:
-
-- The transfer amount must be specified either via `amount` or via `amountE8`.
-- The transaction fee must be specified either via `fee` or via `feeE8`.
-- Miner fee must be exactly representable in a 16 bit encoding.
-
-#### Details on fees
-
-Fees are not subtracted from the amount sent in the transaction. The sender spends both, transfer amount and transaction fee, `toAddr` receives the transferred amount and the miner of the block including this transaction gets the transaction fee.
-
-For efficiency and compactness transaction fees are internally encoded as 2-byte floating-point numbers (16 bits), where the first 6 bits encode the exponent and the remaining 10 bits encode a 11 bit mantissa starting with an implicit 1. Of course not every 64 bit value can be encoded in 16 bits and only fee 64 bit values which are representable exactly in the 16 bits encoding are accepted. You can use the `/tools/encode16bit/from_e8/:feeE8` or `/tools/encode16bit/from_string/:feestring` endpoints to round an arbitrary 64-bit fee value to an accepted 64 bit value.
-
-#### How to specify the sender?
-
-The sender's address is recovered from the recoverable ECDSA signature `signature65`. It is implicitly specified by creating a signature with the corresponding private key.
-
-#### Signature generation
-
-The following steps are required:
-
-1. Call the `/chain/head` endpoint and extract the  `pinHash` and `pinHeight` fields.
-
-2. Compute transaction hash. The transaction hash is the SHA256 hash of the following bytes:
-
-BYTES | DESCRIPTION
-------|------------
-1 -32 | `pinHash` (hash of block at height `pinHeight`)
-33-36 | `pinHeight` (`uint32_t` in network byte order)
-37-40 | `nonceId` (`uint32_t` in network byte order)
-41-43 | `reserved` (3 bytes containing 0)
-44-51 | `feeE8` (`uint64_t` in network byte order)
-52-71 | `toAddr` receiving address (20 bytes without the final 4 byte checksum)
-72-79 | `amountE8` (`uint64_t` in network byte order)
-
-3. Generate the secp256k1-ECDSA recoverable signature of the 32-byte transaction hash using the private key corresponding to the sender's address. The signature will have three properties:
-
-- `r`: 32 byte coordinate parameter
-- `s`: 32 byte coordinate parameter
-- `recid`: 1 byte recovery id, it should automatically have one of the four values 0,1,2,3.
-
-4. Concatenate the parameters to form the 65-byte compact normalized (lower `s`) recoverable signature with the following byte structure:
-
-BYTES | DESCRIPTION
-------|------------
-1 -32 | `r`
-33-64 | `s`
-65    | `recid`
-
-Note that this is not the standard compact recoverable signature representation because in Warthog, the recoverable id is the last byte of the 65 byte signature and has no offset of 27.
-
-#### Integration guides
-
-We provide working code snippets on how to generate and send transactions [in Python3](./integration_python.md), [Elixir](./integration_elixir.md) and [NodeJS](./integration_nodejs.md).
-
-### `POST /transaction/add`
-
+[!ref Detailed Description](transaction-add)
 Send transactions in JSON format, returns transaction hash in hex format:
 
  ```json
