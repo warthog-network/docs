@@ -58,11 +58,14 @@ METHOD| PATH | DESCRIPTION
 `GET`   |`/peers/connected`| Show info of connected peers
 `GET`   |`/peers/endpoints`| Show known peer endpoints
 `GET`   |`/peers/connect_timers`| Show timers used for reconnect
-`GET`  |`/tools/encode16bit/from_e8/:feeE8`| Round raw 64 integer to closest 16 bit representation (for fee specification)
+`GET`   |`/tools/encode16bit/from_e8/:feeE8`| Round raw 64 integer to closest 16 bit representation (for fee specification)
 `GET`   |`/tools/encode16bit/from_string/:feestring`| Round coin amount string to closest 16 bit representation (for fee specification)
-`GET`    | `/tools/janushash_number/:headerhex`| Show number interpretation of a header's janushash
-`GET`   |`/tools/wallet/new`| Create a new wallet
-`GET`    | `/tools/wallet/from_privkey/:privkey`| Restore wallet from a private key
+`GET`   | `/tools/parse_price/:price/:precision` | Parse price adjusted for asset precision
+`GET`   | `/tools/info` | Print information about this node
+`GET`   | `/tools/wallet/new`| Create a new wallet
+`GET`   | `/tools/wallet/from_privkey/:privkey`| Restore wallet from a private key
+`GET`   | `/tools/janushash_number/:headerhex`| Show number interpretation of a header's Janushash.
+`GET`   | `/tools/sample_verified_peers/:number`| List verified peers
 `WEBSOCKET`   |`/ws/chain_delta`| Get chain delta events
 
 ## Detailed Description
@@ -492,18 +495,66 @@ Example output of `/chain/hashrate/100`
 }
 ```
 
-### `GET /tools/janushash_number/:headerhex`
+### `GET /tools/parse_price/:price/:precision`
 
-Show number interpretation of a header's janushash. Header is specified in hexadecimal encoding.
+Parse price adjusted for asset precision.
 
-Example output of `/tools/janushash_number/<some 160 character hex string>`:
+Example output of `/tools/parse_price/0.123456/3`:
 
 ```json
-0.06597094470635056
+{
+ "code": 0,
+ "data": {
+  "assetPrecision": 3,
+  "ceil": {
+   "doubleAdjusted": 0.12345750000000001,
+   "doubleRaw": 12345.75,
+   "exponent2": -2,
+   "hex": "c0e74d",
+   "mantissa": 49383,
+   "precExponent10": 5
+  },
+  "floor": {
+   "doubleAdjusted": 0.12345500000000001,
+   "doubleRaw": 12345.5,
+   "exponent2": -2,
+   "hex": "c0e64d",
+   "mantissa": 49382,
+   "precExponent10": 5
+  }
+ }
+}
 ```
-!!!info Info
-We do not use JSON encoding in this endpoint for performance reasons to support use of this endpoint by pool share validation. If the input `:headerhex` cannot be parsed, the result is an empty string.
-!!!
+### `GET /tools/info`
+
+Print information about this node.
+
+Example output of `/tools/info`:
+
+```json
+{
+ "code": 0,
+ "data": {
+  "chainDBPath": "/home/user/.warthog/chain_defi.db3",
+  "dbSize": 3058028544,
+  "peersDBPath": "/home/user/.warthog/peers_v2.db3",
+  "rxtxDBPath": "/home/user/.warthog/rxtx.db3",
+  "uptime": {
+   "formatted": "0d 0h 6m 8s",
+   "seconds": 368,
+   "sinceTimestamp": 1763453691,
+   "sinceUTC": "2025-11-18 08:14:51 UTC"
+  },
+  "version": {
+   "commit": "4da03e4",
+   "major": 0,
+   "minor": 10,
+   "name": "v0.10.3 \"4da03e4\"",
+   "patch": 3
+  }
+ }
+}
+```
 
 ### `GET /tools/wallet/new`
 
@@ -541,6 +592,38 @@ Example output of `/tools/wallet/from_privkey/d3ce2210adf0fccabe31b61309e2b80c02
  }
 }
 ```
+
+### `GET /tools/janushash_number/:headerhex`
+Show number interpretation of a header's Janushash. Mining corresponds to finding headers with this number smaller than some threshold dictated by the header difficulty.
+
+Example output of `/tools/janushash_number/b4e91160d990b7b679234fc7cdc1aefbe11afe9823d6d8d1da7067e9ab0c8d380af405022613b56b379d0b071a4829cc27875f19bb0cb493f3f15aaedade1080e433874b0000000265ce0eb452f36e59`:
+
+```json
+{
+ "code": 0,
+ "data": {
+  "janushashNumber": 4.315032866502006e-14
+ }
+}
+```
+### `GET /tools/sample_verified_peers/:number`
+List verified peers.
+
+Example output of `/tools/wallet/from_privkey/d3ce2210adf0fccabe31b61309e2b80c029a7e4e305aeed29432edd428d35c3d`:
+
+```json
+{
+ "code": 0,
+ "data": [
+  "51.75.21.134:9186",
+  "172.241.31.200:19110",
+  "51.68.155.69:9186",
+  "148.251.181.254:19110",
+  "149.102.187.227:9186"
+ ]
+}
+```
+
 
 ### `WEBSOCKET /stream`
 This websocket endpoint allows real-time data streams on several topics such as `chain`, `account` and `connection` related information. Subscribe with a message containing `"action": "subscribe"` and unsubscribe similarly with `"action": "unsubscribe"`, as shown below.
