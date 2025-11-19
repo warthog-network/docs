@@ -220,7 +220,7 @@ Create a new asset.
 
  PARAMETER | TYPE | DETAILS
  ----------|------|--------
-`type`| string | Set to `liquidityDeposit`.
+`type`| string | Set to `assetCreation`.
  `feeE8` (optional) | unsigned 64 bit integer | Amount of coins to spend on transaction fees multiplied by 10^8. For example to send one 0.00000001 coins this value must be 1. This value must be exactly representable value in a 16 bit encoding, see below.
  `fee` (optional) | string | Amount of coins to spend on transaction fees. This value must be exactly representable value in a 16 bit encoding, see below.
  `name` | string of length 1 to 5 | The name of asset to be created.
