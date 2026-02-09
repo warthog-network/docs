@@ -1,26 +1,29 @@
 # POST /transaction/add
  Send transactions as JSON object. This endpoint is for all transaction types.
+
 #### Supported Transactions
 The structure depends on the `type` parameter.
 ==- Wart Transfer
  Transfer `WART`.
 
+<!-- PinHeightEl, NonceIdEl, NonceReservedEl, CompactFeeEl, Ts..., SignatureEl -->
+
  PARAMETER | TYPE | DETAILS
  ----------|------|--------
 `type`| string | Set to `wartTransfer`.
  `feeE8` (optional) | unsigned 64 bit integer | Amount of `WART` to spend on transaction fees multiplied by 10^8. For example to send one 0.00000001 `WART` this value must be 1. This value must be exactly representable value in a 16 bit encoding, see below.
- `fee` (optional) | string | Amount of `WART` to spend on transaction fees. This value must be exactly representable value in a 16 bit encoding, see below.
+ `feeStr` (optional) | string | Amount of `WART` to spend on transaction fees. This value must be exactly representable value in a 16 bit encoding, see below.
  `nonceId`   | unsigned 32 bit integer | To avoid double spend, there can only be one transaction with a specific (pinHeight,nonceId) pair. The same nonceId can be used for different pinHeight values.
  `pinHeight` | unsigned 32 bit integer | Signature includes block hash at this height
  `signature65`| string of length 130 | hex-encoded 65 byte compact recoverable ECDSA signature in custom format, see below.
  `toAddr`    | string of length 48| The address that `WART` shall be transferred to.
- `wartE8` (optional) | unsigned 64 bit integer | Amount of `WART` to send multiplied by 10^8. For example to send one coin this value must be 100000000.
- `wartStr` (optional) | string | Amount of `WART` to send. Format must be string, non-scientific notation with at most 8 digits after comma. "`1`" or "`1.00000000`" are valid.
+ `wartE8` (optional) | unsigned 64 bit integer | Nonzero amount of `WART` to send multiplied by 10^8. For example to send one coin this value must be 100000000.
+ `wartStr` (optional) | string | Nonzero amount of `WART` to send. Format must be string, non-scientific notation with at most 8 digits after comma. "`1`" or "`1.00000000`" are valid.
 
 **NOTE**:
 
-- The `WART` amount must be specified either via `wart` or via `wartE8`.
-- The transaction fee must be specified either via `fee` or via `feeE8`.
+- The `WART` amount must be specified either via `wartE8` or via `wartStr`.
+- The transaction fee must be specified either via `feeE8` or via `feeStr`.
 - Miner fee must be exactly representable in a 16 bit encoding.
 
 The transaction hash needed for signature generation is the SHA256 hash of the following bytes:
@@ -43,7 +46,7 @@ BYTES | DESCRIPTION
  `amountU64` | unsigned 64 bit integer | Number of smallest representable units of the token to be sent. See the warning below.
  `assetHash` | string of length 64 | The asset hash specifies the asset for this transfer.
  `feeE8` (optional) | unsigned 64 bit integer | Amount of `WART` to spend on transaction fees multiplied by 10^8. For example to send one 0.00000001 `WART` this value must be 1. This value must be exactly representable value in a 16 bit encoding, see below.
- `fee` (optional) | string | Amount of `WART` to spend on transaction fees. This value must be exactly representable value in a 16 bit encoding, see below.
+ `feeStr` (optional) | string | Amount of `WART` to spend on transaction fees. This value must be exactly representable value in a 16 bit encoding, see below.
  `isLiquidity` | boolean | Specify whether you want to send the asset itself (`false`) or its pool liquidity (`true`).
  `nonceId`   | unsigned 32 bit integer | To avoid double spend, there can only be one transaction with a specific (pinHeight,nonceId) pair. The same nonceId can be used for different pinHeight values.
  `pinHeight` | unsigned 32 bit integer | Signature includes block hash at this height
@@ -51,12 +54,11 @@ BYTES | DESCRIPTION
  `toAddr`    | string of length 48| The address that tokens shall be transferred to.
 
 !!!warning Warning
-The `amountU64` parameter specifies the number of smallest units of the specified token type. The actual conversion to token units depends on the token type's precision `p` (one token unit corresponds to `10^p` smallest representable units). Note that every asset has **its own precision** fixed during asset creation whereas any asset pool's liquidity **always has precision 8** (like the WART token type).
+The `amountU64` parameter specifies the number of smallest units of the specified token type. The actual conversion to token units depends on the token type's precision `p` (one token unit corresponds to `10^p` smallest representable units). Note that every asset has **its own precision** fixed during asset creation whereas any asset pool's liquidity **always has precision 8** (like the WART token itself).
 !!!
 **NOTE**:
 
-- The transaction fee must be specified either via `fee` or via `feeE8`.
-- The transaction fee must be specified either via `fee` or via `feeE8`.
+- The transaction fee must be specified either via `feeE8` or via `feeStr`.
 - Miner fee must be exactly representable in a 16 bit encoding.
 
 The transaction hash needed for signature generation is the SHA256 hash of the following bytes:
@@ -82,7 +84,7 @@ Create a new buy or sell limit swap order for a specific asset.
  `amountU64` | unsigned 64 bit integer | Number of smallest representable units of the token to be spent on the swap.
  `assetHash` | string of length 64 | The asset hash specifies the asset for this transfer.
  `feeE8` (optional) | unsigned 64 bit integer | Amount of coins to spend on transaction fees multiplied by 10^8. For example to send one 0.00000001 coins this value must be 1. This value must be exactly representable value in a 16 bit encoding, see below.
- `fee` (optional) | string | Amount of coins to spend on transaction fees. This value must be exactly representable value in a 16 bit encoding, see below.
+ `feeStr` (optional) | string | Amount of coins to spend on transaction fees. This value must be exactly representable value in a 16 bit encoding, see below.
  `isBuy` | boolean | Specify whether this order is a buy (`true`) or a sell (`false`) order.
  `limit`    | string of length 6| Hexadecimal of of 3 byte encoded limit price. Use the `/tools/parse_price` endpoint to request this encoding.
  `nonceId`   | unsigned 32 bit integer | To avoid double spend, there can only be one transaction with a specific (pinHeight,nonceId) pair. The same nonceId can be used for different pinHeight values
@@ -94,7 +96,7 @@ The `amountU64` parameter specifies the number of smallest units of the token th
 !!!
 **NOTE**:
 
-- The transaction fee must be specified either via `fee` or via `feeE8`.
+- The transaction fee must be specified either via `feeE8` or via `feeStr`.
 - Miner fee must be exactly representable in a 16 bit encoding.
 
 The transaction hash needed for signature generation is the SHA256 hash of the following bytes:
@@ -121,7 +123,7 @@ Deposit liquidity into an asset's `WART` pool.
  `amountU64` | unsigned 64 bit integer | Number of smallest representable units of the asset to spend into the pool. See the warning below.
  `assetHash` | string of length 64 | The asset hash specifies the asset for this transfer.
  `feeE8` (optional) | unsigned 64 bit integer | Amount of coins to spend on transaction fees multiplied by 10^8. For example to send one 0.00000001 coins this value must be 1. This value must be exactly representable value in a 16 bit encoding, see below.
- `fee` (optional) | string | Amount of coins to spend on transaction fees. This value must be exactly representable value in a 16 bit encoding, see below.
+ `feeStr` (optional) | string | Amount of coins to spend on transaction fees. This value must be exactly representable value in a 16 bit encoding, see below.
  `nonceId`   | unsigned 32 bit integer | To avoid double spend, there can only be one transaction with a specific (pinHeight,nonceId) pair. The same nonceId can be used for different pinHeight values
  `pinHeight` | unsigned 32 bit integer | Signature includes block hash at this height
  `signature65`| string of length 130 | hex-encoded 65 byte compact recoverable ECDSA signature in custom format, see below.
@@ -133,8 +135,8 @@ The `amountU64` parameter specifies the number of smallest units of the specifie
 !!!
 **NOTE**:
 
-- The `WART` amount must be specified either via `wart` or via `wartE8`.
-- The transaction fee must be specified either via `fee` or via `feeE8`.
+- The `WART` amount must be specified either via `wartE8` or via `wartStr`.
+- The transaction fee must be specified either via `feeE8` or via `feeStr`.
 - Miner fee must be exactly representable in a 16 bit encoding.
 
 The transaction hash needed for signature generation is the SHA256 hash of the following bytes:
@@ -155,11 +157,11 @@ Withdraw liquidity from an asset's `WART` pool by redeeming liquidity tokens.
 
  PARAMETER | TYPE | DETAILS
  ----------|------|--------
-`type`| string | Set to `liquidityDeposit`.
+`type`| string | Set to `liquidityWithdrawal`.
  `amountE8` | unsigned 64 bit integer | Number of smallest representable units of the liquidity tokens to spend into the pool. Since liquidity tokens always have precision 8, this is the number of liquidity tokens multiplied by `10^8`.
  `assetHash` | string of length 64 | The asset hash specifies the asset for this transfer.
  `feeE8` (optional) | unsigned 64 bit integer | Amount of coins to spend on transaction fees multiplied by 10^8. For example to send one 0.00000001 coins this value must be 1. This value must be exactly representable value in a 16 bit encoding, see below.
- `fee` (optional) | string | Amount of coins to spend on transaction fees. This value must be exactly representable value in a 16 bit encoding, see below.
+ `feeStr` (optional) | string | Amount of coins to spend on transaction fees. This value must be exactly representable value in a 16 bit encoding, see below.
  `nonceId`   | unsigned 32 bit integer | To avoid double spend, there can only be one transaction with a specific (pinHeight,nonceId) pair. The same nonceId can be used for different pinHeight values
  `pinHeight` | unsigned 32 bit integer | Signature includes block hash at this height
  `signature65`| string of length 130 | hex-encoded 65 byte compact recoverable ECDSA signature in custom format, see below.
@@ -169,7 +171,7 @@ The `amountU64` parameter specifies the number of smallest units of the specifie
 !!!
 **NOTE**:
 
-- The transaction fee must be specified either via `fee` or via `feeE8`.
+- The transaction fee must be specified either via `feeE8` or via `feeStr`.
 - Miner fee must be exactly representable in a 16 bit encoding.
 
 The transaction hash needed for signature generation is the SHA256 hash of the following bytes:
@@ -189,18 +191,18 @@ Cancel a pending transaction or an existing order.
 
  PARAMETER | TYPE | DETAILS
  ----------|------|--------
-`type`| string | Set to `liquidityDeposit`.
+`type`| string | Set to `cancelation`.
  `cancelHeight` | unsigned 32 bit integer | The canceled transaction's `pinHeight`.
  `cancelNonceId` | unsinged 32 bit integer | The canceled transaction's `nonceId`.
  `feeE8` (optional) | unsigned 64 bit integer | Amount of coins to spend on transaction fees multiplied by 10^8. For example to send one 0.00000001 coins this value must be 1. This value must be exactly representable value in a 16 bit encoding, see below.
- `fee` (optional) | string | Amount of coins to spend on transaction fees. This value must be exactly representable value in a 16 bit encoding, see below.
+ `feeStr` (optional) | string | Amount of coins to spend on transaction fees. This value must be exactly representable value in a 16 bit encoding, see below.
  `nonceId`   | unsigned 32 bit integer | To avoid double spend, there can only be one transaction with a specific (pinHeight,nonceId) pair. The same nonceId can be used for different pinHeight values
  `pinHeight` | unsigned 32 bit integer | Signature includes block hash at this height
  `signature65`| string of length 130 | hex-encoded 65 byte compact recoverable ECDSA signature in custom format, see below.
 
 **NOTE**:
 
-- The transaction fee must be specified either via `fee` or via `feeE8`.
+- The transaction fee must be specified either via `feeE8` or via `feeStr`.
 - Miner fee must be exactly representable in a 16 bit encoding.
 
 The transaction hash needed for signature generation is the SHA256 hash of the following bytes:
@@ -222,7 +224,7 @@ Create a new asset.
  ----------|------|--------
 `type`| string | Set to `assetCreation`.
  `feeE8` (optional) | unsigned 64 bit integer | Amount of coins to spend on transaction fees multiplied by 10^8. For example to send one 0.00000001 coins this value must be 1. This value must be exactly representable value in a 16 bit encoding, see below.
- `fee` (optional) | string | Amount of coins to spend on transaction fees. This value must be exactly representable value in a 16 bit encoding, see below.
+ `feeStr` (optional) | string | Amount of coins to spend on transaction fees. This value must be exactly representable value in a 16 bit encoding, see below.
  `name` | string of length 1 to 5 | The name of asset to be created.
  `nonceId`   | unsigned 32 bit integer | To avoid double spend, there can only be one transaction with a specific (pinHeight,nonceId) pair. The same nonceId can be used for different pinHeight values
  `pinHeight` | unsigned 32 bit integer | Signature includes block hash at this height
@@ -232,7 +234,7 @@ Create a new asset.
 
 **NOTE**:
 
-- The transaction fee must be specified either via `fee` or via `feeE8`.
+- The transaction fee must be specified either via `feeE8` or via `feeStr`.
 - Miner fee must be exactly representable in a 16 bit encoding.
 
 The transaction hash needed for signature generation is the SHA256 hash of the following bytes:
