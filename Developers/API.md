@@ -1,4 +1,4 @@
-# API
+# REST API
 
 API for Warthog node version v0.10.3 "dd054a2"
 
@@ -33,60 +33,62 @@ Below we assume the RPC socket is accessible at `localhost:3000`. On startup the
 
 | Method | Path | Description |
 |--------|------|-------------|
-| `POST` | `/transaction/add` | Send transactions |
-| `GET` | `/transaction/mempool` | Show content of mempool |
-| `GET` | `/transaction/lookup/:txid` | Transaction lookup by transaction ID |
-| `GET` | `/transaction/latest` | Show latest transactions |
-| `GET` | `/transaction/minfee` | Show the minimum fee required by this node |
-| `GET` | `/settings/mempool/minfee/:feeE8` | Adjust the minimum transaction fee |
-| `GET` | `/chain/head` | Show info on chain head |
-| `GET` | `/chain/grid` | Show header grid (used for sync) |
-| `GET` | `/chain/block/:id/hash` | Show hash of specific block |
-| `GET` | `/chain/block/:id/header` | Show header of specific block |
-| `GET` | `/chain/block/:id/binary` | Show binary data of specific block |
-| `GET` | `/chain/block/:id` | Show header and body of specific block |
-| `GET` | `/chain/mine/:account` | Generate data required for mining |
-| `GET` | `/chain/txcache` | Show transaction cache |
-| `GET` | `/chain/hashrate/:window` | Show current hashrate based on latest N blocks |
-| `GET` | `/chain/signed_snapshot` | Show chain snapshot |
-| `GET` | `/chain/hashrate/chart/block/:from/:to/:window` | Show hashrate chart by block range |
-| `GET` | `/chain/hashrate/chart/time/:from/:to/:interval` | Show hashrate chart by time range |
-| `POST` | `/chain/append` | Append mined block |
-| `GET` | `/token/complete` | Search tokens by name and/or hash prefix |
-| `GET` | `/market/:market` | Show market orders and liquidity pool |
-| `GET` | `/account/:account/mempool` | Show mempool transactions for account |
-| `GET` | `/account/:account/open_orders` | Show all open orders for account |
-| `GET` | `/account/:account/open_orders/:asset` | Show open orders for account and specific asset |
-| `GET` | `/account/:account/balance/:token` | Show balance of specific account for a token |
-| `GET` | `/account/:account/balance_wart` | Show WART balance of specific account |
-| `GET` | `/account/:account/history/:beforeTxIndex` | Show transaction history of specific account |
-| `GET` | `/account/richlist/:token` | Show richlist for a specific token |
-| `GET` | `/peers/ip_count` | Show peer IP counts |
-| `GET` | `/peers/banned` | Show banned peers |
-| `GET` | `/peers/offenses/:page` | Show offenses of peers |
-| `GET` | `/peers/connected/connection` | Show connection info of connected peers |
-| `GET` | `/peers/connection_schedule` | Show connection schedule |
-| `GET` | `/peers/unban` | Unban all peers |
-| `GET` | `/peers/connected` | Show info of connected peers |
-| `GET` | `/peers/disconnect/:id` | Disconnect a specific peer |
-| `GET` | `/peers/throttled` | Show throttled peers |
-| `GET` | `/peers/transmission_hours` | Show transmission data by hours |
-| `GET` | `/peers/transmission_minutes` | Show transmission data by minutes |
-| `GET` | `/tools/encode16bit/from_e8/:feeE8` | Round raw 64 integer to closest 16 bit representation |
-| `GET` | `/tools/encode16bit/from_string/:string` | Round coin amount string to closest 16 bit representation |
-| `GET` | `/tools/parse_price/:price/:precision` | Parse price adjusted for asset precision |
-| `GET` | `/tools/info` | Print information about this node |
-| `GET` | `/tools/wallet/new` | Create a new wallet |
-| `GET` | `/tools/wallet/from_privkey/:privkey` | Restore wallet from a private key |
-| `GET` | `/tools/janushash_number/:headerhex` | Show number interpretation of a header's Janushash |
-| `GET` | `/tools/sample_verified_peers/:number` | List verified peers |
-| `GET` | `/debug/header_download` | Show header download status |
-| `GET` | `/loadtest/block_request/:conn_id` | Load test block request |
-| `GET` | `/loadtest/header_request/:conn_id` | Load test header request |
-| `GET` | `/loadtest/disable/:conn_id` | Disable load test connection |
-| `GET` | `/debug/fakemine` | Generate fake mining data (default address) |
-| `GET` | `/debug/rollback` | Rollback chain |
-| `GET` | `/debug/fakemine/:address` | Generate fake mining data for address |
+| `POST` | [`/transaction/add`](#post-transactionadd) | Send transactions |
+| `GET` | [`/transaction/mempool`](#get-transactionmempool) | Show content of mempool |
+| `GET` | [`/transaction/lookup/:txid`](#get-transactionlookuptxid) | Transaction lookup by transaction ID |
+| `GET` | [`/transaction/latest`](#get-transactionlatest) | Show latest transactions |
+| `GET` | [`/transaction/minfee`](#get-transactionminfee) | Show the minimum fee required by this node |
+| `GET` | [`/settings/mempool/minfee/:feeE8`](#get-settingsmempoolminfeefeee8) | Adjust the minimum transaction fee |
+| `GET` | [`/chain/head`](#get-chainhead) | Show info on chain head |
+| `GET` | [`/chain/grid`](#get-chaingrid) | Show header grid (used for sync) |
+| `GET` | [`/chain/block/:id/hash`](#get-chainblockidhash) | Show hash of specific block |
+| `GET` | [`/chain/block/:id/header`](#get-chainblockidheader) | Show header of specific block |
+| `GET` | [`/chain/block/:id/binary`](#get-chainblockidbinary) | Show binary data of specific block |
+| `GET` | [`/chain/block/:id`](#get-chainblockid) | Show header and body of specific block |
+| `GET` | [`/chain/mine/:account`](#get-chainmineaccount) | Generate data required for mining |
+| `GET` | [`/chain/txcache`](#get-chaintxcache) | Show transaction cache |
+| `GET` | [`/chain/hashrate/:window`](#get-chainhashratewindow) | Show current hashrate based on latest N blocks |
+| `GET` | [`/chain/signed_snapshot`](#get-chainsigned_snapshot) | Show chain snapshot |
+| `GET` | [`/chain/hashrate/chart/block/:from/:to/:window`](#get-chainhashratechartblockfromtowindow) | Show hashrate chart by block range |
+| `GET` | [`/chain/hashrate/chart/time/:from/:to/:interval`](#get-chainhashratecharttimefromtointerval) | Show hashrate chart by time range |
+| `POST` | [`/chain/append`](#post-chainappend) | Append mined block |
+| `GET` | [`/token/complete`](#get-tokencomplete) | Search tokens by name and/or hash prefix |
+| `GET` | [`/market/:market`](#get-marketmarket) | Show market orders and liquidity pool |
+| `GET` | [`/account/:account/mempool`](#get-accountaccountmempool) | Show mempool transactions for account |
+| `GET` | [`/account/:account/open_orders`](#get-accountaccountopen_orders) | Show all open orders for account |
+| `GET` | [`/account/:account/open_orders/:asset`](#get-accountaccountopen_ordersasset) | Show open orders for account and specific asset |
+| `GET` | [`/account/:account/balance/:token`](#get-accountaccountbalancetoken) | Show balance of specific account for a token |
+| `GET` | [`/account/:account/balance_wart`](#get-accountaccountbalance_wart) | Show WART balance of specific account |
+| `GET` | [`/account/:account/history/:beforeTxIndex`](#get-accountaccounthistorybeforetxindex) | Show transaction history of specific account |
+| `GET` | [`/account/richlist/:token`](#get-accountrichlisttoken) | Show richlist for a specific token |
+| `GET` | [`/peers/ip_count`](#get-peersip_count) | Show peer IP counts |
+| `GET` | [`/peers/banned`](#get-peersbanned) | Show banned peers |
+| `GET` | [`/peers/offenses/:page`](#get-peersoffensespage) | Show offenses of peers |
+| `GET` | [`/peers/connected/connection`](#get-peersconnectedconnection) | Show connection info of connected peers |
+| `GET` | [`/peers/connection_schedule`](#get-peersconnection_schedule) | Show connection schedule |
+| `GET` | [`/peers/unban`](#get-peersunban) | Unban all peers |
+| `GET` | [`/peers/connected`](#get-peersconnected) | Show info of connected peers |
+| `GET` | [`/peers/disconnect/:id`](#get-peersdisconnectid) | Disconnect a specific peer |
+| `GET` | [`/peers/throttled`](#get-peersthrottled) | Show throttled peers |
+| `GET` | [`/peers/transmission_hours`](#get-peerstransmission_hours) | Show transmission data by hours |
+| `GET` | [`/peers/transmission_minutes`](#get-peerstransmission_minutes) | Show transmission data by minutes |
+| `GET` | [`/tools/encode16bit/from_e8/:feeE8`](#get-toolsencode16bitfrom_e8feee8) | Round raw 64 integer to closest 16 bit representation |
+| `GET` | [`/tools/encode16bit/from_string/:string`](#get-toolsencode16bitfrom_stringstring) | Round coin amount string to closest 16 bit representation |
+| `GET` | [`/tools/parse_price/:price/:precision`](#get-toolsparse_pricepriceprecision) | Parse price adjusted for asset precision |
+| `GET` | [`/tools/info`](#get-toolsinfo) | Print information about this node |
+| `GET` | [`/tools/wallet/new`](#get-toolswalletnew) | Create a new wallet |
+| `GET` | [`/tools/wallet/from_privkey/:privkey`](#get-toolswalletfrom_privkeyprivkey) | Restore wallet from a private key |
+| `GET` | [`/tools/janushash_number/:headerhex`](#get-toolsjanushash_numberheaderhex) | Show number interpretation of a header's Janushash |
+| `GET` | [`/tools/sample_verified_peers/:number`](#get-toolssample_verified_peersnumber) | List verified peers |
+| `GET` | [`/debug/header_download`](#get-debugheader_download) | Show header download status |
+| `GET` | [`/loadtest/block_request/:conn_id`](#get-loadtestblock_requestconn_id) | Load test block request |
+| `GET` | [`/loadtest/header_request/:conn_id`](#get-loadtestheader_requestconn_id) | Load test header request |
+| `GET` | [`/loadtest/disable/:conn_id`](#get-loadtestdisableconn_id) | Disable load test connection |
+| `GET` | [`/debug/fakemine`](#get-debugfakemine) | Generate fake mining data (default address) |
+| `GET` | [`/debug/rollback`](#get-debugrollback) | Rollback chain |
+| `GET` | [`/debug/fakemine/:address`](#get-debugfakemineaddress) | Generate fake mining data for address |
+
+For WebSocket API documentation, see [WebSocket.md](WebSocket.md).
 
 ## Detailed Description
 
@@ -322,7 +324,7 @@ Show binary data of specific block with structure annotations.
 }
 ```
 
-### `GET /chain/mine/:address`
+### `GET /chain/mine/:account`
 
  Generate data required for mining. Example output of `/chain/mine/11c6c0f7148a845cc899360a38fa839ba3d5e719293bb5c6`
 
@@ -833,307 +835,3 @@ Rollback the chain by one block.
 Generate fake mining data for a specific address.
 
 **TODO: Add JSON output example**
-
-## WebSocket
-
-### `WEBSOCKET /stream`
-This websocket endpoint allows real-time data streams on several topics such as `chain`, `account` and `connection` related information. Subscribe with a message containing `"action": "subscribe"` and unsubscribe similarly with `"action": "unsubscribe"`, as shown below.
-
-==- Chain
-Subscribe to 10 latest blocks. Upon subscription, the 10 latest blocks are provided in a `chain.state` message. When chain is appended (no rollback), *either* incremental updates are given (i.e. new blocks) as a `chain.append` message *or* (in case of more than 10 new blocks) the latest 10 blocks are provided in a `chain.state` message. When chain is appended with rollback, a `chain.fork` message is sent over the websocket connection.
-
-**Subscribe**
-```json
-{"action": "subscribe", "topic": "chain"}
-```
-**Event types**
-1. `chain.state`
-Receive 10 latest blocks.
-```json
-{
-  "latestBlocks": [
-    {
-      "body": {
-        "rewards": [
-          {
-            "amount": "3.00000000",
-            "amountE8": 300000000,
-            "toAddress": "f07353f22a59c6a98042f29ec87d1fc0f44a6c3ceea24797",
-            "txHash": "fe33577de3186c1869f9084bfe0aeaee2e92c8fe10f87eedb438036b341b98ef"
-          }
-        ],
-        "transfers": []
-      },
-      "confirmations": 11,
-      "header": {
-        "difficulty": 14142941042437.885,
-        "hash": "80b200a9ac37d7c41d98ad1cc2d6add8ab50a3905bf52d8347b56955923c28bc",
-        "merkleroot": "f3c41bf363fe94eb448bf924f791f77c22a2ebd6a3a5d8948f8aff019f072bea",
-        "nonce": "2719fef5",
-        "pow": {
-          "floatSha256t": 0.010330632328987122,
-          "floatVerus": 6.267357060779177e-13,
-          "hashSha256t": "02a507400db273886cd1bdc61e05bc4bde6978d74ce6e48d33a46fa705c59ae1",
-          "hashVerus": "0000000000b069112cc0caf14507169f6adf1e5278a2ef286cddc89f1162d7ca",
-          "verusV2.2": true
-        },
-        "prevHash": "05b42d206f8a4b2b8094199fd28423151af8aa54a5073ac6e6805f42096dc3a2",
-        "raw": "05b42d206f8a4b2b8094199fd28423151af8aa54a5073ac6e6805f42096dc3a20ae7cde7f3c41bf363fe94eb448bf924f791f77c22a2ebd6a3a5d8948f8aff019f072bea0000000366f2fefb2719fef5",
-        "target": "0ae7cde7",
-        "timestamp": 1727201019,
-        "utc": "2024-09-24 18:03:39 UTC",
-        "version": "00000003"
-      },
-      "height": 1949766,
-      "timestamp": 1727201019,
-      "utc": "2024-09-24 18:03:39 UTC"
-    },
-    ...
-  ],
-  "eventName": "chain.state",
-  "head": {
-    "difficulty": 14142941042437.885,
-    "hash": "cbaa8aefc5c5df6a4cfa8134bb6780895c0389f40a8c0f8ca9c627e1177ea2df",
-    "height": 1949776,
-    "is_janushash": true,
-    "pinHash": "568e30a9abdbc510c9a21ec2dcb636e66cd4d1fb60028a31c65906069114e988",
-    "pinHeight": 1949760,
-    "worksum": 29360669698622464000,
-    "worksumHex": "0x00000000000000000000000000000000000000000000000197760d8809f796a0"
-  }
-}
-```
-
-2. `chain.append`
-```json
-{
-  "eventName": "chain.append",
-  "head": {
-    "difficulty": 14142941042437.885,
-    "hash": "1edd2043a92ac4747487aecaa7dc8145b6bf8ae4509c3bae4e4d9ad9727fe4ee",
-    "height": 1950121,
-    "is_janushash": true,
-    "pinHash": "ae8e35d5e0ab86b4a30612b37717e29ea2d4d21f039abe130fcb94b03079e073",
-    "pinHeight": 1950112,
-    "worksum": 29365549013281480000,
-    "worksumHex": "0x0000000000000000000000000000000000000000000000019787633e02f726a0"
-  },
-  "newBlocks": {
-    "data": [
-      {
-        "body": {
-          "rewards": [],
-          "transfers": []
-        },
-        "confirmations": 0,
-        "header": {
-          "difficulty": 14142941042437.885,
-          "hash": "1edd2043a92ac4747487aecaa7dc8145b6bf8ae4509c3bae4e4d9ad9727fe4ee",
-          "merkleroot": "dcfeba982307da35c0098709c20f4ea0a4f04e0bbcd1b0c34c8ecc30157159eb",
-          "nonce": "1aace551",
-          "pow": {
-            "floatSha256t": 0.012002777308225632,
-            "floatVerus": 6.341241019439662e-13,
-            "hashSha256t": "03129d3047448ed01936f206d4a5f59de702a35df450d36706ef93545cf03c36",
-            "hashVerus": "0000000000b27d750524493e994e98b7dea83af149ae7673dfc3d21935c1ae05",
-            "verusV2.2": true
-          },
-          "prevHash": "8c8811ee10a9c5c7d23f6f4791cbf03b781531574d53f224278cb78531a4c2fe",
-          "raw": "8c8811ee10a9c5c7d23f6f4791cbf03b781531574d53f224278cb78531a4c2fe0ae7cde7dcfeba982307da35c0098709c20f4ea0a4f04e0bbcd1b0c34c8ecc30157159eb0000000366f31e3c1aace551",
-          "target": "0ae7cde7",
-          "timestamp": 1727209020,
-          "utc": "2024-09-24 20:17:00 UTC",
-          "version": "00000003"
-        },
-        "height": 1950121,
-        "timestamp": 1727209020,
-        "utc": "2024-09-24 20:17:00 UTC"
-      }
-    ]
-  }
-}
-```
-
-3. `chain.fork`
-```json
-{
-  "eventName": "chain.fork",
-  "head": {
-    "difficulty": 14142941042437.885,
-    "hash": "8bb4c08b71a496921d121460c55041678943c89107a59306fda948dfc2c8dc8a",
-    "height": 1950129,
-    "is_janushash": true,
-    "pinHash": "ae8e35d5e0ab86b4a30612b37717e29ea2d4d21f039abe130fcb94b03079e073",
-    "pinHeight": 1950112,
-    "worksum": 29365662156809806000,
-    "worksumHex": "0x0000000000000000000000000000000000000000000000019787ca254ac7a6a0"
-  },
-  "latestBlocks": {
-    "data": [
-      {
-        "body": {
-          "rewards": [
-            {
-              "amount": "3.00000000",
-              "amountE8": 300000000,
-              "toAddress": "e4f3052d8c5858ddeca667b2130eec5886c8e9d7fcdea3ec",
-              "txHash": "a19c2b9410440e569c670ca223504379aa09697f7b061e8dbf04c2a7870fd9b1"
-            }
-          ],
-          "transfers": []
-        },
-        "confirmations": 11,
-        "header": {
-          "difficulty": 14142941042437.885,
-          "hash": "10b5ed6868f0e5c4fbd859a8dd5a68d7cf4c9038025acde37a004e9f02e7c85e",
-          "merkleroot": "9205c8127aabd555acb7ff3f95733bd6ec19cb110c2878c55ae77b893fdec7ec",
-          "nonce": "46f6a275",
-          "pow": {
-            "floatSha256t": 0.012585171731188893,
-            "floatVerus": 3.504885418321763e-15,
-            "hashSha256t": "0338c8258ed30e6088b4b81cba45f5c40553be12af0323abb7418e2cf63becd7",
-            "hashVerus": "000000000000fc8db96d150937429ce192e0ad69458311c4d8415b720e59b6c0",
-            "verusV2.2": true
-          },
-          "prevHash": "30537a679be7d6082cc905be4a717ea7985f0853403a40dedea1be4e224916dd",
-          "raw": "30537a679be7d6082cc905be4a717ea7985f0853403a40dedea1be4e224916dd0ae7cde79205c8127aabd555acb7ff3f95733bd6ec19cb110c2878c55ae77b893fdec7ec0000000366f31e0c46f6a275",
-          "target": "0ae7cde7",
-          "timestamp": 1727208972,
-          "utc": "2024-09-24 20:16:12 UTC",
-          "version": "00000003"
-        },
-        "height": 1950119,
-        "timestamp": 1727208972,
-        "utc": "2024-09-24 20:16:12 UTC"
-      },
-      ...
-    ]
-  },
-  "rollbackLength": 1950127
-}
-```
-===
-==- Account
-Subscribe to account updates such as new transactions and balance changes. Address is specified in the `message["params"]["address"]` field. To unsubscribe, this parameter has be specified again.
-
-**Subscribe**
-```json
-{"action": "subscribe", "topic": "account", "params": {"address": "f07353f22a59c6a98042f29ec87d1fc0f44a6c3ceea24797"}}
-```
-**Event types**
-1. `account.state`
-```json
-{
-  "address": "f07353f22a59c6a98042f29ec87d1fc0f44a6c3ceea24797",
-  "balance": "51557.99973680",
-  "balanceE8": 5155799973680,
-  "eventName": "account.state",
-  "history": []
-}
-```
-2. `account.delta`
-```json
-{
-  "address": "f07353f22a59c6a98042f29ec87d1fc0f44a6c3ceea24797",
-  "balance": "51551.99973680",
-  "balanceE8": 5155199973680,
-  "eventName": "account.delta",
-  "history": {
-    "data": [
-      {
-        "body": {
-          "rewards": [
-            {
-              "amount": "3.00000000",
-              "amountE8": 300000000,
-              "toAddress": "f07353f22a59c6a98042f29ec87d1fc0f44a6c3ceea24797",
-              "txHash": "fe33577de3186c1869f9084bfe0aeaee2e92c8fe10f87eedb438036b341b98ef"
-            }
-          ],
-          "transfers": []
-        },
-        "confirmations": 0,
-        "header": {
-          "difficulty": 14142941042437.885,
-          "hash": "80b200a9ac37d7c41d98ad1cc2d6add8ab50a3905bf52d8347b56955923c28bc",
-          "merkleroot": "f3c41bf363fe94eb448bf924f791f77c22a2ebd6a3a5d8948f8aff019f072bea",
-          "nonce": "2719fef5",
-          "pow": {
-            "floatSha256t": 0.010330632328987122,
-            "floatVerus": 6.267357060779177e-13,
-            "hashSha256t": "02a507400db273886cd1bdc61e05bc4bde6978d74ce6e48d33a46fa705c59ae1",
-            "hashVerus": "0000000000b069112cc0caf14507169f6adf1e5278a2ef286cddc89f1162d7ca",
-            "verusV2.2": true
-          },
-          "prevHash": "05b42d206f8a4b2b8094199fd28423151af8aa54a5073ac6e6805f42096dc3a2",
-          "raw": "05b42d206f8a4b2b8094199fd28423151af8aa54a5073ac6e6805f42096dc3a20ae7cde7f3c41bf363fe94eb448bf924f791f77c22a2ebd6a3a5d8948f8aff019f072bea0000000366f2fefb2719fef5",
-          "target": "0ae7cde7",
-          "timestamp": 1727201019,
-          "utc": "2024-09-24 18:03:39 UTC",
-          "version": "00000003"
-        },
-        "height": 1949766,
-        "timestamp": 1727201019,
-        "utc": "2024-09-24 18:03:39 UTC"
-      }
-    ]
-  }
-}
-```
-===
-
-==- Connection
-Subscribe to connection state and deltas. After subscription, a `connection.state` message is sent. New connections trigger a `connection.add` message while removed connections trigger a `connection.remove` message.
-
-**Subscribe**
-```json
-{"action": "subscribe", "topic": "connection"}
-```
-**Event types**
-1. `connection.state`
-```json
-{
-  "connections": [
-    {
-      "id": 22,
-      "inbound": false,
-      "peerAddr": "tcp://213.199.59.252:20016",
-      "since": 0
-    },
-    ...
-    {
-      "id": 1261,
-      "inbound": false,
-      "peerAddr": "tcp://51.222.248.202:9186",
-      "since": 0
-    }
-  ],
-  "eventName": "connection.state",
-  "total": 16
-}
-```
-
-2. `connection.add`
-```json
-{
-  "connection": {
-    "id": 83,
-    "inbound": false,
-    "peerAddr": "tcp://65.21.76.159:9186",
-    "since": 0
-  },
-  "eventName": "connection.add",
-  "total": 3
-}
-```
-
-
-3. `connection.remove`
-```json
-{
-  "eventName": "connection.remove",
-  "id": 83,
-  "total": 2
-}
-```
-===
