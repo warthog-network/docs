@@ -49,7 +49,7 @@ METHOD| PATH | DESCRIPTION
 `GET`   |`/chain/hashrate/:windows`| Show current hashrate based on latest `n` blocks
 `GET`   |`/chain/hashrate/chart/:from/:to/:window`|
 `POST`  |`/chain/append`| Append mined block
-`GET`   |`/account/:account/balance`| Show balance of specific account
+`GET`   |`/account/:account/balance/asset/:asset`| Show balance of specific account for an asset
 `GET`   |`/account/:account/history/:beforeTxIndex`| Show transaction history of specific account
 `GET`   |`/peers/ip_count`| Show peer IPs
 `GET`   |`/peers/banned`| Show banned peers
@@ -374,36 +374,62 @@ Example output of `/chain/hashrate/100`
  Append mined block. Miners must POST mined block they received from `GET /chain/mine/:address`.
  TODO: Detailed description
 
-### `GET /account/:account/balance`
+### `GET /account/:account/balance/asset/:asset`
 
- Show balance of specific account. Example output:
+ Show balance of an account for a specific asset. The `:account` parameter is the account address, and `:asset` is the asset identifier (e.g., `asset:0e4825efffa294610d2ac376713e3bcc9b53d378e823834b64e5df01f75d3b0c`).
+
+ #### Balance Types
+
+ The API returns three balance types:
+
+ | Type | Description |
+ |------|-------------|
+ | `total` | The total balance of the account |
+ | `locked` | Balance locked in open orders |
+ | `mempool` | Balance currently used by pending transactions in the mempool |
+
+Spendable amount is `total - locked` and can be reused for new transactions. If `total - locked` is sufficient but `total - locked - mempool` is not, the system may evict lower-fee transactions from the mempool to make room for a higher-fee transaction. 
+
+ Example output:
 
  ```json
  {
- "code": 0,
- "data": {
-  "accountId": 198,
-  "balance": "5027.00000000",
-  "balanceE8": 502700000000
+  "code": 0,
+  "data": {
+   "account": {
+    "accountId": 9,
+    "address": "2de77d5e23dc63e4c4149d394c979361e9e8e966336c8cd4"
+   },
+   "balance": {
+    "locked": {
+     "precision": 4,
+     "str": "12479.9990",
+     "u64": 124799990
+    },
+    "mempool": {
+     "precision": 4,
+     "str": "100.0000",
+     "u64": 1000000
+    },
+    "total": {
+     "precision": 4,
+     "str": "30899.9999",
+     "u64": 308999999
+    }
+   },
+   "lookupTrace": {
+    "fails": [],
+    "snapshotHeight": null
+   },
+   "token": {
+    "id": 15,
+    "name": "TOK2",
+    "precision": 4,
+    "spec": "asset:0e4825efffa294610d2ac376713e3bcc9b53d378e823834b64e5df01f75d3b0c"
+   }
+  }
  }
-}
-{
- "code": 0,
- "data": {
-  "blockReward": "3.00000000",
-  "blockRewardE8": 300000000,
-  "body": "000000000000000000000001e94f274f08cf64bd76688ffb34012269e045b737000000000000098d0000000011e1a300",
-  "difficulty": 30866431555762.105,
-  "header": "50eaaf1453c84cabef749af9064d73d881174a44d7f165122400604e71342f9d0b2479fd6ec2b44e00bed326c9116b2f85f9f72bdd2157cc521cf49d0cf360fad91b881e00000002660ab00400000000",
-  "height": 1198924,
-  "merklePrefix": "72aa3aa84afd92af788b750d28ed9fe247d8788956bbdddc5a92cbdcb5925e4fbe20dcff8dc31364a524061ff0235bd78c9786d6d29dd2a73b49efacb57966d6",
-  "synced": true,
-  "testnet": false,
-  "totalTxFee": "0",
-  "totalTxFeeE8": 0
- }
-}
-```
+ ```
 
 ### `GET /account/:account/history/:beforeTxIndex`
 
