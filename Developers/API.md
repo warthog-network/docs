@@ -1,5 +1,7 @@
 # API
 
+API for Warthog node version v0.10.3 "dd054a2"
+
 ## Configuration
 
 API is accessed via the RPC endpoints of the node. The endpoints socket can be configured via the `--rpc` command line option:
@@ -27,46 +29,64 @@ Below we assume the RPC socket is accessible at `localhost:3000`. On startup the
 [info] RPC endpoint is 127.0.0.1:3000.
 ```
 
-## Endpoint Overview
+## Overview
 
-You can see an HTML overview of all supported RPC endpoints by opening `localhost:3000` in your browser. Currently the following endpoints are supported:
-
-METHOD| PATH | DESCRIPTION
-------|------|------------
-`POST`  |`/transaction/add`| Send transactions
-`GET`   |`/transaction/mempool`| Show content of mempool
-`GET`   |`/transaction/lookup/:txid`| Transaction lookup
-`GET`   |`/transaction/minfee` | Show the minimum fee required by this node
-`GET`   |`/settings/mempool/minfee/:feeE8` | Adjust the minimum transaction fee
-`GET`   |`/chain/head`| Show info on chain head
-`GET`   |`/chain/grid`| Show header grid (used for sync)
-`GET`   |`/chain/block/:id/hash`| Show hash of specific block
-`GET`   |`/chain/signed_snapshot`| Show chain snapshot
-`GET`   |`/chain/block/:id/header`| Show header of specific block
-`GET`   |`/chain/block/:id`| Show header and body of specific block
-`GET`   |`/chain/mine/:address`| Generate data required for mining
-`GET`   |`/chain/txcache`| Show transaction cache
-`GET`   |`/chain/hashrate/:windows`| Show current hashrate based on latest `n` blocks
-`GET`   |`/chain/hashrate/chart/:from/:to/:window`|
-`POST`  |`/chain/append`| Append mined block
-`GET`   |`/account/:account/balance/asset/:asset`| Show balance of specific account for an asset
-`GET`   |`/account/:account/history/:beforeTxIndex`| Show transaction history of specific account
-`GET`   |`/peers/ip_count`| Show peer IPs
-`GET`   |`/peers/banned`| Show banned peers
-`GET`   |`/peers/unban`| Unban all peers
-`GET`   |`/peers/offenses/:page`| Show offenses of peers
-`GET`   |`/peers/connected`| Show info of connected peers
-`GET`   |`/peers/endpoints`| Show known peer endpoints
-`GET`   |`/peers/connect_timers`| Show timers used for reconnect
-`GET`   |`/tools/encode16bit/from_e8/:feeE8`| Round raw 64 integer to closest 16 bit representation (for fee specification)
-`GET`   |`/tools/encode16bit/from_string/:feestring`| Round coin amount string to closest 16 bit representation (for fee specification)
-`GET`   | `/tools/parse_price/:price/:precision` | Parse price adjusted for asset precision
-`GET`   | `/tools/info` | Print information about this node
-`GET`   | `/tools/wallet/new`| Create a new wallet
-`GET`   | `/tools/wallet/from_privkey/:privkey`| Restore wallet from a private key
-`GET`   | `/tools/janushash_number/:headerhex`| Show number interpretation of a header's Janushash.
-`GET`   | `/tools/sample_verified_peers/:number`| List verified peers
-`WEBSOCKET`   |`/ws/chain_delta`| Get chain delta events
+| Method | Path | Description |
+|--------|------|-------------|
+| `POST` | `/transaction/add` | Send transactions |
+| `GET` | `/transaction/mempool` | Show content of mempool |
+| `GET` | `/transaction/lookup/:txid` | Transaction lookup by transaction ID |
+| `GET` | `/transaction/latest` | Show latest transactions |
+| `GET` | `/transaction/minfee` | Show the minimum fee required by this node |
+| `GET` | `/settings/mempool/minfee/:feeE8` | Adjust the minimum transaction fee |
+| `GET` | `/chain/head` | Show info on chain head |
+| `GET` | `/chain/grid` | Show header grid (used for sync) |
+| `GET` | `/chain/block/:id/hash` | Show hash of specific block |
+| `GET` | `/chain/block/:id/header` | Show header of specific block |
+| `GET` | `/chain/block/:id/binary` | Show binary data of specific block |
+| `GET` | `/chain/block/:id` | Show header and body of specific block |
+| `GET` | `/chain/mine/:account` | Generate data required for mining |
+| `GET` | `/chain/txcache` | Show transaction cache |
+| `GET` | `/chain/hashrate/:window` | Show current hashrate based on latest N blocks |
+| `GET` | `/chain/signed_snapshot` | Show chain snapshot |
+| `GET` | `/chain/hashrate/chart/block/:from/:to/:window` | Show hashrate chart by block range |
+| `GET` | `/chain/hashrate/chart/time/:from/:to/:interval` | Show hashrate chart by time range |
+| `POST` | `/chain/append` | Append mined block |
+| `GET` | `/token/complete` | Search tokens by name and/or hash prefix |
+| `GET` | `/market/:market` | Show market orders and liquidity pool |
+| `GET` | `/account/:account/mempool` | Show mempool transactions for account |
+| `GET` | `/account/:account/open_orders` | Show all open orders for account |
+| `GET` | `/account/:account/open_orders/:asset` | Show open orders for account and specific asset |
+| `GET` | `/account/:account/balance/:token` | Show balance of specific account for a token |
+| `GET` | `/account/:account/balance_wart` | Show WART balance of specific account |
+| `GET` | `/account/:account/history/:beforeTxIndex` | Show transaction history of specific account |
+| `GET` | `/account/richlist/:token` | Show richlist for a specific token |
+| `GET` | `/peers/ip_count` | Show peer IP counts |
+| `GET` | `/peers/banned` | Show banned peers |
+| `GET` | `/peers/offenses/:page` | Show offenses of peers |
+| `GET` | `/peers/connected/connection` | Show connection info of connected peers |
+| `GET` | `/peers/connection_schedule` | Show connection schedule |
+| `GET` | `/peers/unban` | Unban all peers |
+| `GET` | `/peers/connected` | Show info of connected peers |
+| `GET` | `/peers/disconnect/:id` | Disconnect a specific peer |
+| `GET` | `/peers/throttled` | Show throttled peers |
+| `GET` | `/peers/transmission_hours` | Show transmission data by hours |
+| `GET` | `/peers/transmission_minutes` | Show transmission data by minutes |
+| `GET` | `/tools/encode16bit/from_e8/:feeE8` | Round raw 64 integer to closest 16 bit representation |
+| `GET` | `/tools/encode16bit/from_string/:string` | Round coin amount string to closest 16 bit representation |
+| `GET` | `/tools/parse_price/:price/:precision` | Parse price adjusted for asset precision |
+| `GET` | `/tools/info` | Print information about this node |
+| `GET` | `/tools/wallet/new` | Create a new wallet |
+| `GET` | `/tools/wallet/from_privkey/:privkey` | Restore wallet from a private key |
+| `GET` | `/tools/janushash_number/:headerhex` | Show number interpretation of a header's Janushash |
+| `GET` | `/tools/sample_verified_peers/:number` | List verified peers |
+| `GET` | `/debug/header_download` | Show header download status |
+| `GET` | `/loadtest/block_request/:conn_id` | Load test block request |
+| `GET` | `/loadtest/header_request/:conn_id` | Load test header request |
+| `GET` | `/loadtest/disable/:conn_id` | Disable load test connection |
+| `GET` | `/debug/fakemine` | Generate fake mining data (default address) |
+| `GET` | `/debug/rollback` | Rollback chain |
+| `GET` | `/debug/fakemine/:address` | Generate fake mining data for address |
 
 ## Detailed Description
 
@@ -118,9 +138,15 @@ Send transactions in JSON format, returns transaction hash in hex format:
   }
  }
 }
- ```
+```
 
- ### `GET /transaction/minfee`
+### `GET /transaction/latest`
+
+Show latest transactions.
+
+**TODO: Add JSON output example**
+
+### `GET /transaction/minfee`
 
  Show the minimum fee required by this node. Transactions with a lower fee will not be accepted or requested by the node.
 
@@ -135,9 +161,9 @@ Send transactions in JSON format, returns transaction hash in hex format:
    "amount": "0.00009992"
   }
  }
- ```
+```
 
- ### `GET /settings/mempool/minfee/:feeE8`
+### `GET /settings/mempool/minfee/:feeE8`
 
  Adjust the minimum transaction fee. The desired new minimum transaction fee should be specified.
 
@@ -150,7 +176,7 @@ Send transactions in JSON format, returns transaction hash in hex format:
    "deleted": 0
   }
  }
- ```
+```
 
  You can also set the min fee when launching your node.
 
@@ -192,40 +218,10 @@ Send transactions in JSON format, returns transaction hash in hex format:
  "data": [
   "19f65d40c6bc02a16378712bd7652eaebc925955e96c0262641314520000000021c88fbd99f0d3369f7f1ad981e11b8c6f032e13d4ef28311226ea5c8574c3fe3635b32500000001649f78127c04d23d",
   "0e43cf390ca986fabbed37a33386b4ad73723d51fab291d12013351f0000000021d1c6076e52222fb8c83fe33d55c610482cd272b7789646710510df3ba37a4f55b30e4e0000000164a221eb03577627",
-  "2e92a976c5f7df4cfa26a37f534f79795d23342cd003fdaa000d28050000000021cab3fb524f9a8ca2cc60fbe97602c87079628007cedffdc35cfe9c2ee213fd065bfd890000000164a4c5ec4b03db81",
-  "8473ff5f3f518d7c452cac1615bf8c9002bd8fbbbd55de46fe44093a0000000021bcc4fc5876f1e6cac619f2d8879440d1d8d12533366aae1d510b0545726e9001d3c19e0000000164a76310886953a6",
-  "f0712262bd4e33de238d1e398af6b230a3d73a35b47f1594b0a937390000000021bbe95b117621d2cac808d78ec949629153d613b786ee6c36c7138648fac654ddda201f0000000164aa047487b3ac63",
-  "46d35ed8925c8352ba39724f6300d722aa68647d384a1337cc1e2c0a0000000021cbd7eeb4de9855cf012681cc0136970ec2d0908f67e27e67a776b73938fd5bc028991e0000000164acb408c64731c8",
-  "b519f66a8273a8e1a729b6a002fb559e6f9e8789acc4d3735650a00d0000000023d178c86190febff3340df034fe867fe19539d9a6c1715d9ce5775e5231db1c82d564ab0000000164af016a0fea6998",
-  "ede75acb72ac56e888ffa70b05668e61425dd58859abaabe5e04fc040000000025d852ac6f8f2c63fda6d0de9dfa3cda237a56f3c5ffd3ac7108373e9d2890530f8f927b0000000164b174eec1703326",
   .
   .
   .
  ]
-}
- ```
-
-### `GET /chain/signed_snapshot`
-
- Show chain snapshot. Example output
-
- ```json
-{
- "code": 0,
- "data": {
-  "header": {
-   "difficulty": 5850035871080.048,
-   "hash": "ac4f50ef90c0730075f4995d0b33691e9e7d69f84d2191c029371c0000000000",
-   "merkleroot": "a4d44aff9ebd539f2b5e758fb76df22bfd13a2e4d894752c7892f9e9c3f3d969",
-   "nonce": "0d8e8eab",
-   "prevHash": "11f2b6860910f7b544e01fd5ed5419588c29e42b305553bd492a0d0000000000",
-   "raw": "11f2b6860910f7b544e01fd5ed5419588c29e42b305553bd492a0d00000000002ac075d9a4d44aff9ebd539f2b5e758fb76df22bfd13a2e4d894752c7892f9e9c3f3d96900000001650bd0820d8e8eab",
-   "target": "d975c02a",
-   "timestamp": 1695273090,
-   "utc": "2023-09-21 05:11:30 UTC",
-   "version": "00000001"
-  }
- }
 }
  ```
 
@@ -266,9 +262,15 @@ Send transactions in JSON format, returns transaction hash in hex format:
   }
  }
 }
- ```
+```
 
-### `GET/chain/block/:id`
+### `GET /chain/block/:id/binary`
+
+Show binary data of specific block with structure annotations.
+
+**TODO: Add JSON output example**
+
+### `GET /chain/block/:id`
 
  Show header and body of specific block.
  Example output of `/chain/block/366700`
@@ -350,7 +352,7 @@ Send transactions in JSON format, returns transaction hash in hex format:
 {
  "code": 0,
  "data": []
-}
+ }
  ```
 
 ### `GET /chain/hashrate/:window`
@@ -367,16 +369,76 @@ Example output of `/chain/hashrate/100`
   "N": 100
  }
 }
+```
+
+### `GET /chain/signed_snapshot`
+
+ Show chain snapshot. Example output
+
+ ```json
+{
+ "code": 0,
+ "data": {
+  "priority": {
+    "height": 1198912,
+    "importance": 12345
+  },
+  "hash": "a7bd097d9c10dc393239f169f6dd5352e0b4e28e942aaa78b54c57ed1ec7315b",
+  "signature": "..."}
+ }
+}
  ```
+
+### `GET /chain/hashrate/chart/block/:from/:to/:window`
+
+Show hashrate chart data for a block range.
+
+**TODO: Add JSON output example**
+
+### `GET /chain/hashrate/chart/time/:from/:to/:interval`
+
+Show hashrate chart data for a time range.
+
+**TODO: Add JSON output example**
 
 ### `POST /chain/append`
 
  Append mined block. Miners must POST mined block they received from `GET /chain/mine/:address`.
  TODO: Detailed description
 
-### `GET /account/:account/balance/asset/:asset`
+### `GET /token/complete`
 
- Show balance of an account for a specific asset. The `:account` parameter is the account address, and `:asset` is the asset identifier (e.g., `asset:0e4825efffa294610d2ac376713e3bcc9b53d378e823834b64e5df01f75d3b0c`).
+Search tokens by name prefix and/or hash prefix. Query parameters: `namePrefix` and `hashPrefix`.
+
+**TODO: Add JSON output example**
+
+### `GET /market/:market`
+
+Show market orders and liquidity pool for a specific asset. The `:market` parameter is the asset identifier.
+
+**TODO: Add JSON output example**
+
+### `GET /account/:account/mempool`
+
+Show mempool transactions for a specific account.
+
+**TODO: Add JSON output example**
+
+### `GET /account/:account/open_orders`
+
+Show all open orders for a specific account.
+
+**TODO: Add JSON output example**
+
+### `GET /account/:account/open_orders/:asset`
+
+Show open orders for a specific account and asset.
+
+**TODO: Add JSON output example**
+
+### `GET /account/:account/balance/:token`
+
+ Show balance of an account for a specific asset. The `:account` parameter is the account address, and `:token` is the token spec (e.g., `asset:0e4825efffa294610d2ac376713e3bcc9b53d378e823834b64e5df01f75d3b0c`).
 
  #### Balance Types
 
@@ -388,7 +450,7 @@ Example output of `/chain/hashrate/100`
  | `locked` | Balance locked in open orders |
  | `mempool` | Balance currently used by pending transactions in the mempool |
 
-Spendable amount is `total - locked` and can be reused for new transactions. If `total - locked` is sufficient but `total - locked - mempool` is not, the system may evict lower-fee transactions from the mempool to make room for a higher-fee transaction. 
+ Spendable amount is `total - locked` and can be reused for new transactions. If `total - locked` is sufficient but `total - locked - mempool` is not, the system may evict lower-fee transactions from the mempool to make room for a higher-fee transaction. 
 
  Example output:
 
@@ -429,7 +491,13 @@ Spendable amount is `total - locked` and can be reused for new transactions. If 
    }
   }
  }
- ```
+```
+
+### `GET /account/:account/balance_wart`
+
+Show WART balance of a specific account.
+
+**TODO: Add JSON output example**
 
 ### `GET /account/:account/history/:beforeTxIndex`
 
@@ -487,6 +555,78 @@ Spendable amount is `total - locked` and can be reused for new transactions. If 
 }
 ```
 
+### `GET /account/richlist/:token`
+
+Show richlist for a specific token.
+
+**TODO: Add JSON output example**
+
+### `GET /peers/ip_count`
+
+Show count of connections per IP address.
+
+**TODO: Add JSON output example**
+
+### `GET /peers/banned`
+
+Show list of banned peers.
+
+**TODO: Add JSON output example**
+
+### `GET /peers/offenses/:page`
+
+Show paginated list of peer offenses.
+
+**TODO: Add JSON output example**
+
+### `GET /peers/connected/connection`
+
+Show connection information of connected peers.
+
+**TODO: Add JSON output example**
+
+### `GET /peers/connection_schedule`
+
+Show the connection schedule for peers.
+
+**TODO: Add JSON output example**
+
+### `GET /peers/unban`
+
+Unban all banned peers.
+
+**TODO: Add JSON output example**
+
+### `GET /peers/connected`
+
+Show detailed information about connected peers.
+
+**TODO: Add JSON output example**
+
+### `GET /peers/disconnect/:id`
+
+Disconnect a specific peer by connection ID.
+
+**TODO: Add JSON output example**
+
+### `GET /peers/throttled`
+
+Show throttled peers.
+
+**TODO: Add JSON output example**
+
+### `GET /peers/transmission_hours`
+
+Show transmission statistics aggregated by hours.
+
+**TODO: Add JSON output example**
+
+### `GET /peers/transmission_minutes`
+
+Show transmission statistics aggregated by minutes.
+
+**TODO: Add JSON output example**
+
 ### `GET /tools/encode16bit/from_e8/:feeE8`
 
  Round raw fee integer representation (coin amount is this number divided by 10^8) to closest 16 bit representation. This is required for fee specification in the `/transaction/add` endpoint. Example output of `/tools/encode16bit/from_e8/5002`
@@ -504,7 +644,7 @@ Spendable amount is `total - locked` and can be reused for new transactions. If 
 }
 ```
 
-### `GET /tools/encode16bit/from_string/:feestring`
+### `GET /tools/encode16bit/from_string/:string`
 
  Round fee amount string to closest 16 bit representation. This is required for fee specification in the `/transaction/add` endpoint. Example output of `/tools/encode16bit/from_string/0.001`:
 
@@ -551,6 +691,7 @@ Example output of `/tools/parse_price/0.123456/3`:
  }
 }
 ```
+
 ### `GET /tools/info`
 
 Print information about this node.
@@ -572,10 +713,10 @@ Example output of `/tools/info`:
    "sinceUTC": "2025-11-18 08:14:51 UTC"
   },
   "version": {
-   "commit": "4da03e4",
+   "commit": "dd054a2",
    "major": 0,
    "minor": 10,
-   "name": "v0.10.3 \"4da03e4\"",
+   "name": "v0.10.3 \"dd054a2\"",
    "patch": 3
   }
  }
@@ -584,19 +725,19 @@ Example output of `/tools/info`:
 
 ### `GET /tools/wallet/new`
 
-Create a new wallet.
+ Create a new wallet.
 
-Example output of `/tools/wallet/new`:
+ Example output of `/tools/wallet/new`:
 
-```json
-{
- "code": 0,
- "data": {
-  "address": "11c6c0f7148a845cc899360a38fa839ba3d5e719293bb5c6",
-  "privKey": "d711913bea313c7a9007e115a5969d9e1127f119d7ec72b3d713f698ab591488",
-  "pubKey": "03a907038c8aba55cecf71b242c18d4c92e2a37ff83b8779444f10ceb720fe4551"
+ ```json
+ {
+  "code": 0,
+  "data": {
+   "address": "11c6c0f7148a845cc899360a38fa839ba3d5e719293bb5c6",
+   "privKey": "d711913bea313c7a9007e115a5969d9e1127f119d7ec72b3d713f698ab591488",
+   "pubKey": "03a907038c8aba55cecf71b242c18d4c92e2a37ff83b8779444f10ceb720fe4551"
+  }
  }
-}
 ```
 
 !!!warning Warning
@@ -632,10 +773,11 @@ Example output of `/tools/janushash_number/b4e91160d990b7b679234fc7cdc1aefbe11af
  }
 }
 ```
+
 ### `GET /tools/sample_verified_peers/:number`
 List verified peers.
 
-Example output of `/tools/wallet/from_privkey/d3ce2210adf0fccabe31b61309e2b80c029a7e4e305aeed29432edd428d35c3d`:
+Example output of `/tools/sample_verified_peers/5`:
 
 ```json
 {
@@ -650,6 +792,49 @@ Example output of `/tools/wallet/from_privkey/d3ce2210adf0fccabe31b61309e2b80c02
 }
 ```
 
+### `GET /debug/header_download`
+
+Show header download status for debugging purposes.
+
+**TODO: Add JSON output example**
+
+### `GET /loadtest/block_request/:conn_id`
+
+Load test endpoint for block requests.
+
+**TODO: Add JSON output example**
+
+### `GET /loadtest/header_request/:conn_id`
+
+Load test endpoint for header requests.
+
+**TODO: Add JSON output example**
+
+### `GET /loadtest/disable/:conn_id`
+
+Disable a load test connection.
+
+**TODO: Add JSON output example**
+
+### `GET /debug/fakemine`
+
+Generate fake mining data using the default address.
+
+**TODO: Add JSON output example**
+
+### `GET /debug/rollback`
+
+Rollback the chain by one block.
+
+**TODO: Add JSON output example**
+
+### `GET /debug/fakemine/:address`
+
+Generate fake mining data for a specific address.
+
+**TODO: Add JSON output example**
+
+## WebSocket
 
 ### `WEBSOCKET /stream`
 This websocket endpoint allows real-time data streams on several topics such as `chain`, `account` and `connection` related information. Subscribe with a message containing `"action": "subscribe"` and unsubscribe similarly with `"action": "unsubscribe"`, as shown below.
@@ -659,7 +844,7 @@ Subscribe to 10 latest blocks. Upon subscription, the 10 latest blocks are provi
 
 **Subscribe**
 ```json
-{"action": "subscribe", "topic": "account", "params": {"address": "f07353f22a59c6a98042f29ec87d1fc0f44a6c3ceea24797"}}
+{"action": "subscribe", "topic": "chain"}
 ```
 **Event types**
 1. `chain.state`
@@ -704,42 +889,6 @@ Receive 10 latest blocks.
       "utc": "2024-09-24 18:03:39 UTC"
     },
     ...
-    {
-      "body": {
-        "rewards": [
-          {
-            "amount": "3.00000000",
-            "amountE8": 300000000,
-            "toAddress": "e4f3052d8c5858ddeca667b2130eec5886c8e9d7fcdea3ec",
-            "txHash": "fab8b317590c011ba4fbfcc27824892fd4d822bd194d373c7ea21da05e22f10b"
-          }
-        ],
-        "transfers": []
-      },
-      "confirmations": 1,
-      "header": {
-        "difficulty": 14142941042437.885,
-        "hash": "cbaa8aefc5c5df6a4cfa8134bb6780895c0389f40a8c0f8ca9c627e1177ea2df",
-        "merkleroot": "ac7e68f57176e65e1ff9263d47a28e898d1cac505d57e28665f236bf126d3f6d",
-        "nonce": "023fdc6a",
-        "pow": {
-          "floatSha256t": 0.014122519874945283,
-          "floatVerus": 6.624495242688164e-14,
-          "hashSha256t": "039d8891ce3ef0432b9efb50d527b62496f4892a7f0594fcc71957b99cd41434",
-          "hashVerus": "000000000012a573afadcbac539deda01718c3fdac34099569fd71bb3dfb14d8",
-          "verusV2.2": true
-        },
-        "prevHash": "bf788e2e5a82ee12859d0f9d6c0543233c4f6af1f29f99dcd93042e4c9398471",
-        "raw": "bf788e2e5a82ee12859d0f9d6c0543233c4f6af1f29f99dcd93042e4c93984710ae7cde7ac7e68f57176e65e1ff9263d47a28e898d1cac505d57e28665f236bf126d3f6d0000000366f3003b023fdc6a",
-        "target": "0ae7cde7",
-        "timestamp": 1727201339,
-        "utc": "2024-09-24 18:08:59 UTC",
-        "version": "00000003"
-      },
-      "height": 1949776,
-      "timestamp": 1727201339,
-      "utc": "2024-09-24 18:08:59 UTC"
-    }
   ],
   "eventName": "chain.state",
   "head": {
@@ -987,3 +1136,4 @@ Subscribe to connection state and deltas. After subscription, a `connection.stat
   "total": 2
 }
 ```
+===
