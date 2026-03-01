@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.0.1.825696793728">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.0.1.825699573085">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 4.0.1">
@@ -27,12 +27,12 @@
 
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../resources/css/retype.css?v=4.0.1.825696793728" rel="stylesheet">
+    <link href="../../resources/css/retype.css?v=4.0.1.825699573085" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../resources/js/config.js?v=4.0.1.825696793728" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../resources/js/config.js?v=4.0.1.825699573085" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../resources/js/retype.js?v=4.0.1" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.0.1.825696793728" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../../resources/js/prism.js?v=4.0.1.825696793728" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.0.1.825699573085" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../../resources/js/prism.js?v=4.0.1.825699573085" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -288,8 +288,8 @@
 </tr>
 <tr>
 <td><code translate="no" v-pre>GET</code></td>
-<td><code translate="no" v-pre>/account/:account/balance</code></td>
-<td>Show balance of specific account</td>
+<td><code translate="no" v-pre>/account/:account/balance/asset/:asset</code></td>
+<td>Show balance of specific account for an asset</td>
 </tr>
 <tr>
 <td><code translate="no" v-pre>GET</code></td>
@@ -722,37 +722,82 @@ Example output of <code translate="no" v-pre>/chain/block/366700</code></p>
 </doc-anchor-target>
 <p>Append mined block. Miners must POST mined block they received from <code translate="no" v-pre>GET /chain/mine/:address</code>.
 TODO: Detailed description</p>
-<doc-anchor-target id="get-accountaccountbalance">
+<doc-anchor-target id="get-accountaccountbalanceassetasset">
     <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#get-accountaccountbalance">#</doc-anchor-trigger>
-        <span><code translate="no" v-pre>GET /account/:account/balance</code></span>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#get-accountaccountbalanceassetasset">#</doc-anchor-trigger>
+        <span><code translate="no" v-pre>GET /account/:account/balance/asset/:asset</code></span>
     </h3>
 </doc-anchor-target>
-<p>Show balance of specific account. Example output:</p>
+<p>Show balance of an account for a specific asset. The <code translate="no" v-pre>:account</code> parameter is the account address, and <code translate="no" v-pre>:asset</code> is the asset identifier (e.g., <code translate="no" v-pre>asset:0e4825efffa294610d2ac376713e3bcc9b53d378e823834b64e5df01f75d3b0c</code>).</p>
+<doc-anchor-target id="balance-types">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#balance-types">#</doc-anchor-trigger>
+        <span>Balance Types</span>
+    </h4>
+</doc-anchor-target>
+<p>The API returns three balance types:</p>
+<div class="table-wrapper scrollbar overflow-hidden">
+<table class="comfortable">
+<thead>
+<tr>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code translate="no" v-pre>total</code></td>
+<td>The total balance of the account</td>
+</tr>
+<tr>
+<td><code translate="no" v-pre>locked</code></td>
+<td>Balance locked in open orders</td>
+</tr>
+<tr>
+<td><code translate="no" v-pre>mempool</code></td>
+<td>Balance currently used by pending transactions in the mempool</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Spendable amount is <code translate="no" v-pre>total - locked</code> and can be reused for new transactions. If <code translate="no" v-pre>total - locked</code> is sufficient but <code translate="no" v-pre>total - locked - mempool</code> is not, the system may evict lower-fee transactions from the mempool to make room for a higher-fee transaction.</p>
+<p>Example output:</p>
 <div class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-json"><code v-pre class="language-json">{
-&quot;code&quot;: 0,
-&quot;data&quot;: {
- &quot;accountId&quot;: 198,
- &quot;balance&quot;: &quot;5027.00000000&quot;,
- &quot;balanceE8&quot;: 502700000000
-}
-}
-{
-&quot;code&quot;: 0,
-&quot;data&quot;: {
- &quot;blockReward&quot;: &quot;3.00000000&quot;,
- &quot;blockRewardE8&quot;: 300000000,
- &quot;body&quot;: &quot;000000000000000000000001e94f274f08cf64bd76688ffb34012269e045b737000000000000098d0000000011e1a300&quot;,
- &quot;difficulty&quot;: 30866431555762.105,
- &quot;header&quot;: &quot;50eaaf1453c84cabef749af9064d73d881174a44d7f165122400604e71342f9d0b2479fd6ec2b44e00bed326c9116b2f85f9f72bdd2157cc521cf49d0cf360fad91b881e00000002660ab00400000000&quot;,
- &quot;height&quot;: 1198924,
- &quot;merklePrefix&quot;: &quot;72aa3aa84afd92af788b750d28ed9fe247d8788956bbdddc5a92cbdcb5925e4fbe20dcff8dc31364a524061ff0235bd78c9786d6d29dd2a73b49efacb57966d6&quot;,
- &quot;synced&quot;: true,
- &quot;testnet&quot;: false,
- &quot;totalTxFee&quot;: &quot;0&quot;,
- &quot;totalTxFeeE8&quot;: 0
-}
+ &quot;code&quot;: 0,
+ &quot;data&quot;: {
+  &quot;account&quot;: {
+   &quot;accountId&quot;: 9,
+   &quot;address&quot;: &quot;2de77d5e23dc63e4c4149d394c979361e9e8e966336c8cd4&quot;
+  },
+  &quot;balance&quot;: {
+   &quot;locked&quot;: {
+    &quot;precision&quot;: 4,
+    &quot;str&quot;: &quot;12479.9990&quot;,
+    &quot;u64&quot;: 124799990
+   },
+   &quot;mempool&quot;: {
+    &quot;precision&quot;: 4,
+    &quot;str&quot;: &quot;100.0000&quot;,
+    &quot;u64&quot;: 1000000
+   },
+   &quot;total&quot;: {
+    &quot;precision&quot;: 4,
+    &quot;str&quot;: &quot;30899.9999&quot;,
+    &quot;u64&quot;: 308999999
+   }
+  },
+  &quot;lookupTrace&quot;: {
+   &quot;fails&quot;: [],
+   &quot;snapshotHeight&quot;: null
+  },
+  &quot;token&quot;: {
+   &quot;id&quot;: 15,
+   &quot;name&quot;: &quot;TOK2&quot;,
+   &quot;precision&quot;: 4,
+   &quot;spec&quot;: &quot;asset:0e4825efffa294610d2ac376713e3bcc9b53d378e823834b64e5df01f75d3b0c&quot;
+  }
+ }
 }</code></pre>
 </doc-codeblock></div>
 <doc-anchor-target id="get-accountaccounthistorybeforetxindex">
