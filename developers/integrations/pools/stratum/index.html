@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.0.1.825699573085">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.1.0.825754865855">
 
     <!-- See retype.com -->
-    <meta name="generator" content="Retype 4.0.1">
+    <meta name="generator" content="Retype 4.1.0">
 
     <!-- Primary Meta Tags -->
     <title>Stratum Protocol</title>
@@ -27,11 +27,11 @@
 
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../../../resources/css/retype.css?v=4.0.1.825699573085" rel="stylesheet">
+    <link href="../../../../resources/css/retype.css?v=4.1.0.825754865855" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../../../resources/js/config.js?v=4.0.1.825699573085" data-turbo-eval="false" defer></script>
-    <script data-cfasync="false" src="../../../../resources/js/retype.js?v=4.0.1" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../../../resources/js/lunr.js?v=4.0.1.825699573085" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../../../resources/js/config.js?v=4.1.0.825754865855" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../../../resources/js/retype.js?v=4.1.0" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../../../resources/js/lunr.js?v=4.1.0.825754865855" data-turbo-eval="false" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -171,7 +171,7 @@
         <span>Request from client:</span>
     </h4>
 </doc-anchor-target>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div id="request-from-client-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-none"><code v-pre class="language-none">{
   &quot;id&quot;: 1,
   &quot;method&quot;: &quot;mining.subscribe&quot;,
@@ -188,7 +188,7 @@
         <span>Response from pool:</span>
     </h4>
 </doc-anchor-target>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div id="response-from-pool-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-none"><code v-pre class="language-none">{
   &quot;id&quot;: 1,                 # same as &quot;id&quot; in the request
   &quot;result&quot;: [
@@ -217,7 +217,7 @@
         <span>Request from client:</span>
     </h4>
 </doc-anchor-target>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div id="request-from-client-1-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-none"><code v-pre class="language-none">{
   &quot;id&quot;: 2, 
   &quot;method&quot;: &quot;mining.authorize&quot;,
@@ -233,7 +233,7 @@
         <span>Response from pool:</span>
     </h4>
 </doc-anchor-target>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div id="response-from-pool-1-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-none"><code v-pre class="language-none">{
   &quot;id&quot;: 2,        # same &quot;id&quot; as in the request
   &quot;result&quot;: true,
@@ -254,7 +254,7 @@
         <span>Mining.notify</span>
     </h3>
 </doc-anchor-target>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div id="miningnotify-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-none"><code v-pre class="language-none">{
   &quot;id&quot;: null,
   &quot;method&quot;: &quot;mining.notify&quot;,
@@ -332,7 +332,7 @@
         <span>Mining.set_difficulty</span>
     </h3>
 </doc-anchor-target>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div id="miningset_difficulty-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-none"><code v-pre class="language-none">{
   &quot;id&quot;: null,
   &quot;method&quot;: &quot;mining.set_difficulty&quot;,
@@ -362,7 +362,7 @@ This means the miner must meet the target <code translate="no" v-pre>1/difficult
     </h3>
 </doc-anchor-target>
 <p>When the miner has found nonce and extranonce2 such that the block is</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div id="miningsubmit-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-none"><code v-pre class="language-none">{
   &quot;id&quot;: 4,
   &quot;method&quot;: &quot;mining.submit&quot;,
@@ -375,7 +375,7 @@ This means the miner must meet the target <code translate="no" v-pre>1/difficult
 }</code></pre>
 </doc-codeblock></div>
 <p>Pool will reply with</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div id="miningsubmit-code-2" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-none"><code v-pre class="language-none">{
   &quot;id&quot;: 4,        # same &quot;id&quot; as in the request
   &quot;result&quot;: true,
@@ -390,7 +390,7 @@ This means the miner must meet the target <code translate="no" v-pre>1/difficult
     </h2>
 </doc-anchor-target>
 <p>Pool response must specify request id in the <code translate="no" v-pre>&quot;id&quot;</code> field. Errors are reported by setting <code translate="no" v-pre>&quot;result&quot;</code> to <code translate="no" v-pre>null</code> and specifying error details in an array of size 3 (code, message, additional info) in the <code translate="no" v-pre>&quot;error&quot;</code> field.</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div id="error-reporting-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-none"><code v-pre class="language-none">{
   &quot;id&quot;: 3,
   &quot;result&quot;: null,
@@ -403,7 +403,7 @@ This means the miner must meet the target <code translate="no" v-pre>1/difficult
 </doc-codeblock></div>
 <p>01/21/2024 6:07 PM
 Every coin has its own stratum specification and I changed just very little. Basically we do not have coinbases but mining.notify looks like this:</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div id="error-reporting-code-2" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-none"><code v-pre class="language-none">{
   &quot;id&quot;: null,
   &quot;method&quot;: &quot;mining.notify&quot;,

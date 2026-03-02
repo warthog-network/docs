@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.0.1.825699573085">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.1.0.825754865855">
 
     <!-- See retype.com -->
-    <meta name="generator" content="Retype 4.0.1">
+    <meta name="generator" content="Retype 4.1.0">
 
     <!-- Primary Meta Tags -->
     <title>Compiling Warthog from source on Linux</title>
@@ -31,11 +31,11 @@
 
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../../resources/css/retype.css?v=4.0.1.825699573085" rel="stylesheet">
+    <link href="../../../resources/css/retype.css?v=4.1.0.825754865855" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.0.1.825699573085" data-turbo-eval="false" defer></script>
-    <script data-cfasync="false" src="../../../resources/js/retype.js?v=4.0.1" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.0.1.825699573085" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.1.0.825754865855" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../../resources/js/retype.js?v=4.1.0" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.1.0.825754865855" data-turbo-eval="false" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -163,7 +163,7 @@
     </h2>
 </doc-anchor-target>
 <p>Before we can start make sure you have a recent Linux distribution. In this guide we are using Ubuntu 22.04.3 LTS. We need to update our package manager and install <code translate="no" v-pre>git</code>, <code translate="no" v-pre>build-essential</code>, <code translate="no" v-pre>meson</code> and <code translate="no" v-pre>ninja-build</code>:</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div id="installing-required-packages-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-none"><code v-pre class="language-none">sudo apt update
 sudo apt install git
 sudo apt install build-essential meson ninja-build</code></pre>
@@ -189,7 +189,7 @@ sudo apt install build-essential meson ninja-build</code></pre>
     </h2>
 </doc-anchor-target>
 <p>Now that we have git we can clone the Warthog repository from GitHub:</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div id="cloning-the-repo-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-none"><code v-pre class="language-none">git clone https://github.com/warthog-network/Warthog</code></pre>
 </doc-codeblock></div>
 <p><figure class="content-center">
@@ -204,7 +204,7 @@ sudo apt install build-essential meson ninja-build</code></pre>
     </h2>
 </doc-anchor-target>
 <p>A new directory should be created, let&#x27;s <code translate="no" v-pre>cd</code> into it and run <code translate="no" v-pre>meson build</code> to create a build directory named <code translate="no" v-pre>build</code>:</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div id="compiling-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-none"><code v-pre class="language-none">cd Warthog
 meson build</code></pre>
 </doc-codeblock></div>
@@ -214,7 +214,7 @@ meson build</code></pre>
 </figure>
 </p>
 <p>When you run the <code translate="no" v-pre>meson build</code> command for the first time some extra dependencies will be downloaded so it might take a while.  Now we have a build directory within the Warthog directory so we <code translate="no" v-pre>cd</code> into it and start compilation with <code translate="no" v-pre>ninja</code>:</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div id="compiling-code-2" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-none"><code v-pre class="language-none">cd build
 ninja</code></pre>
 </doc-codeblock></div>
@@ -225,7 +225,7 @@ ninja</code></pre>
 </p>
 <p>Congratulations! You now have compiled the Warthog C++ source. But wait - there is a problem: we did not enable compiler optimizations. In <code translate="no" v-pre>meson</code> compiler optimizations need to be explicitly enabled with the <code translate="no" v-pre>--buildtype=release</code> flag. Then the compiled executables and libraries will be more efficient. This is important for mining because you will get better hashrate with optimized compilation.</p>
 <p>So let&#x27;s do this again, we will go up one directory and delete the build directory again. Then we recreate it but this time with the <code translate="no" v-pre>--buildtype=release</code> option and compile again with <code translate="no" v-pre>ninja</code>:</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div id="compiling-code-3" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-none"><code v-pre class="language-none">cd ..
 rm -rf build
 meson build --buildtype=release
@@ -239,7 +239,7 @@ ninja</code></pre>
 </figure>
 </p>
 <p>After compilation finished successfully we can have a look at the compiled artifacts: Warthog currently compiles a node and a wallet. They are generated in the <code translate="no" v-pre>src</code> directory within the build directory. Since the algo update miner is no longer in this main repo, you can see the available miner <a href="https://docs.warthog.network/links/#miners">here</a>. Have a look:</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div id="compiling-code-4" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-none"><code v-pre class="language-none">cd src/
 ls</code></pre>
 </doc-codeblock></div>

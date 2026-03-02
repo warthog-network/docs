@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.0.1.825699573085">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.1.0.825754865855">
 
     <!-- See retype.com -->
-    <meta name="generator" content="Retype 4.0.1">
+    <meta name="generator" content="Retype 4.1.0">
 
     <!-- Primary Meta Tags -->
     <title>Warthog WebRTC communication draft</title>
@@ -27,11 +27,11 @@
 
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../resources/css/retype.css?v=4.0.1.825699573085" rel="stylesheet">
+    <link href="../../resources/css/retype.css?v=4.1.0.825754865855" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../resources/js/config.js?v=4.0.1.825699573085" data-turbo-eval="false" defer></script>
-    <script data-cfasync="false" src="../../resources/js/retype.js?v=4.0.1" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.0.1.825699573085" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../resources/js/config.js?v=4.1.0.825754865855" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../resources/js/retype.js?v=4.1.0" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.1.0.825754865855" data-turbo-eval="false" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -159,7 +159,7 @@
     </h2>
 </doc-anchor-target>
 <p>When RTC node A wants to connect to another RTC node C, SDP (session description protocol) data needs to be exchanged over a signaling server. In Warthog, each node can act as a signaling server and can assist in establishing direct P2P connection between two of its peers. We denote this node by <em>B</em>. Node B must be already connected with node A and C.</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div id="webrtc-needs-to-be-signaled-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-none"><code v-pre class="language-none">                 SDP Offer             SDP Offer
         Node A ------------&gt; Node B -------------&gt; Node C
                                                         | creates
@@ -235,7 +235,7 @@
 </table>
 </div>
 <p>In the above setting, the message transmission scheme looks like this:</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div id="overview-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-none"><code v-pre class="language-none">             RTCInfo                 RTCQuota
 Node A &lt;---------------- Node B &lt;----------------- Node C
 

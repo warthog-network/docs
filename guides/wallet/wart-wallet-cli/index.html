@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.0.1.825699573085">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.1.0.825754865855">
 
     <!-- See retype.com -->
-    <meta name="generator" content="Retype 4.0.1">
+    <meta name="generator" content="Retype 4.1.0">
 
     <!-- Primary Meta Tags -->
     <title>Use a CLI wallet</title>
@@ -31,11 +31,11 @@
 
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../../resources/css/retype.css?v=4.0.1.825699573085" rel="stylesheet">
+    <link href="../../../resources/css/retype.css?v=4.1.0.825754865855" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.0.1.825699573085" data-turbo-eval="false" defer></script>
-    <script data-cfasync="false" src="../../../resources/js/retype.js?v=4.0.1" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.0.1.825699573085" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.1.0.825754865855" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../../resources/js/retype.js?v=4.1.0" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.1.0.825754865855" data-turbo-eval="false" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -171,7 +171,7 @@ You can follow this guide to run a local node <a href="/docs/blob/master/guides/
 <p>Or you can connect your wallet to a <a href="https://github.com/warthog-network/public-nodes">public node</a>
 Then, to connect to a public node, you will have to add on your commands the arguments <code translate="no" v-pre>-h</code> for the node IP or URL and <code translate="no" v-pre>-p</code> for the node port.</p>
 <p>For example :</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div id="connect-to-node-local-or-public-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-none"><code v-pre class="language-none">./wart-wallet -b -h 193.218.118.57 -p 3001</code></pre>
 </doc-codeblock></div>
 <doc-anchor-target id="create-wallet">
@@ -181,11 +181,11 @@ Then, to connect to a public node, you will have to add on your commands the arg
     </h2>
 </doc-anchor-target>
 <p>To create the wallet, just run this command:</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div id="create-wallet-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-none"><code v-pre class="language-none">./wart-wallet -c</code></pre>
 </doc-codeblock></div>
 <p>In output you get wallet address, private and public keys. This information will be saved to the wallet.json file. It is not encrypted and other malicious programs you run on your computer can steal it. Back it up. Don&#x27;t show it to anyone. The private key can be used to restore the wallet.</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div id="create-wallet-code-2" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-none"><code v-pre class="language-none">Wallet file created.
 {
    &quot;address&quot;: &quot;5fe016f874698e11f36a2b2f4dd759d53b55d5520c255e64&quot;,
@@ -194,7 +194,7 @@ Then, to connect to a public node, you will have to add on your commands the arg
 }</code></pre>
 </doc-codeblock></div>
 <p>To print your address use the command</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div id="create-wallet-code-3" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-none"><code v-pre class="language-none">./wart-wallet -a</code></pre>
 </doc-codeblock></div>
 <doc-anchor-target id="check-balance">
@@ -204,7 +204,7 @@ Then, to connect to a public node, you will have to add on your commands the arg
     </h2>
 </doc-anchor-target>
 <p>To check your balance use</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div id="check-balance-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-none"><code v-pre class="language-none">./wart-wallet -b</code></pre>
 </doc-codeblock></div>
 <doc-anchor-target id="send-coins">
@@ -214,15 +214,15 @@ Then, to connect to a public node, you will have to add on your commands the arg
     </h2>
 </doc-anchor-target>
 <p>To send some coins, use command:</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div id="send-coins-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-none"><code v-pre class="language-none">./wart-walet -s --to=%address% --amount %count% --fee 0</code></pre>
 </doc-codeblock></div>
 <p>Example :</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div id="send-coins-code-2" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-none"><code v-pre class="language-none">./wart-walet -s --to=9da0dc31d0c3bcaaeaf422be6499fbf451b314fa622be978 --amount 0.00000001 --fee 0</code></pre>
 </doc-codeblock></div>
 <p>Next, you will be shown the details of the transaction and if you agree with them, you need to confirm it</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div id="send-coins-code-3" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-none"><code v-pre class="language-none">Summary:
    To:     9da0dc31d0c3bcaaeaf422be6499fbf451b314fa622be978
    Fee:    0.00000001
@@ -231,7 +231,7 @@ Then, to connect to a public node, you will have to add on your commands the arg
 Confirm with &quot;y&quot;: y</code></pre>
 </doc-codeblock></div>
 <p>And your transaction added to blockchain</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div id="send-coins-code-4" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-none"><code v-pre class="language-none">Get pin
 Got pin
 NonceId: 4262777042
@@ -257,11 +257,11 @@ Transaction accepted.</code></pre>
     </h2>
 </doc-anchor-target>
 <p>To restore your wallet.json file, you can run command:</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div id="restore-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-none"><code v-pre class="language-none">./wart-wallet -r %your private key%</code></pre>
 </doc-codeblock></div>
 <p>In output you get wallet address, private and public keys and</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div id="restore-code-2" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-none"><code v-pre class="language-none">./wart-wallet -r 2cc2cbe28cb665d540c949aef5d1a3484a960740338780ec82a9ae1414bcc18a
 Wallet file created.
 {
@@ -277,7 +277,7 @@ Wallet file created.
     </h2>
 </doc-anchor-target>
 <p>For more information on how to use the wallet read the <code translate="no" v-pre>--help</code> section:</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div id="get-more-help-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-none"><code v-pre class="language-none">./wart-wallet --help</code></pre>
 </doc-codeblock></div>
 <p><figure class="content-center">

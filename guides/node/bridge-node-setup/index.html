@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.0.1.825699573085">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.1.0.825754865855">
 
     <!-- See retype.com -->
-    <meta name="generator" content="Retype 4.0.1">
+    <meta name="generator" content="Retype 4.1.0">
 
     <!-- Primary Meta Tags -->
     <title>Bridge Node Setup</title>
@@ -27,12 +27,12 @@
 
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../../resources/css/retype.css?v=4.0.1.825699573085" rel="stylesheet">
+    <link href="../../../resources/css/retype.css?v=4.1.0.825754865855" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.0.1.825699573085" data-turbo-eval="false" defer></script>
-    <script data-cfasync="false" src="../../../resources/js/retype.js?v=4.0.1" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.0.1.825699573085" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../../../resources/js/prism.js?v=4.0.1.825699573085" defer></script>
+    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.1.0.825754865855" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../../resources/js/retype.js?v=4.1.0" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.1.0.825754865855" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../../../resources/js/prism.js?v=4.1.0.825754865855" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -195,17 +195,17 @@ This reverse proxy will forward websocket traffic to the node and perform the TL
 </doc-anchor-target>
 <p>Right now only the <code translate="no" v-pre>network_refactor</code> branch supports bridge nodes so you need to check out this branch:</p>
 <p>Firstly, you need to clone the Warthog core repository:</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div id="get-the-warthog-node-from-the-network_refactor-branch-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-none"><code v-pre class="language-none">git clone https://github.com/warthog-network/Warthog.git</code></pre>
 </doc-codeblock></div>
 <p>Then enter the repository directory and switch to the <code translate="no" v-pre>network_refactor</code> branch <code translate="no" v-pre>git switch network_refactor</code>.</p>
 <p>We can either compile directly from source or within a docker container. In this guide we demonstrate the latter.</p>
 <p>We first build the docker image:</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div id="get-the-warthog-node-from-the-network_refactor-branch-code-2" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-none"><code v-pre class="language-none">docker build . -f dockerfiles/build_linux -t warthog</code></pre>
 </doc-codeblock></div>
 <p>We can now run the container with the <code translate="no" v-pre>--ws-x-forwarded-for</code> and <code translate="no" v-pre>--ws-port=10001</code> flags and also map the websocket port <code translate="no" v-pre>-p 10001:10001</code>:</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div id="get-the-warthog-node-from-the-network_refactor-branch-code-3" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-bash"><code v-pre class="language-bash">docker run -it --mount src=&quot;$HOME&quot;/.warthog/,target=/warthog/.warthog/,type=bind -p 127.0.0.1:10001:10001 -p 3000:3000 warthog --ws-x-forwarded-for --ws-port=10001</code></pre>
 </doc-codeblock></div>
 <p>Note that we did not use the <code translate="no" v-pre>--ws-bind-localhost</code> flag because within the docker container the proxied websocket connection does not originate from localhost. However we have used the <code translate="no" v-pre>-p 127.0.0.1:10001:10001</code> flag when running the docker container such that we achieve the same effect: on the host machine, only requests from localhost to 10001 are forwarded to the docker container&#x27;s (and warthog node&#x27;s) port 10001.</p>
@@ -216,7 +216,7 @@ This reverse proxy will forward websocket traffic to the node and perform the TL
     </h1>
 </doc-anchor-target>
 <p>Nginx can be installed with the command</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div id="setting-up-the-nginx-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-shell-session"><code v-pre class="language-shell-session">$ sudo apt install nginx -y</code></pre>
 </doc-codeblock></div>
 <doc-anchor-target id="getting-a-domain-name">
@@ -233,7 +233,7 @@ This reverse proxy will forward websocket traffic to the node and perform the TL
     </h2>
 </doc-anchor-target>
 <p>In <code translate="no" v-pre>/etc/nginx/sites-enabled/default</code> enable reverse proxying. For example:</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div id="configuring-nginx-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-none"><code v-pre class="language-none">upstream warthog_node {
   server 127.0.0.1:10001 max_fails=5 fail_timeout=60s;
 }
@@ -298,7 +298,7 @@ server {
 </doc-anchor-target>
 <p>Either get a certificate from your domain registrar and adapt the certificate paths accordingly or get a free certificate using certbot.</p>
 <p>Type the following command:</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div id="obtaining-a-certificate-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-none"><code v-pre class="language-none">$ sudo certbot certonly --nginx --register-unsafely-without-email</code></pre>
 </doc-codeblock></div>
 <div class="flex mb-6">
@@ -328,7 +328,7 @@ The requested nginx plugin does not appear to be installed</code></pre>
     </div>
 </div>
 <p>You should see this output:</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div id="obtaining-a-certificate-code-2" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-none"><code v-pre class="language-none">certbot certonly --nginx --register-unsafely-without-email
 Saving debug log to /var/log/letsencrypt/letsencrypt.log
 Plugins selected: Authenticator nginx, Installer nginx
@@ -375,7 +375,7 @@ IMPORTANT NOTES:
 </doc-codeblock></div>
 <p>The output above lists the paths of the <code translate="no" v-pre>fullchain.pem</code> and the <code translate="no" v-pre>privkey.pem</code> files. Make sure you use these paths in the configuration file.</p>
 <p>Now you can uncomment the <code translate="no" v-pre>server</code> block of the nginx configuration file above and restart nginx again with</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div id="obtaining-a-certificate-code-3" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-none"><code v-pre class="language-none">systemctl restart nginx</code></pre>
 </doc-codeblock></div>
 <p>When your node is running with the <code translate="no" v-pre>--ws-x-forwarded-for</code> and <code translate="no" v-pre>--ws-port=10001</code> flags you should be able to accept websocket connections on <code translate="no" v-pre>&lt;your domain&gt;/ws</code> from browser nodes.</p>

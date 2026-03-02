@@ -4,15 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.0.1.825699573085">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.1.0.825754865855">
 
     <!-- See retype.com -->
-    <meta name="generator" content="Retype 4.0.1">
+    <meta name="generator" content="Retype 4.1.0">
 
     <!-- Primary Meta Tags -->
     <title>POST /transaction/add</title>
     <meta name="title" content="POST /transaction/add">
-    <meta name="description" content="Send transactions as JSON object. This endpoint is for all transaction types.">
+    <meta name="description" content="Send transactions as JSON object. This endpoint supports all transaction types.">
 
     <!-- Canonical -->
     <link rel="canonical" href="https://docs.warthog.network/developers/api/transaction-add/">
@@ -21,17 +21,18 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://docs.warthog.network/developers/api/transaction-add/">
     <meta property="og:title" content="POST /transaction/add">
-    <meta property="og:description" content="Send transactions as JSON object. This endpoint is for all transaction types.">
+    <meta property="og:description" content="Send transactions as JSON object. This endpoint supports all transaction types.">
     <meta property="og:site_name" content="Warthog Network">
     <meta property="og:locale" content="en_US">
 
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../../resources/css/retype.css?v=4.0.1.825699573085" rel="stylesheet">
+    <link href="../../../resources/css/retype.css?v=4.1.0.825754865855" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.0.1.825699573085" data-turbo-eval="false" defer></script>
-    <script data-cfasync="false" src="../../../resources/js/retype.js?v=4.0.1" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.0.1.825699573085" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.1.0.825754865855" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../../resources/js/retype.js?v=4.1.0" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.1.0.825754865855" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../../../resources/js/prism.js?v=4.1.0.825754865855" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -151,187 +152,288 @@
         <span>POST /transaction/add</span>
     </h1>
 </doc-anchor-target>
-<p>Send transactions as JSON object. This endpoint is for all transaction types.</p>
-<doc-anchor-target id="supported-transactions">
-    <h4>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#supported-transactions">#</doc-anchor-trigger>
-        <span>Supported Transactions</span>
-    </h4>
+<p>Send transactions as JSON object. This endpoint supports all transaction types.</p>
+<doc-anchor-target id="overview">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#overview">#</doc-anchor-trigger>
+        <span>Overview</span>
+    </h2>
 </doc-anchor-target>
-<p>The structure depends on the <code translate="no" v-pre>type</code> parameter.</p>
-<doc-panels>
-   <doc-panel id="wart-transfer" collapsed>
-       <template #title>Wart Transfer</template>
-<p>Transfer <code translate="no" v-pre>WART</code>.</p>
-<!-- PinHeightEl, NonceIdEl, NonceReservedEl, CompactFeeEl, Ts..., SignatureEl -->
 <div class="table-wrapper scrollbar overflow-hidden">
 <table class="comfortable">
 <thead>
 <tr>
-<th>PARAMETER</th>
-<th>TYPE</th>
-<th>DETAILS</th>
+<th>Transaction Type</th>
+<th><code translate="no" v-pre>type</code> Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>WART Transfer</td>
+<td><code translate="no" v-pre>wartTransfer</code></td>
+<td>Transfer WART tokens</td>
+</tr>
+<tr>
+<td>Token Transfer</td>
+<td><code translate="no" v-pre>tokenTransfer</code></td>
+<td>Transfer a specific asset or liquidity token</td>
+</tr>
+<tr>
+<td>Limit Swap</td>
+<td><code translate="no" v-pre>limitSwap</code></td>
+<td>Create a buy or sell limit order</td>
+</tr>
+<tr>
+<td>Liquidity Deposit</td>
+<td><code translate="no" v-pre>liquidityDeposit</code></td>
+<td>Deposit liquidity into an asset&#x27;s WART pool</td>
+</tr>
+<tr>
+<td>Liquidity Withdrawal</td>
+<td><code translate="no" v-pre>liquidityWithdrawal</code></td>
+<td>Withdraw liquidity by redeeming tokens</td>
+</tr>
+<tr>
+<td>Cancelation</td>
+<td><code translate="no" v-pre>cancelation</code></td>
+<td>Cancel a pending transaction or order</td>
+</tr>
+<tr>
+<td>Asset Creation</td>
+<td><code translate="no" v-pre>assetCreation</code></td>
+<td>Create a new asset</td>
+</tr>
+</tbody>
+</table>
+</div>
+<doc-anchor-target id="common-parameters">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#common-parameters">#</doc-anchor-trigger>
+        <span>Common Parameters</span>
+    </h2>
+</doc-anchor-target>
+<p>The following parameters are common to all transaction types:</p>
+<div class="table-wrapper scrollbar overflow-hidden">
+<table class="comfortable">
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><code translate="no" v-pre>type</code></td>
 <td>string</td>
-<td>Set to <code translate="no" v-pre>wartTransfer</code>.</td>
+<td>Transaction type (see table above)</td>
 </tr>
 <tr>
-<td><code translate="no" v-pre>feeE8</code> (optional)</td>
-<td>unsigned 64 bit integer</td>
-<td>Amount of <code translate="no" v-pre>WART</code> to spend on transaction fees multiplied by 10^8. For example to send one 0.00000001 <code translate="no" v-pre>WART</code> this value must be 1. This value must be exactly representable value in a 16 bit encoding, see below.</td>
+<td><code translate="no" v-pre>feeE8</code></td>
+<td>uint64 (optional)</td>
+<td>Transaction fee in WART multiplied by 10^8. Must be exactly representable in 16-bit encoding.</td>
 </tr>
 <tr>
-<td><code translate="no" v-pre>feeStr</code> (optional)</td>
-<td>string</td>
-<td>Amount of <code translate="no" v-pre>WART</code> to spend on transaction fees. This value must be exactly representable value in a 16 bit encoding, see below.</td>
+<td><code translate="no" v-pre>feeStr</code></td>
+<td>string (optional)</td>
+<td>Transaction fee as string (e.g., <code translate="no" v-pre>&quot;0.0001&quot;</code>). Must be exactly representable in 16-bit encoding.</td>
 </tr>
 <tr>
 <td><code translate="no" v-pre>nonceId</code></td>
-<td>unsigned 32 bit integer</td>
-<td>To avoid double spend, there can only be one transaction with a specific (pinHeight,nonceId) pair. The same nonceId can be used for different pinHeight values.</td>
+<td>uint32</td>
+<td>Unique identifier for this transaction at the given <code translate="no" v-pre>pinHeight</code>.</td>
 </tr>
 <tr>
 <td><code translate="no" v-pre>pinHeight</code></td>
-<td>unsigned 32 bit integer</td>
-<td>Signature includes block hash at this height</td>
+<td>uint32</td>
+<td>Block height whose hash is included in the signature.</td>
 </tr>
 <tr>
 <td><code translate="no" v-pre>signature65</code></td>
-<td>string of length 130</td>
-<td>hex-encoded 65 byte compact recoverable ECDSA signature in custom format, see below.</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>toAddr</code></td>
-<td>string of length 48</td>
-<td>The address that <code translate="no" v-pre>WART</code> shall be transferred to.</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>wartE8</code> (optional)</td>
-<td>unsigned 64 bit integer</td>
-<td>Nonzero amount of <code translate="no" v-pre>WART</code> to send multiplied by 10^8. For example to send one coin this value must be 100000000.</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>wartStr</code> (optional)</td>
-<td>string</td>
-<td>Nonzero amount of <code translate="no" v-pre>WART</code> to send. Format must be string, non-scientific notation with at most 8 digits after comma. &quot;<code translate="no" v-pre>1</code>&quot; or &quot;<code translate="no" v-pre>1.00000000</code>&quot; are valid.</td>
+<td>string (130 chars)</td>
+<td>Hex-encoded 65-byte compact recoverable ECDSA signature.</td>
 </tr>
 </tbody>
 </table>
 </div>
-<p><strong>NOTE</strong>:</p>
-<ul>
-<li>The <code translate="no" v-pre>WART</code> amount must be specified either via <code translate="no" v-pre>wartE8</code> or via <code translate="no" v-pre>wartStr</code>.</li>
-<li>The transaction fee must be specified either via <code translate="no" v-pre>feeE8</code> or via <code translate="no" v-pre>feeStr</code>.</li>
-<li>Miner fee must be exactly representable in a 16 bit encoding.</li>
-</ul>
-<p>The transaction hash needed for signature generation is the SHA256 hash of the following bytes:</p>
+<div class="flex mb-6">
+    <div class="shrink-0 w-1.5 rounded-tl-lg rounded-bl-lg bg-callout-primary"></div>
+    <div class="flex w-full py-4 border border-l-0 rounded-tr-lg rounded-br-lg doc-callout bg-callout-base-bg border-callout-base-border" role="alert">
+        <div class="flex items-center ml-4 h-7">
+            <svg xmlns="http://www.w3.org/2000/svg" class="mb-px text-callout-primary" width="22" height="22" viewBox="0 0 24 24" role="presentation">
+                <g fill="currentColor"><g>
+                    <path d="M12 1C5.93 1 1 5.93 1 12s4.93 11 11 11 11-4.93 11-11S18.07 1 12 1zm0 20c-4.96 0-9-4.04-9-9s4.04-9 9-9 9 4.04 9 9-4.04 9-9 9z"></path>
+                    <path d="M12 11c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1s1-.45 1-1v-4c0-.55-.45-1-1-1zM12.01 7c-.56 0-1 .45-1 1s.45 1 1 1 1-.45 1-1-.45-1-1-1z"></path>
+                    <path fill="none" d="M0 0h24v24H0z"></path>
+                </g></g>
+            </svg>
+        </div>
+        <div class="pr-5 ml-3 w-full">
+<p>Either <code translate="no" v-pre>feeE8</code> or <code translate="no" v-pre>feeStr</code> must be specified. The fee must be exactly representable in a 16-bit encoding (see <doc-anchor-trigger to="#fee-encoding">Fee Encoding</doc-anchor-trigger>).</p>
+        </div>
+    </div>
+</div>
+<doc-anchor-target id="transaction-types">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#transaction-types">#</doc-anchor-trigger>
+        <span>Transaction Types</span>
+    </h2>
+</doc-anchor-target>
+<doc-anchor-target id="wart-transfer">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#wart-transfer">#</doc-anchor-trigger>
+        <span>WART Transfer</span>
+    </h3>
+</doc-anchor-target>
+<p>Transfer WART tokens to another address.</p>
+<p><strong>Parameters:</strong></p>
 <div class="table-wrapper scrollbar overflow-hidden">
 <table class="comfortable">
 <thead>
 <tr>
-<th>BYTES</th>
-<th>DESCRIPTION</th>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>1 -32</td>
+<td><code translate="no" v-pre>type</code></td>
+<td>string</td>
+<td>Set to <code translate="no" v-pre>wartTransfer</code></td>
+</tr>
+<tr>
+<td><code translate="no" v-pre>toAddr</code></td>
+<td>string (48 chars)</td>
+<td>Recipient address</td>
+</tr>
+<tr>
+<td><code translate="no" v-pre>wartE8</code></td>
+<td>uint64 (optional)</td>
+<td>Amount of WART to send multiplied by 10^8</td>
+</tr>
+<tr>
+<td><code translate="no" v-pre>wartStr</code></td>
+<td>string (optional)</td>
+<td>Amount of WART to send (e.g., <code translate="no" v-pre>&quot;1.5&quot;</code> or <code translate="no" v-pre>&quot;1.50000000&quot;</code>)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="flex mb-6">
+    <div class="shrink-0 w-1.5 rounded-tl-lg rounded-bl-lg bg-callout-primary"></div>
+    <div class="flex w-full py-4 border border-l-0 rounded-tr-lg rounded-br-lg doc-callout bg-callout-base-bg border-callout-base-border" role="alert">
+        <div class="flex items-center ml-4 h-7">
+            <svg xmlns="http://www.w3.org/2000/svg" class="mb-px text-callout-primary" width="22" height="22" viewBox="0 0 24 24" role="presentation">
+                <g fill="currentColor"><g>
+                    <path d="M12 1C5.93 1 1 5.93 1 12s4.93 11 11 11 11-4.93 11-11S18.07 1 12 1zm0 20c-4.96 0-9-4.04-9-9s4.04-9 9-9 9 4.04 9 9-4.04 9-9 9z"></path>
+                    <path d="M12 11c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1s1-.45 1-1v-4c0-.55-.45-1-1-1zM12.01 7c-.56 0-1 .45-1 1s.45 1 1 1 1-.45 1-1-.45-1-1-1z"></path>
+                    <path fill="none" d="M0 0h24v24H0z"></path>
+                </g></g>
+            </svg>
+        </div>
+        <div class="pr-5 ml-3 w-full">
+<p>Either <code translate="no" v-pre>wartE8</code> or <code translate="no" v-pre>wartStr</code> must be specified.</p>
+        </div>
+    </div>
+</div>
+<p><strong>Example Request:</strong></p>
+<div id="wart-transfer-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-json"><code v-pre class="language-json">{
+  &quot;type&quot;: &quot;wartTransfer&quot;,
+  &quot;toAddr&quot;: &quot;848b08b803e95640f8cb30af1b3166701b152b98c2cd70ee&quot;,
+  &quot;wartStr&quot;: &quot;1.5&quot;,
+  &quot;feeStr&quot;: &quot;0.0001&quot;,
+  &quot;nonceId&quot;: 1,
+  &quot;pinHeight&quot;: 1198931,
+  &quot;signature65&quot;: &quot;...&quot;
+}</code></pre>
+</doc-codeblock></div>
+<p><strong>Signature Hash Bytes:</strong></p>
+<div class="table-wrapper scrollbar overflow-hidden">
+<table class="comfortable">
+<thead>
+<tr>
+<th>Bytes</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1-32</td>
 <td><code translate="no" v-pre>pinHash</code> (hash of block at height <code translate="no" v-pre>pinHeight</code>)</td>
 </tr>
 <tr>
 <td>33-36</td>
-<td><code translate="no" v-pre>pinHeight</code> (<code translate="no" v-pre>uint32_t</code> in network byte order)</td>
+<td><code translate="no" v-pre>pinHeight</code> (uint32, network byte order)</td>
 </tr>
 <tr>
 <td>37-40</td>
-<td><code translate="no" v-pre>nonceId</code> (<code translate="no" v-pre>uint32_t</code> in network byte order)</td>
+<td><code translate="no" v-pre>nonceId</code> (uint32, network byte order)</td>
 </tr>
 <tr>
 <td>41-43</td>
-<td><code translate="no" v-pre>reserved</code> (3 bytes containing 0)</td>
+<td><code translate="no" v-pre>reserved</code> (3 zero bytes)</td>
 </tr>
 <tr>
 <td>44-51</td>
-<td><code translate="no" v-pre>feeE8</code> (<code translate="no" v-pre>uint64_t</code> in network byte order)</td>
+<td><code translate="no" v-pre>feeE8</code> (uint64, network byte order)</td>
 </tr>
 <tr>
 <td>52-71</td>
-<td><code translate="no" v-pre>toAddr</code> receiving address (20 bytes without the final 4 byte checksum)</td>
+<td><code translate="no" v-pre>toAddr</code> (20 bytes, without checksum)</td>
 </tr>
 <tr>
 <td>72-79</td>
-<td><code translate="no" v-pre>wartE8</code> (<code translate="no" v-pre>uint64_t</code> in network byte order)</td>
+<td><code translate="no" v-pre>wartE8</code> (uint64, network byte order)</td>
 </tr>
 </tbody>
 </table>
 </div>
-   </doc-panel>
-   <doc-panel id="token-transfer" collapsed>
-       <template #title>Token Transfer</template>
+<hr>
+<doc-anchor-target id="token-transfer">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#token-transfer">#</doc-anchor-trigger>
+        <span>Token Transfer</span>
+    </h3>
+</doc-anchor-target>
 <p>Transfer a specific asset or its pool&#x27;s liquidity token.</p>
+<p><strong>Parameters:</strong></p>
 <div class="table-wrapper scrollbar overflow-hidden">
 <table class="comfortable">
 <thead>
 <tr>
-<th>PARAMETER</th>
-<th>TYPE</th>
-<th>DETAILS</th>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><code translate="no" v-pre>type</code></td>
 <td>string</td>
-<td>Set to <code translate="no" v-pre>tokenTransfer</code>.</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>amountU64</code></td>
-<td>unsigned 64 bit integer</td>
-<td>Number of smallest representable units of the token to be sent. See the warning below.</td>
+<td>Set to <code translate="no" v-pre>tokenTransfer</code></td>
 </tr>
 <tr>
 <td><code translate="no" v-pre>assetHash</code></td>
-<td>string of length 64</td>
-<td>The asset hash specifies the asset for this transfer.</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>feeE8</code> (optional)</td>
-<td>unsigned 64 bit integer</td>
-<td>Amount of <code translate="no" v-pre>WART</code> to spend on transaction fees multiplied by 10^8. For example to send one 0.00000001 <code translate="no" v-pre>WART</code> this value must be 1. This value must be exactly representable value in a 16 bit encoding, see below.</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>feeStr</code> (optional)</td>
-<td>string</td>
-<td>Amount of <code translate="no" v-pre>WART</code> to spend on transaction fees. This value must be exactly representable value in a 16 bit encoding, see below.</td>
+<td>string (64 chars)</td>
+<td>Hash of the asset to transfer</td>
 </tr>
 <tr>
 <td><code translate="no" v-pre>isLiquidity</code></td>
 <td>boolean</td>
-<td>Specify whether you want to send the asset itself (<code translate="no" v-pre>false</code>) or its pool liquidity (<code translate="no" v-pre>true</code>).</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>nonceId</code></td>
-<td>unsigned 32 bit integer</td>
-<td>To avoid double spend, there can only be one transaction with a specific (pinHeight,nonceId) pair. The same nonceId can be used for different pinHeight values.</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>pinHeight</code></td>
-<td>unsigned 32 bit integer</td>
-<td>Signature includes block hash at this height</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>signature65</code></td>
-<td>string of length 130</td>
-<td>hex-encoded 65 byte compact recoverable ECDSA signature in custom format, see below.</td>
+<td><code translate="no" v-pre>false</code> for asset, <code translate="no" v-pre>true</code> for liquidity tokens</td>
 </tr>
 <tr>
 <td><code translate="no" v-pre>toAddr</code></td>
-<td>string of length 48</td>
-<td>The address that tokens shall be transferred to.</td>
+<td>string (48 chars)</td>
+<td>Recipient address</td>
+</tr>
+<tr>
+<td><code translate="no" v-pre>amountU64</code></td>
+<td>uint64</td>
+<td>Number of smallest representable units</td>
 </tr>
 </tbody>
 </table>
@@ -348,270 +450,116 @@
             </svg>
         </div>
         <div class="pr-5 ml-3 w-full">
-            <h5>Warning</h5>
-<p>The <code translate="no" v-pre>amountU64</code> parameter specifies the number of smallest units of the specified token type. The actual conversion to token units depends on the token type&#x27;s precision <code translate="no" v-pre>p</code> (one token unit corresponds to <code translate="no" v-pre>10^p</code> smallest representable units). Note that every asset has <strong>its own precision</strong> fixed during asset creation whereas any asset pool&#x27;s liquidity <strong>always has precision 8</strong> (like the WART token itself).</p>
+<p>The <code translate="no" v-pre>amountU64</code> specifies the smallest units. The conversion to token units depends on the asset&#x27;s precision <code translate="no" v-pre>p</code> (one token unit = <code translate="no" v-pre>10^p</code> smallest units). Assets have their own precision, while liquidity tokens always have precision 8 (like WART).</p>
         </div>
     </div>
 </div>
-<p><strong>NOTE</strong>:</p>
-<ul>
-<li>The transaction fee must be specified either via <code translate="no" v-pre>feeE8</code> or via <code translate="no" v-pre>feeStr</code>.</li>
-<li>Miner fee must be exactly representable in a 16 bit encoding.</li>
-</ul>
-<p>The transaction hash needed for signature generation is the SHA256 hash of the following bytes:</p>
+<p><strong>Example Request:</strong></p>
+<div id="token-transfer-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-json"><code v-pre class="language-json">{
+  &quot;type&quot;: &quot;tokenTransfer&quot;,
+  &quot;assetHash&quot;: &quot;0e4825efffa294610d2ac376713e3bcc9b53d378e823834b64e5df01f75d3b0c&quot;,
+  &quot;isLiquidity&quot;: false,
+  &quot;toAddr&quot;: &quot;848b08b803e95640f8cb30af1b3166701b152b98c2cd70ee&quot;,
+  &quot;amountU64&quot;: 1000000,
+  &quot;feeStr&quot;: &quot;0.0001&quot;,
+  &quot;nonceId&quot;: 1,
+  &quot;pinHeight&quot;: 1198931,
+  &quot;signature65&quot;: &quot;...&quot;
+}</code></pre>
+</doc-codeblock></div>
+<p><strong>Signature Hash Bytes:</strong></p>
 <div class="table-wrapper scrollbar overflow-hidden">
 <table class="comfortable">
 <thead>
 <tr>
-<th>BYTES</th>
-<th>DESCRIPTION</th>
+<th>Bytes</th>
+<th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>1 -32</td>
-<td><code translate="no" v-pre>pinHash</code> (hash of block at height <code translate="no" v-pre>pinHeight</code>)</td>
+<td>1-32</td>
+<td><code translate="no" v-pre>pinHash</code></td>
 </tr>
 <tr>
 <td>33-36</td>
-<td><code translate="no" v-pre>pinHeight</code> (<code translate="no" v-pre>uint32_t</code> in network byte order)</td>
+<td><code translate="no" v-pre>pinHeight</code> (uint32, network byte order)</td>
 </tr>
 <tr>
 <td>37-40</td>
-<td><code translate="no" v-pre>nonceId</code> (<code translate="no" v-pre>uint32_t</code> in network byte order)</td>
+<td><code translate="no" v-pre>nonceId</code> (uint32, network byte order)</td>
 </tr>
 <tr>
 <td>41-43</td>
-<td><code translate="no" v-pre>reserved</code> (3 bytes containing 0)</td>
+<td><code translate="no" v-pre>reserved</code> (3 zero bytes)</td>
 </tr>
 <tr>
 <td>44-51</td>
-<td><code translate="no" v-pre>feeE8</code> (<code translate="no" v-pre>uint64_t</code> in network byte order)</td>
+<td><code translate="no" v-pre>feeE8</code> (uint64, network byte order)</td>
 </tr>
 <tr>
 <td>52-83</td>
-<td><code translate="no" v-pre>assetHash</code> asset hash (hash of asset)</td>
+<td><code translate="no" v-pre>assetHash</code> (32 bytes)</td>
 </tr>
 <tr>
-<td>84-84</td>
-<td><code translate="no" v-pre>isLiquidity</code> (1 byte bool, 1 for <code translate="no" v-pre>true</code>, 0 for <code translate="no" v-pre>false</code>)</td>
+<td>84</td>
+<td><code translate="no" v-pre>isLiquidity</code> (1 byte: 1 for <code translate="no" v-pre>true</code>, 0 for <code translate="no" v-pre>false</code>)</td>
 </tr>
 <tr>
 <td>85-104</td>
-<td><code translate="no" v-pre>toAddr</code> receiving address (20 bytes without the final 4 byte checksum)</td>
+<td><code translate="no" v-pre>toAddr</code> (20 bytes, without checksum)</td>
 </tr>
 <tr>
 <td>105-112</td>
-<td><code translate="no" v-pre>amountU64</code> (<code translate="no" v-pre>uint64_t</code> in network byte order)</td>
+<td><code translate="no" v-pre>amountU64</code> (uint64, network byte order)</td>
 </tr>
 </tbody>
 </table>
 </div>
-   </doc-panel>
-   <doc-panel id="limit-swap" collapsed>
-       <template #title>Limit Swap</template>
-<p>Create a new buy or sell limit swap order for a specific asset.</p>
+<hr>
+<doc-anchor-target id="limit-swap">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#limit-swap">#</doc-anchor-trigger>
+        <span>Limit Swap</span>
+    </h3>
+</doc-anchor-target>
+<p>Create a new buy or sell limit order for a specific asset.</p>
+<p><strong>Parameters:</strong></p>
 <div class="table-wrapper scrollbar overflow-hidden">
 <table class="comfortable">
 <thead>
 <tr>
-<th>PARAMETER</th>
-<th>TYPE</th>
-<th>DETAILS</th>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><code translate="no" v-pre>type</code></td>
 <td>string</td>
-<td>Set to <code translate="no" v-pre>limitSwap</code>.</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>amountU64</code></td>
-<td>unsigned 64 bit integer</td>
-<td>Number of smallest representable units of the token to be spent on the swap.</td>
+<td>Set to <code translate="no" v-pre>limitSwap</code></td>
 </tr>
 <tr>
 <td><code translate="no" v-pre>assetHash</code></td>
-<td>string of length 64</td>
-<td>The asset hash specifies the asset for this transfer.</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>feeE8</code> (optional)</td>
-<td>unsigned 64 bit integer</td>
-<td>Amount of coins to spend on transaction fees multiplied by 10^8. For example to send one 0.00000001 coins this value must be 1. This value must be exactly representable value in a 16 bit encoding, see below.</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>feeStr</code> (optional)</td>
-<td>string</td>
-<td>Amount of coins to spend on transaction fees. This value must be exactly representable value in a 16 bit encoding, see below.</td>
+<td>string (64 chars)</td>
+<td>Hash of the asset to trade</td>
 </tr>
 <tr>
 <td><code translate="no" v-pre>isBuy</code></td>
 <td>boolean</td>
-<td>Specify whether this order is a buy (<code translate="no" v-pre>true</code>) or a sell (<code translate="no" v-pre>false</code>) order.</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>limit</code></td>
-<td>string of length 6</td>
-<td>Hexadecimal of of 3 byte encoded limit price. Use the <code translate="no" v-pre>/tools/parse_price</code> endpoint to request this encoding.</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>nonceId</code></td>
-<td>unsigned 32 bit integer</td>
-<td>To avoid double spend, there can only be one transaction with a specific (pinHeight,nonceId) pair. The same nonceId can be used for different pinHeight values</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>pinHeight</code></td>
-<td>unsigned 32 bit integer</td>
-<td>Signature includes block hash at this height</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>signature65</code></td>
-<td>string of length 130</td>
-<td>hex-encoded 65 byte compact recoverable ECDSA signature in custom format, see below.</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="flex mb-6">
-    <div class="shrink-0 w-1.5 rounded-tl-lg rounded-bl-lg bg-callout-warning"></div>
-    <div class="flex w-full py-4 border border-l-0 rounded-tr-lg rounded-br-lg doc-callout bg-callout-base-bg border-callout-base-border" role="alert">
-        <div class="flex items-center ml-4 h-7">
-            <svg xmlns="http://www.w3.org/2000/svg" class="mb-px text-callout-warning" width="22" height="22" viewBox="0 0 24 24" role="presentation">
-                <g fill="currentColor"><g>
-                    <path d="M22.48 15.59L14.01 1.45A2.968 2.968 0 0012.16.09c-.78-.19-1.58-.07-2.27.35-.41.25-.76.6-1.01 1.01v.01L.4 15.6c-.83 1.43-.33 3.27 1.1 4.1.45.26.95.4 1.48.4h16.95c.8-.01 1.55-.33 2.11-.9.56-.57.87-1.33.86-2.13a3.04 3.04 0 00-.42-1.48zm-1.87 2.21c-.19.19-.44.3-.69.3H2.99c-.17 0-.34-.05-.49-.13a.992.992 0 01-.37-1.35L10.6 2.48c.08-.14.2-.25.34-.33a.992.992 0 011.37.33l8.46 14.13c.09.15.13.32.13.49 0 .26-.1.51-.29.7z"></path>
-                    <path d="M11.45 12.1c.55 0 1-.45 1-1v-4c0-.55-.45-1-1-1s-1 .45-1 1v4c0 .56.45 1 1 1zM11.46 14.1c-.56 0-1 .45-1 1s.45 1 1 1 1-.45 1-1-.45-1-1-1z"></path>
-                </g></g>
-            </svg>
-        </div>
-        <div class="pr-5 ml-3 w-full">
-            <h5>Warning</h5>
-<p>The <code translate="no" v-pre>amountU64</code> parameter specifies the number of smallest units of the token that is converted. Depending on the <code translate="no" v-pre>isBuy</code> parameter, this is either <code translate="no" v-pre>WART</code> or the specified asset. The actual conversion to token units depends on the token type&#x27;s precision <code translate="no" v-pre>p</code> (one token unit corresponds to <code translate="no" v-pre>10^p</code> smallest representable units). Note that <strong><code translate="no" v-pre>WART</code> has precision 8</strong> whereas the asset has <strong>its own precision</strong> fixed during asset creation.</p>
-        </div>
-    </div>
-</div>
-<p><strong>NOTE</strong>:</p>
-<ul>
-<li>The transaction fee must be specified either via <code translate="no" v-pre>feeE8</code> or via <code translate="no" v-pre>feeStr</code>.</li>
-<li>Miner fee must be exactly representable in a 16 bit encoding.</li>
-</ul>
-<p>The transaction hash needed for signature generation is the SHA256 hash of the following bytes:</p>
-<div class="table-wrapper scrollbar overflow-hidden">
-<table class="comfortable">
-<thead>
-<tr>
-<th>BYTES</th>
-<th>DESCRIPTION</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>1 -32</td>
-<td><code translate="no" v-pre>pinHash</code> (hash of block at height <code translate="no" v-pre>pinHeight</code>)</td>
-</tr>
-<tr>
-<td>33-36</td>
-<td><code translate="no" v-pre>pinHeight</code> (<code translate="no" v-pre>uint32_t</code> in network byte order)</td>
-</tr>
-<tr>
-<td>37-40</td>
-<td><code translate="no" v-pre>nonceId</code> (<code translate="no" v-pre>uint32_t</code> in network byte order)</td>
-</tr>
-<tr>
-<td>41-43</td>
-<td><code translate="no" v-pre>reserved</code> (3 bytes containing 0)</td>
-</tr>
-<tr>
-<td>44-51</td>
-<td><code translate="no" v-pre>feeE8</code> (<code translate="no" v-pre>uint64_t</code> in network byte order)</td>
-</tr>
-<tr>
-<td>52-83</td>
-<td><code translate="no" v-pre>assetHash</code> asset hash (hash of asset)</td>
-</tr>
-<tr>
-<td>84-84</td>
-<td><code translate="no" v-pre>buy</code> (1 byte bool, 1 for <code translate="no" v-pre>true</code>, 0 for <code translate="no" v-pre>false</code>)</td>
-</tr>
-<tr>
-<td>85-92</td>
-<td><code translate="no" v-pre>amountU64</code> (<code translate="no" v-pre>uint64_t</code> in network byte order)</td>
-</tr>
-<tr>
-<td>93-95</td>
-<td><code translate="no" v-pre>limit</code> (3 byte encoding from <code translate="no" v-pre>/tools/parse_price</code>)</td>
-</tr>
-<tr>
-<td>96-116</td>
-<td><code translate="no" v-pre>toAddr</code> receiving address (20 bytes without the final 4 byte checksum)</td>
-</tr>
-</tbody>
-</table>
-</div>
-   </doc-panel>
-   <doc-panel id="liquidity-deposit" collapsed>
-       <template #title>Liquidity Deposit</template>
-<p>Deposit liquidity into an asset&#x27;s <code translate="no" v-pre>WART</code> pool.</p>
-<div class="table-wrapper scrollbar overflow-hidden">
-<table class="comfortable">
-<thead>
-<tr>
-<th>PARAMETER</th>
-<th>TYPE</th>
-<th>DETAILS</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code translate="no" v-pre>type</code></td>
-<td>string</td>
-<td>Set to <code translate="no" v-pre>liquidityDeposit</code>.</td>
+<td><code translate="no" v-pre>true</code> for buy order, <code translate="no" v-pre>false</code> for sell order</td>
 </tr>
 <tr>
 <td><code translate="no" v-pre>amountU64</code></td>
-<td>unsigned 64 bit integer</td>
-<td>Number of smallest representable units of the asset to spend into the pool. See the warning below.</td>
+<td>uint64</td>
+<td>Amount to spend (WART if buying, asset if selling)</td>
 </tr>
 <tr>
-<td><code translate="no" v-pre>assetHash</code></td>
-<td>string of length 64</td>
-<td>The asset hash specifies the asset for this transfer.</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>feeE8</code> (optional)</td>
-<td>unsigned 64 bit integer</td>
-<td>Amount of coins to spend on transaction fees multiplied by 10^8. For example to send one 0.00000001 coins this value must be 1. This value must be exactly representable value in a 16 bit encoding, see below.</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>feeStr</code> (optional)</td>
-<td>string</td>
-<td>Amount of coins to spend on transaction fees. This value must be exactly representable value in a 16 bit encoding, see below.</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>nonceId</code></td>
-<td>unsigned 32 bit integer</td>
-<td>To avoid double spend, there can only be one transaction with a specific (pinHeight,nonceId) pair. The same nonceId can be used for different pinHeight values</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>pinHeight</code></td>
-<td>unsigned 32 bit integer</td>
-<td>Signature includes block hash at this height</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>signature65</code></td>
-<td>string of length 130</td>
-<td>hex-encoded 65 byte compact recoverable ECDSA signature in custom format, see below.</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>wartE8</code> (optional)</td>
-<td>unsigned 64 bit integer</td>
-<td>Amount of coins to send multiplied by 10^8. For example to send one coin this value must be 100000000.</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>wartStr</code> (optional)</td>
-<td>string</td>
-<td>Amount of coins to send. Format must be string, non-scientific notation with at most 8 digits after comma. &quot;<code translate="no" v-pre>1</code>&quot; or &quot;<code translate="no" v-pre>1.00000000</code>&quot; are valid.</td>
+<td><code translate="no" v-pre>limit</code></td>
+<td>string (6 chars)</td>
+<td>Hex-encoded 3-byte limit price (use <code translate="no" v-pre>/tools/parse_price</code>)</td>
 </tr>
 </tbody>
 </table>
@@ -628,446 +576,530 @@
             </svg>
         </div>
         <div class="pr-5 ml-3 w-full">
-            <h5>Warning</h5>
-<p>The <code translate="no" v-pre>amountU64</code> parameter specifies the number of smallest units of the specified token type. The actual conversion to token units depends on the assets precision <code translate="no" v-pre>p</code> (one token unit corresponds to <code translate="no" v-pre>10^p</code> smallest representable units). Note that every asset has <strong>its own precision</strong> fixed during asset creation.</p>
+<p>For buy orders, <code translate="no" v-pre>amountU64</code> is in WART (precision 8). For sell orders, it&#x27;s in the asset&#x27;s smallest units (precision varies by asset).</p>
         </div>
     </div>
 </div>
-<p><strong>NOTE</strong>:</p>
-<ul>
-<li>The <code translate="no" v-pre>WART</code> amount must be specified either via <code translate="no" v-pre>wartE8</code> or via <code translate="no" v-pre>wartStr</code>.</li>
-<li>The transaction fee must be specified either via <code translate="no" v-pre>feeE8</code> or via <code translate="no" v-pre>feeStr</code>.</li>
-<li>Miner fee must be exactly representable in a 16 bit encoding.</li>
-</ul>
-<p>The transaction hash needed for signature generation is the SHA256 hash of the following bytes:</p>
+<p><strong>Example Request:</strong></p>
+<div id="limit-swap-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-json"><code v-pre class="language-json">{
+  &quot;type&quot;: &quot;limitSwap&quot;,
+  &quot;assetHash&quot;: &quot;0e4825efffa294610d2ac376713e3bcc9b53d378e823834b64e5df01f75d3b0c&quot;,
+  &quot;isBuy&quot;: true,
+  &quot;amountU64&quot;: 100000000,
+  &quot;limit&quot;: &quot;c0e74d&quot;,
+  &quot;feeStr&quot;: &quot;0.0001&quot;,
+  &quot;nonceId&quot;: 1,
+  &quot;pinHeight&quot;: 1198931,
+  &quot;signature65&quot;: &quot;...&quot;
+}</code></pre>
+</doc-codeblock></div>
+<p><strong>Signature Hash Bytes:</strong></p>
 <div class="table-wrapper scrollbar overflow-hidden">
 <table class="comfortable">
 <thead>
 <tr>
-<th>BYTES</th>
-<th>DESCRIPTION</th>
+<th>Bytes</th>
+<th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>1 -32</td>
-<td><code translate="no" v-pre>pinHash</code> (hash of block at height <code translate="no" v-pre>pinHeight</code>)</td>
+<td>1-32</td>
+<td><code translate="no" v-pre>pinHash</code></td>
 </tr>
 <tr>
 <td>33-36</td>
-<td><code translate="no" v-pre>pinHeight</code> (<code translate="no" v-pre>uint32_t</code> in network byte order)</td>
+<td><code translate="no" v-pre>pinHeight</code> (uint32, network byte order)</td>
 </tr>
 <tr>
 <td>37-40</td>
-<td><code translate="no" v-pre>nonceId</code> (<code translate="no" v-pre>uint32_t</code> in network byte order)</td>
+<td><code translate="no" v-pre>nonceId</code> (uint32, network byte order)</td>
 </tr>
 <tr>
 <td>41-43</td>
-<td><code translate="no" v-pre>reserved</code> (3 bytes containing 0)</td>
+<td><code translate="no" v-pre>reserved</code> (3 zero bytes)</td>
 </tr>
 <tr>
 <td>44-51</td>
-<td><code translate="no" v-pre>feeE8</code> (<code translate="no" v-pre>uint64_t</code> in network byte order)</td>
+<td><code translate="no" v-pre>feeE8</code> (uint64, network byte order)</td>
 </tr>
 <tr>
 <td>52-83</td>
-<td><code translate="no" v-pre>assetHash</code> asset hash (hash of asset)</td>
+<td><code translate="no" v-pre>assetHash</code> (32 bytes)</td>
+</tr>
+<tr>
+<td>84</td>
+<td><code translate="no" v-pre>isBuy</code> (1 byte: 1 for <code translate="no" v-pre>true</code>, 0 for <code translate="no" v-pre>false</code>)</td>
+</tr>
+<tr>
+<td>85-92</td>
+<td><code translate="no" v-pre>amountU64</code> (uint64, network byte order)</td>
+</tr>
+<tr>
+<td>93-95</td>
+<td><code translate="no" v-pre>limit</code> (3 bytes)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr>
+<doc-anchor-target id="liquidity-deposit">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#liquidity-deposit">#</doc-anchor-trigger>
+        <span>Liquidity Deposit</span>
+    </h3>
+</doc-anchor-target>
+<p>Deposit liquidity into an asset&#x27;s WART pool.</p>
+<p><strong>Parameters:</strong></p>
+<div class="table-wrapper scrollbar overflow-hidden">
+<table class="comfortable">
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code translate="no" v-pre>type</code></td>
+<td>string</td>
+<td>Set to <code translate="no" v-pre>liquidityDeposit</code></td>
+</tr>
+<tr>
+<td><code translate="no" v-pre>assetHash</code></td>
+<td>string (64 chars)</td>
+<td>Hash of the asset</td>
+</tr>
+<tr>
+<td><code translate="no" v-pre>amountU64</code></td>
+<td>uint64</td>
+<td>Amount of asset to deposit (smallest units)</td>
+</tr>
+<tr>
+<td><code translate="no" v-pre>wartE8</code></td>
+<td>uint64 (optional)</td>
+<td>Amount of WART to deposit multiplied by 10^8</td>
+</tr>
+<tr>
+<td><code translate="no" v-pre>wartStr</code></td>
+<td>string (optional)</td>
+<td>Amount of WART to deposit</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="flex mb-6">
+    <div class="shrink-0 w-1.5 rounded-tl-lg rounded-bl-lg bg-callout-primary"></div>
+    <div class="flex w-full py-4 border border-l-0 rounded-tr-lg rounded-br-lg doc-callout bg-callout-base-bg border-callout-base-border" role="alert">
+        <div class="flex items-center ml-4 h-7">
+            <svg xmlns="http://www.w3.org/2000/svg" class="mb-px text-callout-primary" width="22" height="22" viewBox="0 0 24 24" role="presentation">
+                <g fill="currentColor"><g>
+                    <path d="M12 1C5.93 1 1 5.93 1 12s4.93 11 11 11 11-4.93 11-11S18.07 1 12 1zm0 20c-4.96 0-9-4.04-9-9s4.04-9 9-9 9 4.04 9 9-4.04 9-9 9z"></path>
+                    <path d="M12 11c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1s1-.45 1-1v-4c0-.55-.45-1-1-1zM12.01 7c-.56 0-1 .45-1 1s.45 1 1 1 1-.45 1-1-.45-1-1-1z"></path>
+                    <path fill="none" d="M0 0h24v24H0z"></path>
+                </g></g>
+            </svg>
+        </div>
+        <div class="pr-5 ml-3 w-full">
+<p>Either <code translate="no" v-pre>wartE8</code> or <code translate="no" v-pre>wartStr</code> must be specified.</p>
+        </div>
+    </div>
+</div>
+<p><strong>Example Request:</strong></p>
+<div id="liquidity-deposit-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-json"><code v-pre class="language-json">{
+  &quot;type&quot;: &quot;liquidityDeposit&quot;,
+  &quot;assetHash&quot;: &quot;0e4825efffa294610d2ac376713e3bcc9b53d378e823834b64e5df01f75d3b0c&quot;,
+  &quot;amountU64&quot;: 1000000,
+  &quot;wartStr&quot;: &quot;10.0&quot;,
+  &quot;feeStr&quot;: &quot;0.0001&quot;,
+  &quot;nonceId&quot;: 1,
+  &quot;pinHeight&quot;: 1198931,
+  &quot;signature65&quot;: &quot;...&quot;
+}</code></pre>
+</doc-codeblock></div>
+<p><strong>Signature Hash Bytes:</strong></p>
+<div class="table-wrapper scrollbar overflow-hidden">
+<table class="comfortable">
+<thead>
+<tr>
+<th>Bytes</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1-32</td>
+<td><code translate="no" v-pre>pinHash</code></td>
+</tr>
+<tr>
+<td>33-36</td>
+<td><code translate="no" v-pre>pinHeight</code> (uint32, network byte order)</td>
+</tr>
+<tr>
+<td>37-40</td>
+<td><code translate="no" v-pre>nonceId</code> (uint32, network byte order)</td>
+</tr>
+<tr>
+<td>41-43</td>
+<td><code translate="no" v-pre>reserved</code> (3 zero bytes)</td>
+</tr>
+<tr>
+<td>44-51</td>
+<td><code translate="no" v-pre>feeE8</code> (uint64, network byte order)</td>
+</tr>
+<tr>
+<td>52-83</td>
+<td><code translate="no" v-pre>assetHash</code> (32 bytes)</td>
 </tr>
 <tr>
 <td>84-91</td>
-<td><code translate="no" v-pre>amountU64</code> (<code translate="no" v-pre>uint64_t</code> in network byte order)</td>
+<td><code translate="no" v-pre>amountU64</code> (uint64, network byte order)</td>
 </tr>
 <tr>
 <td>92-99</td>
-<td><code translate="no" v-pre>wartE8</code> (<code translate="no" v-pre>uint64_t</code> in network byte order)</td>
+<td><code translate="no" v-pre>wartE8</code> (uint64, network byte order)</td>
 </tr>
 </tbody>
 </table>
 </div>
-   </doc-panel>
-   <doc-panel id="liquidity-withdrawal" collapsed>
-       <template #title>Liquidity Withdrawal</template>
-<p>Withdraw liquidity from an asset&#x27;s <code translate="no" v-pre>WART</code> pool by redeeming liquidity tokens.</p>
+<hr>
+<doc-anchor-target id="liquidity-withdrawal">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#liquidity-withdrawal">#</doc-anchor-trigger>
+        <span>Liquidity Withdrawal</span>
+    </h3>
+</doc-anchor-target>
+<p>Withdraw liquidity from an asset&#x27;s WART pool by redeeming liquidity tokens.</p>
+<p><strong>Parameters:</strong></p>
 <div class="table-wrapper scrollbar overflow-hidden">
 <table class="comfortable">
 <thead>
 <tr>
-<th>PARAMETER</th>
-<th>TYPE</th>
-<th>DETAILS</th>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><code translate="no" v-pre>type</code></td>
 <td>string</td>
-<td>Set to <code translate="no" v-pre>liquidityWithdrawal</code>.</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>amountE8</code></td>
-<td>unsigned 64 bit integer</td>
-<td>Number of smallest representable units of the liquidity tokens to spend into the pool. Since liquidity tokens always have precision 8, this is the number of liquidity tokens multiplied by <code translate="no" v-pre>10^8</code>.</td>
+<td>Set to <code translate="no" v-pre>liquidityWithdrawal</code></td>
 </tr>
 <tr>
 <td><code translate="no" v-pre>assetHash</code></td>
-<td>string of length 64</td>
-<td>The asset hash specifies the asset for this transfer.</td>
+<td>string (64 chars)</td>
+<td>Hash of the asset</td>
 </tr>
 <tr>
-<td><code translate="no" v-pre>feeE8</code> (optional)</td>
-<td>unsigned 64 bit integer</td>
-<td>Amount of coins to spend on transaction fees multiplied by 10^8. For example to send one 0.00000001 coins this value must be 1. This value must be exactly representable value in a 16 bit encoding, see below.</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>feeStr</code> (optional)</td>
-<td>string</td>
-<td>Amount of coins to spend on transaction fees. This value must be exactly representable value in a 16 bit encoding, see below.</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>nonceId</code></td>
-<td>unsigned 32 bit integer</td>
-<td>To avoid double spend, there can only be one transaction with a specific (pinHeight,nonceId) pair. The same nonceId can be used for different pinHeight values</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>pinHeight</code></td>
-<td>unsigned 32 bit integer</td>
-<td>Signature includes block hash at this height</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>signature65</code></td>
-<td>string of length 130</td>
-<td>hex-encoded 65 byte compact recoverable ECDSA signature in custom format, see below.</td>
+<td><code translate="no" v-pre>amountE8</code></td>
+<td>uint64</td>
+<td>Amount of liquidity tokens to redeem (multiplied by 10^8)</td>
 </tr>
 </tbody>
 </table>
 </div>
-<div class="flex mb-6">
-    <div class="shrink-0 w-1.5 rounded-tl-lg rounded-bl-lg bg-callout-warning"></div>
-    <div class="flex w-full py-4 border border-l-0 rounded-tr-lg rounded-br-lg doc-callout bg-callout-base-bg border-callout-base-border" role="alert">
-        <div class="flex items-center ml-4 h-7">
-            <svg xmlns="http://www.w3.org/2000/svg" class="mb-px text-callout-warning" width="22" height="22" viewBox="0 0 24 24" role="presentation">
-                <g fill="currentColor"><g>
-                    <path d="M22.48 15.59L14.01 1.45A2.968 2.968 0 0012.16.09c-.78-.19-1.58-.07-2.27.35-.41.25-.76.6-1.01 1.01v.01L.4 15.6c-.83 1.43-.33 3.27 1.1 4.1.45.26.95.4 1.48.4h16.95c.8-.01 1.55-.33 2.11-.9.56-.57.87-1.33.86-2.13a3.04 3.04 0 00-.42-1.48zm-1.87 2.21c-.19.19-.44.3-.69.3H2.99c-.17 0-.34-.05-.49-.13a.992.992 0 01-.37-1.35L10.6 2.48c.08-.14.2-.25.34-.33a.992.992 0 011.37.33l8.46 14.13c.09.15.13.32.13.49 0 .26-.1.51-.29.7z"></path>
-                    <path d="M11.45 12.1c.55 0 1-.45 1-1v-4c0-.55-.45-1-1-1s-1 .45-1 1v4c0 .56.45 1 1 1zM11.46 14.1c-.56 0-1 .45-1 1s.45 1 1 1 1-.45 1-1-.45-1-1-1z"></path>
-                </g></g>
-            </svg>
-        </div>
-        <div class="pr-5 ml-3 w-full">
-            <h5>Warning</h5>
-<p>The <code translate="no" v-pre>amountU64</code> parameter specifies the number of smallest units of the specified token type. The actual conversion to token units depends on the assets precision <code translate="no" v-pre>p</code> (one token unit corresponds to <code translate="no" v-pre>10^p</code> smallest representable units). Note that every asset has <strong>its own precision</strong> fixed during asset creation.</p>
-        </div>
-    </div>
-</div>
-<p><strong>NOTE</strong>:</p>
-<ul>
-<li>The transaction fee must be specified either via <code translate="no" v-pre>feeE8</code> or via <code translate="no" v-pre>feeStr</code>.</li>
-<li>Miner fee must be exactly representable in a 16 bit encoding.</li>
-</ul>
-<p>The transaction hash needed for signature generation is the SHA256 hash of the following bytes:</p>
+<p><strong>Example Request:</strong></p>
+<div id="liquidity-withdrawal-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-json"><code v-pre class="language-json">{
+  &quot;type&quot;: &quot;liquidityWithdrawal&quot;,
+  &quot;assetHash&quot;: &quot;0e4825efffa294610d2ac376713e3bcc9b53d378e823834b64e5df01f75d3b0c&quot;,
+  &quot;amountE8&quot;: 1000000000,
+  &quot;feeStr&quot;: &quot;0.0001&quot;,
+  &quot;nonceId&quot;: 1,
+  &quot;pinHeight&quot;: 1198931,
+  &quot;signature65&quot;: &quot;...&quot;
+}</code></pre>
+</doc-codeblock></div>
+<p><strong>Signature Hash Bytes:</strong></p>
 <div class="table-wrapper scrollbar overflow-hidden">
 <table class="comfortable">
 <thead>
 <tr>
-<th>BYTES</th>
-<th>DESCRIPTION</th>
+<th>Bytes</th>
+<th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>1 -32</td>
-<td><code translate="no" v-pre>pinHash</code> (hash of block at height <code translate="no" v-pre>pinHeight</code>)</td>
+<td>1-32</td>
+<td><code translate="no" v-pre>pinHash</code></td>
 </tr>
 <tr>
 <td>33-36</td>
-<td><code translate="no" v-pre>pinHeight</code> (<code translate="no" v-pre>uint32_t</code> in network byte order)</td>
+<td><code translate="no" v-pre>pinHeight</code> (uint32, network byte order)</td>
 </tr>
 <tr>
 <td>37-40</td>
-<td><code translate="no" v-pre>nonceId</code> (<code translate="no" v-pre>uint32_t</code> in network byte order)</td>
+<td><code translate="no" v-pre>nonceId</code> (uint32, network byte order)</td>
 </tr>
 <tr>
 <td>41-43</td>
-<td><code translate="no" v-pre>reserved</code> (3 bytes containing 0)</td>
+<td><code translate="no" v-pre>reserved</code> (3 zero bytes)</td>
 </tr>
 <tr>
 <td>44-51</td>
-<td><code translate="no" v-pre>feeE8</code> (<code translate="no" v-pre>uint64_t</code> in network byte order)</td>
+<td><code translate="no" v-pre>feeE8</code> (uint64, network byte order)</td>
 </tr>
 <tr>
 <td>52-83</td>
-<td><code translate="no" v-pre>assetHash</code> asset hash (hash of asset)</td>
+<td><code translate="no" v-pre>assetHash</code> (32 bytes)</td>
 </tr>
 <tr>
 <td>84-91</td>
-<td><code translate="no" v-pre>amountE8</code> (<code translate="no" v-pre>uint64_t</code> in network byte order)</td>
+<td><code translate="no" v-pre>amountE8</code> (uint64, network byte order)</td>
 </tr>
 </tbody>
 </table>
 </div>
-   </doc-panel>
-   <doc-panel id="cancelation" collapsed>
-       <template #title>Cancelation</template>
+<hr>
+<doc-anchor-target id="cancelation">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#cancelation">#</doc-anchor-trigger>
+        <span>Cancelation</span>
+    </h3>
+</doc-anchor-target>
 <p>Cancel a pending transaction or an existing order.</p>
+<p><strong>Parameters:</strong></p>
 <div class="table-wrapper scrollbar overflow-hidden">
 <table class="comfortable">
 <thead>
 <tr>
-<th>PARAMETER</th>
-<th>TYPE</th>
-<th>DETAILS</th>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><code translate="no" v-pre>type</code></td>
 <td>string</td>
-<td>Set to <code translate="no" v-pre>cancelation</code>.</td>
+<td>Set to <code translate="no" v-pre>cancelation</code></td>
 </tr>
 <tr>
 <td><code translate="no" v-pre>cancelHeight</code></td>
-<td>unsigned 32 bit integer</td>
-<td>The canceled transaction&#x27;s <code translate="no" v-pre>pinHeight</code>.</td>
+<td>uint32</td>
+<td>The <code translate="no" v-pre>pinHeight</code> of the transaction to cancel</td>
 </tr>
 <tr>
 <td><code translate="no" v-pre>cancelNonceId</code></td>
-<td>unsinged 32 bit integer</td>
-<td>The canceled transaction&#x27;s <code translate="no" v-pre>nonceId</code>.</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>feeE8</code> (optional)</td>
-<td>unsigned 64 bit integer</td>
-<td>Amount of coins to spend on transaction fees multiplied by 10^8. For example to send one 0.00000001 coins this value must be 1. This value must be exactly representable value in a 16 bit encoding, see below.</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>feeStr</code> (optional)</td>
-<td>string</td>
-<td>Amount of coins to spend on transaction fees. This value must be exactly representable value in a 16 bit encoding, see below.</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>nonceId</code></td>
-<td>unsigned 32 bit integer</td>
-<td>To avoid double spend, there can only be one transaction with a specific (pinHeight,nonceId) pair. The same nonceId can be used for different pinHeight values</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>pinHeight</code></td>
-<td>unsigned 32 bit integer</td>
-<td>Signature includes block hash at this height</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>signature65</code></td>
-<td>string of length 130</td>
-<td>hex-encoded 65 byte compact recoverable ECDSA signature in custom format, see below.</td>
+<td>uint32</td>
+<td>The <code translate="no" v-pre>nonceId</code> of the transaction to cancel</td>
 </tr>
 </tbody>
 </table>
 </div>
-<p><strong>NOTE</strong>:</p>
-<ul>
-<li>The transaction fee must be specified either via <code translate="no" v-pre>feeE8</code> or via <code translate="no" v-pre>feeStr</code>.</li>
-<li>Miner fee must be exactly representable in a 16 bit encoding.</li>
-</ul>
-<p>The transaction hash needed for signature generation is the SHA256 hash of the following bytes:</p>
+<p><strong>Example Request:</strong></p>
+<div id="cancelation-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-json"><code v-pre class="language-json">{
+  &quot;type&quot;: &quot;cancelation&quot;,
+  &quot;cancelHeight&quot;: 1198900,
+  &quot;cancelNonceId&quot;: 5,
+  &quot;feeStr&quot;: &quot;0.0001&quot;,
+  &quot;nonceId&quot;: 1,
+  &quot;pinHeight&quot;: 1198931,
+  &quot;signature65&quot;: &quot;...&quot;
+}</code></pre>
+</doc-codeblock></div>
+<p><strong>Signature Hash Bytes:</strong></p>
 <div class="table-wrapper scrollbar overflow-hidden">
 <table class="comfortable">
 <thead>
 <tr>
-<th>BYTES</th>
-<th>DESCRIPTION</th>
+<th>Bytes</th>
+<th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>1 -32</td>
-<td><code translate="no" v-pre>pinHash</code> (hash of block at height <code translate="no" v-pre>pinHeight</code>)</td>
+<td>1-32</td>
+<td><code translate="no" v-pre>pinHash</code></td>
 </tr>
 <tr>
 <td>33-36</td>
-<td><code translate="no" v-pre>pinHeight</code> (<code translate="no" v-pre>uint32_t</code> in network byte order)</td>
+<td><code translate="no" v-pre>pinHeight</code> (uint32, network byte order)</td>
 </tr>
 <tr>
 <td>37-40</td>
-<td><code translate="no" v-pre>nonceId</code> (<code translate="no" v-pre>uint32_t</code> in network byte order)</td>
+<td><code translate="no" v-pre>nonceId</code> (uint32, network byte order)</td>
 </tr>
 <tr>
 <td>41-43</td>
-<td><code translate="no" v-pre>reserved</code> (3 bytes containing 0)</td>
+<td><code translate="no" v-pre>reserved</code> (3 zero bytes)</td>
 </tr>
 <tr>
 <td>44-51</td>
-<td><code translate="no" v-pre>feeE8</code> (<code translate="no" v-pre>uint64_t</code> in network byte order)</td>
+<td><code translate="no" v-pre>feeE8</code> (uint64, network byte order)</td>
 </tr>
 <tr>
 <td>52-55</td>
-<td><code translate="no" v-pre>cancelHeight</code> (<code translate="no" v-pre>uint32_t</code> in network byte order)</td>
+<td><code translate="no" v-pre>cancelHeight</code> (uint32, network byte order)</td>
 </tr>
 <tr>
 <td>56-59</td>
-<td><code translate="no" v-pre>cancelNonceId</code> (<code translate="no" v-pre>uint32_t</code> in network byte order)</td>
+<td><code translate="no" v-pre>cancelNonceId</code> (uint32, network byte order)</td>
 </tr>
 </tbody>
 </table>
 </div>
-   </doc-panel>
-   <doc-panel id="assetcreations" collapsed>
-       <template #title>AssetCreations</template>
+<hr>
+<doc-anchor-target id="asset-creation">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#asset-creation">#</doc-anchor-trigger>
+        <span>Asset Creation</span>
+    </h3>
+</doc-anchor-target>
 <p>Create a new asset.</p>
+<p><strong>Parameters:</strong></p>
 <div class="table-wrapper scrollbar overflow-hidden">
 <table class="comfortable">
 <thead>
 <tr>
-<th>PARAMETER</th>
-<th>TYPE</th>
-<th>DETAILS</th>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><code translate="no" v-pre>type</code></td>
 <td>string</td>
-<td>Set to <code translate="no" v-pre>assetCreation</code>.</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>feeE8</code> (optional)</td>
-<td>unsigned 64 bit integer</td>
-<td>Amount of coins to spend on transaction fees multiplied by 10^8. For example to send one 0.00000001 coins this value must be 1. This value must be exactly representable value in a 16 bit encoding, see below.</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>feeStr</code> (optional)</td>
-<td>string</td>
-<td>Amount of coins to spend on transaction fees. This value must be exactly representable value in a 16 bit encoding, see below.</td>
+<td>Set to <code translate="no" v-pre>assetCreation</code></td>
 </tr>
 <tr>
 <td><code translate="no" v-pre>name</code></td>
-<td>string of length 1 to 5</td>
-<td>The name of asset to be created.</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>nonceId</code></td>
-<td>unsigned 32 bit integer</td>
-<td>To avoid double spend, there can only be one transaction with a specific (pinHeight,nonceId) pair. The same nonceId can be used for different pinHeight values</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>pinHeight</code></td>
-<td>unsigned 32 bit integer</td>
-<td>Signature includes block hash at this height</td>
+<td>string (1-5 chars)</td>
+<td>Name of the asset</td>
 </tr>
 <tr>
 <td><code translate="no" v-pre>precision</code></td>
-<td>values from 0 to 18</td>
-<td>Precision <code translate="no" v-pre>p</code> of the asset to be created. One asset unit will correspond to <code translate="no" v-pre>10^p</code> smallest representable units.</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>signature65</code></td>
-<td>string of length 130</td>
-<td>hex-encoded 65 byte compact recoverable ECDSA signature in custom format, see below.</td>
+<td>uint8 (0-18)</td>
+<td>Precision <code translate="no" v-pre>p</code> (one unit = <code translate="no" v-pre>10^p</code> smallest units)</td>
 </tr>
 <tr>
 <td><code translate="no" v-pre>supplyU64</code></td>
-<td>unsinged 64 bit integer</td>
-<td>Number of smallest representable units of the asset to be created. The supply in asset units is <code translate="no" v-pre>supplyU64 / 10^precision</code>.</td>
+<td>uint64</td>
+<td>Total supply in smallest units</td>
 </tr>
 </tbody>
 </table>
 </div>
-<p><strong>NOTE</strong>:</p>
-<ul>
-<li>The transaction fee must be specified either via <code translate="no" v-pre>feeE8</code> or via <code translate="no" v-pre>feeStr</code>.</li>
-<li>Miner fee must be exactly representable in a 16 bit encoding.</li>
-</ul>
-<p>The transaction hash needed for signature generation is the SHA256 hash of the following bytes:</p>
+<p><strong>Example Request:</strong></p>
+<div id="asset-creation-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-json"><code v-pre class="language-json">{
+  &quot;type&quot;: &quot;assetCreation&quot;,
+  &quot;name&quot;: &quot;TOK1&quot;,
+  &quot;precision&quot;: 8,
+  &quot;supplyU64&quot;: 1000000000000,
+  &quot;feeStr&quot;: &quot;0.0001&quot;,
+  &quot;nonceId&quot;: 1,
+  &quot;pinHeight&quot;: 1198931,
+  &quot;signature65&quot;: &quot;...&quot;
+}</code></pre>
+</doc-codeblock></div>
+<p><strong>Signature Hash Bytes:</strong></p>
 <div class="table-wrapper scrollbar overflow-hidden">
 <table class="comfortable">
 <thead>
 <tr>
-<th>BYTES</th>
-<th>DESCRIPTION</th>
+<th>Bytes</th>
+<th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>1 -32</td>
-<td><code translate="no" v-pre>pinHash</code> (hash of block at height <code translate="no" v-pre>pinHeight</code>)</td>
+<td>1-32</td>
+<td><code translate="no" v-pre>pinHash</code></td>
 </tr>
 <tr>
 <td>33-36</td>
-<td><code translate="no" v-pre>pinHeight</code> (<code translate="no" v-pre>uint32_t</code> in network byte order)</td>
+<td><code translate="no" v-pre>pinHeight</code> (uint32, network byte order)</td>
 </tr>
 <tr>
 <td>37-40</td>
-<td><code translate="no" v-pre>nonceId</code> (<code translate="no" v-pre>uint32_t</code> in network byte order)</td>
+<td><code translate="no" v-pre>nonceId</code> (uint32, network byte order)</td>
 </tr>
 <tr>
 <td>41-43</td>
-<td><code translate="no" v-pre>reserved</code> (3 bytes containing 0)</td>
+<td><code translate="no" v-pre>reserved</code> (3 zero bytes)</td>
 </tr>
 <tr>
 <td>44-51</td>
-<td><code translate="no" v-pre>feeE8</code> (<code translate="no" v-pre>uint64_t</code> in network byte order)</td>
+<td><code translate="no" v-pre>feeE8</code> (uint64, network byte order)</td>
 </tr>
 <tr>
 <td>52-59</td>
-<td><code translate="no" v-pre>supplyU64</code> (<code translate="no" v-pre>uint64_t</code> in network byte order)</td>
+<td><code translate="no" v-pre>supplyU64</code> (uint64, network byte order)</td>
 </tr>
 <tr>
-<td>60-60</td>
-<td><code translate="no" v-pre>precision</code></td>
+<td>60</td>
+<td><code translate="no" v-pre>precision</code> (1 byte)</td>
 </tr>
 <tr>
 <td>61-65</td>
-<td><code translate="no" v-pre>name</code> (back-padded to 5 bytes with 0)</td>
+<td><code translate="no" v-pre>name</code> (5 bytes, null-padded)</td>
 </tr>
 </tbody>
 </table>
 </div>
-   </doc-panel>
-</doc-panels>
-<doc-anchor-target id="details-on-fees">
-    <h4>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#details-on-fees">#</doc-anchor-trigger>
-        <span>Details on fees</span>
-    </h4>
+<hr>
+<doc-anchor-target id="fee-encoding">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#fee-encoding">#</doc-anchor-trigger>
+        <span>Fee Encoding</span>
+    </h2>
 </doc-anchor-target>
-<p>Fees are not subtracted from the amount sent in the transaction. The sender spends both, transfer amount and transaction fee, <code translate="no" v-pre>toAddr</code> receives the transferred amount and the miner of the block including this transaction gets the transaction fee.</p>
-<p>For efficiency and compactness transaction fees are internally encoded as 2-byte floating-point numbers (16 bits), where the first 6 bits encode the exponent and the remaining 10 bits encode a 11 bit mantissa starting with an implicit 1. Of course not every 64 bit value can be encoded in 16 bits and only fee 64 bit values which are representable exactly in the 16 bits encoding are accepted. You can use the <code translate="no" v-pre>/tools/encode16bit/from_e8/:feeE8</code> or <code translate="no" v-pre>/tools/encode16bit/from_string/:feestring</code> endpoints to round an arbitrary 64-bit fee value to an accepted 64 bit value.</p>
-<doc-anchor-target id="how-to-specify-the-sender">
-    <h4>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#how-to-specify-the-sender">#</doc-anchor-trigger>
-        <span>How to specify the sender?</span>
-    </h4>
-</doc-anchor-target>
-<p>The sender&#x27;s address is recovered from the recoverable ECDSA signature <code translate="no" v-pre>signature65</code>. It is implicitly specified by creating a signature with the corresponding private key.</p>
-<doc-anchor-target id="signature-generation">
-    <h4>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#signature-generation">#</doc-anchor-trigger>
-        <span>Signature generation</span>
-    </h4>
-</doc-anchor-target>
-<p>The following steps are required:</p>
-<ol>
-<li><p>Call the <code translate="no" v-pre>/chain/head</code> endpoint and extract the  <code translate="no" v-pre>pinHash</code> and <code translate="no" v-pre>pinHeight</code> fields.</p>
-</li>
-<li><p>Generate the secp256k1-ECDSA recoverable signature of the 32-byte transaction hash using the private key corresponding to the sender&#x27;s address. The signature will have three properties:</p>
-</li>
-</ol>
+<p>Transaction fees are not subtracted from the transfer amount. The sender spends both the transfer amount and the fee, while <code translate="no" v-pre>toAddr</code> receives only the transferred amount.</p>
+<p>For efficiency, fees are encoded as 2-byte floating-point numbers (16 bits):</p>
 <ul>
-<li><code translate="no" v-pre>r</code>: 32 byte coordinate parameter</li>
-<li><code translate="no" v-pre>s</code>: 32 byte coordinate parameter</li>
-<li><code translate="no" v-pre>recid</code>: 1 byte recovery id, it should automatically have one of the four values 0,1,2,3.</li>
+<li>First 6 bits: exponent</li>
+<li>Remaining 10 bits: 11-bit mantissa (with implicit leading 1)</li>
 </ul>
-<ol start="3">
-<li>Concatenate the parameters to form the 65-byte compact normalized (lower <code translate="no" v-pre>s</code>) recoverable signature with the following byte structure:</li>
-</ol>
+<p>Only 64-bit values exactly representable in 16 bits are accepted. Use these endpoints to round arbitrary values:</p>
+<ul>
+<li><code translate="no" v-pre>GET /tools/encode16bit/from_e8/:feeE8</code> - Round from numeric value</li>
+<li><code translate="no" v-pre>GET /tools/encode16bit/from_string/:string</code> - Round from string</li>
+</ul>
+<doc-anchor-target id="signature-generation">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#signature-generation">#</doc-anchor-trigger>
+        <span>Signature Generation</span>
+    </h2>
+</doc-anchor-target>
+<p>The sender&#x27;s address is recovered from the ECDSA signature <code translate="no" v-pre>signature65</code>. The signature is created with the private key corresponding to the sender&#x27;s address.</p>
+<doc-anchor-target id="steps">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#steps">#</doc-anchor-trigger>
+        <span>Steps</span>
+    </h3>
+</doc-anchor-target>
+<ol>
+<li><p><strong>Get pinHash:</strong> Call <code translate="no" v-pre>GET /chain/head</code> and extract <code translate="no" v-pre>pinHash</code> and <code translate="no" v-pre>pinHeight</code>.</p>
+</li>
+<li><p><strong>Create transaction hash:</strong> Compute SHA256 of the transaction-specific byte sequence (see each transaction type above).</p>
+</li>
+<li><p><strong>Generate signature:</strong> Create a secp256k1-ECDSA recoverable signature with:</p>
+<ul>
+<li><code translate="no" v-pre>r</code>: 32-byte coordinate parameter</li>
+<li><code translate="no" v-pre>s</code>: 32-byte coordinate parameter (normalized to lower value)</li>
+<li><code translate="no" v-pre>recid</code>: 1-byte recovery ID (0, 1, 2, or 3)</li>
+</ul>
+</li>
+<li><p><strong>Encode signature:</strong> Concatenate to form the 65-byte signature:</p>
 <div class="table-wrapper scrollbar overflow-hidden">
 <table class="comfortable">
 <thead>
 <tr>
-<th>BYTES</th>
-<th>DESCRIPTION</th>
+<th>Bytes</th>
+<th>Value</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>1 -32</td>
+<td>1-32</td>
 <td><code translate="no" v-pre>r</code></td>
 </tr>
 <tr>
@@ -1081,14 +1113,47 @@
 </tbody>
 </table>
 </div>
-<p>Note that this is not the standard compact recoverable signature representation because in Warthog, the recoverable id is the last byte of the 65 byte signature and has no offset of 27.</p>
-<doc-anchor-target id="integration-guides">
-    <h4>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#integration-guides">#</doc-anchor-trigger>
-        <span>Integration guides</span>
-    </h4>
+</li>
+</ol>
+<div class="flex mb-6">
+    <div class="shrink-0 w-1.5 rounded-tl-lg rounded-bl-lg bg-callout-primary"></div>
+    <div class="flex w-full py-4 border border-l-0 rounded-tr-lg rounded-br-lg doc-callout bg-callout-base-bg border-callout-base-border" role="alert">
+        <div class="flex items-center ml-4 h-7">
+            <svg xmlns="http://www.w3.org/2000/svg" class="mb-px text-callout-primary" width="22" height="22" viewBox="0 0 24 24" role="presentation">
+                <g fill="currentColor"><g>
+                    <path d="M12 1C5.93 1 1 5.93 1 12s4.93 11 11 11 11-4.93 11-11S18.07 1 12 1zm0 20c-4.96 0-9-4.04-9-9s4.04-9 9-9 9 4.04 9 9-4.04 9-9 9z"></path>
+                    <path d="M12 11c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1s1-.45 1-1v-4c0-.55-.45-1-1-1zM12.01 7c-.56 0-1 .45-1 1s.45 1 1 1 1-.45 1-1-.45-1-1-1z"></path>
+                    <path fill="none" d="M0 0h24v24H0z"></path>
+                </g></g>
+            </svg>
+        </div>
+        <div class="pr-5 ml-3 w-full">
+<p>Warthog uses a custom signature format where the recovery ID is the last byte without the standard offset of 27.</p>
+        </div>
+    </div>
+</div>
+<doc-anchor-target id="response">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#response">#</doc-anchor-trigger>
+        <span>Response</span>
+    </h2>
 </doc-anchor-target>
-<p>We provide working code snippets on how to generate and send transactions <a href="./integration_python.md">in Python3</a>, <a href="./integration_elixir.md">Elixir</a> and <a href="./integration_nodejs.md">NodeJS</a>.</p>
+<p>On success, returns the transaction hash:</p>
+<div id="response-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-json"><code v-pre class="language-json">{
+  &quot;code&quot;: 0,
+  &quot;data&quot;: {
+    &quot;txHash&quot;: &quot;f364da997bf7a3c3bc8ead22041509228d6bdea39fcbcdc6be56030433d54219&quot;
+  }
+}</code></pre>
+</doc-codeblock></div>
+<doc-anchor-target id="integration-guides">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#integration-guides">#</doc-anchor-trigger>
+        <span>Integration Guides</span>
+    </h2>
+</doc-anchor-target>
+<p>Working code examples for generating and sending transactions in <a href="../../integrations/wallet-integration/">Python3, NodeJS, and Elixir</a>.</p>
 
                 
                 <!-- Required only on API pages -->
@@ -1108,16 +1173,16 @@
                             <svg xmlns="http://www.w3.org/2000/svg" class="mr-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19 11H7.41l5.29-5.29a.996.996 0 10-1.41-1.41l-7 7a1 1 0 000 1.42l7 7a1.024 1.024 0 001.42-.01.996.996 0 000-1.41L7.41 13H19c.55 0 1-.45 1-1s-.45-1-1-1z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
                             <span>
                                 <span class="block text-xs font-normal text-base-text-muted">Previous</span>
-                                <span class="block mt-1">API</span>
+                                <span class="block mt-1">REST API</span>
                             </span>
                         </a>
                     </div>
             
                     <div class="w-1/2">
-                        <a class="px-5 py-4 -mx-px h-full flex items-center justify-end break-normal font-medium text-body-link border border-base-border hover:border-base-border-hover rounded-r-lg transition-colors duration-150 relative hover:z-5" href="../../../developers/integrations/pools/">
+                        <a class="px-5 py-4 -mx-px h-full flex items-center justify-end break-normal font-medium text-body-link border border-base-border hover:border-base-border-hover rounded-r-lg transition-colors duration-150 relative hover:z-5" href="../../../developers/websocket/">
                             <span>
                                 <span class="block text-xs font-normal text-right text-base-text-muted">Next</span>
-                                <span class="block mt-1">Pool Integration</span>
+                                <span class="block mt-1">Web​Socket API</span>
                             </span>
                             <svg xmlns="http://www.w3.org/2000/svg" class="ml-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19.92 12.38a1 1 0 00-.22-1.09l-7-7a.996.996 0 10-1.41 1.41l5.3 5.3H5c-.55 0-1 .45-1 1s.45 1 1 1h11.59l-5.29 5.29a.996.996 0 000 1.41c.19.2.44.3.7.3s.51-.1.71-.29l7-7c.09-.09.16-.21.21-.33z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
                         </a>
@@ -1161,6 +1226,6 @@
 
     <div id="retype-overlay-target"></div>
 
-    <script data-cfasync="false">window.__DOCS__ = { "title": "POST /transaction/add", level: 3, icon: "file", hasPrism: false, hasMermaid: false, hasMath: false, tocDepth: 23 }</script>
+    <script data-cfasync="false">window.__DOCS__ = { "title": "POST /transaction/add", level: 3, icon: "file", hasPrism: true, hasMermaid: false, hasMath: false, tocDepth: 23 }</script>
 </body>
 </html>

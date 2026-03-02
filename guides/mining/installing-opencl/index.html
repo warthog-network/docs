@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.0.1.825699573085">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.1.0.825754865855">
 
     <!-- See retype.com -->
-    <meta name="generator" content="Retype 4.0.1">
+    <meta name="generator" content="Retype 4.1.0">
 
     <!-- Primary Meta Tags -->
     <title>OpenCL Installation</title>
@@ -31,11 +31,11 @@
 
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../../resources/css/retype.css?v=4.0.1.825699573085" rel="stylesheet">
+    <link href="../../../resources/css/retype.css?v=4.1.0.825754865855" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.0.1.825699573085" data-turbo-eval="false" defer></script>
-    <script data-cfasync="false" src="../../../resources/js/retype.js?v=4.0.1" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.0.1.825699573085" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.1.0.825754865855" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../../resources/js/retype.js?v=4.1.0" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.1.0.825754865855" data-turbo-eval="false" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -157,11 +157,11 @@
 </doc-anchor-target>
 <p>To mine on your GPUs you need to install GPU drivers with OpenCL support.</p>
 <p>You can check whether your GPU has a working OpenCL support with the <code translate="no" v-pre>clinfo</code> command. Install this program with</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div id="opencl-installation-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-none"><code v-pre class="language-none">sudo apt install clinfo</code></pre>
 </doc-codeblock></div>
 <p>Then start it by typing</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div id="opencl-installation-code-2" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-none"><code v-pre class="language-none">clinfo</code></pre>
 </doc-codeblock></div>
 <p>In our case we don&#x27;t have any GPU drivers installed that support OpenCL:</p>
@@ -199,7 +199,7 @@
     <figcaption class="caption"></figcaption>
 </figure>
 </p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div id="amd-gpus-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-none"><code v-pre class="language-none">sudo amdgpu-install --usecase=workstation,rocm,opencl --opencl=rocr,legacy --vulkan=pro --accept-eula</code></pre>
 </doc-codeblock></div>
 <p>This will command will take a while downloading and installing more than 2GB worth of packages.</p>
@@ -210,7 +210,7 @@
 </figure>
 </p>
 <p>The AMD OpenCL platform is now detected but there are no devices. This is because you need to add your user to the <code translate="no" v-pre>render</code> group:</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div id="amd-gpus-code-2" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-none"><code v-pre class="language-none">sudo adduser $USER render</code></pre>
 </doc-codeblock></div>
 <p>Now reboot your system. If you try <code translate="no" v-pre>clinfo</code> again you now see the GPU device:</p>
@@ -237,7 +237,7 @@
 </figure>
 </p>
 <p>The downloaded file is a <code translate="no" v-pre>sh</code> script and we need to make it executable. So we navigate to the <code translate="no" v-pre>Downloads</code> directory and execute</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div id="nvidia-gpus-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-none"><code v-pre class="language-none">chmod a+x NVIDIA-Linux-x86_64-535.112.01.run</code></pre>
 </doc-codeblock></div>
 <p>Of course you need to insert your exact filename here.
@@ -246,7 +246,7 @@
     <figcaption class="caption"></figcaption>
 </figure>
 When we try to run it via</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div id="nvidia-gpus-code-2" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-none"><code v-pre class="language-none">sudo ./NVIDIA-Linux-x86_64-535.112.01.run</code></pre>
 </doc-codeblock></div>
 <p>we get this error:
@@ -256,23 +256,23 @@ When we try to run it via</p>
 </figure>
 </p>
 <p>This means we need to execute the script no a lower run level without an X server running. In addition we must blacklist the default <code translate="no" v-pre>nouvaeu</code> driver with this command:</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div id="nvidia-gpus-code-3" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-none"><code v-pre class="language-none">echo -e &quot;blacklist nouveau\noptions nouveau modeset=0&quot; | sudo tee /etc/modprobe.d/blacklist-nouveau.conf</code></pre>
 </doc-codeblock></div>
 <p>Now reboot your system. Once rebooted you should switch to a lower run level.
 To do this press the three keys CTRL + ALT + F3 at the same time.
 You should see a black screen with login prompt like this:</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div id="nvidia-gpus-code-4" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-none"><code v-pre class="language-none">Ubuntu 220.4.3 LTS pc tty3
 
 pc login: _</code></pre>
 </doc-codeblock></div>
 <p>Log in with your user name and password and then switch to a lower run level with</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div id="nvidia-gpus-code-5" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-none"><code v-pre class="language-none">sudo init 3</code></pre>
 </doc-codeblock></div>
 <p>You can now start the installation as above, navigate to the <code translate="no" v-pre>Downloads</code> directory and start the installation:</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div id="nvidia-gpus-code-6" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-none"><code v-pre class="language-none">cd ~/Downloads
 sudo ./NVIDIA-Linux-x86_64-535.112.01.run</code></pre>
 </doc-codeblock></div>
