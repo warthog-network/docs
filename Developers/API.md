@@ -146,9 +146,66 @@ Send transactions in JSON format, returns transaction hash in hex format:
 
 ### `GET /transaction/latest`
 
-Show latest transactions.
+Show latest transactions. Returns the most recent blocks with their full transaction details.
 
-**TODO: Add JSON output example**
+**Output:**
+- `count` — total number of transactions returned
+- `fromId` — the lowest history ID in the result set
+- `perBlock` — array of blocks, each containing `header`, `body`, `confirmations`, `height`, `timestamp`, `utc`
+
+Example output of `/transaction/latest`:
+
+```json
+{
+ "code": 0,
+ "data": {
+  "count": 49,
+  "fromId": 1,
+  "perBlock": [
+   {
+    "body": {
+     "assetCreations": [...],
+     "cancelations": [...],
+     "matches": [...],
+     "newOrders": [...],
+     "rewards": [...],
+     "tokenTransfers": [...],
+     "wartTransfers": [...]
+    },
+    "confirmations": 1,
+    "header": {
+     "difficulty": 536871040.0000305,
+     "hash": "7deb38e45a74b96d02166dfd8f6627bbbefd8dc25a20727885bb21eeb52a3cb4",
+     "merkleroot": "...",
+     "nonce": "00000000",
+     "pow": { ... },
+     "prevHash": "...",
+     "raw": "...",
+     "target": "077fffff",
+     "timestamp": 1772443430,
+     "utc": "2026-03-02 09:23:50 UTC",
+     "version": "00000004"
+    },
+    "height": 23,
+    "timestamp": 1772443430,
+    "utc": "2026-03-02 09:23:50 UTC"
+   },
+   ...
+  ]
+ }
+}
+```
+
+**Body fields:**
+- `assetCreations` — new token/asset creations
+- `cancelations` — order cancelations
+- `liquidityDeposits` — liquidity provider deposits
+- `liquidityWithdrawals` — liquidity provider withdrawals
+- `matches` — DEX trade matches/swaps
+- `newOrders` — new limit orders
+- `rewards` — block rewards
+- `tokenTransfers` — token transfers
+- `wartTransfers` — WART coin transfers
 
 ### `GET /transaction/minfee`
 
