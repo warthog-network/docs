@@ -51,6 +51,8 @@ Below we assume the RPC socket is accessible at `localhost:3000`. On startup the
 | `GET` | [`/chain/signed_snapshot`](#get-chainsigned_snapshot) | Show chain snapshot |
 | `GET` | [`/chain/hashrate/chart/block/:from/:to/:window`](#get-chainhashratechartblockfromtowindow) | Show hashrate chart by block range |
 | `GET` | [`/chain/hashrate/chart/time/:from/:to/:interval`](#get-chainhashratecharttimefromtointerval) | Show hashrate chart by time range |
+| `GET` | [`/chart/candles/:asset/:interval?from=...&to=...&n=...`](#get-chartcandlesassetinterval) | Show OHLCV candle data for a timeframe (5m, 1h, 1d) |
+| `GET` | [`/chart/trades/:asset?from=...&to=...&n=...`](#get-charttradesasset) | Show trade data |
 | `POST` | [`/chain/append`](#post-chainappend) | Append mined block |
 | `GET` | [`/token/complete`](#get-tokencomplete) | Search tokens by name and/or hash prefix |
 | `GET` | [`/market/:market`](#get-marketmarket) | Show market orders and liquidity pool |
@@ -835,3 +837,84 @@ Rollback the chain by one block.
 Generate fake mining data for a specific address.
 
 **TODO: Add JSON output example**
+
+### `GET /chart/candles/:asset/:interval`
+
+Show OHLCV candle data for a specific asset and interval.
+
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `:asset` | integer/string | Asset ID (e.g. `7`) or hash (e.g. `0e4825efffa294610d2ac376713e3bcc9b53d378e823834b64e5df01f75d3b0c`)|
+| `:interval` | string | Timeframe: `5m` (5 minutes), `1h` (1 hour), `1d` (1 day) |
+| `from` | Unix timestamp | Start time (optional) |
+| `to` | Unix timestamp | End time (optional) |
+| `n` | integer | Limit number of results (optional, default: 100) |
+
+**Query parameter rules:**
+- Not all three optional parameters (`from`, `to`, `n`) can be specified at the same time.
+- If only `from` is specified, the earliest entries from `from` are returned.
+- If only `to` is specified, the latest entries up to `to` are returned.
+- If `from` and `to` are specified, all entries from `from` to `to` are returned.
+- The total number of entries is limited to 200. The default value for `n` is 100.
+
+Example output of `/chart/candles/7/5m`:
+
+```json
+{
+ "code": 0,
+ "data": [
+  [
+   1772265900,          // begin timestamp of the candle
+   7,                   // height
+   0.09999999999999999, // open
+   0.09999999999999999, // high
+   0.09999999999999999, // low
+   0.09999999999999999, // close
+   40.00200000000001,   // asset amount (base)
+   4.0002               // WART amount (quote)
+  ]
+ ]
+}
+```
+
+Each candle is a 8-element array: `[begin_timestamp, height, open, high, low, close, base, quote]`.
+
+### `GET /chart/trades/:asset`
+
+Show trade data for a specific asset.
+
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `:asset` | integer/string | Asset ID (e.g. `7`) or hash (e.g. `0e4825efffa294610d2ac376713e3bcc9b53d378e823834b64e5df01f75d3b0c`) |
+| `from` | block height | Start block (optional) |
+| `to` | block height | End block (optional) |
+| `n` | integer | Limit number of results (optional, default: 100) |
+
+**Query parameter rules:**
+- Not all three optional parameters (`from`, `to`, `n`) can be specified at the same time.
+- If only `from` is specified, the earliest entries from `from` are returned.
+- If only `to` is specified, the latest entries up to `to` are returned.
+- If `from` and `to` are specified, all entries from `from` to `to` are returned.
+- The total number of entries is limited to 200. The default value for `n` is 100.
+
+Example output of `/chart/trades/7`:
+
+```json
+{
+ "code": 0,
+ "data": [
+  [
+   7,                 // height
+   1772266091,        // timestamp of the block containing the trade
+   40.00200000000001, // total asset amount traded in the block
+   4.0002             // total WART amount traded in the block
+  ]
+ ]
+}
+```
+
+Each trade is a 4-element array: `[height, timestamp, base, quote]`.
