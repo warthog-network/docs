@@ -1061,4 +1061,4 @@ HTTPoison.post!(baseurl <> "/transaction/add", Jason.encode!(postdata)).body
 
 ## Transaction Reference
 
-For detailed information on all transaction types, signature byte layouts, and parameter requirements, see the [Transaction API documentation](../api/transaction-add.md).
+For detailed information on all transaction types, signature byte layouts, and parameter requirements, see the [Transaction API documentation](../api/create-transaction.md).

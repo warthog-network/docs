@@ -14,7 +14,7 @@ Miners should report Sha256t and Verushash v2.1 measured hashrates and in additi
 ```c++
 (10.0 / 3.0) * double(sha256t) * (pow(c + double(verus) / double(sha256t), 0.3) - pow(c, 0.3));
 ```
-[!ref](/janushash/analysis/janusscore.md)
+[!ref](/Janushash/analysis/janusscore.md)
 
 ## Pools for testing
 [!ref](/links.md)

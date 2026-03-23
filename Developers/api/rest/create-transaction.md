@@ -1,3 +1,6 @@
+---
+title: Create Transaction
+---
 # POST /transaction/add
 
 Send transactions as JSON object. This endpoint supports all transaction types.

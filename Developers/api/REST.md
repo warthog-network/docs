@@ -90,23 +90,13 @@ Below we assume the RPC socket is accessible at `localhost:3000`. On startup the
 | `GET` | [`/debug/rollback`](#get-debugrollback) | Rollback chain |
 | `GET` | [`/debug/fakemine/:address`](#get-debugfakemineaddress) | Generate fake mining data for address |
 
-For WebSocket API documentation, see [WebSocket.md](WebSocket.md).
+For WebSocket API documentation, see [WebSocket API](WebSocket.md).
 
 ## Detailed Description
 
 ### `POST /transaction/add`
 
-[!ref Detailed Description](transaction-add)
-Send transactions in JSON format, returns transaction hash in hex format:
-
- ```json
-{
- "code": 0,
- "data": {
-  "txHash": <txhash>
- }
-}
-```
+Create new transactions as described [here](api/create-transaction.md). Returns transaction hash in hex format:
 
 ### `GET /transaction/mempool`
 
@@ -199,7 +189,7 @@ Example output of `/transaction/latest`:
 }
 ```
 
-[!ref Transaction Details](api/transaction-details)
+[!ref Transaction Details](api/transaction-details.md)
 ### `GET /transaction/minfee`
 
  Show the minimum fee required by this node. Transactions with a lower fee will not be accepted or requested by the node.
