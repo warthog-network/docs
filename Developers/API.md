@@ -166,8 +166,11 @@ Example output of `/transaction/latest`:
     "body": {
      "assetCreations": [...],
      "cancelations": [...],
+     "liquidityDeposits": [...],
+     "liquidityWithdrawals": [...],
      "matches": [...],
      "newOrders": [...],
+     "orderCancelations": [...],
      "rewards": [...],
      "tokenTransfers": [...],
      "wartTransfers": [...]
@@ -196,17 +199,7 @@ Example output of `/transaction/latest`:
 }
 ```
 
-**Body fields:**
-- `assetCreations` — new token/asset creations
-- `cancelations` — order cancelations
-- `liquidityDeposits` — liquidity provider deposits
-- `liquidityWithdrawals` — liquidity provider withdrawals
-- `matches` — DEX trade matches/swaps
-- `newOrders` — new limit orders
-- `rewards` — block rewards
-- `tokenTransfers` — token transfers
-- `wartTransfers` — WART coin transfers
-
+[!ref Transaction Details](api/transaction-details)
 ### `GET /transaction/minfee`
 
  Show the minimum fee required by this node. Transactions with a lower fee will not be accepted or requested by the node.
