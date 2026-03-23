@@ -408,7 +408,7 @@ On success, returns the transaction hash:
 
 ## Integration Guides
 
-Working code examples for generating and sending transactions in [Python3, NodeJS, and Elixir](../../Integration/wallets.md).
+Working code examples for generating and sending transactions in [Python3, NodeJS, and Elixir](../../integration/wallets.md).
 
 ## Libraries
-[!ref](../../Libraries.md)
+[!ref](../../libraries.md)

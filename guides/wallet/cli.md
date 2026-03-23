@@ -9,7 +9,7 @@ The CLI (Command Line Interface) wallet is the most bare-bone way of interacting
 ## Connect to node (local or public)
 
 First, you need a node :
-You can follow this guide to run a local node [here](../Guides/Node/node.md)
+You can follow this guide to run a local node [here](../node/node.md)
 
 Or you can connect your wallet to a [public node](https://github.com/warthog-network/public-nodes)
 Then, to connect to a public node, you will have to add on your commands the arguments `-h` for the node IP or URL and `-p` for the node port.
