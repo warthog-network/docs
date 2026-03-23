@@ -18,19 +18,19 @@ You can join the Warthog community on [Discord](https://discord.com/invite/QMDV8
 ## Starting a node
 
 Doc available here :
-- [wart-node](/Guides/Node/node.md)
+- [wart-node](Guides/Node/node.md)
 
 ## Using a wallet :
 
 Doc available here :
-- [wart-dapp (GUI)](/Guides/Wallet/wart-dapp.md)
-- [wart-wallet (CLI)](/Guides/Wallet/cli.md)
+- [wart-dapp (GUI)](Guides/Wallet/wart-dapp.md)
+- [wart-wallet (CLI)](Guides/Wallet/cli.md)
 
 
 ## Mining
 Mining Warthog's Janushash algorithm requires both, a good CPU and a GPU.
 
 Docs available here :
-- [Mining quick start guide](/Guides/Mining/quickstart.md)
-- [Mining quick start guide FRENCH](/Guides/Mining/quickstart_FR.md)
-- [Installing opencl](../Guides/Mining/installing-opencl.md)
+- [Mining quick start guide](Guides/Mining/quickstart.md)
+- [Mining quick start guide FRENCH](Guides/Mining/quickstart/quickstart_FR.md)
+- [Installing opencl](Guides/Mining/installing-opencl.md)

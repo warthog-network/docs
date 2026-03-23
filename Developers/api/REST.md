@@ -99,7 +99,7 @@ For WebSocket API documentation, see [WebSocket API](WebSocket.md).
 
 ### `POST /transaction/add`
 
-Create new transactions as described [here](api/create-transaction.md). Returns transaction hash in hex format:
+Create new transactions as described [here](rest/create-transaction.md). Returns transaction hash in hex format:
 
 ### `GET /transaction/mempool`
 

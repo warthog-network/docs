@@ -16,7 +16,7 @@ Bridge | TCP, Websocket, (later WebRTC support)
 Browser | Websocket, (later WebRTC support)
 
 For now browser nodes cannot communicate between each other and are only connected to bridge nodes. Warthog nodes of version 0.7.47 or above can be used as a bridge node.
-[!ref](/Guides/Node/bridge-node-setup.md)
+[!ref](../../Guides/Node/bridge-node-setup.md)
 
 
 ## Frequently asked questions

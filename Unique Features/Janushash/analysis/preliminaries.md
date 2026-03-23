@@ -10,7 +10,7 @@ We therefore define the [random vector](https://en.wikipedia.org/wiki/Multivaria
 ## Acceptance region
 
 Recall the the two conditions to solve a block.
-[!ref](/Janushash/condition-to-solve-a-block.md)
+[!ref](../condition-to-solve-a-block.md)
 An equivalent formulation is to require that $(X(h),Y(h))$ must be an element of the *acceptance region* $A_{\tau}\subset [0,1]^2$ defined as
 
 $$
