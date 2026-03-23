@@ -4,10 +4,13 @@ title: Miners
 # Miner Integration
 
 ## Condition to Mine a Block
-[!ref](../../Unique Features/Janushash/condition-to-solve-a-block.md)
+Warthog's Janushash algorithm requires a custom condition on two hashes (SHA256t and Verushash v2.1) to be satisfied for valid blocks. 
+[!ref Condition to solve a block](../../Unique-Features/Janushash/condition-to-solve-a-block.md)
 
 ## Mining Strategy
-[!ref](../../Unique Features/Janushash/mining.md)
+Optimally mining blocks requires a two-stage strategy. First SHA256t hashes have to be calculated (since SHA256t is faster than Verushash v2.1 on modern hardware), then promising candidates have to be filtered for evaluation of Verushash v2.1.
+
+[!ref Mining Strategy](/Unique-Features/Janushash/mining.md)
 
 ## Stratum Protocol
 [!ref](Pools/stratum.md)

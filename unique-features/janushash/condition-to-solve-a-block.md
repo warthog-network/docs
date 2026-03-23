@@ -1,4 +1,5 @@
 ---
+title: Condition
 order: 90
 ---
 # Condition to solve a block
