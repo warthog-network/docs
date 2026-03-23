@@ -1,3 +1,6 @@
+---
+title: REST
+---
 # REST API
 
 API for Warthog node version v0.10.3 "dd054a2"
@@ -189,7 +192,7 @@ Example output of `/transaction/latest`:
 }
 ```
 
-[!ref Transaction Details](api/transaction-details.md)
+[!ref Transaction Details](rest/transaction-details.md)
 ### `GET /transaction/minfee`
 
  Show the minimum fee required by this node. Transactions with a lower fee will not be accepted or requested by the node.

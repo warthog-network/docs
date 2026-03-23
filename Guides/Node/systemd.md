@@ -1,3 +1,6 @@
+---
+title: Systemd
+---
 # How to start a Warthog node as a systemd service 
 **NOTE**: This is only supported in Linux distros that use `systemctl` (Debian, Ubuntu, Mint etc.).
 * Enable auto restart when logged off (only need to do this once per machine): `$ sudo loginctl enable-linger $USER`

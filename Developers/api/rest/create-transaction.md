@@ -1,11 +1,11 @@
 ---
 title: Create Transaction
 ---
-# POST /transaction/add
+# Creating a New Transaction
 
-Send transactions as JSON object. This endpoint supports all transaction types.
+To create a new transaction, use the `POST /transaction/add` API method. POST data must be in JSON format and describes the transaction data in a JSON object. There must always exist a `type` string property that describes the transaction type which determines the other required parameters.
 
-## Overview
+## Transaction Types
 
 | Transaction Type | `type` Value | Description |
 |------------------|--------------|-------------|
@@ -36,7 +36,7 @@ Either `feeE8` or `feeStr` must be specified. The fee must be exactly representa
 
 ## Transaction Types
 
-### WART Transfer
+==- WART Transfer
 
 Transfer WART tokens to another address.
 
@@ -81,7 +81,7 @@ Either `wartE8` or `wartStr` must be specified.
 
 ---
 
-### Token Transfer
+==- Token Transfer
 
 Transfer a specific asset or its pool's liquidity token.
 
@@ -131,7 +131,7 @@ The `amountU64` specifies the smallest units. The conversion to token units depe
 
 ---
 
-### Limit Swap
+==- Limit Swap
 
 Create a new buy or sell limit order for a specific asset.
 
@@ -181,7 +181,7 @@ For buy orders, `amountU64` is in WART (precision 8). For sell orders, it's in t
 
 ---
 
-### Liquidity Deposit
+==- Liquidity Deposit
 
 Deposit liquidity into an asset's WART pool.
 
@@ -229,7 +229,7 @@ Either `wartE8` or `wartStr` must be specified.
 
 ---
 
-### Liquidity Withdrawal
+==- Liquidity Withdrawal
 
 Withdraw liquidity from an asset's WART pool by redeeming liquidity tokens.
 
@@ -269,7 +269,7 @@ Withdraw liquidity from an asset's WART pool by redeeming liquidity tokens.
 
 ---
 
-### Cancelation
+==- Cancelation
 
 Cancel a pending transaction or an existing order.
 
@@ -309,7 +309,7 @@ Cancel a pending transaction or an existing order.
 
 ---
 
-### Asset Creation
+==- Asset Creation
 
 Create a new asset.
 
@@ -351,6 +351,7 @@ Create a new asset.
 | 61-65 | `name` (5 bytes, null-padded) |
 
 ---
+===
 
 ## Fee Encoding
 
@@ -407,7 +408,7 @@ On success, returns the transaction hash:
 
 ## Integration Guides
 
-Working code examples for generating and sending transactions in [Python3, NodeJS, and Elixir](../Integrations/wallet-integration.md).
+Working code examples for generating and sending transactions in [Python3, NodeJS, and Elixir](../../integration/wallets.md).
 
 ## Libraries
-[!ref](../Integrations/Libraries.md)
+[!ref](../../Libraries.md)

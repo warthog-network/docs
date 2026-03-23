@@ -1,15 +1,17 @@
-# Libraries
+---
+title: TypeScript
+---
 
-## `warthog-ts`
-We are working on an official TypeScript library named [warthog-ts](https://github.com/warthog-network/warthog-ts) that greatly simplifies interaction with the Warthog ecosystem.
+# TypeScript Library for Warthog
+Warthog provides an easy-to-use TypeScript library called `warthog-ts` intended for interacting with the Warthog ecosystem. This project is [hosted on GitHub](https://github.com/warthog-network/warthog-ts) and PRs are always welcome.
 
-### Features
+## Features
 
 - Generate wallets and sign transactions
 - Built-in API client for node communication
 - Works in Node.js, React Native, and Browsers
 
-### Quick Start
+## Quick Start
 
 ```typescript
 import { Account, WarthogApi, TransactionContext } from 'warthog-ts';
@@ -27,7 +29,7 @@ const tx = context.wartTransfer(account, toAddress, BigInt(amount));
 const result = await api.submitTransaction(tx);
 ```
 
-### Installation
+## Installation
 
 ```bash
 npm install github:warthog-network/warthog-ts

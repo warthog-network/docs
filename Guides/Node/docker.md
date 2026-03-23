@@ -1,4 +1,8 @@
-# HOWTO Run a warthog node with docker.
+---
+title: Docker
+---
+
+# How to run a warthog node with docker.
 
 ## Basic way
 

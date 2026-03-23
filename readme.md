@@ -24,13 +24,13 @@ Doc available here :
 
 Doc available here :
 - [wart-dapp (GUI)](/Guides/Wallet/wart-dapp.md)
-- [wart-wallet (CLI)](/Guides/Wallet/wart-wallet-cli.md)
+- [wart-wallet (CLI)](/Guides/Wallet/cli.md)
 
 
 ## Mining
 Mining Warthog's Janushash algorithm requires both, a good CPU and a GPU.
 
 Docs available here :
-- [Mining quick start guide](/Guides/Mining/mining-quickstart.md)
-- [Mining quick start guide FRENCH](/Guides/Mining/mining-quickstart_FR.md)
+- [Mining quick start guide](/Guides/Mining/quickstart.md)
+- [Mining quick start guide FRENCH](/Guides/Mining/quickstart_FR.md)
 - [Installing opencl](../Guides/Mining/installing-opencl.md)

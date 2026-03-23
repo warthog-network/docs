@@ -1,4 +1,8 @@
-# Use a CLI wallet
+---
+title: CLI
+---
+# Using the CLI wallet
+The CLI (Command Line Interface) wallet is the most bare-bone way of interacting with Warthog. It is mainly intended as proof-of-concept and only provides the most basic features required to create addresses, check balances and send transactions. This wallet is shipped as part of the Warthog implementation compared to other wallets written by the community or other third parties.
 
 ![](/img/get-started/10-wallet.png)
 

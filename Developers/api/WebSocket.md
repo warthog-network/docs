@@ -1,3 +1,6 @@
+---
+title: WebSocket
+---
 # WebSocket API
 
 The WebSocket endpoint allows real-time data streams on several topics such as `chain`, `account` and `connection` related information. Subscribe with a message containing `"action": "subscribe"` and unsubscribe similarly with `"action": "unsubscribe"`, as shown below.

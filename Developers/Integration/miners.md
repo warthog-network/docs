@@ -1,3 +1,6 @@
+---
+title: Miners
+---
 # Miner Integration
 
 ## Condition to Mine a Block

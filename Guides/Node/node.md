@@ -1,3 +1,6 @@
+---
+title: Node
+---
 # Using a node
 
 For some actions on the Warthog network (using a wallet or solo mining), you need to run an instance of the node on your computer. Currently, the pre-compiled node executable file are availabe for Windows, macOS (only arm), Linux (Ubuntu, Debian). Аfter launch, node will start synchronizing the blockchain, after it is completed, it will be possible to perform operations with the wallet and start solo mining.

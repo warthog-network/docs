@@ -1,5 +1,8 @@
-# Warthog - using the mining calculator to estimate your profitability
-This guide will help you to estimate your mining profitability, depending on your mining hardware.
+---
+title: Calculator
+---
+# Mining calculator
+A Mining calculator will help you to estimate your mining profitability, depending on your mining hardware.
 
 ## Links :
 - [Mining calculator](https://wartscan.io/calculator)

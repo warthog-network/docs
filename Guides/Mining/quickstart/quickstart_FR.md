@@ -1,3 +1,6 @@
+---
+title: Quick Start (French)
+---
 # Warthog - Tutoriel de minage - Mis à jour le 24/04/2024
 
 Ce guide contient toutes les infos nécessaires pour vous lancer immédiatement dans le minage de Warthog, en pool ou en solo.
@@ -37,7 +40,7 @@ Ce guide contient toutes les infos nécessaires pour vous lancer immédiatement 
 - Wallet CLI (en ligne de commande)
 - Node nécessaire (local ou [publique](https://github.com/warthog-network/public-nodes))
 - Téléchargement : https://github.com/warthog-network/Warthog/releases
-- Guide d'utilisation : https://docs.warthog.network/guides/wart-wallet-cli/
+- Guide d'utilisation : https://docs.warthog.network/guides/cli/
 
 ## Hardware pour miner :
 L'algo janushash en Proof of Balanced Work favorise les configs type PC gamer (bon CPU impératif + bon GPU) plutôt que les rigs multi-GPU. Le mineur vous donnera le hashrate GPU, le hashrate CPU, et le janus hr qui dépend des deux. C'est ce dernier qui est votre "vrai" hashrate et apparaît sur la pool.

@@ -1,3 +1,6 @@
+---
+title: Pools
+---
 # Pool Integration
 
 ## Share validation
@@ -82,10 +85,10 @@ Hash BodyView::merkleRoot() const
 In the last step we append the 10 byte extranonce space from the beginning of the block to the hashed data for the final hash. The data we append these 10 `extranonce` to we call `merklePrefix`. The Merkle root is therefore `sha256(merklePrefix + extranonceBytes)`. The `merklePrefix` is transmitted in the Stratum protocol. It is either 32 bytes or 64 bytes long. Only if you have 1 leaf in the Merkle tree, the Merkle prefix will be 32 bytes, otherwise the Merkle prefix will be the two children of the root concatenated.
 
 ## Scanning the Chain
-[!ref](../../REST.md)
+[!ref](../../../api/REST.md)
 
 ## Pool Payout
-[!ref](../wallet-integration.md)
+[!ref](../wallets.md)
 
 ## Miners for Testing
 [!ref](/links.md)

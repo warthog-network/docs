@@ -6,7 +6,7 @@ Messages are newline (`"\n"`) terminated json strings sent over plain TCP with o
 After establishing a TCP connection (and optionally TLS) the first message is sent from the Client and must be of type `mining.subscribe`:
 ### Mining.subscribe
 #### Request from client:
-```
+```json
 {
   "id": 1,
   "method": "mining.subscribe",
@@ -18,7 +18,7 @@ After establishing a TCP connection (and optionally TLS) the first message is se
 
 ```
 #### Response from pool:
-```
+```json
 {
   "id": 1,                 # same as "id" in the request
   "result": [
@@ -38,7 +38,7 @@ After establishing a TCP connection (and optionally TLS) the first message is se
 ### Mining authorize
 The next message is again send from the client and must have `"method"`  field equal to `"mining.authorize"`:
 #### Request from client:
-```
+```json
 {
   "id": 2, 
   "method": "mining.authorize",
@@ -50,7 +50,7 @@ The next message is again send from the client and must have `"method"`  field e
 ```
 
 #### Response from pool:
-```
+```json
 {
   "id": 2,        # same "id" as in the request
   "result": true,
@@ -63,7 +63,7 @@ Now the connection is established. The pool n
 There are two kind of events that sent from the pool: `"mining.notify"` and `"mining.set_difficulty"`.
 
 ### Mining.notify
-```
+```json
 {
   "id": null,
   "method": "mining.notify",
@@ -98,7 +98,7 @@ Bytes | Meaning
 
 ### Mining.set_difficulty
 
-```
+```json
 {
   "id": null,
   "method": "mining.set_difficulty",
@@ -115,7 +115,7 @@ This means the miner must meet the target `1/difficulty` to mine a share.
 ## Events pushed from miner to pool
 ### Mining.submit
 When the miner has found nonce and extranonce2 such that the block is 
-```
+```json
 {
   "id": 4,
   "method": "mining.submit",
@@ -129,7 +129,7 @@ When the miner has found nonce and extranonce2 such that the block is
 ```
 
 Pool will reply with
-```
+```json
 {
   "id": 4,        # same "id" as in the request
   "result": true,
@@ -140,7 +140,7 @@ or report error.
 ## Error reporting
 Pool response must specify request id in the `"id"` field. Errors are reported by setting `"result"` to `null` and specifying error details in an array of size 3 (code, message, additional info) in the `"error"` field.
 
-```
+```json
 {
   "id": 3,
   "result": null,
@@ -156,7 +156,7 @@ Pool response must specify request id in the `"id"` field. Errors are reported b
 01/21/2024 6:07 PM
 Every coin has its own stratum specification and I changed just very little. Basically we do not have coinbases but mining.notify looks like this:
 
-```
+```json
 {
   "id": null,
   "method": "mining.notify",
