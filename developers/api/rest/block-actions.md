@@ -1,10 +1,11 @@
-# Transaction Details
+# Block Actions
 
-All block body arrays share the same entry structures described below. See [GET /transaction/latest](#get-transactionlatest) for context on where these fields appear.
+Every block affects the chain state via actions. These actions are returned from various API methods such as the `/chain/block/:id` and `/transaction/latest` methods. 
+The JSON structure of these actions is explained below.
 
-## Rewards
+## Reward
 
-Block rewards paid to miners.
+Block reward paid to miners.
 
 ```json
 {
@@ -23,9 +24,9 @@ Block rewards paid to miners.
 | `amount.E8` | integer | Amount in raw E8 units |
 | `amount.str` | string | Amount as decimal string |
 
-## Wart Transfers
+## Wart Transfer
 
-WART coin transfers between accounts.
+Wart coin transfer between accounts. Token transfers are returned as a differnt action type, see below.
 
 ```json
 {
@@ -55,7 +56,9 @@ WART coin transfers between accounts.
 
 ## Token Transfers
 
-Token transfers between accounts.
+Token transfers between accounts. Wart transfers are separated from token transfers because the latter
+require additional fields to be returned such as different amount specification (assets don't always have 
+8 decimals) and `isLiquidity` flag.
 
 ```json
 {
@@ -90,12 +93,12 @@ Token transfers between accounts.
 | `asset.name` | string | Asset name |
 | `asset.decimals` | integer | Asset decimals |
 | `asset.hash` | string | Asset hash |
-| `isLiquidity` | boolean | Whether transfer is liquidity-related |
+| `isLiquidity` | boolean | Whether transfer is the asset itself (false) or liquidity of the corresponding pool |
 | `tokenSpec` | string | Token specification string |
 
 ## New Orders
 
-New limit orders placed on the DEX.
+Represents a new limit order placed on the DEX including orders that were included in the same block and were immediately matched.
 
 ```json
 {
@@ -136,9 +139,11 @@ New limit orders placed on the DEX.
 | `limit.doubleRaw` | number | Price as double (raw) |
 | `buy` | boolean | True if buy order, false if sell |
 
-## Matches
+## Match
 
-DEX trade matches (swaps between liquidity providers).
+In each block, markets with new orders are order-matched. Order matching is based on CoinFuMasterShifu's paper on [Fair Batch Matching](https://github.com/CoinFuMasterShifu/FairBatchMatching/blob/main/FairBatchMatching.pdf). This algorithm batch-matches discrete with continuous liquidity in a fair way such that no intrinsic ordering exists among the matched orders, which means that the the algorithm is MEV-proof, in particular no sandwich attacks are possible.
+
+The returned JSON object contains the pool before and after the matching, and all swaps executed. Each swaps also includes the history id which can be used for further lookup on the referenced order. To check remaining order quantity, use the `historyId` in the `/market/:market/order/:historyId` API endpoint.
 
 ```json
 {
@@ -185,9 +190,9 @@ DEX trade matches (swaps between liquidity providers).
 | `buySwaps[].historyId` | integer | Referenced history ID |
 | `sellSwaps[]` | array | Sell-side swap entries (same fields as `buySwaps`) |
 
-## Liquidity Deposits
+## Liquidity Deposit
 
-Liquidity provider deposits into a trading pool.
+Represents liquidity deposits into a liquidity pool.
 
 ```json
 {
@@ -223,7 +228,7 @@ Liquidity provider deposits into a trading pool.
 
 ## Liquidity Withdrawals
 
-Liquidity provider withdrawals from a trading pool.
+Liquidity provider withdrawals from a liquidity pool.
 
 ```json
 {
@@ -258,7 +263,7 @@ Liquidity provider withdrawals from a trading pool.
 
 ## Asset Creations
 
-New token/asset creation transactions.
+Represents new asset creations.
 
 ```json
 {
@@ -289,7 +294,7 @@ New token/asset creation transactions.
 
 ## Cancelations
 
-Transaction cancelations (revert pending transactions).
+Represents Transaction cancelation, i.e. special transactions which block other transactions. Each cancel transaction contains a `cancelTxid` field referencing the cancelled transaction. No transaction with the referenced transaction id can be mined in the same or a future block.
 
 ```json
 {
@@ -298,7 +303,8 @@ Transaction cancelations (revert pending transactions).
  "address": "3661579d...",
  "fee": { "E8": 9992, "str": "0.00009992" },
  "nonceId": 5,
- "pinHeight": 0
+ "pinHeight": 0,
+ "cancelTxid": { "accountId": 2, "nonceId": 3, "pinHeight": 10 }
 }
 ```
 
@@ -311,10 +317,13 @@ Transaction cancelations (revert pending transactions).
 | `fee.str` | string | Fee as decimal string |
 | `nonceId` | integer | Nonce ID of cancelled tx |
 | `pinHeight` | integer | Pin block height |
+| `cancelTxid.accountId` | integer | Account ID of cancelled transaction |
+| `cancelTxid.nonceId` | integer | Nonce ID of cancelled transaction |
+| `cancelTxid.pinHeight` | integer | Pin height of cancelled transaction |
 
-## Order Cancelations
+## Order Cancelation
 
-Order cancelations (cancel limit orders on the DEX).
+Represents previously active limit orders which were canceled from a specific asset's the order Wart/Asset book.
 
 ```json
 {
