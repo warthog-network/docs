@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.4.0.827752747072">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.4.0.827949639758">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 4.4.0">
@@ -12,7 +12,7 @@
     <!-- Primary Meta Tags -->
     <title>REST</title>
     <meta name="title" content="REST">
-    <meta name="description" content="API for Warthog node version v0.10.3 \"dd054a2\"">
+    <meta name="description" content="API for Warthog node version v0.10.3 \"3ead1f0\"">
 
     <!-- Canonical -->
     <link rel="canonical" href="https://docs.warthog.network/developers/api/rest/">
@@ -21,7 +21,7 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://docs.warthog.network/developers/api/rest/">
     <meta property="og:title" content="REST">
-    <meta property="og:description" content="API for Warthog node version v0.10.3 \"dd054a2\"">
+    <meta property="og:description" content="API for Warthog node version v0.10.3 \"3ead1f0\"">
     <meta property="og:site_name" content="Warthog Network">
     <meta property="og:locale" content="en_US">
 
@@ -29,16 +29,16 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://docs.warthog.network/developers/api/rest/">
     <meta name="twitter:title" content="REST">
-    <meta name="twitter:description" content="API for Warthog node version v0.10.3 \"dd054a2\"">
+    <meta name="twitter:description" content="API for Warthog node version v0.10.3 \"3ead1f0\"">
 
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../../resources/css/retype.css?v=4.4.0.827752747072" rel="stylesheet">
+    <link href="../../../resources/css/retype.css?v=4.4.0.827949639758" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.4.0.827752747072" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.4.0.827949639758" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../../resources/js/retype.js?v=4.4.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.4.0.827752747072" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../../../resources/js/prism.js?v=4.4.0.827752747072" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.4.0.827949639758" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../../../resources/js/prism.js?v=4.4.0.827949639758" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -152,7 +152,7 @@
                 <div id="retype-sidebar-right-toggle"></div>
                 <!-- Page content  -->
 <h1 id="rest-api">REST API</h1>
-<p>API for Warthog node version v0.10.3 &quot;dd054a2&quot;</p>
+<p>API for Warthog node version v0.10.3 &quot;3ead1f0&quot;</p>
 <h2 id="configuration">Configuration</h2>
 <p>API is accessed via the RPC endpoints of the node. The endpoints socket can be configured via the <code translate="no" v-pre>--rpc</code> command line option:</p>
 <div id="configuration-code-1" class="codeblock-wrapper"><doc-codeblock>
@@ -287,29 +287,29 @@
 <td>Show hashrate chart by time range</td>
 </tr>
 <tr>
-<td><code translate="no" v-pre>GET</code></td>
-<td><doc-anchor-trigger to="#get-chartcandlesassetinterval"><code translate="no" v-pre>/chart/candles/:asset/:interval?from=...&amp;to=...&amp;n=...</code></doc-anchor-trigger></td>
-<td>Show OHLCV candle data for a timeframe (5m, 1h, 1d)</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>GET</code></td>
-<td><doc-anchor-trigger to="#get-charttradesasset"><code translate="no" v-pre>/chart/trades/:asset?from=...&amp;to=...&amp;n=...</code></doc-anchor-trigger></td>
-<td>Show trade data</td>
-</tr>
-<tr>
 <td><code translate="no" v-pre>POST</code></td>
 <td><doc-anchor-trigger to="#post-chainappend"><code translate="no" v-pre>/chain/append</code></doc-anchor-trigger></td>
 <td>Append mined block</td>
 </tr>
 <tr>
 <td><code translate="no" v-pre>GET</code></td>
-<td><doc-anchor-trigger to="#get-tokencomplete"><code translate="no" v-pre>/token/complete</code></doc-anchor-trigger></td>
-<td>Search tokens by name and/or hash prefix</td>
+<td><doc-anchor-trigger to="#get-assetcomplete"><code translate="no" v-pre>/asset/complete?namePrefix=...&amp;hashPrefix=...</code></doc-anchor-trigger></td>
+<td>Search assets by name and/or hash prefix</td>
+</tr>
+<tr>
+<td><code translate="no" v-pre>GET</code></td>
+<td><doc-anchor-trigger to="#get-assetlookupasset"><code translate="no" v-pre>/asset/lookup/:asset</code></doc-anchor-trigger></td>
+<td>Asset lookup (by ID or hash)</td>
 </tr>
 <tr>
 <td><code translate="no" v-pre>GET</code></td>
 <td><doc-anchor-trigger to="#get-marketmarket"><code translate="no" v-pre>/market/:market</code></doc-anchor-trigger></td>
 <td>Show market orders and liquidity pool</td>
+</tr>
+<tr>
+<td><code translate="no" v-pre>GET</code></td>
+<td><doc-anchor-trigger to="#get-marketmarketorderhistoryid"><code translate="no" v-pre>/market/:market/order/:historyId</code></doc-anchor-trigger></td>
+<td>Order history</td>
 </tr>
 <tr>
 <td><code translate="no" v-pre>GET</code></td>
@@ -333,7 +333,7 @@
 </tr>
 <tr>
 <td><code translate="no" v-pre>GET</code></td>
-<td><doc-anchor-trigger to="#get-accountaccountbalance_wart"><code translate="no" v-pre>/account/:account/balance_wart</code></doc-anchor-trigger></td>
+<td><doc-anchor-trigger to="#get-accountaccountwart_balance"><code translate="no" v-pre>/account/:account/wart_balance</code></doc-anchor-trigger></td>
 <td>Show WART balance of specific account</td>
 </tr>
 <tr>
@@ -403,6 +403,16 @@
 </tr>
 <tr>
 <td><code translate="no" v-pre>GET</code></td>
+<td><doc-anchor-trigger to="#get-chartcandlesassetinterval"><code translate="no" v-pre>/chart/candles/:asset/:interval?from=...&amp;to=...&amp;n=...</code></doc-anchor-trigger></td>
+<td>Show OHLCV candle data for a timeframe (5m, 1h, 1d)</td>
+</tr>
+<tr>
+<td><code translate="no" v-pre>GET</code></td>
+<td><doc-anchor-trigger to="#get-charttradesasset"><code translate="no" v-pre>/chart/trades/:asset?from=...&amp;to=...&amp;n=...</code></doc-anchor-trigger></td>
+<td>Show trade data</td>
+</tr>
+<tr>
+<td><code translate="no" v-pre>GET</code></td>
 <td><doc-anchor-trigger to="#get-toolsencode16bitfrom_e8feee8"><code translate="no" v-pre>/tools/encode16bit/from_e8/:feeE8</code></doc-anchor-trigger></td>
 <td>Round raw 64 integer to closest 16 bit representation</td>
 </tr>
@@ -413,7 +423,7 @@
 </tr>
 <tr>
 <td><code translate="no" v-pre>GET</code></td>
-<td><doc-anchor-trigger to="#get-toolsparse_pricepriceprecision"><code translate="no" v-pre>/tools/parse_price/:price/:precision</code></doc-anchor-trigger></td>
+<td><doc-anchor-trigger to="#get-toolsparse_pricedecimals"><code translate="no" v-pre>/tools/parse_price/:price/:decimals</code></doc-anchor-trigger></td>
 <td>Parse price adjusted for asset precision</td>
 </tr>
 <tr>
@@ -674,7 +684,162 @@
 </doc-codeblock></div>
 <h3 id="get-chainblockidbinary"><code translate="no" v-pre>GET /chain/block/:id/binary</code></h3>
 <p>Show binary data of specific block with structure annotations.</p>
-<p><strong>TODO: Add JSON output example</strong></p>
+<p>Example output of <code translate="no" v-pre>/chain/block/20/binary</code>:</p>
+<div id="get-chainblockidbinary-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-json"><code v-pre class="language-json">{
+ &quot;code&quot;: 0,
+ &quot;data&quot;: {
+  &quot;bytes&quot;: &quot;00000000000000000000000000000000000000040000000011e1a30100000000000000010000000000000007000000040000000000000000000009000000630000000000000000000000000f4240fa004902fc0829a8a7fa7b7016935f3bf5e8db4c5aed491dd6c0609180133ce5cff48c3134d287f28f0a07b266f68f04ddec146a93f9237a8f779dee0d2f7fc90b2d56010000&quot;,
+  &quot;structure&quot;: [
+   {
+    &quot;children&quot;: [],
+    &quot;offsetBegin&quot;: 0,
+    &quot;offsetEnd&quot;: 10,
+    &quot;tag&quot;: &quot;extraNonce&quot;
+   },
+   {
+    &quot;children&quot;: [
+     {
+      &quot;children&quot;: [],
+      &quot;offsetBegin&quot;: 10,
+      &quot;offsetEnd&quot;: 12,
+      &quot;tag&quot;: &quot;length&quot;
+     }
+    ],
+    &quot;offsetBegin&quot;: 10,
+    &quot;offsetEnd&quot;: 12,
+    &quot;tag&quot;: &quot;newAddresses&quot;
+   },
+   {
+    &quot;children&quot;: [
+     {
+      &quot;children&quot;: [],
+      &quot;offsetBegin&quot;: 12,
+      &quot;offsetEnd&quot;: 20,
+      &quot;tag&quot;: &quot;toAccountId&quot;
+     },
+     {
+      &quot;children&quot;: [],
+      &quot;offsetBegin&quot;: 20,
+      &quot;offsetEnd&quot;: 28,
+      &quot;tag&quot;: &quot;wart&quot;
+     }
+    ],
+    &quot;offsetBegin&quot;: 12,
+    &quot;offsetEnd&quot;: 28,
+    &quot;tag&quot;: &quot;reward&quot;
+   },
+   {
+    &quot;children&quot;: [
+     {
+      &quot;children&quot;: [],
+      &quot;offsetBegin&quot;: 28,
+      &quot;offsetEnd&quot;: 32,
+      &quot;tag&quot;: &quot;length&quot;
+     }
+    ],
+    &quot;offsetBegin&quot;: 28,
+    &quot;offsetEnd&quot;: 32,
+    &quot;tag&quot;: &quot;wartTransfers&quot;
+   },
+   {
+    &quot;children&quot;: [
+     {
+      &quot;children&quot;: [],
+      &quot;offsetBegin&quot;: 32,
+      &quot;offsetEnd&quot;: 34,
+      &quot;tag&quot;: &quot;length&quot;
+     }
+    ],
+    &quot;offsetBegin&quot;: 32,
+    &quot;offsetEnd&quot;: 34,
+    &quot;tag&quot;: &quot;cancelations&quot;
+   },
+   {
+    &quot;children&quot;: [
+     {
+      &quot;children&quot;: [],
+      &quot;offsetBegin&quot;: 34,
+      &quot;offsetEnd&quot;: 36,
+      &quot;tag&quot;: &quot;length&quot;
+     },
+     {
+      &quot;children&quot;: [],
+      &quot;offsetBegin&quot;: 36,
+      &quot;offsetEnd&quot;: 44,
+      &quot;tag&quot;: &quot;assetId&quot;
+     },
+     {
+      &quot;children&quot;: [],
+      &quot;offsetBegin&quot;: 44,
+      &quot;offsetEnd&quot;: 51,
+      &quot;tag&quot;: &quot;tenBitsLengths&quot;
+     },
+     {
+      &quot;children&quot;: [
+       {
+        &quot;children&quot;: [],
+        &quot;offsetBegin&quot;: 51,
+        &quot;offsetEnd&quot;: 59,
+        &quot;tag&quot;: &quot;originAccountId&quot;
+       },
+       {
+        &quot;children&quot;: [],
+        &quot;offsetBegin&quot;: 59,
+        &quot;offsetEnd&quot;: 67,
+        &quot;tag&quot;: &quot;pinNonce&quot;
+       },
+       {
+        &quot;children&quot;: [],
+        &quot;offsetBegin&quot;: 67,
+        &quot;offsetEnd&quot;: 69,
+        &quot;tag&quot;: &quot;compactFee&quot;
+       },
+       {
+        &quot;children&quot;: [],
+        &quot;offsetBegin&quot;: 70,
+        &quot;offsetEnd&quot;: 78,
+        &quot;tag&quot;: &quot;amount&quot;
+       },
+       {
+        &quot;children&quot;: [],
+        &quot;offsetBegin&quot;: 78,
+        &quot;offsetEnd&quot;: 81,
+        &quot;tag&quot;: &quot;limitPrice&quot;
+       },
+       {
+        &quot;children&quot;: [],
+        &quot;offsetBegin&quot;: 81,
+        &quot;offsetEnd&quot;: 146,
+        &quot;tag&quot;: &quot;signature&quot;
+       }
+      ],
+      &quot;offsetBegin&quot;: 51,
+      &quot;offsetEnd&quot;: 146,
+      &quot;tag&quot;: &quot;limitSwap&quot;
+     }
+    ],
+    &quot;offsetBegin&quot;: 34,
+    &quot;offsetEnd&quot;: 146,
+    &quot;tag&quot;: &quot;tokenSections&quot;
+   },
+   {
+    &quot;children&quot;: [
+     {
+      &quot;children&quot;: [],
+      &quot;offsetBegin&quot;: 146,
+      &quot;offsetEnd&quot;: 148,
+      &quot;tag&quot;: &quot;length&quot;
+     }
+    ],
+    &quot;offsetBegin&quot;: 146,
+    &quot;offsetEnd&quot;: 148,
+    &quot;tag&quot;: &quot;assetCreations&quot;
+   }
+  ]
+ }
+}</code></pre>
+</doc-codeblock></div>
 <h3 id="get-chainblockid"><code translate="no" v-pre>GET /chain/block/:id</code></h3>
 <p>Show header and body of specific block.
 Example output of <code translate="no" v-pre>/chain/block/366700</code></p>
@@ -781,17 +946,69 @@ Example output of <code translate="no" v-pre>/chain/block/366700</code></p>
 }
 }</code></pre>
 </doc-codeblock></div>
-<h3 id="get-chainhashratechartblockfromtowindow"><code translate="no" v-pre>GET /chain/hashrate/chart/block/:from/:to/:window</code></h3>
+<h3 id="get-charthashrateblockfromtowindow"><code translate="no" v-pre>GET /chart/hashrate/block/:from/:to/:window</code></h3>
 <p>Show hashrate chart data for a block range.</p>
 <p><strong>TODO: Add JSON output example</strong></p>
-<h3 id="get-chainhashratecharttimefromtointerval"><code translate="no" v-pre>GET /chain/hashrate/chart/time/:from/:to/:interval</code></h3>
+<h3 id="get-charthashratetimefromtointerval"><code translate="no" v-pre>GET /chart/hashrate/time/:from/:to/:interval</code></h3>
 <p>Show hashrate chart data for a time range.</p>
 <p><strong>TODO: Add JSON output example</strong></p>
 <h3 id="post-chainappend"><code translate="no" v-pre>POST /chain/append</code></h3>
-<p>Append mined block. Miners must POST mined block they received from <code translate="no" v-pre>GET /chain/mine/:address</code>.
-TODO: Detailed description</p>
-<h3 id="get-tokencomplete"><code translate="no" v-pre>GET /token/complete</code></h3>
-<p>Search tokens by name prefix and/or hash prefix. Query parameters: <code translate="no" v-pre>namePrefix</code> and <code translate="no" v-pre>hashPrefix</code>.</p>
+<p>Append mined block. Miners must POST mined block they received from <code translate="no" v-pre>GET /chain/mine/:address</code> with mined nonce (in header) and extranonce (first 10 bytes in block).
+Output on success: <code translate="no" v-pre>{&quot;code&quot;: 0, data: null}</code>, example on error: <code translate="no" v-pre>{&quot;code&quot;: &lt;error code&gt;, error: &quot;&lt;error message&gt;&quot;}</code>.</p>
+<h3 id="get-assetcompletenameprefixhashprefix"><code translate="no" v-pre>GET /asset/complete?namePrefix=...&amp;hashPrefix=...</code></h3>
+<p>Search assets by query parameters <code translate="no" v-pre>namePrefix</code> (asset name prefix) and <code translate="no" v-pre>hashPrefix</code> (hash prefix) especially suitable for auto-complete.
+Example output of &quot;/asset/complete?namePrefix=TOK&quot;</p>
+<div id="get-assetcompletenameprefixhashprefix-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-json"><code v-pre class="language-json">{
+ &quot;code&quot;: 0,
+ &quot;data&quot;: {
+  &quot;hashPrefix&quot;: &quot;&quot;,
+  &quot;matches&quot;: [
+   {
+    &quot;decimals&quot;: 4,
+    &quot;hash&quot;: &quot;0e4825efffa294610d2ac376713e3bcc9b53d378e823834b64e5df01f75d3b0c&quot;,
+    &quot;height&quot;: 7,
+    &quot;name&quot;: &quot;TOK2&quot;
+   },
+   {
+    &quot;decimals&quot;: 4,
+    &quot;hash&quot;: &quot;58a74b758516d13e7f882922b483fca1627758c85b491e2cb9303e92e270ba88&quot;,
+    &quot;height&quot;: 4,
+    &quot;name&quot;: &quot;TOK2&quot;
+   },
+   {
+    &quot;decimals&quot;: 4,
+    &quot;hash&quot;: &quot;d645efa5c0a64b409e44725d1d9b84ed7d800fca8ca5b3d71301d361652eddbc&quot;,
+    &quot;height&quot;: 22,
+    &quot;name&quot;: &quot;TOK2&quot;
+   },
+   {
+    &quot;decimals&quot;: 4,
+    &quot;hash&quot;: &quot;f45b113119c7f7c000234f1090d5d181ab60b8b24526f1edd2f563aa1ca329f2&quot;,
+    &quot;height&quot;: 3,
+    &quot;name&quot;: &quot;TOK2&quot;
+   }
+  ],
+  &quot;namePrefix&quot;: &quot;TOK&quot;
+ }
+}</code></pre>
+</doc-codeblock></div>
+<h3 id="get-assetlookupasset"><code translate="no" v-pre>GET /asset/lookup/:asset</code></h3>
+<p>Look up asset information by asset ID or asset hash.</p>
+<p>Example output of <code translate="no" v-pre>/asset/lookup/7</code>:</p>
+<div id="get-assetlookupasset-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-json"><code v-pre class="language-json">{
+ &quot;code&quot;: 0,
+ &quot;data&quot;: {
+  &quot;decimals&quot;: 4,
+  &quot;hash&quot;: &quot;0e4825efffa294610d2ac376713e3bcc9b53d378e823834b64e5df01f75d3b0c&quot;,
+  &quot;height&quot;: 7,
+  &quot;name&quot;: &quot;TOK2&quot;
+ }
+}</code></pre>
+</doc-codeblock></div>
+<h3 id="get-marketmarketorderhistoryid"><code translate="no" v-pre>GET /market/:market/order/:historyId</code></h3>
+<p>Show order for a specific market and order.</p>
 <p><strong>TODO: Add JSON output example</strong></p>
 <h3 id="get-marketmarket"><code translate="no" v-pre>GET /market/:market</code></h3>
 <p>Show market orders and liquidity pool for a specific asset. The <code translate="no" v-pre>:market</code> parameter is the asset identifier.</p>
@@ -805,7 +1022,7 @@ TODO: Detailed description</p>
 <h3 id="get-accountaccountopen_ordersasset"><code translate="no" v-pre>GET /account/:account/open_orders/:asset</code></h3>
 <p>Show open orders for a specific account and asset.</p>
 <p><strong>TODO: Add JSON output example</strong></p>
-<h3 id="get-accountaccountbalancetoken"><code translate="no" v-pre>GET /account/:account/balance/:token</code></h3>
+<h3 id="get-accountaccountbalancetokenspec"><code translate="no" v-pre>GET /account/:account/balance/:tokenspec</code></h3>
 <p>Show balance of an account for a specific asset. The <code translate="no" v-pre>:account</code> parameter is the account address, and <code translate="no" v-pre>:token</code> is the token spec (e.g., <code translate="no" v-pre>asset:0e4825efffa294610d2ac376713e3bcc9b53d378e823834b64e5df01f75d3b0c</code>).</p>
 <h4 id="balance-types">Balance Types</h4>
 <p>The API returns three balance types:</p>
@@ -873,9 +1090,34 @@ TODO: Detailed description</p>
  }
 }</code></pre>
 </doc-codeblock></div>
-<h3 id="get-accountaccountbalance_wart"><code translate="no" v-pre>GET /account/:account/balance_wart</code></h3>
-<p>Show WART balance of a specific account.</p>
-<p><strong>TODO: Add JSON output example</strong></p>
+<h3 id="get-accountaccountwart_balance"><code translate="no" v-pre>GET /account/:account/wart_balance</code></h3>
+<p>Show WART balance (locked, mempool and total) of a specific account. Amount in <code translate="no" v-pre>mempool</code> cannot exceed <code translate="no" v-pre>total - locked</code>.</p>
+<p>Example output of <code translate="no" v-pre>account/2de77d5e23dc63e4c4149d394c979361e9e8e966336c8cd4/wart_balance</code>:</p>
+<div id="get-accountaccountwart_balance-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-json"><code v-pre class="language-json">{
+ &quot;code&quot;: 0,
+ &quot;data&quot;: {
+  &quot;account&quot;: {
+   &quot;accountId&quot;: 9,
+   &quot;address&quot;: &quot;2de77d5e23dc63e4c4149d394c979361e9e8e966336c8cd4&quot;
+  },
+  &quot;balance&quot;: {
+   &quot;locked&quot;: {
+    &quot;E8&quot;: 0,
+    &quot;str&quot;: &quot;0&quot;
+   },
+   &quot;mempool&quot;: {
+    &quot;E8&quot;: 0,
+    &quot;str&quot;: &quot;0&quot;
+   },
+   &quot;total&quot;: {
+    &quot;E8&quot;: 400097559,
+    &quot;str&quot;: &quot;4.00097559&quot;
+   }
+  }
+ }
+}</code></pre>
+</doc-codeblock></div>
 <h3 id="get-accountaccounthistorybeforetxindex"><code translate="no" v-pre>GET /account/:account/history/:beforeTxIndex</code></h3>
 <p>Show transaction history of specific account
 Example output:</p>
@@ -993,10 +1235,10 @@ Example output:</p>
  }
 }</code></pre>
 </doc-codeblock></div>
-<h3 id="get-toolsparse_pricepriceprecision"><code translate="no" v-pre>GET /tools/parse_price/:price/:precision</code></h3>
+<h3 id="get-toolsparse_pricepricedecimals"><code translate="no" v-pre>GET /tools/parse_price/:price/:decimals</code></h3>
 <p>Parse price adjusted for asset precision.</p>
 <p>Example output of <code translate="no" v-pre>/tools/parse_price/0.123456/3</code>:</p>
-<div id="get-toolsparse_pricepriceprecision-code-1" class="codeblock-wrapper"><doc-codeblock>
+<div id="get-toolsparse_pricepricedecimals-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-json"><code v-pre class="language-json">{
  &quot;code&quot;: 0,
  &quot;data&quot;: {
