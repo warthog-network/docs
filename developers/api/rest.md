@@ -3,7 +3,7 @@ title: REST
 ---
 # REST API
 
-API for Warthog node version v0.10.3 "dd054a2"
+API for Warthog node version v0.10.3 "3ead1f0"
 
 ## Configuration
 
@@ -54,16 +54,16 @@ Below we assume the RPC socket is accessible at `localhost:3000`. On startup the
 | `GET` | [`/chain/signed_snapshot`](#get-chainsigned_snapshot) | Show chain snapshot |
 | `GET` | [`/chain/hashrate/chart/block/:from/:to/:window`](#get-chainhashratechartblockfromtowindow) | Show hashrate chart by block range |
 | `GET` | [`/chain/hashrate/chart/time/:from/:to/:interval`](#get-chainhashratecharttimefromtointerval) | Show hashrate chart by time range |
-| `GET` | [`/chart/candles/:asset/:interval?from=...&to=...&n=...`](#get-chartcandlesassetinterval) | Show OHLCV candle data for a timeframe (5m, 1h, 1d) |
-| `GET` | [`/chart/trades/:asset?from=...&to=...&n=...`](#get-charttradesasset) | Show trade data |
 | `POST` | [`/chain/append`](#post-chainappend) | Append mined block |
-| `GET` | [`/token/complete`](#get-tokencomplete) | Search tokens by name and/or hash prefix |
+| `GET` | [`/asset/complete?namePrefix=...&hashPrefix=...`](#get-assetcomplete) | Search assets by name and/or hash prefix |
+| `GET` | [`/asset/lookup/:asset`](#get-assetlookupasset) | Asset lookup (by ID or hash) |
 | `GET` | [`/market/:market`](#get-marketmarket) | Show market orders and liquidity pool |
+| `GET` | [`/market/:market/order/:historyId`](#get-marketmarketorderhistoryid) | Order history |
 | `GET` | [`/account/:account/mempool`](#get-accountaccountmempool) | Show mempool transactions for account |
 | `GET` | [`/account/:account/open_orders`](#get-accountaccountopen_orders) | Show all open orders for account |
 | `GET` | [`/account/:account/open_orders/:asset`](#get-accountaccountopen_ordersasset) | Show open orders for account and specific asset |
 | `GET` | [`/account/:account/balance/:token`](#get-accountaccountbalancetoken) | Show balance of specific account for a token |
-| `GET` | [`/account/:account/balance_wart`](#get-accountaccountbalance_wart) | Show WART balance of specific account |
+| `GET` | [`/account/:account/wart_balance`](#get-accountaccountwart_balance) | Show WART balance of specific account |
 | `GET` | [`/account/:account/history/:beforeTxIndex`](#get-accountaccounthistorybeforetxindex) | Show transaction history of specific account |
 | `GET` | [`/account/richlist/:token`](#get-accountrichlisttoken) | Show richlist for a specific token |
 | `GET` | [`/peers/ip_count`](#get-peersip_count) | Show peer IP counts |
@@ -77,9 +77,11 @@ Below we assume the RPC socket is accessible at `localhost:3000`. On startup the
 | `GET` | [`/peers/throttled`](#get-peersthrottled) | Show throttled peers |
 | `GET` | [`/peers/transmission_hours`](#get-peerstransmission_hours) | Show transmission data by hours |
 | `GET` | [`/peers/transmission_minutes`](#get-peerstransmission_minutes) | Show transmission data by minutes |
+| `GET` | [`/chart/candles/:asset/:interval?from=...&to=...&n=...`](#get-chartcandlesassetinterval) | Show OHLCV candle data for a timeframe (5m, 1h, 1d) |
+| `GET` | [`/chart/trades/:asset?from=...&to=...&n=...`](#get-charttradesasset) | Show trade data |
 | `GET` | [`/tools/encode16bit/from_e8/:feeE8`](#get-toolsencode16bitfrom_e8feee8) | Round raw 64 integer to closest 16 bit representation |
 | `GET` | [`/tools/encode16bit/from_string/:string`](#get-toolsencode16bitfrom_stringstring) | Round coin amount string to closest 16 bit representation |
-| `GET` | [`/tools/parse_price/:price/:precision`](#get-toolsparse_pricepriceprecision) | Parse price adjusted for asset precision |
+| `GET` | [`/tools/parse_price/:price/:decimals`](#get-toolsparse_pricedecimals) | Parse price adjusted for asset precision |
 | `GET` | [`/tools/info`](#get-toolsinfo) | Print information about this node |
 | `GET` | [`/tools/wallet/new`](#get-toolswalletnew) | Create a new wallet |
 | `GET` | [`/tools/wallet/from_privkey/:privkey`](#get-toolswalletfrom_privkeyprivkey) | Restore wallet from a private key |
@@ -316,7 +318,163 @@ For detailed JSON strucutre of block actions, see
 
 Show binary data of specific block with structure annotations.
 
-**TODO: Add JSON output example**
+Example output of `/chain/block/20/binary`:
+
+```json
+{
+ "code": 0,
+ "data": {
+  "bytes": "00000000000000000000000000000000000000040000000011e1a30100000000000000010000000000000007000000040000000000000000000009000000630000000000000000000000000f4240fa004902fc0829a8a7fa7b7016935f3bf5e8db4c5aed491dd6c0609180133ce5cff48c3134d287f28f0a07b266f68f04ddec146a93f9237a8f779dee0d2f7fc90b2d56010000",
+  "structure": [
+   {
+    "children": [],
+    "offsetBegin": 0,
+    "offsetEnd": 10,
+    "tag": "extraNonce"
+   },
+   {
+    "children": [
+     {
+      "children": [],
+      "offsetBegin": 10,
+      "offsetEnd": 12,
+      "tag": "length"
+     }
+    ],
+    "offsetBegin": 10,
+    "offsetEnd": 12,
+    "tag": "newAddresses"
+   },
+   {
+    "children": [
+     {
+      "children": [],
+      "offsetBegin": 12,
+      "offsetEnd": 20,
+      "tag": "toAccountId"
+     },
+     {
+      "children": [],
+      "offsetBegin": 20,
+      "offsetEnd": 28,
+      "tag": "wart"
+     }
+    ],
+    "offsetBegin": 12,
+    "offsetEnd": 28,
+    "tag": "reward"
+   },
+   {
+    "children": [
+     {
+      "children": [],
+      "offsetBegin": 28,
+      "offsetEnd": 32,
+      "tag": "length"
+     }
+    ],
+    "offsetBegin": 28,
+    "offsetEnd": 32,
+    "tag": "wartTransfers"
+   },
+   {
+    "children": [
+     {
+      "children": [],
+      "offsetBegin": 32,
+      "offsetEnd": 34,
+      "tag": "length"
+     }
+    ],
+    "offsetBegin": 32,
+    "offsetEnd": 34,
+    "tag": "cancelations"
+   },
+   {
+    "children": [
+     {
+      "children": [],
+      "offsetBegin": 34,
+      "offsetEnd": 36,
+      "tag": "length"
+     },
+     {
+      "children": [],
+      "offsetBegin": 36,
+      "offsetEnd": 44,
+      "tag": "assetId"
+     },
+     {
+      "children": [],
+      "offsetBegin": 44,
+      "offsetEnd": 51,
+      "tag": "tenBitsLengths"
+     },
+     {
+      "children": [
+       {
+        "children": [],
+        "offsetBegin": 51,
+        "offsetEnd": 59,
+        "tag": "originAccountId"
+       },
+       {
+        "children": [],
+        "offsetBegin": 59,
+        "offsetEnd": 67,
+        "tag": "pinNonce"
+       },
+       {
+        "children": [],
+        "offsetBegin": 67,
+        "offsetEnd": 69,
+        "tag": "compactFee"
+       },
+       {
+        "children": [],
+        "offsetBegin": 70,
+        "offsetEnd": 78,
+        "tag": "amount"
+       },
+       {
+        "children": [],
+        "offsetBegin": 78,
+        "offsetEnd": 81,
+        "tag": "limitPrice"
+       },
+       {
+        "children": [],
+        "offsetBegin": 81,
+        "offsetEnd": 146,
+        "tag": "signature"
+       }
+      ],
+      "offsetBegin": 51,
+      "offsetEnd": 146,
+      "tag": "limitSwap"
+     }
+    ],
+    "offsetBegin": 34,
+    "offsetEnd": 146,
+    "tag": "tokenSections"
+   },
+   {
+    "children": [
+     {
+      "children": [],
+      "offsetBegin": 146,
+      "offsetEnd": 148,
+      "tag": "length"
+     }
+    ],
+    "offsetBegin": 146,
+    "offsetEnd": 148,
+    "tag": "assetCreations"
+   }
+  ]
+ }
+}
+```
 
 ### `GET /chain/block/:id`
 
@@ -437,13 +595,13 @@ Example output of `/chain/hashrate/100`
 }
  ```
 
-### `GET /chain/hashrate/chart/block/:from/:to/:window`
+### `GET /chart/hashrate/block/:from/:to/:window`
 
 Show hashrate chart data for a block range.
 
 **TODO: Add JSON output example**
 
-### `GET /chain/hashrate/chart/time/:from/:to/:interval`
+### `GET /chart/hashrate/time/:from/:to/:interval`
 
 Show hashrate chart data for a time range.
 
@@ -451,12 +609,70 @@ Show hashrate chart data for a time range.
 
 ### `POST /chain/append`
 
- Append mined block. Miners must POST mined block they received from `GET /chain/mine/:address`.
- TODO: Detailed description
+ Append mined block. Miners must POST mined block they received from `GET /chain/mine/:address` with mined nonce (in header) and extranonce (first 10 bytes in block).
+ Output on success: `{"code": 0, data: null}`, example on error: `{"code": <error code>, error: "<error message>"}`.
 
-### `GET /token/complete`
+### `GET /asset/complete?namePrefix=...&hashPrefix=...`
 
-Search tokens by name prefix and/or hash prefix. Query parameters: `namePrefix` and `hashPrefix`.
+Search assets by query parameters `namePrefix` (asset name prefix) and `hashPrefix` (hash prefix) especially suitable for auto-complete.
+Example output of "/asset/complete?namePrefix=TOK"
+```json
+{
+ "code": 0,
+ "data": {
+  "hashPrefix": "",
+  "matches": [
+   {
+    "decimals": 4,
+    "hash": "0e4825efffa294610d2ac376713e3bcc9b53d378e823834b64e5df01f75d3b0c",
+    "height": 7,
+    "name": "TOK2"
+   },
+   {
+    "decimals": 4,
+    "hash": "58a74b758516d13e7f882922b483fca1627758c85b491e2cb9303e92e270ba88",
+    "height": 4,
+    "name": "TOK2"
+   },
+   {
+    "decimals": 4,
+    "hash": "d645efa5c0a64b409e44725d1d9b84ed7d800fca8ca5b3d71301d361652eddbc",
+    "height": 22,
+    "name": "TOK2"
+   },
+   {
+    "decimals": 4,
+    "hash": "f45b113119c7f7c000234f1090d5d181ab60b8b24526f1edd2f563aa1ca329f2",
+    "height": 3,
+    "name": "TOK2"
+   }
+  ],
+  "namePrefix": "TOK"
+ }
+}
+```
+
+### `GET /asset/lookup/:asset`
+
+Look up asset information by asset ID or asset hash.
+
+Example output of `/asset/lookup/7`:
+
+```json
+{
+ "code": 0,
+ "data": {
+  "decimals": 4,
+  "hash": "0e4825efffa294610d2ac376713e3bcc9b53d378e823834b64e5df01f75d3b0c",
+  "height": 7,
+  "name": "TOK2"
+ }
+}
+```
+
+### `GET /market/:market/order/:historyId`
+
+Show order for a specific market and order.
 
 **TODO: Add JSON output example**
 
@@ -484,7 +700,7 @@ Show open orders for a specific account and asset.
 
 **TODO: Add JSON output example**
 
-### `GET /account/:account/balance/:token`
+### `GET /account/:account/balance/:tokenspec`
 
  Show balance of an account for a specific asset. The `:account` parameter is the account address, and `:token` is the token spec (e.g., `asset:0e4825efffa294610d2ac376713e3bcc9b53d378e823834b64e5df01f75d3b0c`).
 
@@ -541,11 +757,36 @@ Show open orders for a specific account and asset.
  }
 ```
 
-### `GET /account/:account/balance_wart`
+### `GET /account/:account/wart_balance`
 
-Show WART balance of a specific account.
+Show WART balance (locked, mempool and total) of a specific account. Amount in `mempool` cannot exceed `total - locked`.
 
-**TODO: Add JSON output example**
+Example output of `account/2de77d5e23dc63e4c4149d394c979361e9e8e966336c8cd4/wart_balance`:
+```json
+{
+ "code": 0,
+ "data": {
+  "account": {
+   "accountId": 9,
+   "address": "2de77d5e23dc63e4c4149d394c979361e9e8e966336c8cd4"
+  },
+  "balance": {
+   "locked": {
+    "E8": 0,
+    "str": "0"
+   },
+   "mempool": {
+    "E8": 0,
+    "str": "0"
+   },
+   "total": {
+    "E8": 400097559,
+    "str": "4.00097559"
+   }
+  }
+ }
+}
+```
 
 ### `GET /account/:account/history/:beforeTxIndex`
 
@@ -709,7 +950,7 @@ Show transmission statistics aggregated by minutes.
 }
 ```
 
-### `GET /tools/parse_price/:price/:precision`
+### `GET /tools/parse_price/:price/:decimals`
 
 Parse price adjusted for asset precision.
 
