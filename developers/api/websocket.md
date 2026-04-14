@@ -3,6 +3,8 @@ title: WebSocket
 ---
 # WebSocket API
 
+> **AI-Augmented Documentation** — This file was updated to match the live node API schema (`v0.10.3 "a26330e"`). All examples reflect the schema structure. Report discrepancies to the maintainers.
+
 The WebSocket endpoint allows real-time data streams on several topics such as `chain`, `account` and `connection` related information. Subscribe with a message containing `"action": "subscribe"` and unsubscribe similarly with `"action": "unsubscribe"`, as shown below.
 
 ## Endpoint
@@ -31,19 +33,27 @@ Receive 10 latest blocks.
   "latestBlocks": [
     {
       "body": {
-        "rewards": [
-          {
-            "amount": "3.00000000",
-            "amountE8": 300000000,
-            "toAddress": "f07353f22a59c6a98042f29ec87d1fc0f44a6c3ceea24797",
-            "txHash": "fe33577de3186c1869f9084bfe0aeaee2e92c8fe10f87eedb438036b341b98ef"
+        "reward": {
+          "historyId": 123456789,
+          "transaction": {
+            "data": {
+              "amount": "3.00000000",
+              "toAddress": "f07353f22a59c6a98042f29ec87d1fc0f44a6c3ceea24797"
+            },
+            "hash": "fe33577de3186c1869f9084bfe0aeaee2e92c8fe10f87eedb438036b341b98ef"
           }
-        ],
-        "transfers": []
+        },
+        "wartTransfers": [],
+        "tokenTransfers": [],
+        "newOrders": [],
+        "matches": [],
+        "liquidityDeposits": [],
+        "liquidityWithdrawals": [],
+        "assetCreations": [],
+        "cancelations": []
       },
       "confirmations": 11,
       "header": {
-        "difficulty": 14142941042437.885,
         "hash": "80b200a9ac37d7c41d98ad1cc2d6add8ab50a3905bf52d8347b56955923c28bc",
         "merkleroot": "f3c41bf363fe94eb448bf924f791f77c22a2ebd6a3a5d8948f8aff019f072bea",
         "nonce": "2719fef5",
@@ -57,13 +67,10 @@ Receive 10 latest blocks.
         "prevHash": "05b42d206f8a4b2b8094199fd28423151af8aa54a5073ac6e6805f42096dc3a2",
         "raw": "05b42d206f8a4b2b8094199fd28423151af8aa54a5073ac6e6805f42096dc3a20ae7cde7f3c41bf363fe94eb448bf924f791f77c22a2ebd6a3a5d8948f8aff019f072bea0000000366f2fefb2719fef5",
         "target": "0ae7cde7",
-        "timestamp": 1727201019,
-        "utc": "2024-09-24 18:03:39 UTC",
+        "time": 1727201019,
         "version": "00000003"
       },
-      "height": 1949766,
-      "timestamp": 1727201019,
-      "utc": "2024-09-24 18:03:39 UTC"
+      "height": 1949766
     },
     ...
   ],
@@ -71,6 +78,7 @@ Receive 10 latest blocks.
   "head": {
     "difficulty": 14142941042437.885,
     "hash": "cbaa8aefc5c5df6a4cfa8134bb6780895c0389f40a8c0f8ca9c627e1177ea2df",
+    "hashrate": 140000000000000,
     "height": 1949776,
     "is_janushash": true,
     "pinHash": "568e30a9abdbc510c9a21ec2dcb636e66cd4d1fb60028a31c65906069114e988",
@@ -89,6 +97,7 @@ Receive 10 latest blocks.
   "head": {
     "difficulty": 14142941042437.885,
     "hash": "1edd2043a92ac4747487aecaa7dc8145b6bf8ae4509c3bae4e4d9ad9727fe4ee",
+    "hashrate": 140000000000000,
     "height": 1950121,
     "is_janushash": true,
     "pinHash": "ae8e35d5e0ab86b4a30612b37717e29ea2d4d21f039abe130fcb94b03079e073",
@@ -100,12 +109,18 @@ Receive 10 latest blocks.
     "data": [
       {
         "body": {
-          "rewards": [],
-          "transfers": []
+          "reward": null,
+          "wartTransfers": [],
+          "tokenTransfers": [],
+          "newOrders": [],
+          "matches": [],
+          "liquidityDeposits": [],
+          "liquidityWithdrawals": [],
+          "assetCreations": [],
+          "cancelations": []
         },
         "confirmations": 0,
         "header": {
-          "difficulty": 14142941042437.885,
           "hash": "1edd2043a92ac4747487aecaa7dc8145b6bf8ae4509c3bae4e4d9ad9727fe4ee",
           "merkleroot": "dcfeba982307da35c0098709c20f4ea0a4f04e0bbcd1b0c34c8ecc30157159eb",
           "nonce": "1aace551",
@@ -119,13 +134,10 @@ Receive 10 latest blocks.
           "prevHash": "8c8811ee10a9c5c7d23f6f4791cbf03b781531574d53f224278cb78531a4c2fe",
           "raw": "8c8811ee10a9c5c7d23f6f4791cbf03b781531574d53f224278cb78531a4c2fe0ae7cde7dcfeba982307da35c0098709c20f4ea0a4f04e0bbcd1b0c34c8ecc30157159eb0000000366f31e3c1aace551",
           "target": "0ae7cde7",
-          "timestamp": 1727209020,
-          "utc": "2024-09-24 20:17:00 UTC",
+          "time": 1727209020,
           "version": "00000003"
         },
-        "height": 1950121,
-        "timestamp": 1727209020,
-        "utc": "2024-09-24 20:17:00 UTC"
+        "height": 1950121
       }
     ]
   }
@@ -140,6 +152,7 @@ Receive 10 latest blocks.
   "head": {
     "difficulty": 14142941042437.885,
     "hash": "8bb4c08b71a496921d121460c55041678943c89107a59306fda948dfc2c8dc8a",
+    "hashrate": 140000000000000,
     "height": 1950129,
     "is_janushash": true,
     "pinHash": "ae8e35d5e0ab86b4a30612b37717e29ea2d4d21f039abe130fcb94b03079e073",
@@ -151,19 +164,27 @@ Receive 10 latest blocks.
     "data": [
       {
         "body": {
-          "rewards": [
-            {
-              "amount": "3.00000000",
-              "amountE8": 300000000,
-              "toAddress": "e4f3052d8c5858ddeca667b2130eec5886c8e9d7fcdea3ec",
-              "txHash": "a19c2b9410440e569c670ca223504379aa09697f7b061e8dbf04c2a7870fd9b1"
+          "reward": {
+            "historyId": 123456790,
+            "transaction": {
+              "data": {
+                "amount": "3.00000000",
+                "toAddress": "e4f3052d8c5858ddeca667b2130eec5886c8e9d7fcdea3ec"
+              },
+              "hash": "a19c2b9410440e569c670ca223504379aa09697f7b061e8dbf04c2a7870fd9b1"
             }
-          ],
-          "transfers": []
+          },
+          "wartTransfers": [],
+          "tokenTransfers": [],
+          "newOrders": [],
+          "matches": [],
+          "liquidityDeposits": [],
+          "liquidityWithdrawals": [],
+          "assetCreations": [],
+          "cancelations": []
         },
         "confirmations": 11,
         "header": {
-          "difficulty": 14142941042437.885,
           "hash": "10b5ed6868f0e5c4fbd859a8dd5a68d7cf4c9038025acde37a004e9f02e7c85e",
           "merkleroot": "9205c8127aabd555acb7ff3f95733bd6ec19cb110c2878c55ae77b893fdec7ec",
           "nonce": "46f6a275",
@@ -171,19 +192,16 @@ Receive 10 latest blocks.
             "floatSha256t": 0.012585171731188893,
             "floatVerus": 3.504885418321763e-15,
             "hashSha256t": "0338c8258ed30e6088b4b81cba45f5c40553be12af0323abb7418e2cf63becd7",
-            "hashVerus": "000000000000fc8db96d150937429ce192e0ad69458311c4d8415b720e59b6c0",
+            "hashVerus": "0000000000fc8db96d150937429ce192e0ad69458311c4d8415b720e59b6c0",
             "verusV2.2": true
           },
           "prevHash": "30537a679be7d6082cc905be4a717ea7985f0853403a40dedea1be4e224916dd",
           "raw": "30537a679be7d6082cc905be4a717ea7985f0853403a40dedea1be4e224916dd0ae7cde79205c8127aabd555acb7ff3f95733bd6ec19cb110c2878c55ae77b893fdec7ec0000000366f31e0c46f6a275",
           "target": "0ae7cde7",
-          "timestamp": 1727208972,
-          "utc": "2024-09-24 20:16:12 UTC",
+          "time": 1727208972,
           "version": "00000003"
         },
-        "height": 1950119,
-        "timestamp": 1727208972,
-        "utc": "2024-09-24 20:16:12 UTC"
+        "height": 1950119
       },
       ...
     ]
@@ -208,8 +226,11 @@ Subscribe to account updates such as new transactions and balance changes. Addre
 ```json
 {
   "address": "f07353f22a59c6a98042f29ec87d1fc0f44a6c3ceea24797",
-  "balance": "51557.99973680",
-  "balanceE8": 5155799973680,
+  "wart": {
+    "locked": "0.00000000",
+    "mempool": "6.00000000",
+    "total": "51557.99973680"
+  },
   "eventName": "account.state",
   "history": []
 }
@@ -220,26 +241,38 @@ Subscribe to account updates such as new transactions and balance changes. Addre
 ```json
 {
   "address": "f07353f22a59c6a98042f29ec87d1fc0f44a6c3ceea24797",
-  "balance": "51551.99973680",
-  "balanceE8": 5155199973680,
+  "wart": {
+    "locked": "0.00000000",
+    "mempool": "6.00000000",
+    "total": "51551.99973680"
+  },
   "eventName": "account.delta",
   "history": {
-    "data": [
+    "fromId": 123456789,
+    "perBlock": [
       {
         "body": {
-          "rewards": [
-            {
-              "amount": "3.00000000",
-              "amountE8": 300000000,
-              "toAddress": "f07353f22a59c6a98042f29ec87d1fc0f44a6c3ceea24797",
-              "txHash": "fe33577de3186c1869f9084bfe0aeaee2e92c8fe10f87eedb438036b341b98ef"
+          "reward": {
+            "historyId": 123456789,
+            "transaction": {
+              "data": {
+                "amount": "3.00000000",
+                "toAddress": "f07353f22a59c6a98042f29ec87d1fc0f44a6c3ceea24797"
+              },
+              "hash": "fe33577de3186c1869f9084bfe0aeaee2e92c8fe10f87eedb438036b341b98ef"
             }
-          ],
-          "transfers": []
+          },
+          "wartTransfers": [],
+          "tokenTransfers": [],
+          "newOrders": [],
+          "matches": [],
+          "liquidityDeposits": [],
+          "liquidityWithdrawals": [],
+          "assetCreations": [],
+          "cancelations": []
         },
         "confirmations": 0,
         "header": {
-          "difficulty": 14142941042437.885,
           "hash": "80b200a9ac37d7c41d98ad1cc2d6add8ab50a3905bf52d8347b56955923c28bc",
           "merkleroot": "f3c41bf363fe94eb448bf924f791f77c22a2ebd6a3a5d8948f8aff019f072bea",
           "nonce": "2719fef5",
@@ -253,13 +286,10 @@ Subscribe to account updates such as new transactions and balance changes. Addre
           "prevHash": "05b42d206f8a4b2b8094199fd28423151af8aa54a5073ac6e6805f42096dc3a2",
           "raw": "05b42d206f8a4b2b8094199fd28423151af8aa54a5073ac6e6805f42096dc3a20ae7cde7f3c41bf363fe94eb448bf924f791f77c22a2ebd6a3a5d8948f8aff019f072bea0000000366f2fefb2719fef5",
           "target": "0ae7cde7",
-          "timestamp": 1727201019,
-          "utc": "2024-09-24 18:03:39 UTC",
+          "time": 1727201019,
           "version": "00000003"
         },
-        "height": 1949766,
-        "timestamp": 1727201019,
-        "utc": "2024-09-24 18:03:39 UTC"
+        "height": 1949766
       }
     ]
   }
@@ -283,17 +313,13 @@ Subscribe to connection state and deltas. After subscription, a `connection.stat
 {
   "connections": [
     {
-      "id": 22,
-      "inbound": false,
-      "peerAddr": "tcp://213.199.59.252:20016",
-      "since": 0
+      "endpoint": "tcp://213.199.59.252:20016",
+      "id": 22
     },
     ...
     {
-      "id": 1261,
-      "inbound": false,
-      "peerAddr": "tcp://51.222.248.202:9186",
-      "since": 0
+      "endpoint": "tcp://51.222.248.202:9186",
+      "id": 1261
     }
   ],
   "eventName": "connection.state",
@@ -306,10 +332,8 @@ Subscribe to connection state and deltas. After subscription, a `connection.stat
 ```json
 {
   "connection": {
-    "id": 83,
-    "inbound": false,
-    "peerAddr": "tcp://65.21.76.159:9186",
-    "since": 0
+    "endpoint": "tcp://65.21.76.159:9186",
+    "id": 83
   },
   "eventName": "connection.add",
   "total": 3

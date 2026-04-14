@@ -4,350 +4,485 @@
 This documentation was partially generated with AI augmentation. Report inconsistencies at [github.com/warthog-network/docs/issues](https://github.com/warthog-network/docs/issues).
 !!!
 
-Every block affects the chain state via actions. These actions are returned from various API methods such as the `/chain/block/:id` and `/transaction/latest` methods. 
-The JSON structure of these actions is explained below.
+Every block affects the chain state via actions. These actions are returned from API methods such as `/transaction/latest` and `/chain/block/:id`.
+
+## Block Structure
+
+The response hierarchy is:
+
+```
+ActionsByBlock = {
+  perBlock: BlockEntry[],
+  fromId: uint64_t
+}
+BlockEntry = {
+  height: uint32_t,
+  confirmations: uint32_t,
+  actions: BlockActions
+}
+BlockActions = {
+  reward: WithHistoryId<Transaction<RewardData>> | null,
+  wartTransfers: WithHistoryId<SignedTransaction<WartTransferData>>[],
+  tokenTransfers: WithHistoryId<SignedTransaction<TokenTransferData>>[],
+  newOrders: WithHistoryId<SignedTransactionProcessed<NewOrderData, NewOrderProcessed>>[],
+  matches: WithHistoryId<Transaction<MatchData>>[],
+  liquidityDeposits: WithHistoryId<SignedTransactionProcessed<LiqDepositData, LiqDepositProcessed>>[],
+  liquidityWithdrawals: WithHistoryId<SignedTransactionProcessed<LiqWithdrawData, LiqWithdrawProcessed>>[],
+  assetCreations: WithHistoryId<SignedTransactionProcessed<AssetCreateData, AssetCreateProcessed>>[],
+  cancelations: WithHistoryId<SignedTransactionProcessed<CancelData, CancelProcessed>>[]
+}
+```
+
+## Transaction Categories
+
+Every action entry follows the same wrapper pattern:
+
+```json
+{
+  "historyId": 123,
+  "transaction": {
+    "data": { ... },
+    "hash": "...",
+    "signedCommon": { ... },
+    "processed": { ... }
+  }
+}
+```
+
+The `data`, `hash`, `signedCommon`, and `processed` fields contain the action-specific information.
+
+### Unsigned Transactions
+
+Reward and Match are unsigned — they are the result of block production, not submitted by users. They have no `signedCommon`:
+
+```json
+{
+  "historyId": 1,
+  "transaction": {
+    "data": { ... },
+    "hash": "..."
+  }
+}
+```
+
+### Signed Transactions
+
+Wart Transfer, Token Transfer, New Order, Liquidity Deposit, Liquidity Withdrawal, Asset Creation, and Cancelation are signed — they are submitted by users and include `signedCommon` and optionally `processed`:
+
+```json
+{
+  "historyId": 2,
+  "transaction": {
+    "data": { ... },
+    "hash": "...",
+    "signedCommon": { ... },
+    "processed": { ... }
+  }
+}
+```
+
+### Common Field Types
+
+**TransactionSignedCommon** — present in all signed transactions:
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `fee` | `Wart` | Transaction fee |
+| `nonceId` | uint32_t | Nonce ID |
+| `originAddress` | string | Sender address |
+| `originId` | uint64_t | Origin transaction ID |
+| `pinHeight` | uint32_t | Pin block height |
+
+**Wart** — used for WART coin amounts:
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `E8` | uint64_t | Amount in smallest unit (1 WART = 10^8 E8) |
+| `str` | string | Human-readable decimal string |
+
+**FundsDecimal** — used for token amounts:
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `u64` | uint64_t | Amount in smallest unit |
+| `str` | string | Human-readable decimal string |
+| `decimals` | int32_t | Token decimal places |
+
+**AssetBasic:**
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `hash` | string | Asset hash |
+| `id` | uint64_t | Asset ID |
+| `name` | string | Asset name |
+| `decimals` | uint32_t | Asset decimals |
+
+**PriceDetail** — used in limit orders:
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `precExponent10` | int32_t | Base-10 precision exponent |
+| `exponent2` | int32_t | Power-of-2 exponent |
+| `mantissa` | int32_t | 16-bit mantissa |
+| `hex` | string | Raw bytes (hex) |
+| `doubleAdjusted` | double | Price as double (adjusted) |
+| `doubleRaw` | double | Price as double (raw) |
+
+**BaseQuote** — used for liquidity pools and swaps:
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `base` | `FundsDecimal` | Base asset amount |
+| `quote` | `Wart` | Quote asset amount (WART) |
 
 ## Reward
 
-Block reward paid to miners.
+Block reward paid to miners. This is an unsigned transaction — there is no `signedCommon`.
 
 ```json
 {
- "txHash": "e849a0fe...",
- "historyId": 46,
- "toAddress": "00000000...de47c9b2",
- "amount": { "E8": 300019985, "str": "3.00019985" }
+  "historyId": 1,
+  "transaction": {
+    "data": {
+      "amount": { "E8": 300000000, "str": "3.00000000" },
+      "toAddress": "3661579d..."
+    },
+    "hash": "da3dcfbc0dcb60be..."
+  }
 }
 ```
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `txHash` | string | Transaction hash (hex) |
-| `historyId` | integer | History entry ID (null if pending) |
-| `toAddress` | string | Recipient address |
-| `amount.E8` | integer | Amount in raw E8 units |
-| `amount.str` | string | Amount as decimal string |
+| `historyId` | uint64_t | History entry ID |
+| `transaction.data.amount` | `Wart` | Reward amount |
+| `transaction.data.toAddress` | string | Recipient address |
+| `transaction.hash` | string | Transaction hash |
 
 ## Wart Transfer
 
-Wart coin transfer between accounts. Token transfers are returned as a differnt action type, see below.
+WART coin transfer between accounts. This is a signed transaction.
 
 ```json
 {
- "txHash": "897b3cc7...",
- "historyId": 42,
- "fromAddress": "3661579d...",
- "fee": { "E8": 9992, "str": "0.00009992" },
- "nonceId": 0,
- "pinHeight": 0,
- "toAddress": "00000000...de47c9b2",
- "amount": { "E8": 100000000, "str": "1.00000000" }
+  "historyId": 40,
+  "transaction": {
+    "data": {
+      "amount": { "E8": 100000000, "str": "1.00000000" },
+      "toAddress": "00000000..."
+    },
+    "hash": "897b3cc72950b41e...",
+    "signedCommon": {
+      "fee": { "E8": 9992, "str": "0.00009992" },
+      "nonceId": 0,
+      "originAddress": "3661579d...",
+      "originId": 12344,
+      "pinHeight": 0
+    }
+  }
 }
 ```
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `txHash` | string | Transaction hash |
-| `historyId` | integer | History entry ID |
-| `fromAddress` | string | Sender address |
-| `fee.E8` | integer | Fee in raw E8 units |
-| `fee.str` | string | Fee as decimal string |
-| `nonceId` | integer | Nonce ID |
-| `pinHeight` | integer | Pin block height |
-| `toAddress` | string | Recipient address |
-| `amount.E8` | integer | Amount in raw E8 units |
-| `amount.str` | string | Amount as decimal string |
+| `historyId` | uint64_t | History entry ID |
+| `transaction.data.amount` | `Wart` | Transfer amount |
+| `transaction.data.toAddress` | string | Recipient address |
+| `transaction.hash` | string | Transaction hash |
+| `transaction.signedCommon` | object | Signing metadata |
 
-## Token Transfers
+## Token Transfer
 
-Token transfers between accounts. Wart transfers are separated from token transfers because the latter
-require additional fields to be returned such as different amount specification (assets don't always have 
-8 decimals) and `isLiquidity` flag.
+Token transfer between accounts. Tokens may be standard assets or liquidity pool shares (`isLiquidity: true`). This is a signed transaction.
 
 ```json
 {
- "txHash": "edb03806...",
- "historyId": 48,
- "fromAddress": "2de77d5e...",
- "fee": { "E8": 1, "str": "0.00000001" },
- "nonceId": 100,
- "pinHeight": 0,
- "toAddress": "00000000...de47c9b2",
- "amount": { "str": "100.0000", "u64": 1000000, "decimals": 4 },
- "asset": { "id": 2, "name": "TOK2", "decimals": 4, "hash": "f45b1131..." },
- "isLiquidity": false,
- "tokenSpec": "asset:f45b1131..."
+  "historyId": 41,
+  "transaction": {
+    "data": {
+      "amount": { "str": "99.9912", "u64": 999912, "decimals": 4 },
+      "asset": { "hash": "f45b1131...", "id": 2, "name": "TOK2", "decimals": 4 },
+      "isLiquidity": false,
+      "toAddress": "00000000...",
+      "tokenSpec": "asset:f45b1131..."
+    },
+    "hash": "87a8f53490f32a2...",
+    "signedCommon": {
+      "fee": { "E8": 9992, "str": "0.00009992" },
+      "nonceId": 1,
+      "originAddress": "3661579d...",
+      "originId": 12344,
+      "pinHeight": 0
+    }
+  }
 }
 ```
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `txHash` | string | Transaction hash |
-| `historyId` | integer | History entry ID |
-| `fromAddress` | string | Sender address |
-| `fee.E8` | integer | Fee in raw E8 units |
-| `fee.str` | string | Fee as decimal string |
-| `nonceId` | integer | Nonce ID |
-| `pinHeight` | integer | Pin block height |
-| `toAddress` | string | Recipient address |
-| `amount.str` | string | Amount as decimal string |
-| `amount.u64` | integer | Amount in smallest unit |
-| `amount.decimals` | integer | Token decimals |
-| `asset.id` | integer | Asset ID |
-| `asset.name` | string | Asset name |
-| `asset.decimals` | integer | Asset decimals |
-| `asset.hash` | string | Asset hash |
-| `isLiquidity` | boolean | Whether transfer is the asset itself (false) or liquidity of the corresponding pool |
-| `tokenSpec` | string | Token specification string |
+| `historyId` | uint64_t | History entry ID |
+| `transaction.data.amount` | `FundsDecimal` | Transfer amount |
+| `transaction.data.asset` | `AssetBasic` | Asset details |
+| `transaction.data.isLiquidity` | boolean | True if this is a liquidity pool share transfer |
+| `transaction.data.toAddress` | string | Recipient address |
+| `transaction.data.tokenSpec` | string | Token specification string |
+| `transaction.hash` | string | Transaction hash |
+| `transaction.signedCommon` | object | Signing metadata |
 
-## New Orders
+## New Order
 
-Represents a new limit order placed on the DEX including orders that were included in the same block and were immediately matched.
+A limit order placed on the DEX. The order may have been immediately matched if a counter-order existed in the same block. This is a signed transaction.
 
 ```json
 {
- "txHash": "c6fbade2...",
- "historyId": 37,
- "address": "2de77d5e...",
- "fee": { "E8": 1, "str": "0.00000001" },
- "nonceId": 99,
- "pinHeight": 0,
- "baseAsset": { "id": 7, "name": "TOK2", "decimals": 4, "hash": "0e4825ef..." },
- "amount": { "str": "100.0000", "u64": 1000000, "decimals": 4 },
- "limit": { "precExponent10": 4, "exponent2": -6, "mantissa": 64000, "hex": "fa0049", "doubleAdjusted": 0.1, "doubleRaw": 1000.0 },
- "buy": false
+  "historyId": 15,
+  "transaction": {
+    "data": {
+      "amount": { "str": "0.00010000", "u64": 10000, "decimals": 8 },
+      "baseAsset": { "hash": "0e4825ef...", "id": 7, "name": "TOK2", "decimals": 4 },
+      "buy": true,
+      "limit": {
+        "precExponent10": 4,
+        "exponent2": -2,
+        "mantissa": 40000,
+        "hex": "9c404d",
+        "doubleAdjusted": 1,
+        "doubleRaw": 10000
+      }
+    },
+    "hash": "ed0ac4049643f1b...",
+    "processed": {
+      "remaining": { "str": "0", "u64": 0, "decimals": 4 }
+    },
+    "signedCommon": {
+      "fee": { "E8": 1, "str": "0.00000001" },
+      "nonceId": 111,
+      "originAddress": "2de77d5e...",
+      "originId": 12344,
+      "pinHeight": 0
+    }
+  }
 }
 ```
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `txHash` | string | Transaction hash |
-| `historyId` | integer | History entry ID |
-| `address` | string | Order creator address |
-| `fee.E8` | integer | Fee in raw E8 units |
-| `fee.str` | string | Fee as decimal string |
-| `nonceId` | integer | Nonce ID |
-| `pinHeight` | integer | Pin block height |
-| `baseAsset.id` | integer | Base asset ID |
-| `baseAsset.name` | string | Base asset name |
-| `baseAsset.decimals` | integer | Base asset decimals |
-| `baseAsset.hash` | string | Base asset hash |
-| `amount.str` | string | Order amount as decimal string |
-| `amount.u64` | integer | Order amount in smallest unit |
-| `amount.decimals` | integer | Amount decimals |
-| `limit.precExponent10` | integer | Base-10 precision exponent |
-| `limit.exponent2` | integer | Power-of-2 exponent |
-| `limit.mantissa` | integer | 16-bit mantissa |
-| `limit.hex` | string | Raw bytes (hex) |
-| `limit.doubleAdjusted` | number | Price as double (adjusted) |
-| `limit.doubleRaw` | number | Price as double (raw) |
-| `buy` | boolean | True if buy order, false if sell |
+| `historyId` | uint64_t | History entry ID |
+| `transaction.data.amount` | `FundsDecimal` | Order amount |
+| `transaction.data.baseAsset` | `AssetBasic` | Base asset (traded against WART) |
+| `transaction.data.buy` | boolean | True if buy order (pays WART), false if sell |
+| `transaction.data.limit` | `PriceDetail` | Limit price |
+| `transaction.hash` | string | Transaction hash |
+| `transaction.processed.remaining` | `FundsDecimal` | Remaining amount not matched |
+| `transaction.signedCommon` | object | Signing metadata |
 
 ## Match
 
-In each block, markets with new orders are order-matched. Order matching is based on CoinFuMasterShifu's paper on [Fair Batch Matching](https://github.com/CoinFuMasterShifu/FairBatchMatching/blob/main/FairBatchMatching.pdf). This algorithm batch-matches discrete with continuous liquidity in a fair way such that no intrinsic ordering exists among the matched orders, which means that the the algorithm is MEV-proof, in particular no sandwich attacks are possible.
+Batch-matched orders from a single block. Order matching is based on CoinFuMasterShifu's paper on [Fair Batch Matching](https://github.com/CoinFuMasterShifu/FairBatchMatching/blob/main/FairBatchMatching.pdf). This algorithm batch-matches discrete with continuous liquidity in a fair way such that no intrinsic ordering exists among the matched orders, which means that the algorithm is MEV-proof — in particular, no sandwich attacks are possible.
 
-The returned JSON object contains the pool before and after the matching, and all swaps executed. Each swaps also includes the history id which can be used for further lookup on the referenced order. To check remaining order quantity, use the `historyId` in the `/market/:market/order/:historyId` API endpoint.
+The returned JSON object contains the pool before and after the matching, and all swaps executed. Each swap includes the history id which can be used for further lookup on the referenced order. This is an unsigned transaction.
 
 ```json
 {
- "txHash": "2ecefa2f...",
- "historyId": 38,
- "baseAsset": { "id": 7, "name": "TOK2", "decimals": 4, "hash": "0e4825ef..." },
- "poolBefore": {
-  "base": { "str": "0", "u64": 0, "decimals": 4 },
-  "quote": { "str": "0", "E8": 0 }
- },
- "poolAfter": {
-  "base": { "str": "0", "u64": 0, "decimals": 4 },
-  "quote": { "str": "0", "E8": 0 }
- },
- "buySwaps": [
-  { "base": { "str": "10.0000", "u64": 100000, "decimals": 4 }, "quote": { "str": "1.00000000", "E8": 100000000 }, "historyId": 26 }
- ],
- "sellSwaps": [
-  { "base": { "str": "20.0010", "u64": 200010, "decimals": 4 }, "quote": { "str": "2.00010000", "E8": 200010000 }, "historyId": 25 }
- ]
+  "historyId": 38,
+  "transaction": {
+    "data": {
+      "baseAsset": { "hash": "0e4825ef...", "id": 7, "name": "TOK2", "decimals": 4 },
+      "poolBefore": {
+        "base": { "str": "0", "u64": 0, "decimals": 4 },
+        "quote": { "str": "0", "E8": 0 }
+      },
+      "poolAfter": {
+        "base": { "str": "0", "u64": 0, "decimals": 4 },
+        "quote": { "str": "0", "E8": 0 }
+      },
+      "buySwaps": [
+        {
+          "swapped": {
+            "base": { "str": "10.0000", "u64": 100000, "decimals": 4 },
+            "quote": { "str": "1.00000000", "E8": 100000000 }
+          },
+          "historyId": 26
+        }
+      ],
+      "sellSwaps": [
+        {
+          "swapped": {
+            "base": { "str": "20.0010", "u64": 200010, "decimals": 4 },
+            "quote": { "str": "2.00010000", "E8": 200010000 }
+          },
+          "historyId": 25
+        }
+      ]
+    },
+    "hash": "2ecefa2fb405cd4..."
+  }
 }
 ```
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `txHash` | string | Transaction hash |
-| `historyId` | integer | History entry ID |
-| `baseAsset.id` | integer | Base asset ID |
-| `baseAsset.name` | string | Base asset name |
-| `baseAsset.decimals` | integer | Base asset decimals |
-| `baseAsset.hash` | string | Base asset hash |
-| `poolBefore.base.str` | string | Base pool before (decimal) |
-| `poolBefore.base.u64` | integer | Base pool before (smallest unit) |
-| `poolBefore.base.decimals` | integer | Base pool decimals |
-| `poolBefore.quote.str` | string | Quote pool before (decimal) |
-| `poolBefore.quote.E8` | integer | Quote pool before (E8) |
-| `poolAfter.*` | | Same structure as `poolBefore` |
-| `buySwaps[]` | array | Buy-side swap entries |
-| `buySwaps[].base.str` | string | Swap base amount (decimal) |
-| `buySwaps[].base.u64` | integer | Swap base amount (smallest unit) |
-| `buySwaps[].base.decimals` | integer | Swap base decimals |
-| `buySwaps[].quote.str` | string | Swap quote amount (decimal) |
-| `buySwaps[].quote.E8` | integer | Swap quote amount (E8) |
-| `buySwaps[].historyId` | integer | Referenced history ID |
-| `sellSwaps[]` | array | Sell-side swap entries (same fields as `buySwaps`) |
+| `historyId` | uint64_t | History entry ID |
+| `transaction.data.baseAsset` | `AssetBasic` | Base asset |
+| `transaction.data.poolBefore` | `BaseQuote` | Liquidity pool state before matching |
+| `transaction.data.poolAfter` | `BaseQuote` | Liquidity pool state after matching |
+| `transaction.data.buySwaps[]` | array | Buy-side swap entries |
+| `transaction.data.buySwaps[].swapped` | `BaseQuote` | Swapped amounts |
+| `transaction.data.buySwaps[].historyId` | uint64_t | Referenced order history ID |
+| `transaction.data.sellSwaps[]` | array | Sell-side swap entries (same fields as `buySwaps`) |
+| `transaction.hash` | string | Transaction hash |
 
 ## Liquidity Deposit
 
-Represents liquidity deposits into a liquidity pool.
+Deposit of base asset and WART into a liquidity pool, receiving LP shares. This is a signed transaction.
 
 ```json
 {
- "txHash": "576da5fd...",
- "historyId": 11,
- "address": "3661579d...",
- "fee": { "E8": 9992, "str": "0.00009992" },
- "nonceId": 0,
- "pinHeight": 0,
- "baseAsset": { "id": 7, "name": "TOK2", "decimals": 4, "hash": "0e4825ef..." },
- "baseDeposited": { "str": "100.0000", "u64": 1000000, "decimals": 4 },
- "quoteDeposited": { "str": "1.00000000", "E8": 100000000 },
- "sharesReceived": { "str": "10.0000", "u64": 100000, "decimals": 4 }
+  "historyId": 43,
+  "transaction": {
+    "data": {
+      "baseAsset": { "hash": "0e4825ef...", "id": 7, "name": "TOK2", "decimals": 4 },
+      "deposited": {
+        "base": { "str": "100.0000", "u64": 1000000, "decimals": 4 },
+        "quote": { "str": "1.00000000", "E8": 100000000 }
+      }
+    },
+    "hash": "1db23925133e7d3...",
+    "processed": {
+      "sharesReceived": { "str": "1000.0000", "u64": 10000000, "decimals": 4 }
+    },
+    "signedCommon": {
+      "fee": { "E8": 1, "str": "0.00000001" },
+      "nonceId": 111111,
+      "originAddress": "2de77d5e...",
+      "originId": 12344,
+      "pinHeight": 0
+    }
+  }
 }
 ```
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `txHash` | string | Transaction hash |
-| `historyId` | integer | History entry ID |
-| `address` | string | Depositor address |
-| `fee.E8` | integer | Fee in raw E8 units |
-| `fee.str` | string | Fee as decimal string |
-| `nonceId` | integer | Nonce ID |
-| `pinHeight` | integer | Pin block height |
-| `baseAsset.*` | object | Base asset info (see New Orders) |
-| `baseDeposited.str` | string | Base amount deposited (decimal) |
-| `baseDeposited.u64` | integer | Base amount deposited (smallest unit) |
-| `baseDeposited.decimals` | integer | Base decimals |
-| `quoteDeposited.str` | string | Quote amount deposited (decimal) |
-| `quoteDeposited.E8` | integer | Quote amount deposited (E8) |
-| `sharesReceived` | object | LP shares received (null if none, same fields as `baseDeposited`) |
+| `historyId` | uint64_t | History entry ID |
+| `transaction.data.baseAsset` | `AssetBasic` | Base asset |
+| `transaction.data.deposited` | `BaseQuote` | Base and WART amounts deposited |
+| `transaction.hash` | string | Transaction hash |
+| `transaction.processed.sharesReceived` | `FundsDecimal` | LP shares received |
+| `transaction.signedCommon` | object | Signing metadata |
 
-## Liquidity Withdrawals
+## Liquidity Withdrawal
 
-Liquidity provider withdrawals from a liquidity pool.
+Withdrawal of base asset and WART from a liquidity pool by redeeming LP shares. This is a signed transaction.
 
 ```json
 {
- "txHash": "576da5fd...",
- "historyId": 11,
- "address": "3661579d...",
- "fee": { "E8": 9992, "str": "0.00009992" },
- "nonceId": 0,
- "pinHeight": 0,
- "baseAsset": { "id": 7, "name": "TOK2", "decimals": 4, "hash": "0e4825ef..." },
- "sharesRedeemed": { "str": "10.0000", "u64": 100000, "decimals": 4 },
- "baseReceived": { "str": "100.0000", "u64": 1000000, "decimals": 4 },
- "quoteReceived": { "str": "1.00000000", "E8": 100000000 }
+  "historyId": 42,
+  "transaction": {
+    "data": {
+      "baseAsset": { "hash": "0e4825ef...", "id": 7, "name": "TOK2", "decimals": 4 },
+      "sharesRedeemed": { "str": "100.0000", "u64": 1000000, "decimals": 4 }
+    },
+    "hash": "47c50348397eed9...",
+    "processed": {
+      "received": {
+        "base": { "str": "100.0000", "u64": 1000000, "decimals": 4 },
+        "quote": { "str": "1.00000000", "E8": 100000000 }
+      }
+    },
+    "signedCommon": {
+      "fee": { "E8": 9992, "str": "0.00009992" },
+      "nonceId": 3,
+      "originAddress": "3661579d...",
+      "originId": 12344,
+      "pinHeight": 0
+    }
+  }
 }
 ```
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `txHash` | string | Transaction hash |
-| `historyId` | integer | History entry ID |
-| `address` | string | Withdrawer address |
-| `fee.E8` | integer | Fee in raw E8 units |
-| `fee.str` | string | Fee as decimal string |
-| `nonceId` | integer | Nonce ID |
-| `pinHeight` | integer | Pin block height |
-| `baseAsset.*` | object | Base asset info (see New Orders) |
-| `sharesRedeemed.str` | string | Shares redeemed (decimal) |
-| `sharesRedeemed.u64` | integer | Shares redeemed (smallest unit) |
-| `sharesRedeemed.decimals` | integer | Shares decimals |
-| `baseReceived` | object | Base asset received (null if none, same fields as `baseDeposited`) |
-| `quoteReceived` | object | Quote asset received (null if none, same fields as `quoteDeposited`) |
+| `historyId` | uint64_t | History entry ID |
+| `transaction.data.baseAsset` | `AssetBasic` | Base asset |
+| `transaction.data.sharesRedeemed` | `FundsDecimal` | LP shares redeemed |
+| `transaction.hash` | string | Transaction hash |
+| `transaction.processed.received` | `BaseQuote` | Base and WART amounts received |
+| `transaction.signedCommon` | object | Signing metadata |
 
-## Asset Creations
+## Asset Creation
 
-Represents new asset creations.
+Creation of a new token. This is a signed transaction.
 
 ```json
 {
- "txHash": "0e4825ef...",
- "historyId": 10,
- "creatorAddress": "3661579d...",
- "fee": { "E8": 9992, "str": "0.00009992" },
- "nonceId": 13,
- "pinHeight": 0,
- "supply": "100000000.0000",
- "name": "TOK2",
- "assetId": 7
+  "historyId": 10,
+  "transaction": {
+    "data": {
+      "name": "TOK2",
+      "supply": { "str": "100000000.0000", "u64": 1000000000000, "decimals": 4 }
+    },
+    "hash": "0e4825efffa2946...",
+    "processed": {
+      "assetId": 7
+    },
+    "signedCommon": {
+      "fee": { "E8": 9992, "str": "0.00009992" },
+      "nonceId": 13,
+      "originAddress": "3661579d...",
+      "originId": 12344,
+      "pinHeight": 0
+    }
+  }
 }
 ```
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `txHash` | string | Transaction hash |
-| `historyId` | integer | History entry ID |
-| `creatorAddress` | string | Creator address |
-| `fee.E8` | integer | Fee in raw E8 units |
-| `fee.str` | string | Fee as decimal string |
-| `nonceId` | integer | Nonce ID |
-| `pinHeight` | integer | Pin block height |
-| `supply` | string | Total token supply (decimal) |
-| `name` | string | Token name |
-| `assetId` | integer | Assigned asset ID (null if pending) |
+| `historyId` | uint64_t | History entry ID |
+| `transaction.data.name` | string | Token name |
+| `transaction.data.supply` | `FundsDecimal` | Total token supply |
+| `transaction.hash` | string | Transaction hash |
+| `transaction.processed.assetId` | uint64_t | Assigned asset ID |
+| `transaction.signedCommon` | object | Signing metadata |
 
-## Cancelations
+## Cancelation
 
-Represents Transaction cancelation, i.e. special transactions which block other transactions. Each cancel transaction contains a `cancelTxid` field referencing the cancelled transaction. No transaction with the referenced transaction id can be mined in the same or a future block.
+A transaction cancelation. Cancel transactions block other transactions by referencing them — no transaction with the referenced transaction ID can be mined in the same or a future block. This is a signed transaction.
 
 ```json
 {
- "txHash": "a3aadbaa...",
- "historyId": 47,
- "address": "3661579d...",
- "fee": { "E8": 9992, "str": "0.00009992" },
- "nonceId": 5,
- "pinHeight": 0,
- "cancelTxid": { "accountId": 2, "nonceId": 3, "pinHeight": 10 }
+  "historyId": 47,
+  "transaction": {
+    "data": {
+      "cancelTxid": {
+        "accountId": 2,
+        "nonceId": 3,
+        "pinHeight": 10
+      }
+    },
+    "hash": "a3aadbaa...",
+    "processed": {
+      "canceledTxHash": "..."
+    },
+    "signedCommon": {
+      "fee": { "E8": 9992, "str": "0.00009992" },
+      "nonceId": 5,
+      "originAddress": "3661579d...",
+      "originId": 12344,
+      "pinHeight": 0
+    }
+  }
 }
 ```
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `txHash` | string | Transaction hash |
-| `historyId` | integer | History entry ID |
-| `address` | string | Canceling address |
-| `fee.E8` | integer | Fee in raw E8 units |
-| `fee.str` | string | Fee as decimal string |
-| `nonceId` | integer | Nonce ID of cancelled tx |
-| `pinHeight` | integer | Pin block height |
-| `cancelTxid.accountId` | integer | Account ID of cancelled transaction |
-| `cancelTxid.nonceId` | integer | Nonce ID of cancelled transaction |
-| `cancelTxid.pinHeight` | integer | Pin height of cancelled transaction |
-
-## Order Cancelation
-
-Represents previously active limit orders which were canceled from a specific asset's the order Wart/Asset book.
-
-```json
-{
- "txHash": "a3aadbaa...",
- "historyId": 47,
- "cancelTxid": { "accountId": 2, "nonceId": 3, "pinHeight": 10 },
- "buy": true,
- "baseAsset": { "id": 7, "name": "TOK2", "decimals": 4, "hash": "0e4825ef..." },
- "remaining": { "E8": 100000000, "str": "1.00000000" }
-}
-```
-
-| Field | Type | Description |
-|-------|------|-------------|
-| `txHash` | string | Transaction hash |
-| `historyId` | integer | History entry ID |
-| `cancelTxid.accountId` | integer | Account ID of cancelled order |
-| `cancelTxid.nonceId` | integer | Nonce ID of cancelled order |
-| `cancelTxid.pinHeight` | integer | Pin height of cancelled order |
-| `buy` | boolean | True if buy order, false if sell |
-| `baseAsset.*` | object | Base asset info (see New Orders) |
-| `remaining.E8` | integer | Remaining amount in E8 units |
-| `remaining.str` | string | Remaining amount as decimal string |
+| `historyId` | uint64_t | History entry ID |
+| `transaction.data.cancelTxid` | object | Reference to the cancelled transaction |
+| `transaction.data.cancelTxid.accountId` | uint64_t | Account ID of cancelled transaction |
+| `transaction.data.cancelTxid.nonceId` | uint32_t | Nonce ID of cancelled transaction |
+| `transaction.data.cancelTxid.pinHeight` | uint32_t | Pin height of cancelled transaction |
+| `transaction.hash` | string | Transaction hash |
+| `transaction.processed.canceledTxHash` | string | Hash of the cancelled transaction |
+| `transaction.signedCommon` | object | Signing metadata |

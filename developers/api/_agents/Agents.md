@@ -10,6 +10,18 @@ This directory contains the source-of-truth reference files for the Warthog node
 
 > **This file is a living document.** As new friction points are discovered during the update process, add them here to streamline future executions.
 
+### Scope
+
+All API-related documentation files must be kept in sync with `api.txt` and `schemas.json`. **Nothing shall be left stale.** Any example, field name, type, or structure that diverges from the schema is a bug. This includes but is not limited to:
+
+- `rest.md` — overview table, endpoint examples, field names, types, anchors
+- `rest/block-actions.md` — block body field structures
+- `rest/create-transaction.md` — transaction field structures
+- `rest/mempool-transactions.md` — mempool field structures (currently empty; pending live API verification)
+- `websocket.md` — if applicable
+
+When in doubt: schema wins. If `api.txt` or `schemas.json` changes, all affected API docs must be updated accordingly.
+
 ## 2. Reference Files
 
 | File | Description | Source |
@@ -182,25 +194,39 @@ Some return types use C++ `std::variant` for polymorphic results:
 
 ## 9. Block-Actions Special Format
 
-The file `rest/block-actions.md` documents block body transaction types (wartTransfers, tokenTransfers, newOrders, matches, etc.) in a **flattened human-readable format**.
+The file `rest/block-actions.md` documents block body transaction types using the **actual nested structure** from the schema. Do not flatten fields for readability — the schema structure is the canonical representation.
 
-The raw schemas use nested structures like:
+Every action entry follows this pattern:
+
+```json
+{
+  "historyId": 123,
+  "transaction": {
+    "data": { ... },
+    "hash": "...",
+    "signedCommon": { ... },
+    "processed": { ... }
+  }
+}
 ```
-{ data: { amount, toAddress }, hash: "...", signedCommon: { fee, nonceId, ... } }
-```
 
-But `block-actions.md` intentionally flattens this into a single object for developer readability. **When updating `block-actions.md`:**
-- Preserve the flattened format — do NOT use nested `{ data, signedCommon, hash }` structure
-- Fields from `signedCommon` (originAddress, fee, nonceId, pinHeight) are merged into the top level
-- The format in `block-actions.md` is the canonical human-readable representation
-- Use the schema only to verify field names and types, not to restructure the presentation
+**Two categories of transactions:**
+- **Unsigned** (result of block production, no signature): Reward, Match — have `data` and `hash`, no `signedCommon`
+- **Signed** (submitted by users, require signature): Wart Transfer, Token Transfer, New Order, Liquidity Deposit, Liquidity Withdrawal, Asset Creation, Cancelation — have `data`, `hash`, `signedCommon`, and optionally `processed`
 
-## 10. Known Schema-to-Reality Gaps
+**When updating `block-actions.md`:**
+- Always document the actual nested `{ historyId, transaction: { data, hash, signedCommon?, processed? } }` structure
+- **REMOVE** action types that exist in the documentation but are NOT in the `BlockActions` schema (e.g. `orderCancelations` does not exist in the schema)
+- **REMOVE** fields that exist in the documentation but NOT in the schema for a given action type
+- For each action type, show the full nested JSON example with abbreviated values
 
-Some schemas may not fully reflect the actual API output. When in doubt:
-1. Compare the schema against the existing example in `block-actions.md` — that file represents the human-readable canonical format
-2. Compare the schema against the example in `rest.md` for the corresponding endpoint
-3. If neither matches, ask the user for clarification or C++ source code (`tx_to_json` functions)
+## 10. Schema as Source of Truth
+
+The schema is the source of truth. The `BlockActions` schema lists exactly 9 action types:
+
+`reward`, `wartTransfers`, `tokenTransfers`, `newOrders`, `matches`, `liquidityDeposits`, `liquidityWithdrawals`, `assetCreations`, `cancelations`
+
+Any action type not in this list should not be documented. Any field within an action type that is not in its schema should not be documented. When the schema and the live API output differ, the schema definition in `schemas.json` is authoritative for documentation purposes. If neither matches, ask the user for clarification or C++ source code (`tx_to_json` functions).
 
 ## 11. Rules for Updating `rest.md`
 
@@ -217,10 +243,11 @@ Some schemas may not fully reflect the actual API output. When in doubt:
 
 ### Detailed sections
 
-- **NEVER** replace detailed sections wholesale
-- **Correct** incorrect field names, types, or descriptions using `schemas.json`
+- **ALWAYS** correct stale examples to match the schema — never leave incorrect field names, types, or structures in place
+- **Do not** replace detailed prose descriptions (e.g. Fair Batch Matching explanation), but update any stale field references or endpoint links within them
 - **Add** new fields that exist in `schemas.json` but are missing from the docs
 - **Augment** with information from `schemas.json` (structure, types, optional vs required)
+- **REMOVE** fields that exist in the documentation but NOT in `schemas.json` — the schema is authoritative. Do not keep stale fields for backward compatibility or readability reasons.
 - If a detailed section exists in `rest.md` but the endpoint is not in `api.txt`, **remove it**
 
 ### Query parameters
@@ -261,6 +288,8 @@ When generating a new example from a schema:
 - Correct field names, types, and structures to match the schema
 - Keep the existing human-readable descriptions and formatting — only correct structure
 - If a schema defines a new field not yet in the docs, add it
+- **REMOVE** action types documented in `block-actions.md` that are NOT present in the `BlockActions` schema — the schema is authoritative
+- **REMOVE** fields within an action type that are documented but not in its schema
 - Schema names (e.g. `SignedTransactionProcessed`) do not need to appear in the documentation — use them only to verify correctness
 - Ask the user if the C++ source code (`tx_to_json` functions) is available, as it may contain additional context (naming, comments, invariants)
 
