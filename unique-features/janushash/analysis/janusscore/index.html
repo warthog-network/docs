@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.4.0.827949639758">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.5.3.829485167244">
 
     <!-- See retype.com -->
-    <meta name="generator" content="Retype 4.4.0">
+    <meta name="generator" content="Retype 4.5.3">
 
     <!-- Primary Meta Tags -->
     <title>Janusscore - a combined hashrate equivalent</title>
@@ -16,6 +16,7 @@
 
     <!-- Canonical -->
     <link rel="canonical" href="https://docs.warthog.network/unique-features/janushash/analysis/janusscore/">
+    <link rel="sitemap" type="application/xml" title="Sitemap" href="https://docs.warthog.network/sitemap.xml">
 
     <!-- Open Graph -->
     <meta property="og:type" content="website">
@@ -31,16 +32,19 @@
     <meta name="twitter:title" content="Janusscore - a combined hashrate equivalent">
     <meta name="twitter:description" content="We define the Janusscore S(\\mathfrak{h}_X,\\mathfrak{h}_Y) for Verushash v2.2 hashrate \\mathfrak{h}_X and Sha256t hashrate \\mathfrak{h}_Y by">
 
+    <!-- Alternate Markdown -->
+    <link rel="alternate" type="text/markdown" href="https://docs.warthog.network/unique-features/janushash/analysis/janusscore.md">
+
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../../../resources/css/retype.css?v=4.4.0.827949639758" rel="stylesheet">
+    <link href="../../../../resources/css/retype.css?v=4.5.3.829485167244" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../../../resources/js/config.js?v=4.4.0.827949639758" data-turbo-eval="false" defer></script>
-    <script data-cfasync="false" src="../../../../resources/js/retype.js?v=4.4.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../../../resources/js/lunr.js?v=4.4.0.827949639758" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../../../../resources/js/prism.js?v=4.4.0.827949639758" defer></script>
-    <link href="../../../../resources/css/katex.css?v=4.4.0" rel="stylesheet">
-    <script id="katex-js" data-cfasync="false" src="../../../../resources/js/katex.js?v=4.4.0" defer></script>
+    <script data-cfasync="false" src="../../../../resources/js/config.js?v=4.5.3.829485167244" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../../../resources/js/retype.js?v=4.5.3" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../../../resources/js/lunr.js?v=4.5.3.829485167244" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../../../../resources/js/prism.js?v=4.5.3.829485167244" defer></script>
+    <link href="../../../../resources/css/katex.css?v=4.5.3" rel="stylesheet">
+    <script id="katex-js" data-cfasync="false" src="../../../../resources/js/katex.js?v=4.5.3" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -149,9 +153,11 @@
 <div class="flex">
     <div id="retype-main" class="min-w-0 p-4 grow md:px-16">
         <main class="relative pb-12 lg:pt-2">
-            <div class="retype-markdown" id="retype-content">
+            <div class="relative retype-markdown" id="retype-content">
                 <!-- Rendered if sidebar right is enabled -->
                 <div id="retype-sidebar-right-toggle"></div>
+                <doc-page-actions></doc-page-actions>
+
                 <!-- Page content  -->
 <h1 id="janusscore---a-combined-hashrate-equivalent">Janusscore - a combined hashrate equivalent</h1>
 <p>We define the <em>Janusscore</em> <span class="math">S(\mathfrak{h}_X,\mathfrak{h}_Y)</span> for Verushash v2.2 hashrate <span class="math">\mathfrak{h}_X</span> and Sha256t hashrate <span class="math">\mathfrak{h}_Y</span> by</p>
@@ -160,9 +166,11 @@
 <div class="math"><pre translate="no">p_{\tau}(\tfrac{\mathfrak{h}_Y}{\mathfrak{h}_X})\mathfrak{h}_Xt = \tfrac{10}{3}\tfrac{\mathfrak{h}_Y}{\mathfrak{h}_X}\big((c+\tfrac{\mathfrak{h}_X}{\mathfrak{h}_Y})^{0.3}-c^{0.3}\big)\tau t = S(\mathfrak{h}_X,\mathfrak{h}_Y)\tau t.</pre></div>
 <p>This means two things:</p>
 <ol>
-<li><p>For every target <span class="math">\tau</span> the expected number of mined blocks in time <span class="math">t</span> is proportional to <span class="math">S(\mathfrak{h}_X,\mathfrak{h}_Y)</span> and therefore <span class="math">S(\mathfrak{h}_X,\mathfrak{h}_Y)</span> describes the mining efficiency.</p>
+<li>
+<p>For every target <span class="math">\tau</span> the expected number of mined blocks in time <span class="math">t</span> is proportional to <span class="math">S(\mathfrak{h}_X,\mathfrak{h}_Y)</span> and therefore <span class="math">S(\mathfrak{h}_X,\mathfrak{h}_Y)</span> describes the mining efficiency.</p>
 </li>
-<li><p><span class="math">S(\mathfrak{h}_X,\mathfrak{h}_Y)</span> takes the role of a hashrate. For example one can estimate the Janusscore <span class="math">S</span> by dividing the number of mined blocks by the time and the target (this can be used in pools to estimate the Janusscore based on number of shares, time and difficulty).</p>
+<li>
+<p><span class="math">S(\mathfrak{h}_X,\mathfrak{h}_Y)</span> takes the role of a hashrate. For example one can estimate the Janusscore <span class="math">S</span> by dividing the number of mined blocks by the time and the target (this can be used in pools to estimate the Janusscore based on number of shares, time and difficulty).</p>
 </li>
 </ol>
 <p>The Janusscore the unit &quot;hashes per second&quot; and can be interpreted as a hashrate equivalent to compare different setups.</p>
@@ -282,6 +290,6 @@ S(10000000, 250000000)</code></pre>
 
     <div id="retype-overlay-target"></div>
 
-    <script data-cfasync="false">window.__DOCS__ = { "title": "Janusscore", level: 4, icon: "file", hasPrism: true, hasMermaid: false, hasMath: true, tocDepth: 23 }</script>
+        <script data-cfasync="false">window.__DOCS__ = { "title": "Janusscore", level: 4, icon: "file", hasPrism: true, hasInstagram: false, hasMermaid: false, hasMath: true, tocDepth: 23, "md": "/unique-features/janushash/analysis/janusscore.md" }</script>
 </body>
 </html>

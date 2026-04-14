@@ -4,24 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.4.0.827949639758">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.5.3.829485167244">
 
     <!-- See retype.com -->
-    <meta name="generator" content="Retype 4.4.0">
+    <meta name="generator" content="Retype 4.5.3">
 
     <!-- Primary Meta Tags -->
     <title>REST</title>
     <meta name="title" content="REST">
-    <meta name="description" content="API for Warthog node version v0.10.3 \"3ead1f0\"">
+    <meta name="description" content="This documentation was partially generated with AI augmentation. Report inconsistencies at github.com/warthog-network/docs/issues.">
 
     <!-- Canonical -->
     <link rel="canonical" href="https://docs.warthog.network/developers/api/rest/">
+    <link rel="sitemap" type="application/xml" title="Sitemap" href="https://docs.warthog.network/sitemap.xml">
 
     <!-- Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://docs.warthog.network/developers/api/rest/">
     <meta property="og:title" content="REST">
-    <meta property="og:description" content="API for Warthog node version v0.10.3 \"3ead1f0\"">
+    <meta property="og:description" content="This documentation was partially generated with AI augmentation. Report inconsistencies at github.com/warthog-network/docs/issues.">
     <meta property="og:site_name" content="Warthog Network">
     <meta property="og:locale" content="en_US">
 
@@ -29,16 +30,19 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://docs.warthog.network/developers/api/rest/">
     <meta name="twitter:title" content="REST">
-    <meta name="twitter:description" content="API for Warthog node version v0.10.3 \"3ead1f0\"">
+    <meta name="twitter:description" content="This documentation was partially generated with AI augmentation. Report inconsistencies at github.com/warthog-network/docs/issues.">
+
+    <!-- Alternate Markdown -->
+    <link rel="alternate" type="text/markdown" href="https://docs.warthog.network/developers/api/rest.md">
 
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../../resources/css/retype.css?v=4.4.0.827949639758" rel="stylesheet">
+    <link href="../../../resources/css/retype.css?v=4.5.3.829485167244" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.4.0.827949639758" data-turbo-eval="false" defer></script>
-    <script data-cfasync="false" src="../../../resources/js/retype.js?v=4.4.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.4.0.827949639758" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../../../resources/js/prism.js?v=4.4.0.827949639758" defer></script>
+    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.5.3.829485167244" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../../resources/js/retype.js?v=4.5.3" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.5.3.829485167244" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../../../resources/js/prism.js?v=4.5.3.829485167244" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -147,12 +151,31 @@
 <div class="flex">
     <div id="retype-main" class="min-w-0 p-4 grow md:px-16">
         <main class="relative pb-12 lg:pt-2">
-            <div class="retype-markdown" id="retype-content">
+            <div class="relative retype-markdown" id="retype-content">
                 <!-- Rendered if sidebar right is enabled -->
                 <div id="retype-sidebar-right-toggle"></div>
+                <doc-page-actions></doc-page-actions>
+
                 <!-- Page content  -->
 <h1 id="rest-api">REST API</h1>
-<p>API for Warthog node version v0.10.3 &quot;3ead1f0&quot;</p>
+<div class="flex mb-6">
+    <div class="shrink-0 w-1.5 rounded-tl-lg rounded-bl-lg bg-callout-primary"></div>
+    <div class="flex w-full py-4 border border-l-0 rounded-tr-lg rounded-br-lg doc-callout bg-callout-base-bg border-callout-base-border" role="alert">
+        <div class="flex items-center ml-4 h-7">
+            <svg xmlns="http://www.w3.org/2000/svg" class="block text-callout-primary" width="22" height="22" viewBox="0 0 24 24" role="presentation">
+                <g fill="currentColor"><g>
+                    <path d="M12 1C5.93 1 1 5.93 1 12s4.93 11 11 11 11-4.93 11-11S18.07 1 12 1zm0 20c-4.96 0-9-4.04-9-9s4.04-9 9-9 9 4.04 9 9-4.04 9-9 9z"></path>
+                    <path d="M12 11c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1s1-.45 1-1v-4c0-.55-.45-1-1-1zM12.01 7c-.56 0-1 .45-1 1s.45 1 1 1 1-.45 1-1-.45-1-1-1z"></path>
+                    <path fill="none" d="M0 0h24v24H0z"></path>
+                </g></g>
+            </svg>
+        </div>
+        <div class="pr-5 ml-3 w-full">
+<p>This documentation was partially generated with AI augmentation. Report inconsistencies at <a href="https://github.com/warthog-network/docs/issues">github.com/warthog-network/docs/issues</a>.</p>
+        </div>
+    </div>
+</div>
+<p>API for Warthog node version v0.10.3 &quot;a26330e&quot;</p>
 <h2 id="configuration">Configuration</h2>
 <p>API is accessed via the RPC endpoints of the node. The endpoints socket can be configured via the <code translate="no" v-pre>--rpc</code> command line option:</p>
 <div id="configuration-code-1" class="codeblock-wrapper"><doc-codeblock>
@@ -277,16 +300,6 @@
 <td>Show chain snapshot</td>
 </tr>
 <tr>
-<td><code translate="no" v-pre>GET</code></td>
-<td><doc-anchor-trigger to="#get-chainhashratechartblockfromtowindow"><code translate="no" v-pre>/chain/hashrate/chart/block/:from/:to/:window</code></doc-anchor-trigger></td>
-<td>Show hashrate chart by block range</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>GET</code></td>
-<td><doc-anchor-trigger to="#get-chainhashratecharttimefromtointerval"><code translate="no" v-pre>/chain/hashrate/chart/time/:from/:to/:interval</code></doc-anchor-trigger></td>
-<td>Show hashrate chart by time range</td>
-</tr>
-<tr>
 <td><code translate="no" v-pre>POST</code></td>
 <td><doc-anchor-trigger to="#post-chainappend"><code translate="no" v-pre>/chain/append</code></doc-anchor-trigger></td>
 <td>Append mined block</td>
@@ -303,13 +316,8 @@
 </tr>
 <tr>
 <td><code translate="no" v-pre>GET</code></td>
-<td><doc-anchor-trigger to="#get-marketmarket"><code translate="no" v-pre>/market/:market</code></doc-anchor-trigger></td>
+<td><doc-anchor-trigger to="#get-dexmarketmarket"><code translate="no" v-pre>/dex/market/:market</code></doc-anchor-trigger></td>
 <td>Show market orders and liquidity pool</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>GET</code></td>
-<td><doc-anchor-trigger to="#get-marketmarketorderhistoryid"><code translate="no" v-pre>/market/:market/order/:historyId</code></doc-anchor-trigger></td>
-<td>Order history</td>
 </tr>
 <tr>
 <td><code translate="no" v-pre>GET</code></td>
@@ -328,7 +336,7 @@
 </tr>
 <tr>
 <td><code translate="no" v-pre>GET</code></td>
-<td><doc-anchor-trigger to="#get-accountaccountbalancetoken"><code translate="no" v-pre>/account/:account/balance/:token</code></doc-anchor-trigger></td>
+<td><doc-anchor-trigger to="#get-accountaccountbalancetokenspec"><code translate="no" v-pre>/account/:account/balance/:tokenspec</code></doc-anchor-trigger></td>
 <td>Show balance of specific account for a token</td>
 </tr>
 <tr>
@@ -343,7 +351,7 @@
 </tr>
 <tr>
 <td><code translate="no" v-pre>GET</code></td>
-<td><doc-anchor-trigger to="#get-accountrichlisttoken"><code translate="no" v-pre>/account/richlist/:token</code></doc-anchor-trigger></td>
+<td><doc-anchor-trigger to="#get-accountrichlisttokenspec"><code translate="no" v-pre>/account/richlist/:tokenspec</code></doc-anchor-trigger></td>
 <td>Show richlist for a specific token</td>
 </tr>
 <tr>
@@ -410,6 +418,16 @@
 <td><code translate="no" v-pre>GET</code></td>
 <td><doc-anchor-trigger to="#get-charttradesasset"><code translate="no" v-pre>/chart/trades/:asset?from=...&amp;to=...&amp;n=...</code></doc-anchor-trigger></td>
 <td>Show trade data</td>
+</tr>
+<tr>
+<td><code translate="no" v-pre>GET</code></td>
+<td><doc-anchor-trigger to="#get-charthashrateblockfromtowindow"><code translate="no" v-pre>/chart/hashrate/block/:from/:to/:window</code></doc-anchor-trigger></td>
+<td>Show hashrate chart by block range</td>
+</tr>
+<tr>
+<td><code translate="no" v-pre>GET</code></td>
+<td><doc-anchor-trigger to="#get-charthashratetimefromtointerval"><code translate="no" v-pre>/chart/hashrate/time/:from/:to/:interval</code></doc-anchor-trigger></td>
+<td>Show hashrate chart by time range</td>
 </tr>
 <tr>
 <td><code translate="no" v-pre>GET</code></td>
@@ -497,50 +515,62 @@
 <p>Show content of mempool. Example output:</p>
 <div id="get-transactionmempool-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-json"><code v-pre class="language-json">{
-&quot;code&quot;: 0,
-&quot;data&quot;: {
- &quot;data&quot;: []
-}
+ &quot;code&quot;: 0,
+ &quot;data&quot;: [
+  {
+   &quot;tag&quot;: &quot;wart_transfer&quot;,
+   &quot;transaction&quot;: {
+    &quot;data&quot;: { &quot;amount&quot;: { &quot;E8&quot;: 100000000, &quot;str&quot;: &quot;1.00000000&quot; }, &quot;toAddress&quot;: &quot;8733d0e...&quot; },
+    &quot;hash&quot;: &quot;f364da997bf7a3c3...&quot;,
+    &quot;signedCommon&quot;: { &quot;fee&quot;: { &quot;E8&quot;: 9992, &quot;str&quot;: &quot;0.00009992&quot; }, &quot;nonceId&quot;: 0, &quot;originAddress&quot;: &quot;2de77d5e...&quot;, &quot;originId&quot;: 12345, &quot;pinHeight&quot;: 0 }
+   }
+  }
+ ]
 }</code></pre>
 </doc-codeblock></div>
 <h3 id="get-transactionlookuptxid"><code translate="no" v-pre>GET /transaction/lookup/:txid</code></h3>
 <p>Transaction lookup by transaction id. Example output of <code translate="no" v-pre>/transaction/lookup/4b3bc48295742b71ff7c3b98ede5b652fafd16c67f0d2db6226e936a1cdbf0a5</code>:</p>
 <div id="get-transactionlookuptxid-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-json"><code v-pre class="language-json">{
-&quot;code&quot;: 0,
-&quot;data&quot;: {
- &quot;transaction&quot;: {
-  &quot;amount&quot;: &quot;3.00000000&quot;,
-  &quot;amountE8&quot;: 300000000,
-  &quot;blockHeight&quot;: 376696,
-  &quot;confirmations&quot;: 8,
-  &quot;timestamp&quot;: 1695472249,
-  &quot;toAddress&quot;: &quot;848b08b803e95640f8cb30af1b3166701b152b98c2cd70ee&quot;,
-  &quot;txHash&quot;: &quot;4b3bc48295742b71ff7c3b98ede5b652fafd16c67f0d2db6226e936a1cdbf0a5&quot;,
+ &quot;code&quot;: 0,
+ &quot;data&quot;: {
   &quot;type&quot;: &quot;Reward&quot;,
-  &quot;utc&quot;: &quot;2023-09-23 12:30:49 UTC&quot;
+  &quot;confirmations&quot;: 8,
+  &quot;mined&quot;: {
+   &quot;blockHeight&quot;: 376696,
+   &quot;timestamp&quot;: 1695472249,
+   &quot;utc&quot;: &quot;2023-09-23 12:30:49 UTC&quot;
+  },
+  &quot;transaction&quot;: {
+   &quot;data&quot;: { &quot;amount&quot;: { &quot;E8&quot;: 300000000, &quot;str&quot;: &quot;3.00000000&quot; }, &quot;toAddress&quot;: &quot;848b08b...&quot; },
+   &quot;hash&quot;: &quot;4b3bc48295742b71ff7c3b98ede5b652fafd16c67f0d2db6226e936a1cdbf0a5&quot;,
+   &quot;signedCommon&quot;: { &quot;fee&quot;: { &quot;E8&quot;: 0, &quot;str&quot;: &quot;0&quot; }, &quot;nonceId&quot;: 0, &quot;originAddress&quot;: &quot;00000000...&quot;, &quot;originId&quot;: 376695, &quot;pinHeight&quot;: 0 }
+  }
  }
-}
 }</code></pre>
 </doc-codeblock></div>
-<h3 id="get-transactionlatest"><code translate="no" v-pre>GET /transaction/latest</code></h3>
-<p>Show latest transactions. Returns the most recent blocks with their full transaction details.</p>
-<p><strong>Output:</strong></p>
-<ul>
-<li><code translate="no" v-pre>count</code> — total number of transactions returned</li>
-<li><code translate="no" v-pre>fromId</code> — the lowest history ID in the result set</li>
-<li><code translate="no" v-pre>perBlock</code> — array of blocks, each containing <code translate="no" v-pre>header</code>, <code translate="no" v-pre>body</code>, <code translate="no" v-pre>confirmations</code>, <code translate="no" v-pre>height</code>, <code translate="no" v-pre>timestamp</code>, <code translate="no" v-pre>utc</code></li>
-</ul>
-<p>Example output of <code translate="no" v-pre>/transaction/latest</code>:</p>
-<div id="get-transactionlatest-code-1" class="codeblock-wrapper"><doc-codeblock>
-<pre translate="no" class="language-json"><code v-pre class="language-json">{
+<div id="get-transactionlookuptxid-code-2" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-none"><code v-pre class="language-none">
+### `GET /transaction/latest`
+
+Show latest transactions. Returns the most recent blocks with their full transaction details.
+
+**Output:**
+- `count` — total number of transactions returned
+- `fromId` — the lowest history ID in the result set
+- `perBlock` — array of blocks, each containing `header`, `body`, `confirmations`, `height`, `timestamp`, `utc`
+
+Example output of `/transaction/latest`:
+
+```json
+{
  &quot;code&quot;: 0,
  &quot;data&quot;: {
   &quot;count&quot;: 49,
   &quot;fromId&quot;: 1,
   &quot;perBlock&quot;: [
    {
-    &quot;body&quot;: {
+    &quot;actions&quot;: {
      &quot;assetCreations&quot;: [...],
      &quot;cancelations&quot;: [...],
      &quot;liquidityDeposits&quot;: [...],
@@ -548,34 +578,19 @@
      &quot;matches&quot;: [...],
      &quot;newOrders&quot;: [...],
      &quot;orderCancelations&quot;: [...],
-     &quot;rewards&quot;: [...],
+     &quot;wartTransfers&quot;: [...],
      &quot;tokenTransfers&quot;: [...],
-     &quot;wartTransfers&quot;: [...]
+     &quot;reward&quot;: null
     },
     &quot;confirmations&quot;: 1,
-    &quot;header&quot;: {
-     &quot;difficulty&quot;: 536871040.0000305,
-     &quot;hash&quot;: &quot;7deb38e45a74b96d02166dfd8f6627bbbefd8dc25a20727885bb21eeb52a3cb4&quot;,
-     &quot;merkleroot&quot;: &quot;...&quot;,
-     &quot;nonce&quot;: &quot;00000000&quot;,
-     &quot;pow&quot;: { ... },
-     &quot;prevHash&quot;: &quot;...&quot;,
-     &quot;raw&quot;: &quot;...&quot;,
-     &quot;target&quot;: &quot;077fffff&quot;,
-     &quot;timestamp&quot;: 1772443430,
-     &quot;utc&quot;: &quot;2026-03-02 09:23:50 UTC&quot;,
-     &quot;version&quot;: &quot;00000004&quot;
-    },
-    &quot;height&quot;: 23,
-    &quot;timestamp&quot;: 1772443430,
-    &quot;utc&quot;: &quot;2026-03-02 09:23:50 UTC&quot;
+    &quot;height&quot;: 23
    },
    ...
   ]
  }
 }</code></pre>
 </doc-codeblock></div>
-<p>For detailed JSON strucutre of block actions, see
+<p>For detailed JSON structure of block actions, see 
 <div class="mb-6 px-5 py-4 flex justify-between relative border border-base-border hover:border-base-border-hover rounded transition-colors duration-150">
     <div class="flex items-center text-base-500">
         <span class="inline-flex items-center justify-center leading-none">
@@ -591,14 +606,16 @@
 </p>
 <h3 id="get-transactionminfee"><code translate="no" v-pre>GET /transaction/minfee</code></h3>
 <p>Show the minimum fee required by this node. Transactions with a lower fee will not be accepted or requested by the node.</p>
-<p>Exemple output :</p>
+<p>Example output:</p>
 <div id="get-transactionminfee-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-json"><code v-pre class="language-json">{
  &quot;code&quot;: 0,
  &quot;data&quot;: {
-  &quot;16bit&quot;: 13537,
-  &quot;E8&quot;: 9992,
-  &quot;amount&quot;: &quot;0.00009992&quot;
+  &quot;minFee&quot;: {
+   &quot;E8&quot;: 9992,
+   &quot;str&quot;: &quot;0.00009992&quot;,
+   &quot;bytes&quot;: &quot;2722&quot;
+  }
  }
 }</code></pre>
 </doc-codeblock></div>
@@ -622,32 +639,35 @@
 <p>Show info on chain head. Example output:</p>
 <div id="get-chainhead-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-json"><code v-pre class="language-json">{
-&quot;code&quot;: 0,
-&quot;data&quot;: {
- &quot;difficulty&quot;: 30866431555762.105,
- &quot;hash&quot;: &quot;e9dfdcfdeec3c5376dd682e09cce909dc255d611e9cb36974bcbcbcecb6fb432&quot;,
- &quot;height&quot;: 1198931,
- &quot;is_janushash&quot;: true,
- &quot;pinHash&quot;: &quot;a7bd097d9c10dc393239f169f6dd5352e0b4e28e942aaa78b54c57ed1ec7315b&quot;,
- &quot;pinHeight&quot;: 1198912,
- &quot;synced&quot;: true,
- &quot;worksum&quot;: 1.008584641271857e+19,
- &quot;worksumHex&quot;: &quot;0x0000000000000000000000000000000000000000000000008bf81fe0113cf6a0&quot;
-}
+ &quot;code&quot;: 0,
+ &quot;data&quot;: {
+  &quot;chainHead&quot;: {
+   &quot;difficulty&quot;: 30866431555762.105,
+   &quot;hash&quot;: &quot;e9dfdcfdeec3c5376dd682e09cce909dc255d611e9cb36974bcbcbcecb6fb432&quot;,
+   &quot;hashrate&quot;: 296429051797,
+   &quot;height&quot;: 1198931,
+   &quot;is_janushash&quot;: true,
+   &quot;pinHash&quot;: &quot;a7bd097d9c10dc393239f169f6dd5352e0b4e28e942aaa78b54c57ed1ec7315b&quot;,
+   &quot;pinHeight&quot;: 1198912,
+   &quot;worksum&quot;: 1.008584641271857e+19,
+   &quot;worksumHex&quot;: &quot;0x0000000000000000000000000000000000000000000000008bf81fe0113cf6a0&quot;
+  },
+  &quot;synced&quot;: true
+ }
 }</code></pre>
 </doc-codeblock></div>
 <h3 id="get-chaingrid"><code translate="no" v-pre>GET /chain/grid</code></h3>
 <p>Show hexadecimal header grid. This grid is used for chain sync to allow nodes spot points where chains diverge. Example output (truncated):</p>
 <div id="get-chaingrid-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-json"><code v-pre class="language-json">{
-&quot;code&quot;: 0,
-&quot;data&quot;: [
- &quot;19f65d40c6bc02a16378712bd7652eaebc925955e96c0262641314520000000021c88fbd99f0d3369f7f1ad981e11b8c6f032e13d4ef28311226ea5c8574c3fe3635b32500000001649f78127c04d23d&quot;,
- &quot;0e43cf390ca986fabbed37a33386b4ad73723d51fab291d12013351f0000000021d1c6076e52222fb8c83fe33d55c610482cd272b7789646710510df3ba37a4f55b30e4e0000000164a221eb03577627&quot;,
- .
- .
- .
-]
+ &quot;code&quot;: 0,
+ &quot;data&quot;: {
+  &quot;headers&quot;: [
+   &quot;19f65d40c6bc02a16378712bd7652eaebc925955e96c0262641314520000000021c88fbd99f0d3369f7f1ad981e11b8c6f032e13d4ef28311226ea5c8574c3fe3635b32500000001649f78127c04d23d&quot;,
+   &quot;0e43cf390ca986fabbed37a33386b4ad73723d51fab291d12013351f0000000021d1c6076e52222fb8c83fe33d55c610482cd272b7789646710510df3ba37a4f55b30e4e0000000164a221eb03577627&quot;,
+   &quot;...&quot;
+  ]
+ }
 }</code></pre>
 </doc-codeblock></div>
 <h3 id="get-chainblockidhash"><code translate="no" v-pre>GET /chain/block/:id/hash</code></h3>
@@ -926,32 +946,55 @@ Example output of <code translate="no" v-pre>/chain/block/366700</code></p>
 <pre translate="no" class="language-json"><code v-pre class="language-json">{
 &quot;code&quot;: 0,
 &quot;data&quot;: {
- &quot;lastNBlocksEstimate&quot;: 296429051797,
- &quot;N&quot;: 100
+ &quot;estimate&quot;: 296429051797,
+ &quot;nBlocks&quot;: 100
 }
 }</code></pre>
 </doc-codeblock></div>
 <h3 id="get-chainsigned_snapshot"><code translate="no" v-pre>GET /chain/signed_snapshot</code></h3>
-<p>Show chain snapshot. Example output</p>
+<p>Show chain snapshot. Example output:</p>
 <div id="get-chainsigned_snapshot-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-json"><code v-pre class="language-json">{
-&quot;code&quot;: 0,
-&quot;data&quot;: {
- &quot;priority&quot;: {
-   &quot;height&quot;: 1198912,
-   &quot;importance&quot;: 12345
- },
- &quot;hash&quot;: &quot;a7bd097d9c10dc393239f169f6dd5352e0b4e28e942aaa78b54c57ed1ec7315b&quot;,
- &quot;signature&quot;: &quot;...&quot;}
+ &quot;code&quot;: 0,
+ &quot;data&quot;: {
+  &quot;hash&quot;: &quot;a7bd097d9c10dc393239f169f6dd5352e0b4e28e942aaa78b54c57ed1ec7315b&quot;,
+  &quot;priorityHeight&quot;: 1198912,
+  &quot;priorityImportance&quot;: 12345,
+  &quot;signature&quot;: &quot;...&quot;
+ }
 }
 }</code></pre>
 </doc-codeblock></div>
 <h3 id="get-charthashrateblockfromtowindow"><code translate="no" v-pre>GET /chart/hashrate/block/:from/:to/:window</code></h3>
-<p>Show hashrate chart data for a block range.</p>
-<p><strong>TODO: Add JSON output example</strong></p>
+<p>Show hashrate chart data for a block range. The <code translate="no" v-pre>:from</code> and <code translate="no" v-pre>:to</code> parameters are block heights, and <code translate="no" v-pre>:window</code> is the averaging window.</p>
+<p>Example output of <code translate="no" v-pre>/chart/hashrate/block/100/200/10</code>:</p>
+<div id="get-charthashrateblockfromtowindow-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-json"><code v-pre class="language-json">{
+ &quot;code&quot;: 0,
+ &quot;data&quot;: {
+  &quot;data&quot;: [296429051797.5, 288123456789.0, ...],
+  &quot;range&quot;: { &quot;begin&quot;: 100, &quot;end&quot;: 200 }
+ }
+}</code></pre>
+</doc-codeblock></div>
+<p>Each entry in <code translate="no" v-pre>data</code> is the estimated hashrate for a block, averaged over the specified window.</p>
 <h3 id="get-charthashratetimefromtointerval"><code translate="no" v-pre>GET /chart/hashrate/time/:from/:to/:interval</code></h3>
-<p>Show hashrate chart data for a time range.</p>
-<p><strong>TODO: Add JSON output example</strong></p>
+<p>Show hashrate chart data for a time range. The <code translate="no" v-pre>:from</code> and <code translate="no" v-pre>:to</code> parameters are block heights, and <code translate="no" v-pre>:interval</code> is the time interval in seconds.</p>
+<p>Example output of <code translate="no" v-pre>/chart/hashrate/time/100/200/3600</code>:</p>
+<div id="get-charthashratetimefromtointerval-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-json"><code v-pre class="language-json">{
+ &quot;code&quot;: 0,
+ &quot;data&quot;: {
+  &quot;data&quot;: [
+   { &quot;height&quot;: 100, &quot;hashrate&quot;: 296429051797, &quot;timestamp&quot;: 1772443430 },
+   { &quot;height&quot;: 101, &quot;hashrate&quot;: 288123456789, &quot;timestamp&quot;: 1772443490 }
+  ],
+  &quot;interval&quot;: 3600,
+  &quot;range&quot;: { &quot;begin&quot;: 100, &quot;end&quot;: 200 }
+ }
+}</code></pre>
+</doc-codeblock></div>
+<p>Each entry in <code translate="no" v-pre>data</code> is <code translate="no" v-pre>{ height, hashrate, timestamp }</code> for the beginning of the interval.</p>
 <h3 id="post-chainappend"><code translate="no" v-pre>POST /chain/append</code></h3>
 <p>Append mined block. Miners must POST mined block they received from <code translate="no" v-pre>GET /chain/mine/:address</code> with mined nonce (in header) and extranonce (first 10 bytes in block).
 Output on success: <code translate="no" v-pre>{&quot;code&quot;: 0, data: null}</code>, example on error: <code translate="no" v-pre>{&quot;code&quot;: &lt;error code&gt;, error: &quot;&lt;error message&gt;&quot;}</code>.</p>
@@ -1001,29 +1044,98 @@ Example output of &quot;/asset/complete?namePrefix=TOK&quot;</p>
  &quot;code&quot;: 0,
  &quot;data&quot;: {
   &quot;decimals&quot;: 4,
+  &quot;groupId&quot;: 0,
   &quot;hash&quot;: &quot;0e4825efffa294610d2ac376713e3bcc9b53d378e823834b64e5df01f75d3b0c&quot;,
   &quot;height&quot;: 7,
-  &quot;name&quot;: &quot;TOK2&quot;
+  &quot;id&quot;: 7,
+  &quot;name&quot;: &quot;TOK2&quot;,
+  &quot;ownerAccountId&quot;: 2,
+  &quot;parentId&quot;: null,
+  &quot;totalSupply&quot;: &quot;100000.0000&quot;
  }
 }</code></pre>
 </doc-codeblock></div>
-<h3 id="get-marketmarketorderhistoryid"><code translate="no" v-pre>GET /market/:market/order/:historyId</code></h3>
-<p>Show order for a specific market and order.</p>
-<p><strong>TODO: Add JSON output example</strong></p>
-<h3 id="get-marketmarket"><code translate="no" v-pre>GET /market/:market</code></h3>
-<p>Show market orders and liquidity pool for a specific asset. The <code translate="no" v-pre>:market</code> parameter is the asset identifier.</p>
-<p><strong>TODO: Add JSON output example</strong></p>
+<div id="get-assetlookupasset-code-2" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-none"><code v-pre class="language-none">
+### `GET /dex/market/:market`
+
+Show market orders and liquidity pool for a specific asset. The `:market` parameter is the asset identifier.
+
+Example output of `/dex/market/7`:
+
+```json
+{
+ &quot;code&quot;: 0,
+ &quot;data&quot;: {
+  &quot;baseAsset&quot;: { &quot;decimals&quot;: 4, &quot;hash&quot;: &quot;0e4825ef...&quot;, &quot;id&quot;: 7, &quot;name&quot;: &quot;TOK2&quot; },
+  &quot;wartToAssetSwaps&quot;: [
+   {
+    &quot;amount&quot;: { &quot;str&quot;: &quot;100.0000&quot;, &quot;u64&quot;: 1000000, &quot;decimals&quot;: 4 },
+    &quot;filled&quot;: { &quot;str&quot;: &quot;0&quot;, &quot;u64&quot;: 0, &quot;decimals&quot;: 4 },
+    &quot;inMempool&quot;: false,
+    &quot;limit&quot;: { &quot;doubleAdjusted&quot;: 0.1, &quot;doubleRaw&quot;: 1000.0, &quot;exponent2&quot;: -6, &quot;hex&quot;: &quot;fa0049&quot;, &quot;mantissa&quot;: 64000, &quot;precExponent10&quot;: 4 },
+    &quot;txHash&quot;: &quot;c6fbade2...&quot;
+   }
+  ],
+  &quot;assetToWartSwaps&quot;: [...],
+  &quot;liquidityPool&quot;: {
+   &quot;asset&quot;: { &quot;str&quot;: &quot;1000.0000&quot;, &quot;u64&quot;: 10000000, &quot;decimals&quot;: 4 },
+   &quot;shares&quot;: { &quot;str&quot;: &quot;100.0000&quot;, &quot;u64&quot;: 1000000, &quot;decimals&quot;: 4 },
+   &quot;wart&quot;: { &quot;E8&quot;: 100000000, &quot;str&quot;: &quot;1.00000000&quot; }
+  },
+  &quot;match&quot;: {
+   &quot;baseAsset&quot;: { &quot;decimals&quot;: 4, &quot;hash&quot;: &quot;0e4825ef...&quot;, &quot;id&quot;: 7, &quot;name&quot;: &quot;TOK2&quot; },
+   &quot;buySwaps&quot;: [...],
+   &quot;poolAfter&quot;: { &quot;base&quot;: { &quot;str&quot;: &quot;10.0000&quot;, &quot;u64&quot;: 100000, &quot;decimals&quot;: 4 }, &quot;quote&quot;: { &quot;str&quot;: &quot;1.00000000&quot;, &quot;E8&quot;: 100000000 } },
+   &quot;poolBefore&quot;: { &quot;base&quot;: { &quot;str&quot;: &quot;0&quot;, &quot;u64&quot;: 0, &quot;decimals&quot;: 4 }, &quot;quote&quot;: { &quot;str&quot;: &quot;0&quot;, &quot;E8&quot;: 0 } },
+   &quot;sellSwaps&quot;: [...]
+  }
+ }
+}</code></pre>
+</doc-codeblock></div>
 <h3 id="get-accountaccountmempool"><code translate="no" v-pre>GET /account/:account/mempool</code></h3>
-<p>Show mempool transactions for a specific account.</p>
-<p><strong>TODO: Add JSON output example</strong></p>
+<p>Show mempool transactions for a specific account. Same structure as <code translate="no" v-pre>GET /transaction/mempool</code> but filtered to this account.</p>
+<div id="get-accountaccountmempool-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-json"><code v-pre class="language-json">{
+ &quot;code&quot;: 0,
+ &quot;data&quot;: [
+  {
+   &quot;tag&quot;: &quot;wart_transfer&quot;,
+   &quot;transaction&quot;: {
+    &quot;data&quot;: { &quot;amount&quot;: { &quot;E8&quot;: 100000000, &quot;str&quot;: &quot;1.00000000&quot; }, &quot;toAddress&quot;: &quot;8733d0e...&quot; },
+    &quot;hash&quot;: &quot;f364da997bf7a3c3...&quot;,
+    &quot;signedCommon&quot;: { &quot;fee&quot;: { &quot;E8&quot;: 9992, &quot;str&quot;: &quot;0.00009992&quot; }, &quot;nonceId&quot;: 0, &quot;originAddress&quot;: &quot;2de77d5e...&quot;, &quot;originId&quot;: 12345, &quot;pinHeight&quot;: 0 }
+   }
+  }
+ ]
+}</code></pre>
+</doc-codeblock></div>
 <h3 id="get-accountaccountopen_orders"><code translate="no" v-pre>GET /account/:account/open_orders</code></h3>
-<p>Show all open orders for a specific account.</p>
-<p><strong>TODO: Add JSON output example</strong></p>
+<p>Show all open orders for a specific account across all markets.</p>
+<div id="get-accountaccountopen_orders-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-json"><code v-pre class="language-json">{
+ &quot;code&quot;: 0,
+ &quot;data&quot;: [
+  {
+   &quot;baseAsset&quot;: { &quot;decimals&quot;: 4, &quot;hash&quot;: &quot;0e4825ef...&quot;, &quot;id&quot;: 7, &quot;name&quot;: &quot;TOK2&quot; },
+   &quot;wartToAssetSwaps&quot;: [
+    {
+     &quot;amount&quot;: { &quot;str&quot;: &quot;100.0000&quot;, &quot;u64&quot;: 1000000, &quot;decimals&quot;: 4 },
+     &quot;filled&quot;: { &quot;str&quot;: &quot;10.0000&quot;, &quot;u64&quot;: 100000, &quot;decimals&quot;: 4 },
+     &quot;inMempool&quot;: false,
+     &quot;limit&quot;: { &quot;doubleAdjusted&quot;: 0.1, &quot;doubleRaw&quot;: 1000.0, &quot;exponent2&quot;: -6, &quot;hex&quot;: &quot;fa0049&quot;, &quot;mantissa&quot;: 64000, &quot;precExponent10&quot;: 4 },
+     &quot;txHash&quot;: &quot;c6fbade2...&quot;
+    }
+   ],
+   &quot;assetToWartSwaps&quot;: [...]
+  }
+ ]
+}</code></pre>
+</doc-codeblock></div>
 <h3 id="get-accountaccountopen_ordersasset"><code translate="no" v-pre>GET /account/:account/open_orders/:asset</code></h3>
-<p>Show open orders for a specific account and asset.</p>
-<p><strong>TODO: Add JSON output example</strong></p>
+<p>Show open orders for a specific account and specific base asset. Same structure as above, filtered to one asset.</p>
 <h3 id="get-accountaccountbalancetokenspec"><code translate="no" v-pre>GET /account/:account/balance/:tokenspec</code></h3>
-<p>Show balance of an account for a specific asset. The <code translate="no" v-pre>:account</code> parameter is the account address, and <code translate="no" v-pre>:token</code> is the token spec (e.g., <code translate="no" v-pre>asset:0e4825efffa294610d2ac376713e3bcc9b53d378e823834b64e5df01f75d3b0c</code>).</p>
+<p>Show balance of an account for a specific asset. The <code translate="no" v-pre>:account</code> parameter is the account address, and <code translate="no" v-pre>:tokenspec</code> is the token spec (e.g., <code translate="no" v-pre>asset:0e4825efffa294610d2ac376713e3bcc9b53d378e823834b64e5df01f75d3b0c</code>).</p>
 <h4 id="balance-types">Balance Types</h4>
 <p>The API returns three balance types:</p>
 <div class="table-wrapper scrollbar overflow-hidden">
@@ -1101,112 +1213,281 @@ Example output of &quot;/asset/complete?namePrefix=TOK&quot;</p>
    &quot;accountId&quot;: 9,
    &quot;address&quot;: &quot;2de77d5e23dc63e4c4149d394c979361e9e8e966336c8cd4&quot;
   },
-  &quot;balance&quot;: {
-   &quot;locked&quot;: {
-    &quot;E8&quot;: 0,
-    &quot;str&quot;: &quot;0&quot;
-   },
-   &quot;mempool&quot;: {
-    &quot;E8&quot;: 0,
-    &quot;str&quot;: &quot;0&quot;
-   },
-   &quot;total&quot;: {
-    &quot;E8&quot;: 400097559,
-    &quot;str&quot;: &quot;4.00097559&quot;
-   }
+  &quot;wart&quot;: {
+   &quot;locked&quot;: { &quot;E8&quot;: 0, &quot;str&quot;: &quot;0&quot; },
+   &quot;mempool&quot;: { &quot;E8&quot;: 0, &quot;str&quot;: &quot;0&quot; },
+   &quot;total&quot;: { &quot;E8&quot;: 400097559, &quot;str&quot;: &quot;4.00097559&quot; }
   }
  }
 }</code></pre>
 </doc-codeblock></div>
 <h3 id="get-accountaccounthistorybeforetxindex"><code translate="no" v-pre>GET /account/:account/history/:beforeTxIndex</code></h3>
-<p>Show transaction history of specific account
-Example output:</p>
+<p>Show transaction history of specific account. Returns blocks containing actions relevant to the account, structured as <code translate="no" v-pre>perBlock[].actions</code> (see <a href="block-actions/">Block Actions</a> for field details).</p>
+<p>Example output:</p>
 <div id="get-accountaccounthistorybeforetxindex-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-json"><code v-pre class="language-json">{
-&quot;code&quot;: 0,
-&quot;data&quot;: {
- &quot;balance&quot;: &quot;5027.00000000&quot;,
- &quot;balanceE8&quot;: 502700000000,
- &quot;fromId&quot;: 69626,
- &quot;perBlock&quot;: [
-  {
-   &quot;confirmations&quot;: 9949,
-   &quot;height&quot;: 366700,
-   &quot;transactions&quot;: {
-    &quot;rewards&quot;: [],
-    &quot;transfers&quot;: [
-     {
-      &quot;amount&quot;: &quot;5000.00000000&quot;,
-      &quot;amountE8&quot;: 500000000000,
-      &quot;fee&quot;: &quot;0.00000001&quot;,
-      &quot;feeE8&quot;: 1,
-      &quot;fromAddress&quot;: &quot;1711cadfe5a66a5f5f245fc78b2335f79da362178a72de2e&quot;,
-      &quot;nonceId&quot;: 131630562,
-      &quot;pinHeight&quot;: 366688,
-      &quot;toAddress&quot;: &quot;8733d0e21bc791f44785f02753bb589b8423eb56cd938fbc&quot;,
-      &quot;txHash&quot;: &quot;f364da997bf7a3c3bc8ead22041509228d6bdea39fcbcdc6be56030433d54219&quot;
-     }
-    ]
+ &quot;code&quot;: 0,
+ &quot;data&quot;: {
+  &quot;fromId&quot;: 69626,
+  &quot;perBlock&quot;: [
+   {
+    &quot;actions&quot;: {
+     &quot;wartTransfers&quot;: [...],
+     &quot;tokenTransfers&quot;: [...],
+     &quot;newOrders&quot;: [...],
+     &quot;matches&quot;: [...],
+     &quot;liquidityDeposits&quot;: [...],
+     &quot;liquidityWithdrawals&quot;: [...],
+     &quot;assetCreations&quot;: [...],
+     &quot;cancelations&quot;: [...],
+     &quot;orderCancelations&quot;: [...],
+     &quot;reward&quot;: null
+    },
+    &quot;confirmations&quot;: 9949,
+    &quot;height&quot;: 366700
    }
-  },
-  {
-   &quot;confirmations&quot;: 298316,
-   &quot;height&quot;: 78333,
-   &quot;transactions&quot;: {
-    &quot;rewards&quot;: [
-     {
-      &quot;amount&quot;: &quot;3.00000000&quot;,
-      &quot;amountE8&quot;: 300000000,
-      &quot;toAddress&quot;: &quot;8733d0e21bc791f44785f02753bb589b8423eb56cd938fbc&quot;,
-      &quot;txHash&quot;: &quot;bc1b3a369c63884b013ff798ecb1d964685706d25bfaa8519d301779a6566b2a&quot;
-     }
-    ],
-    &quot;transfers&quot;: []
-   }
-  },
-  .
-  .
-  .
- ]
-}
+  ]
+ }
 }</code></pre>
 </doc-codeblock></div>
-<h3 id="get-accountrichlisttoken"><code translate="no" v-pre>GET /account/richlist/:token</code></h3>
-<p>Show richlist for a specific token.</p>
-<p><strong>TODO: Add JSON output example</strong></p>
+<p>For detailed JSON structure of each action type, see 
+<div class="mb-6 px-5 py-4 flex justify-between relative border border-base-border hover:border-base-border-hover rounded transition-colors duration-150">
+    <div class="flex items-center text-base-500">
+        <span class="inline-flex items-center justify-center leading-none">
+            <svg xmlns="http://www.w3.org/2000/svg" class="block shrink-0" width="20" height="20" viewBox="0 0 24 24" role="presentation" fill="currentColor"><path fill="none" d="M0 0h24v24H0z"/><path d="M19.92 12.38a1 1 0 00-.22-1.09l-7-7a.996.996 0 10-1.41 1.41l5.3 5.3H5c-.55 0-1 .45-1 1s.45 1 1 1h11.59l-5.29 5.29a.996.996 0 000 1.41c.19.2.44.3.7.3s.51-.1.71-.29l7-7c.09-.09.16-.21.21-.33z"/></svg>
+        </span>
+        <span class="inline-block font-medium ml-2">Block Actions</span>
+    </div>
+    <div class="flex items-center text-xs text-gray-400 dark:text-dark-400">
+        <span>block-actions/</span>
+    </div>
+    <a href="block-actions/" class="absolute block inset-0"></a>
+</div>
+.</p>
+<h3 id="get-accountrichlisttokenspec"><code translate="no" v-pre>GET /account/richlist/:tokenspec</code></h3>
+<p>Show richlist for a specific token. Example output of <code translate="no" v-pre>/account/richlist/asset:0e4825ef...</code>:</p>
+<div id="get-accountrichlisttokenspec-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-json"><code v-pre class="language-json">{
+ &quot;code&quot;: 0,
+ &quot;data&quot;: {
+  &quot;richlist&quot;: [
+   {
+    &quot;address&quot;: &quot;2de77d5e23dc63e4c4149d394c979361e9e8e966336c8cd4&quot;,
+    &quot;balance&quot;: { &quot;str&quot;: &quot;50000.0000&quot;, &quot;u64&quot;: 500000000, &quot;decimals&quot;: 4 }
+   },
+   {
+    &quot;address&quot;: &quot;8733d0e21bc791f44785f02753bb589b8423eb56cd938fbc&quot;,
+    &quot;balance&quot;: { &quot;str&quot;: &quot;25000.0000&quot;, &quot;u64&quot;: 250000000, &quot;decimals&quot;: 4 }
+   }
+  ],
+  &quot;token&quot;: { &quot;id&quot;: 7, &quot;name&quot;: &quot;TOK2&quot;, &quot;precision&quot;: 4, &quot;spec&quot;: &quot;asset:0e4825ef...&quot; }
+ }
+}</code></pre>
+</doc-codeblock></div>
 <h3 id="get-peersip_count"><code translate="no" v-pre>GET /peers/ip_count</code></h3>
 <p>Show count of connections per IP address.</p>
-<p><strong>TODO: Add JSON output example</strong></p>
+<div id="get-peersip_count-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-json"><code v-pre class="language-json">{
+ &quot;code&quot;: 0,
+ &quot;data&quot;: [
+  [ &quot;51.75.21.134&quot;, 2 ]
+ ]
+}</code></pre>
+</doc-codeblock></div>
 <h3 id="get-peersbanned"><code translate="no" v-pre>GET /peers/banned</code></h3>
-<p>Show list of banned peers.</p>
-<p><strong>TODO: Add JSON output example</strong></p>
+<p>Show list of banned peers. Example output of <code translate="no" v-pre>/peers/banned</code>:</p>
+<div id="get-peersbanned-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-json"><code v-pre class="language-json">{
+ &quot;code&quot;: 0,
+ &quot;data&quot;: [
+  {
+   &quot;banuntil&quot;: 1773043430,
+   &quot;ip&quot;: &quot;51.75.21.134&quot;,
+   &quot;reason&quot;: &quot;Invalid POW&quot;
+  }
+ ]
+}</code></pre>
+</doc-codeblock></div>
 <h3 id="get-peersoffensespage"><code translate="no" v-pre>GET /peers/offenses/:page</code></h3>
-<p>Show paginated list of peer offenses.</p>
-<p><strong>TODO: Add JSON output example</strong></p>
+<p>Show paginated list of peer offenses. Example output of <code translate="no" v-pre>/peers/offenses/0</code>:</p>
+<div id="get-peersoffensespage-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-json"><code v-pre class="language-json">{
+ &quot;code&quot;: 0,
+ &quot;data&quot;: [
+  {
+   &quot;ip&quot;: &quot;51.75.21.134&quot;,
+   &quot;offense&quot;: &quot;Invalid POW&quot;,
+   &quot;time&quot;: 1772443430
+  }
+ ]
+}</code></pre>
+</doc-codeblock></div>
+<p>The <code translate="no" v-pre>time</code> field is a Unix timestamp.</p>
 <h3 id="get-peersconnectedconnection"><code translate="no" v-pre>GET /peers/connected/connection</code></h3>
 <p>Show connection information of connected peers.</p>
-<p><strong>TODO: Add JSON output example</strong></p>
+<div id="get-peersconnectedconnection-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-json"><code v-pre class="language-json">{
+ &quot;code&quot;: 0,
+ &quot;data&quot;: [
+  {
+   &quot;ip&quot;: &quot;51.75.21.134&quot;,
+   &quot;port&quot;: 9186,
+   &quot;since&quot;: 1772443430
+  }
+ ]
+}</code></pre>
+</doc-codeblock></div>
 <h3 id="get-peersconnection_schedule"><code translate="no" v-pre>GET /peers/connection_schedule</code></h3>
 <p>Show the connection schedule for peers.</p>
-<p><strong>TODO: Add JSON output example</strong></p>
+<div id="get-peersconnection_schedule-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-json"><code v-pre class="language-json">{
+ &quot;code&quot;: 0,
+ &quot;data&quot;: {
+  &quot;schedule&quot;: [...]
+ }
+}</code></pre>
+</doc-codeblock></div>
 <h3 id="get-peersunban"><code translate="no" v-pre>GET /peers/unban</code></h3>
 <p>Unban all banned peers.</p>
-<p><strong>TODO: Add JSON output example</strong></p>
+<div id="get-peersunban-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-json"><code v-pre class="language-json">{ &quot;code&quot;: 0 }</code></pre>
+</doc-codeblock></div>
 <h3 id="get-peersconnected"><code translate="no" v-pre>GET /peers/connected</code></h3>
-<p>Show detailed information about connected peers.</p>
-<p><strong>TODO: Add JSON output example</strong></p>
+<p>Show detailed information about connected peers. Example output of <code translate="no" v-pre>/peers/connected</code>:</p>
+<div id="get-peersconnected-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-json"><code v-pre class="language-json">{
+ &quot;code&quot;: 0,
+ &quot;data&quot;: [
+  {
+   &quot;chain&quot;: {
+    &quot;descriptor&quot;: 4,
+    &quot;forkLower&quot;: 0,
+    &quot;forkUpper&quot;: 0,
+    &quot;grid&quot;: [&quot;...&quot;],
+    &quot;length&quot;: 1198931,
+    &quot;worksum&quot;: 1.008584641271857e+19,
+    &quot;worksumHex&quot;: &quot;0x...&quot;
+   },
+   &quot;connection&quot;: {
+    &quot;ip&quot;: &quot;51.75.21.134&quot;,
+    &quot;port&quot;: 9186,
+    &quot;since&quot;: 1772443430
+   },
+   &quot;leaderPriority&quot;: {
+    &quot;ack&quot;: { &quot;priority&quot;: 0, &quot;since&quot;: 0 },
+    &quot;theirs&quot;: { &quot;priority&quot;: 0, &quot;since&quot;: 0 }
+   },
+   &quot;throttle&quot;: {
+    &quot;blockRequest&quot;: { &quot;priority&quot;: 0, &quot;since&quot;: 0 },
+    &quot;delay&quot;: 0,
+    &quot;headerRequest&quot;: { &quot;priority&quot;: 0, &quot;since&quot;: 0 }
+   }
+  }
+ ]
+}</code></pre>
+</doc-codeblock></div>
+<div class="table-wrapper scrollbar overflow-hidden">
+<table class="comfortable">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code translate="no" v-pre>chain</code></td>
+<td>object</td>
+<td>Chain state of the peer</td>
+</tr>
+<tr>
+<td><code translate="no" v-pre>chain.grid</code></td>
+<td>array</td>
+<td>Header grid for chain comparison</td>
+</tr>
+<tr>
+<td><code translate="no" v-pre>chain.length</code></td>
+<td>integer</td>
+<td>Chain height of the peer</td>
+</tr>
+<tr>
+<td><code translate="no" v-pre>chain.worksum</code></td>
+<td>number</td>
+<td>Total work in the chain</td>
+</tr>
+<tr>
+<td><code translate="no" v-pre>connection</code></td>
+<td>object</td>
+<td>Connection info</td>
+</tr>
+<tr>
+<td><code translate="no" v-pre>connection.ip</code></td>
+<td>string</td>
+<td>Peer IP address</td>
+</tr>
+<tr>
+<td><code translate="no" v-pre>connection.port</code></td>
+<td>integer</td>
+<td>Peer port</td>
+</tr>
+<tr>
+<td><code translate="no" v-pre>connection.since</code></td>
+<td>integer</td>
+<td>Unix timestamp of connection start</td>
+</tr>
+<tr>
+<td><code translate="no" v-pre>leaderPriority</code></td>
+<td>object</td>
+<td>Leader election priority</td>
+</tr>
+<tr>
+<td><code translate="no" v-pre>throttle</code></td>
+<td>object</td>
+<td>Throttling state for block/header requests</td>
+</tr>
+</tbody>
+</table>
+</div>
 <h3 id="get-peersdisconnectid"><code translate="no" v-pre>GET /peers/disconnect/:id</code></h3>
 <p>Disconnect a specific peer by connection ID.</p>
-<p><strong>TODO: Add JSON output example</strong></p>
+<div id="get-peersdisconnectid-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-json"><code v-pre class="language-json">{ &quot;code&quot;: 0 }</code></pre>
+</doc-codeblock></div>
 <h3 id="get-peersthrottled"><code translate="no" v-pre>GET /peers/throttled</code></h3>
 <p>Show throttled peers.</p>
-<p><strong>TODO: Add JSON output example</strong></p>
+<div id="get-peersthrottled-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-json"><code v-pre class="language-json">{
+ &quot;code&quot;: 0,
+ &quot;data&quot;: [
+  {
+   &quot;connection&quot;: { &quot;endpoint&quot;: &quot;51.75.21.134:9186&quot;, &quot;id&quot;: 12345 },
+   &quot;throttle&quot;: {
+    &quot;blockRequest&quot;: { &quot;priority&quot;: 0, &quot;since&quot;: 0 },
+    &quot;delay&quot;: 5000,
+    &quot;headerRequest&quot;: { &quot;priority&quot;: 0, &quot;since&quot;: 0 }
+   }
+  }
+ ]
+}</code></pre>
+</doc-codeblock></div>
 <h3 id="get-peerstransmission_hours"><code translate="no" v-pre>GET /peers/transmission_hours</code></h3>
 <p>Show transmission statistics aggregated by hours.</p>
-<p><strong>TODO: Add JSON output example</strong></p>
+<div id="get-peerstransmission_hours-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-json"><code v-pre class="language-json">{
+ &quot;code&quot;: 0,
+ &quot;data&quot;: {
+  &quot;byHost&quot;: {
+   &quot;51.75.21.134:9186&quot;: [
+    { &quot;rxBytes&quot;: 1024000, &quot;timestamp&quot;: 1772443430, &quot;txBytes&quot;: 512000 },
+    { &quot;rxBytes&quot;: 2048000, &quot;timestamp&quot;: 1772447030, &quot;txBytes&quot;: 1024000 }
+   ]
+  }
+ }
+}</code></pre>
+</doc-codeblock></div>
 <h3 id="get-peerstransmission_minutes"><code translate="no" v-pre>GET /peers/transmission_minutes</code></h3>
-<p>Show transmission statistics aggregated by minutes.</p>
-<p><strong>TODO: Add JSON output example</strong></p>
+<p>Show transmission statistics aggregated by minutes. Same structure as <code translate="no" v-pre>/peers/transmission_hours</code> but with per-minute granularity.</p>
 <h3 id="get-toolsencode16bitfrom_e8feee8"><code translate="no" v-pre>GET /tools/encode16bit/from_e8/:feeE8</code></h3>
 <p>Round raw fee integer representation (coin amount is this number divided by 10^8) to closest 16 bit representation. This is required for fee specification in the <code translate="no" v-pre>/transaction/add</code> endpoint. Example output of <code translate="no" v-pre>/tools/encode16bit/from_e8/5002</code></p>
 <div id="get-toolsencode16bitfrom_e8feee8-code-1" class="codeblock-wrapper"><doc-codeblock>
@@ -1276,8 +1557,7 @@ Example output:</p>
   &quot;uptime&quot;: {
    &quot;formatted&quot;: &quot;0d 0h 6m 8s&quot;,
    &quot;seconds&quot;: 368,
-   &quot;sinceTimestamp&quot;: 1763453691,
-   &quot;sinceUTC&quot;: &quot;2025-11-18 08:14:51 UTC&quot;
+   &quot;since&quot;: 1763453691
   },
   &quot;version&quot;: {
    &quot;commit&quot;: &quot;dd054a2&quot;,
@@ -1359,26 +1639,59 @@ Example output:</p>
 }</code></pre>
 </doc-codeblock></div>
 <h3 id="get-debugheader_download"><code translate="no" v-pre>GET /debug/header_download</code></h3>
-<p>Show header download status for debugging purposes.</p>
-<p><strong>TODO: Add JSON output example</strong></p>
+<p>Show header download status for debugging purposes. Example output:</p>
+<div id="get-debugheader_download-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-json"><code v-pre class="language-json">{
+ &quot;code&quot;: 0,
+ &quot;data&quot;: {
+  &quot;config&quot;: {
+   &quot;maxLeaders&quot;: 10,
+   &quot;pendingDepth&quot;: 10
+  },
+  &quot;leaderListSize&quot;: 5,
+  &quot;minWork&quot;: &quot;0x1d00ffff&quot;,
+  &quot;queuedBatches&quot;: {
+   &quot;51.75.21.134:9186&quot;: {
+    &quot;batchSize&quot;: 2000,
+    &quot;leaderRefsSize&quot;: 0,
+    &quot;originId&quot;: 12345,
+    &quot;probeRefsSize&quot;: 2000
+   }
+  },
+  &quot;verifierMapSize&quot;: 100
+ }
+}</code></pre>
+</doc-codeblock></div>
 <h3 id="get-loadtestblock_requestconn_id"><code translate="no" v-pre>GET /loadtest/block_request/:conn_id</code></h3>
 <p>Load test endpoint for block requests.</p>
-<p><strong>TODO: Add JSON output example</strong></p>
+<div id="get-loadtestblock_requestconn_id-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-json"><code v-pre class="language-json">{ &quot;code&quot;: 0 }</code></pre>
+</doc-codeblock></div>
 <h3 id="get-loadtestheader_requestconn_id"><code translate="no" v-pre>GET /loadtest/header_request/:conn_id</code></h3>
 <p>Load test endpoint for header requests.</p>
-<p><strong>TODO: Add JSON output example</strong></p>
+<div id="get-loadtestheader_requestconn_id-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-json"><code v-pre class="language-json">{ &quot;code&quot;: 0 }</code></pre>
+</doc-codeblock></div>
 <h3 id="get-loadtestdisableconn_id"><code translate="no" v-pre>GET /loadtest/disable/:conn_id</code></h3>
 <p>Disable a load test connection.</p>
-<p><strong>TODO: Add JSON output example</strong></p>
+<div id="get-loadtestdisableconn_id-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-json"><code v-pre class="language-json">{ &quot;code&quot;: 0 }</code></pre>
+</doc-codeblock></div>
 <h3 id="get-debugfakemine"><code translate="no" v-pre>GET /debug/fakemine</code></h3>
 <p>Generate fake mining data using the default address.</p>
-<p><strong>TODO: Add JSON output example</strong></p>
+<div id="get-debugfakemine-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-json"><code v-pre class="language-json">{ &quot;code&quot;: 0 }</code></pre>
+</doc-codeblock></div>
 <h3 id="get-debugrollback"><code translate="no" v-pre>GET /debug/rollback</code></h3>
 <p>Rollback the chain by one block.</p>
-<p><strong>TODO: Add JSON output example</strong></p>
+<div id="get-debugrollback-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-json"><code v-pre class="language-json">{ &quot;code&quot;: 0 }</code></pre>
+</doc-codeblock></div>
 <h3 id="get-debugfakemineaddress"><code translate="no" v-pre>GET /debug/fakemine/:address</code></h3>
 <p>Generate fake mining data for a specific address.</p>
-<p><strong>TODO: Add JSON output example</strong></p>
+<div id="get-debugfakemineaddress-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-json"><code v-pre class="language-json">{ &quot;code&quot;: 0 }</code></pre>
+</doc-codeblock></div>
 <h3 id="get-chartcandlesassetinterval"><code translate="no" v-pre>GET /chart/candles/:asset/:interval</code></h3>
 <p>Show OHLCV candle data for a specific asset and interval.</p>
 <p><strong>Parameters:</strong></p>
@@ -1578,6 +1891,6 @@ Example output:</p>
 
     <div id="retype-overlay-target"></div>
 
-    <script data-cfasync="false">window.__DOCS__ = { "title": "REST API", level: 3, icon: "file", hasPrism: true, hasMermaid: false, hasMath: false, tocDepth: 23 }</script>
+        <script data-cfasync="false">window.__DOCS__ = { "title": "REST API", level: 3, icon: "file", hasPrism: true, hasInstagram: false, hasMermaid: false, hasMath: false, tocDepth: 23, "md": "/developers/api/rest.md" }</script>
 </body>
 </html>

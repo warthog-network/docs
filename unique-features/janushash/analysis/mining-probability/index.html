@@ -4,24 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.4.0.827949639758">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.5.3.829485167244">
 
     <!-- See retype.com -->
-    <meta name="generator" content="Retype 4.4.0">
+    <meta name="generator" content="Retype 4.5.3">
 
     <!-- Primary Meta Tags -->
     <title>Mining Probability</title>
     <meta name="title" content="Mining Probability">
-    <meta name="description" content="Recall that a block is rejected if the Sha256t hash of its header is too small, i.e. if Y< c. Furthermore, the smaller Y the easier it is to satisfy the">
+    <meta name="description" content="Recall that a block is rejected if the Sha256t hash of its header is too small, i.e. if Y< c. Furthermore, the smaller Y the easier it is to satisfy the second condition XY^{0.7}< \\tau because larger, and therefore easier-to-mine Verushash v2.2 hashes are accepted.">
 
     <!-- Canonical -->
     <link rel="canonical" href="https://docs.warthog.network/unique-features/janushash/analysis/mining-probability/">
+    <link rel="sitemap" type="application/xml" title="Sitemap" href="https://docs.warthog.network/sitemap.xml">
 
     <!-- Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://docs.warthog.network/unique-features/janushash/analysis/mining-probability/">
     <meta property="og:title" content="Mining Probability">
-    <meta property="og:description" content="Recall that a block is rejected if the Sha256t hash of its header is too small, i.e. if Y< c. Furthermore, the smaller Y the easier it is to satisfy the">
+    <meta property="og:description" content="Recall that a block is rejected if the Sha256t hash of its header is too small, i.e. if Y< c. Furthermore, the smaller Y the easier it is to satisfy the second condition XY^{0.7}< \\tau because larger, and therefore easier-to-mine Verushash v2.2 hashes are accepted.">
     <meta property="og:site_name" content="Warthog Network">
     <meta property="og:locale" content="en_US">
 
@@ -29,17 +30,20 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://docs.warthog.network/unique-features/janushash/analysis/mining-probability/">
     <meta name="twitter:title" content="Mining Probability">
-    <meta name="twitter:description" content="Recall that a block is rejected if the Sha256t hash of its header is too small, i.e. if Y< c. Furthermore, the smaller Y the easier it is to satisfy the">
+    <meta name="twitter:description" content="Recall that a block is rejected if the Sha256t hash of its header is too small, i.e. if Y< c. Furthermore, the smaller Y the easier it is to satisfy the second condition XY^{0.7}< \\tau because larger, and therefore easier-to-mine Verushash v2.2 hashes are accepted.">
+
+    <!-- Alternate Markdown -->
+    <link rel="alternate" type="text/markdown" href="https://docs.warthog.network/unique-features/janushash/analysis/mining-probability.md">
 
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../../../resources/css/retype.css?v=4.4.0.827949639758" rel="stylesheet">
+    <link href="../../../../resources/css/retype.css?v=4.5.3.829485167244" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../../../resources/js/config.js?v=4.4.0.827949639758" data-turbo-eval="false" defer></script>
-    <script data-cfasync="false" src="../../../../resources/js/retype.js?v=4.4.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../../../resources/js/lunr.js?v=4.4.0.827949639758" data-turbo-eval="false" defer></script>
-    <link href="../../../../resources/css/katex.css?v=4.4.0" rel="stylesheet">
-    <script id="katex-js" data-cfasync="false" src="../../../../resources/js/katex.js?v=4.4.0" defer></script>
+    <script data-cfasync="false" src="../../../../resources/js/config.js?v=4.5.3.829485167244" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../../../resources/js/retype.js?v=4.5.3" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../../../resources/js/lunr.js?v=4.5.3.829485167244" data-turbo-eval="false" defer></script>
+    <link href="../../../../resources/css/katex.css?v=4.5.3" rel="stylesheet">
+    <script id="katex-js" data-cfasync="false" src="../../../../resources/js/katex.js?v=4.5.3" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -148,9 +152,11 @@
 <div class="flex">
     <div id="retype-main" class="min-w-0 p-4 grow md:px-16">
         <main class="relative pb-12 lg:pt-2">
-            <div class="retype-markdown" id="retype-content">
+            <div class="relative retype-markdown" id="retype-content">
                 <!-- Rendered if sidebar right is enabled -->
                 <div id="retype-sidebar-right-toggle"></div>
+                <doc-page-actions></doc-page-actions>
+
                 <!-- Page content  -->
 <h1 id="mining-probability">Mining Probability</h1>
 <p>Recall that a block is rejected if the Sha256t hash of its header is too small, i.e. if <span class="math">Y&lt; c</span>. Furthermore, the smaller <span class="math">Y</span> the easier it is to satisfy the second condition <span class="math">XY^{0.7}&lt; \tau</span> because larger, and therefore easier-to-mine Verushash v2.2 hashes are accepted.</p>
@@ -246,6 +252,6 @@ c&lt; Y(h) &lt; c+1/a
 
     <div id="retype-overlay-target"></div>
 
-    <script data-cfasync="false">window.__DOCS__ = { "title": "Mining Probability", level: 4, icon: "file", hasPrism: false, hasMermaid: false, hasMath: true, tocDepth: 23 }</script>
+        <script data-cfasync="false">window.__DOCS__ = { "title": "Mining Probability", level: 4, icon: "file", hasPrism: false, hasInstagram: false, hasMermaid: false, hasMath: true, tocDepth: 23, "md": "/unique-features/janushash/analysis/mining-probability.md" }</script>
 </body>
 </html>

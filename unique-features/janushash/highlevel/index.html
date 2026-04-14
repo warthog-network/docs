@@ -4,24 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.4.0.827949639758">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.5.3.829485167244">
 
     <!-- See retype.com -->
-    <meta name="generator" content="Retype 4.4.0">
+    <meta name="generator" content="Retype 4.5.3">
 
     <!-- Primary Meta Tags -->
     <title>Janushash made simple</title>
     <meta name="title" content="Janushash made simple">
-    <meta name="description" content="The theory behind Warthog's Proof of Balanced Work and specifically the Janushash algorithm is dry and difficult to grasp. In this post we want to give a">
+    <meta name="description" content="The theory behind Warthog's Proof of Balanced Work and specifically the Janushash algorithm is dry and difficult to grasp. In this post we want to give a high-level understanding on how things work.">
 
     <!-- Canonical -->
     <link rel="canonical" href="https://docs.warthog.network/unique-features/janushash/highlevel/">
+    <link rel="sitemap" type="application/xml" title="Sitemap" href="https://docs.warthog.network/sitemap.xml">
 
     <!-- Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://docs.warthog.network/unique-features/janushash/highlevel/">
     <meta property="og:title" content="Janushash made simple">
-    <meta property="og:description" content="The theory behind Warthog's Proof of Balanced Work and specifically the Janushash algorithm is dry and difficult to grasp. In this post we want to give a">
+    <meta property="og:description" content="The theory behind Warthog's Proof of Balanced Work and specifically the Janushash algorithm is dry and difficult to grasp. In this post we want to give a high-level understanding on how things work.">
     <meta property="og:site_name" content="Warthog Network">
     <meta property="og:locale" content="en_US">
 
@@ -29,15 +30,18 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://docs.warthog.network/unique-features/janushash/highlevel/">
     <meta name="twitter:title" content="Janushash made simple">
-    <meta name="twitter:description" content="The theory behind Warthog's Proof of Balanced Work and specifically the Janushash algorithm is dry and difficult to grasp. In this post we want to give a">
+    <meta name="twitter:description" content="The theory behind Warthog's Proof of Balanced Work and specifically the Janushash algorithm is dry and difficult to grasp. In this post we want to give a high-level understanding on how things work.">
+
+    <!-- Alternate Markdown -->
+    <link rel="alternate" type="text/markdown" href="https://docs.warthog.network/unique-features/janushash/highlevel.md">
 
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../../resources/css/retype.css?v=4.4.0.827949639758" rel="stylesheet">
+    <link href="../../../resources/css/retype.css?v=4.5.3.829485167244" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.4.0.827949639758" data-turbo-eval="false" defer></script>
-    <script data-cfasync="false" src="../../../resources/js/retype.js?v=4.4.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.4.0.827949639758" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.5.3.829485167244" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../../resources/js/retype.js?v=4.5.3" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.5.3.829485167244" data-turbo-eval="false" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -146,9 +150,11 @@
 <div class="flex">
     <div id="retype-main" class="min-w-0 p-4 grow md:px-16">
         <main class="relative pb-12 lg:pt-2">
-            <div class="retype-markdown" id="retype-content">
+            <div class="relative retype-markdown" id="retype-content">
                 <!-- Rendered if sidebar right is enabled -->
                 <div id="retype-sidebar-right-toggle"></div>
+                <doc-page-actions></doc-page-actions>
+
                 <!-- Page content  -->
 <h1 id="janushash-made-simple">Janushash made simple</h1>
 <p>The theory behind Warthog&#x27;s Proof of Balanced Work and specifically the Janushash algorithm is dry and difficult to grasp. In this post we want to give a high-level understanding on how things work.</p>
@@ -175,10 +181,12 @@ The difficulty can then be seen as a maximal threshold value for hashed number f
 <p>Janushash is a PoBW algorithm and as such it combines several hash functions. Specifically, to create a mining algorithm which requires both, CPU and GPU, for efficient mining we have carefully selected and combined two hash functions Sha256t and Verushash v2.2. This yields Janushash, Warthog&#x27;s unique and world&#x27;s first PoBW mining algorithm, the first one to require CPU and GPU hardware.</p>
 <p>Compared to the general PoBW description above there exists subtle differences in the way the two hash functions are combined  that we implemented for two reasons:</p>
 <ol>
-<li><p><strong>Pool mining</strong>
+<li>
+<p><strong>Pool mining</strong>
 Fair pool mining requires a method to scale the difficulty such that every participant is affected proportionally irrespective of the individual hashrate combinations they are mining at. Unfortunately, with standard PoBW this is not the case when only the difficulty is scaled by the pool and instead a complicated acceptance region for shares would need to be implemented on the pool side for each difficulty. For the creation of pools and for adaption this is a major barrier which is why a slight modification was necessary.</p>
 </li>
-<li><p><strong>Diminishing returns:</strong>
+<li>
+<p><strong>Diminishing returns:</strong>
 For fixed CPU hashrate on Verushash the combined Janushash hashrate is hard-capped no matter how much GPU hashrate we have. This protects the Janushash algorithm from offloading the Sha256t computations to a specialized device like ASICs or FPGAs as their use will provide only marginal improvements over GPU usage when the Verus hashrate is not scaled as well.</p>
 </li>
 </ol>
@@ -260,6 +268,6 @@ For fixed CPU hashrate on Verushash the combined Janushash hashrate is hard-capp
 
     <div id="retype-overlay-target"></div>
 
-    <script data-cfasync="false">window.__DOCS__ = { "title": "Janushash made simple", level: 3, icon: "file", hasPrism: false, hasMermaid: false, hasMath: false, tocDepth: 23 }</script>
+        <script data-cfasync="false">window.__DOCS__ = { "title": "Janushash made simple", level: 3, icon: "file", hasPrism: false, hasInstagram: false, hasMermaid: false, hasMath: false, tocDepth: 23, "md": "/unique-features/janushash/highlevel.md" }</script>
 </body>
 </html>

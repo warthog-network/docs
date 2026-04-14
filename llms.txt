@@ -1,0 +1,85 @@
+﻿# Welcome
+
+> This documentation was partially generated with AI augmentation. Report inconsistencies at github.com/warthog-network/docs/issues.
+
+- [Welcome](https://docs.warthog.network/readme.md): Welcome
+- [Links](https://docs.warthog.network/links.md): Algorithm whitepaper
+
+## Guides
+
+### Mining
+
+#### Warthog - Mining quick start guide - Updated 2024-04-24
+
+- [Quick Start](https://docs.warthog.network/guides/mining/quickstart.md): This guide contains all needed information to start mining Warthog, on your own node (solo) or on pool.
+- [Quick Start (French)](https://docs.warthog.network/guides/mining/quickstart/quickstart_fr.md): Ce guide contient toutes les infos nécessaires pour vous lancer immédiatement dans le minage de Warthog, en pool ou en solo.
+- [Calculator](https://docs.warthog.network/guides/mining/calculator.md): A Mining calculator will help you to estimate your mining profitability, depending on your mining hardware.
+- [OpenCL Installation](https://docs.warthog.network/guides/mining/installing-opencl.md): To mine on your GPUs you need to install GPU drivers with OpenCL support.
+
+### Using a node
+
+- [Node](https://docs.warthog.network/guides/node/node.md): For some actions on the Warthog network (using a wallet or solo mining), you need to run an instance of the node on your computer. Currently, the pre-compiled node executable file are availabe for Windows, macOS (only arm), Linux (Ubuntu, Debian).
+- [Compiling Warthog from source on Linux](https://docs.warthog.network/guides/node/compiling.md): Compiling Warthog from soure is an alternative to the use precompiled binaries.
+- [Docker](https://docs.warthog.network/guides/node/docker.md): Exemple you can add this type of arguments to run a node with stratum enabled
+- [Systemd](https://docs.warthog.network/guides/node/systemd.md): NOTE: This is only supported in Linux distros that use systemctl (Debian, Ubuntu, Mint etc.).
+
+### Wallet
+
+- [Browser Extension Wallet](https://docs.warthog.network/guides/wallet/browser-extension-wallet.md): Download here.
+- [CLI](https://docs.warthog.network/guides/wallet/cli.md): The CLI (Command Line Interface) wallet is the most bare-bone way of interacting with Warthog. It is mainly intended as proof-of-concept and only provides the most basic features required to create addresses, check balances and send transactions.
+- [Wart Dapp](https://docs.warthog.network/guides/wallet/wart-dapp.md): Download here.
+
+## Developers
+
+### API
+
+- [API](https://docs.warthog.network/developers/api/api.md): This documentation was partially generated with AI augmentation. Report inconsistencies at github.com/warthog-network/docs/issues.
+
+#### REST API
+
+- [REST](https://docs.warthog.network/developers/api/rest.md): This documentation was partially generated with AI augmentation. Report inconsistencies at github.com/warthog-network/docs/issues.
+- [Block Actions](https://docs.warthog.network/developers/api/rest/block-actions.md): This documentation was partially generated with AI augmentation. Report inconsistencies at github.com/warthog-network/docs/issues.
+- [Create Transaction](https://docs.warthog.network/developers/api/rest/create-transaction.md): This documentation was partially generated with AI augmentation. Report inconsistencies at github.com/warthog-network/docs/issues.
+- [Mempool transactions](https://docs.warthog.network/developers/api/rest/mempool-transactions.md)
+- [WebSocket](https://docs.warthog.network/developers/api/websocket.md): The WebSocket endpoint allows real-time data streams on several topics such as chain, account and connection related information. Subscribe with a message containing action: subscribe and unsubscribe similarly with action: unsubscribe, as shown below.
+
+### Integration
+
+#### Pool Integration
+
+- [Pools](https://docs.warthog.network/developers/integration/pools/pools.md): I have written a C++ backend which support computes the hash product
+- [Stratum Protocol](https://docs.warthog.network/developers/integration/pools/stratum.md): Messages are newline (\n) terminated json strings sent over plain TCP with optional TLS encryption. URI scheme is stratum+tcp for plain TCP and stratum+ssl
+- [Miners](https://docs.warthog.network/developers/integration/miners.md): Warthog's Janushash algorithm requires a custom condition on two hashes (SHA256t and Verushash v2.1) to be satisfied for valid blocks. Condition to solve a
+- [Wallets](https://docs.warthog.network/developers/integration/wallets.md): In this guide we demonstrate how to handle wallets and send transactions in Python 3, NodeJS and Elixir. Note that we also provide libraries.
+
+### Libraries
+
+- [Libraries](https://docs.warthog.network/developers/libraries.md): We are working on an official TypeScript library that greatly simplifies interaction with the Warthog ecosystem.
+- [TypeScript](https://docs.warthog.network/developers/libraries/typescript.md): Warthog provides an easy-to-use TypeScript library called warthog-ts intended for interacting with the Warthog ecosystem. This project is hosted on GitHub and PRs are always welcome.
+
+## Unique features
+
+### Janushash
+
+- [Janushash](https://docs.warthog.network/unique-features/janushash/janushash.md): Compared to classical Proof of Work, the class of Proof of Balanced Work (PoBW) algorithms is quite a different beast. Instead of only employing one hash function they combine multiple hash functions in a multiplicative way.
+- [Hashes as Numbers](https://docs.warthog.network/unique-features/janushash/interpreting-hashes-as-numbers.md): Each hash (32 byte hex string) can be interpreted as a number in the interval [0,1).
+- [Condition](https://docs.warthog.network/unique-features/janushash/condition-to-solve-a-block.md): For target \tau\in[0,1] we define the following two conditions a header h must satisfy to have a valid Proof of Balanced Work:
+- [Mining](https://docs.warthog.network/unique-features/janushash/mining.md): Optimally mining janushash exhausts both, a system's CPU and GPU to their limits. GPU is more efficient at Sha256t computations while CPU is more efficient at Verushash v2.2.
+
+#### Mathematical Analsysis
+
+- [Preliminaries](https://docs.warthog.network/unique-features/janushash/analysis/preliminaries.md): A proper hash function should be random in the sense that each output bit cannot be predicted from the input and also cannot be predicted from other bits in its output.
+- [Mining Probability](https://docs.warthog.network/unique-features/janushash/analysis/mining-probability.md): Recall that a block is rejected if the Sha256t hash of its header is too small, i.e. if Y< c. Furthermore, the smaller Y the easier it is to satisfy the second condition XY^{0.7}< \tau because larger, and therefore easier-to-mine Verushash v2.2 hashes are accepted.
+- [Janusscore - a combined hashrate equivalent](https://docs.warthog.network/unique-features/janushash/analysis/janusscore.md): We define the Janusscore S(\mathfrak{h}_X,\mathfrak{h}_Y) for Verushash v2.2 hashrate \mathfrak{h}_X and Sha256t hashrate \mathfrak{h}_Y by
+- [Hashrate Ratio](https://docs.warthog.network/unique-features/janushash/analysis/hashrate-ratio.md): The hashrate ratio is the quotient a of Sha256t hashrate \mathfrak{h}_Y and Verushash v2.2 \mathfrak{h}_X:
+- [Janushash made simple](https://docs.warthog.network/unique-features/janushash/highlevel.md): The theory behind Warthog's Proof of Balanced Work and specifically the Janushash algorithm is dry and difficult to grasp. In this post we want to give a high-level understanding on how things work.
+
+### Browser Nodes
+
+- [Browser Nodes](https://docs.warthog.network/unique-features/browser-nodes.md)
+- [Browser Nodes](https://docs.warthog.network/unique-features/browser-nodes/introduction.md): Warthog is the first and only crypto project that brought full nodes to the browser. This is possible by harnessing latest technology such as OPFS and SQLite's recent support for it.
+
+### Sandwich-Proof DeFi
+
+- [Sandwich-Proof DeFi](https://docs.warthog.network/unique-features/sandwich-proof-defi.md)
+- [DeFi in Warthog](https://docs.warthog.network/unique-features/sandwich-proof-defi/hcdefi.md): Warthog implements a novel approach to Decentraled Finance (DeFi) by hard-coding the underlying logic directly into the node instead of relying on smart contract implementations.
