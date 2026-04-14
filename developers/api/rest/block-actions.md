@@ -1,5 +1,9 @@
 # Block Actions
 
+!!!
+This documentation was partially generated with AI augmentation. Report inconsistencies at [github.com/warthog-network/docs/issues](https://github.com/warthog-network/docs/issues).
+!!!
+
 Every block affects the chain state via actions. These actions are returned from various API methods such as the `/chain/block/:id` and `/transaction/latest` methods. 
 The JSON structure of these actions is explained below.
 

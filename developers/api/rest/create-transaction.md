@@ -3,6 +3,10 @@ title: Create Transaction
 ---
 # Creating a New Transaction
 
+!!!
+This documentation was partially generated with AI augmentation. Report inconsistencies at [github.com/warthog-network/docs/issues](https://github.com/warthog-network/docs/issues).
+!!!
+
 To create a new transaction, use the `POST /transaction/add` API method. POST data must be in JSON format and describes the transaction data in a JSON object. There must always exist a `type` string property that describes the transaction type which determines the other required parameters.
 
 ## Transaction Types

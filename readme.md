@@ -1,5 +1,9 @@
 # Welcome
 
+!!!
+This documentation was partially generated with AI augmentation. Report inconsistencies at [github.com/warthog-network/docs/issues](https://github.com/warthog-network/docs/issues).
+!!!
+
 Warthog is an experimental cryptocurrency with world's first Proof of Balanced Work algorithm written by a group of crypto enthusiasts. It is meant to be a community effort and everyone is more than welcome to join and contribute. Who knows how big this project will be? This project is not a dumb fork of something else. It was developed completely from scratch!
 
 Warthog's *Janushash* mining algorithm is unique across the crypto space, it is the world's first [Proof of Balanced Work (PoBW) algorithm](https://github.com/CoinFuMasterShifu/ProofOfBalancedWork/blob/main/PoBW.pdf), which requires CPU and GPU hash power for mining.

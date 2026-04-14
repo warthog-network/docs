@@ -3,7 +3,11 @@ title: REST
 ---
 # REST API
 
-API for Warthog node version v0.10.3 "3ead1f0"
+!!!
+This documentation was partially generated with AI augmentation. Report inconsistencies at [github.com/warthog-network/docs/issues](https://github.com/warthog-network/docs/issues).
+!!!
+
+API for Warthog node version v0.10.3 "a26330e"
 
 ## Configuration
 
@@ -52,20 +56,17 @@ Below we assume the RPC socket is accessible at `localhost:3000`. On startup the
 | `GET` | [`/chain/txcache`](#get-chaintxcache) | Show transaction cache |
 | `GET` | [`/chain/hashrate/:window`](#get-chainhashratewindow) | Show current hashrate based on latest N blocks |
 | `GET` | [`/chain/signed_snapshot`](#get-chainsigned_snapshot) | Show chain snapshot |
-| `GET` | [`/chain/hashrate/chart/block/:from/:to/:window`](#get-chainhashratechartblockfromtowindow) | Show hashrate chart by block range |
-| `GET` | [`/chain/hashrate/chart/time/:from/:to/:interval`](#get-chainhashratecharttimefromtointerval) | Show hashrate chart by time range |
 | `POST` | [`/chain/append`](#post-chainappend) | Append mined block |
 | `GET` | [`/asset/complete?namePrefix=...&hashPrefix=...`](#get-assetcomplete) | Search assets by name and/or hash prefix |
 | `GET` | [`/asset/lookup/:asset`](#get-assetlookupasset) | Asset lookup (by ID or hash) |
-| `GET` | [`/market/:market`](#get-marketmarket) | Show market orders and liquidity pool |
-| `GET` | [`/market/:market/order/:historyId`](#get-marketmarketorderhistoryid) | Order history |
+| `GET` | [`/dex/market/:market`](#get-dexmarketmarket) | Show market orders and liquidity pool |
 | `GET` | [`/account/:account/mempool`](#get-accountaccountmempool) | Show mempool transactions for account |
 | `GET` | [`/account/:account/open_orders`](#get-accountaccountopen_orders) | Show all open orders for account |
 | `GET` | [`/account/:account/open_orders/:asset`](#get-accountaccountopen_ordersasset) | Show open orders for account and specific asset |
-| `GET` | [`/account/:account/balance/:token`](#get-accountaccountbalancetoken) | Show balance of specific account for a token |
+| `GET` | [`/account/:account/balance/:tokenspec`](#get-accountaccountbalancetokenspec) | Show balance of specific account for a token |
 | `GET` | [`/account/:account/wart_balance`](#get-accountaccountwart_balance) | Show WART balance of specific account |
 | `GET` | [`/account/:account/history/:beforeTxIndex`](#get-accountaccounthistorybeforetxindex) | Show transaction history of specific account |
-| `GET` | [`/account/richlist/:token`](#get-accountrichlisttoken) | Show richlist for a specific token |
+| `GET` | [`/account/richlist/:tokenspec`](#get-accountrichlisttokenspec) | Show richlist for a specific token |
 | `GET` | [`/peers/ip_count`](#get-peersip_count) | Show peer IP counts |
 | `GET` | [`/peers/banned`](#get-peersbanned) | Show banned peers |
 | `GET` | [`/peers/offenses/:page`](#get-peersoffensespage) | Show offenses of peers |
@@ -79,6 +80,8 @@ Below we assume the RPC socket is accessible at `localhost:3000`. On startup the
 | `GET` | [`/peers/transmission_minutes`](#get-peerstransmission_minutes) | Show transmission data by minutes |
 | `GET` | [`/chart/candles/:asset/:interval?from=...&to=...&n=...`](#get-chartcandlesassetinterval) | Show OHLCV candle data for a timeframe (5m, 1h, 1d) |
 | `GET` | [`/chart/trades/:asset?from=...&to=...&n=...`](#get-charttradesasset) | Show trade data |
+| `GET` | [`/chart/hashrate/block/:from/:to/:window`](#get-charthashrateblockfromtowindow) | Show hashrate chart by block range |
+| `GET` | [`/chart/hashrate/time/:from/:to/:interval`](#get-charthashratetimefromtointerval) | Show hashrate chart by time range |
 | `GET` | [`/tools/encode16bit/from_e8/:feeE8`](#get-toolsencode16bitfrom_e8feee8) | Round raw 64 integer to closest 16 bit representation |
 | `GET` | [`/tools/encode16bit/from_string/:string`](#get-toolsencode16bitfrom_stringstring) | Round coin amount string to closest 16 bit representation |
 | `GET` | [`/tools/parse_price/:price/:decimals`](#get-toolsparse_pricedecimals) | Parse price adjusted for asset precision |
@@ -105,38 +108,47 @@ Create new transactions as described [here](rest/create-transaction.md). Returns
 
 ### `GET /transaction/mempool`
 
- Show content of mempool. Example output:
+Show content of mempool. Example output:
 
- ```json
+```json
 {
  "code": 0,
- "data": {
-  "data": []
- }
+ "data": [
+  {
+   "tag": "wart_transfer",
+   "transaction": {
+    "data": { "amount": { "E8": 100000000, "str": "1.00000000" }, "toAddress": "8733d0e..." },
+    "hash": "f364da997bf7a3c3...",
+    "signedCommon": { "fee": { "E8": 9992, "str": "0.00009992" }, "nonceId": 0, "originAddress": "2de77d5e...", "originId": 12345, "pinHeight": 0 }
+   }
+  }
+ ]
 }
 ```
 
 ### `GET /transaction/lookup/:txid`
 
- Transaction lookup by transaction id. Example output of `/transaction/lookup/4b3bc48295742b71ff7c3b98ede5b652fafd16c67f0d2db6226e936a1cdbf0a5`:
+Transaction lookup by transaction id. Example output of `/transaction/lookup/4b3bc48295742b71ff7c3b98ede5b652fafd16c67f0d2db6226e936a1cdbf0a5`:
 
- ```json
+```json
 {
  "code": 0,
  "data": {
-  "transaction": {
-   "amount": "3.00000000",
-   "amountE8": 300000000,
+  "type": "Reward",
+  "confirmations": 8,
+  "mined": {
    "blockHeight": 376696,
-   "confirmations": 8,
    "timestamp": 1695472249,
-   "toAddress": "848b08b803e95640f8cb30af1b3166701b152b98c2cd70ee",
-   "txHash": "4b3bc48295742b71ff7c3b98ede5b652fafd16c67f0d2db6226e936a1cdbf0a5",
-   "type": "Reward",
    "utc": "2023-09-23 12:30:49 UTC"
+  },
+  "transaction": {
+   "data": { "amount": { "E8": 300000000, "str": "3.00000000" }, "toAddress": "848b08b..." },
+   "hash": "4b3bc48295742b71ff7c3b98ede5b652fafd16c67f0d2db6226e936a1cdbf0a5",
+   "signedCommon": { "fee": { "E8": 0, "str": "0" }, "nonceId": 0, "originAddress": "00000000...", "originId": 376695, "pinHeight": 0 }
   }
  }
 }
+```
 ```
 
 ### `GET /transaction/latest`
@@ -158,7 +170,7 @@ Example output of `/transaction/latest`:
   "fromId": 1,
   "perBlock": [
    {
-    "body": {
+    "actions": {
      "assetCreations": [...],
      "cancelations": [...],
      "liquidityDeposits": [...],
@@ -166,27 +178,12 @@ Example output of `/transaction/latest`:
      "matches": [...],
      "newOrders": [...],
      "orderCancelations": [...],
-     "rewards": [...],
+     "wartTransfers": [...],
      "tokenTransfers": [...],
-     "wartTransfers": [...]
+     "reward": null
     },
     "confirmations": 1,
-    "header": {
-     "difficulty": 536871040.0000305,
-     "hash": "7deb38e45a74b96d02166dfd8f6627bbbefd8dc25a20727885bb21eeb52a3cb4",
-     "merkleroot": "...",
-     "nonce": "00000000",
-     "pow": { ... },
-     "prevHash": "...",
-     "raw": "...",
-     "target": "077fffff",
-     "timestamp": 1772443430,
-     "utc": "2026-03-02 09:23:50 UTC",
-     "version": "00000004"
-    },
-    "height": 23,
-    "timestamp": 1772443430,
-    "utc": "2026-03-02 09:23:50 UTC"
+    "height": 23
    },
    ...
   ]
@@ -194,23 +191,24 @@ Example output of `/transaction/latest`:
 }
 ```
 
-For detailed JSON strucutre of block actions, see 
-[!ref Block Actions](rest/block-actions.md)
+For detailed JSON structure of block actions, see [!ref Block Actions](rest/block-actions.md)
 ### `GET /transaction/minfee`
 
- Show the minimum fee required by this node. Transactions with a lower fee will not be accepted or requested by the node.
+Show the minimum fee required by this node. Transactions with a lower fee will not be accepted or requested by the node.
 
- Exemple output :
+Example output:
 
- ```json
- {
-  "code": 0,
-  "data": {
-   "16bit": 13537,
+```json
+{
+ "code": 0,
+ "data": {
+  "minFee": {
    "E8": 9992,
-   "amount": "0.00009992"
+   "str": "0.00009992",
+   "bytes": "2722"
   }
  }
+}
 ```
 
 ### `GET /settings/mempool/minfee/:feeE8`
@@ -239,39 +237,42 @@ For detailed JSON strucutre of block actions, see
 
 ### `GET /chain/head`
 
- Show info on chain head. Example output:
+Show info on chain head. Example output:
 
- ```json
+```json
 {
  "code": 0,
  "data": {
-  "difficulty": 30866431555762.105,
-  "hash": "e9dfdcfdeec3c5376dd682e09cce909dc255d611e9cb36974bcbcbcecb6fb432",
-  "height": 1198931,
-  "is_janushash": true,
-  "pinHash": "a7bd097d9c10dc393239f169f6dd5352e0b4e28e942aaa78b54c57ed1ec7315b",
-  "pinHeight": 1198912,
-  "synced": true,
-  "worksum": 1.008584641271857e+19,
-  "worksumHex": "0x0000000000000000000000000000000000000000000000008bf81fe0113cf6a0"
+  "chainHead": {
+   "difficulty": 30866431555762.105,
+   "hash": "e9dfdcfdeec3c5376dd682e09cce909dc255d611e9cb36974bcbcbcecb6fb432",
+   "hashrate": 296429051797,
+   "height": 1198931,
+   "is_janushash": true,
+   "pinHash": "a7bd097d9c10dc393239f169f6dd5352e0b4e28e942aaa78b54c57ed1ec7315b",
+   "pinHeight": 1198912,
+   "worksum": 1.008584641271857e+19,
+   "worksumHex": "0x0000000000000000000000000000000000000000000000008bf81fe0113cf6a0"
+  },
+  "synced": true
  }
 }
 ```
 
 ### `GET /chain/grid`
 
- Show hexadecimal header grid. This grid is used for chain sync to allow nodes spot points where chains diverge. Example output (truncated):
+Show hexadecimal header grid. This grid is used for chain sync to allow nodes spot points where chains diverge. Example output (truncated):
 
- ```json
+```json
 {
  "code": 0,
- "data": [
-  "19f65d40c6bc02a16378712bd7652eaebc925955e96c0262641314520000000021c88fbd99f0d3369f7f1ad981e11b8c6f032e13d4ef28311226ea5c8574c3fe3635b32500000001649f78127c04d23d",
-  "0e43cf390ca986fabbed37a33386b4ad73723d51fab291d12013351f0000000021d1c6076e52222fb8c83fe33d55c610482cd272b7789646710510df3ba37a4f55b30e4e0000000164a221eb03577627",
-  .
-  .
-  .
- ]
+ "data": {
+  "headers": [
+   "19f65d40c6bc02a16378712bd7652eaebc925955e96c0262641314520000000021c88fbd99f0d3369f7f1ad981e11b8c6f032e13d4ef28311226ea5c8574c3fe3635b32500000001649f78127c04d23d",
+   "0e43cf390ca986fabbed37a33386b4ad73723d51fab291d12013351f0000000021d1c6076e52222fb8c83fe33d55c610482cd272b7789646710510df3ba37a4f55b30e4e0000000164a221eb03577627",
+   "..."
+  ]
+ }
 }
  ```
 
@@ -571,41 +572,68 @@ Example output of `/chain/hashrate/100`
 {
  "code": 0,
  "data": {
-  "lastNBlocksEstimate": 296429051797,
-  "N": 100
+  "estimate": 296429051797,
+  "nBlocks": 100
  }
 }
 ```
 
 ### `GET /chain/signed_snapshot`
 
- Show chain snapshot. Example output
+Show chain snapshot. Example output:
 
- ```json
+```json
 {
  "code": 0,
  "data": {
-  "priority": {
-    "height": 1198912,
-    "importance": 12345
-  },
   "hash": "a7bd097d9c10dc393239f169f6dd5352e0b4e28e942aaa78b54c57ed1ec7315b",
-  "signature": "..."}
+  "priorityHeight": 1198912,
+  "priorityImportance": 12345,
+  "signature": "..."
  }
+}
 }
  ```
 
 ### `GET /chart/hashrate/block/:from/:to/:window`
 
-Show hashrate chart data for a block range.
+Show hashrate chart data for a block range. The `:from` and `:to` parameters are block heights, and `:window` is the averaging window.
 
-**TODO: Add JSON output example**
+Example output of `/chart/hashrate/block/100/200/10`:
+
+```json
+{
+ "code": 0,
+ "data": {
+  "data": [296429051797.5, 288123456789.0, ...],
+  "range": { "begin": 100, "end": 200 }
+ }
+}
+```
+
+Each entry in `data` is the estimated hashrate for a block, averaged over the specified window.
 
 ### `GET /chart/hashrate/time/:from/:to/:interval`
 
-Show hashrate chart data for a time range.
+Show hashrate chart data for a time range. The `:from` and `:to` parameters are block heights, and `:interval` is the time interval in seconds.
 
-**TODO: Add JSON output example**
+Example output of `/chart/hashrate/time/100/200/3600`:
+
+```json
+{
+ "code": 0,
+ "data": {
+  "data": [
+   { "height": 100, "hashrate": 296429051797, "timestamp": 1772443430 },
+   { "height": 101, "hashrate": 288123456789, "timestamp": 1772443490 }
+  ],
+  "interval": 3600,
+  "range": { "begin": 100, "end": 200 }
+ }
+}
+```
+
+Each entry in `data` is `{ height, hashrate, timestamp }` for the beginning of the interval.
 
 ### `POST /chain/append`
 
@@ -663,46 +691,108 @@ Example output of `/asset/lookup/7`:
  "code": 0,
  "data": {
   "decimals": 4,
+  "groupId": 0,
   "hash": "0e4825efffa294610d2ac376713e3bcc9b53d378e823834b64e5df01f75d3b0c",
   "height": 7,
-  "name": "TOK2"
+  "id": 7,
+  "name": "TOK2",
+  "ownerAccountId": 2,
+  "parentId": null,
+  "totalSupply": "100000.0000"
+ }
+}
+```
+```
+
+### `GET /dex/market/:market`
+
+Show market orders and liquidity pool for a specific asset. The `:market` parameter is the asset identifier.
+
+Example output of `/dex/market/7`:
+
+```json
+{
+ "code": 0,
+ "data": {
+  "baseAsset": { "decimals": 4, "hash": "0e4825ef...", "id": 7, "name": "TOK2" },
+  "wartToAssetSwaps": [
+   {
+    "amount": { "str": "100.0000", "u64": 1000000, "decimals": 4 },
+    "filled": { "str": "0", "u64": 0, "decimals": 4 },
+    "inMempool": false,
+    "limit": { "doubleAdjusted": 0.1, "doubleRaw": 1000.0, "exponent2": -6, "hex": "fa0049", "mantissa": 64000, "precExponent10": 4 },
+    "txHash": "c6fbade2..."
+   }
+  ],
+  "assetToWartSwaps": [...],
+  "liquidityPool": {
+   "asset": { "str": "1000.0000", "u64": 10000000, "decimals": 4 },
+   "shares": { "str": "100.0000", "u64": 1000000, "decimals": 4 },
+   "wart": { "E8": 100000000, "str": "1.00000000" }
+  },
+  "match": {
+   "baseAsset": { "decimals": 4, "hash": "0e4825ef...", "id": 7, "name": "TOK2" },
+   "buySwaps": [...],
+   "poolAfter": { "base": { "str": "10.0000", "u64": 100000, "decimals": 4 }, "quote": { "str": "1.00000000", "E8": 100000000 } },
+   "poolBefore": { "base": { "str": "0", "u64": 0, "decimals": 4 }, "quote": { "str": "0", "E8": 0 } },
+   "sellSwaps": [...]
+  }
  }
 }
 ```
 
-### `GET /market/:market/order/:historyId`
-
-Show order for a specific market and order.
-
-**TODO: Add JSON output example**
-
-### `GET /market/:market`
-
-Show market orders and liquidity pool for a specific asset. The `:market` parameter is the asset identifier.
-
-**TODO: Add JSON output example**
-
 ### `GET /account/:account/mempool`
 
-Show mempool transactions for a specific account.
+Show mempool transactions for a specific account. Same structure as `GET /transaction/mempool` but filtered to this account.
 
-**TODO: Add JSON output example**
+```json
+{
+ "code": 0,
+ "data": [
+  {
+   "tag": "wart_transfer",
+   "transaction": {
+    "data": { "amount": { "E8": 100000000, "str": "1.00000000" }, "toAddress": "8733d0e..." },
+    "hash": "f364da997bf7a3c3...",
+    "signedCommon": { "fee": { "E8": 9992, "str": "0.00009992" }, "nonceId": 0, "originAddress": "2de77d5e...", "originId": 12345, "pinHeight": 0 }
+   }
+  }
+ ]
+}
+```
 
 ### `GET /account/:account/open_orders`
 
-Show all open orders for a specific account.
+Show all open orders for a specific account across all markets.
 
-**TODO: Add JSON output example**
+```json
+{
+ "code": 0,
+ "data": [
+  {
+   "baseAsset": { "decimals": 4, "hash": "0e4825ef...", "id": 7, "name": "TOK2" },
+   "wartToAssetSwaps": [
+    {
+     "amount": { "str": "100.0000", "u64": 1000000, "decimals": 4 },
+     "filled": { "str": "10.0000", "u64": 100000, "decimals": 4 },
+     "inMempool": false,
+     "limit": { "doubleAdjusted": 0.1, "doubleRaw": 1000.0, "exponent2": -6, "hex": "fa0049", "mantissa": 64000, "precExponent10": 4 },
+     "txHash": "c6fbade2..."
+    }
+   ],
+   "assetToWartSwaps": [...]
+  }
+ ]
+}
+```
 
 ### `GET /account/:account/open_orders/:asset`
 
-Show open orders for a specific account and asset.
-
-**TODO: Add JSON output example**
+Show open orders for a specific account and specific base asset. Same structure as above, filtered to one asset.
 
 ### `GET /account/:account/balance/:tokenspec`
 
- Show balance of an account for a specific asset. The `:account` parameter is the account address, and `:token` is the token spec (e.g., `asset:0e4825efffa294610d2ac376713e3bcc9b53d378e823834b64e5df01f75d3b0c`).
+Show balance of an account for a specific asset. The `:account` parameter is the account address, and `:tokenspec` is the token spec (e.g., `asset:0e4825efffa294610d2ac376713e3bcc9b53d378e823834b64e5df01f75d3b0c`).
 
  #### Balance Types
 
@@ -762,6 +852,7 @@ Show open orders for a specific account and asset.
 Show WART balance (locked, mempool and total) of a specific account. Amount in `mempool` cannot exceed `total - locked`.
 
 Example output of `account/2de77d5e23dc63e4c4149d394c979361e9e8e966336c8cd4/wart_balance`:
+
 ```json
 {
  "code": 0,
@@ -770,19 +861,10 @@ Example output of `account/2de77d5e23dc63e4c4149d394c979361e9e8e966336c8cd4/wart
    "accountId": 9,
    "address": "2de77d5e23dc63e4c4149d394c979361e9e8e966336c8cd4"
   },
-  "balance": {
-   "locked": {
-    "E8": 0,
-    "str": "0"
-   },
-   "mempool": {
-    "E8": 0,
-    "str": "0"
-   },
-   "total": {
-    "E8": 400097559,
-    "str": "4.00097559"
-   }
+  "wart": {
+   "locked": { "E8": 0, "str": "0" },
+   "mempool": { "E8": 0, "str": "0" },
+   "total": { "E8": 400097559, "str": "4.00097559" }
   }
  }
 }
@@ -790,131 +872,248 @@ Example output of `account/2de77d5e23dc63e4c4149d394c979361e9e8e966336c8cd4/wart
 
 ### `GET /account/:account/history/:beforeTxIndex`
 
- Show transaction history of specific account
- Example output:
+Show transaction history of specific account. Returns blocks containing actions relevant to the account, structured as `perBlock[].actions` (see [Block Actions](rest/block-actions.md) for field details).
 
- ```json
+Example output:
+
+```json
 {
  "code": 0,
  "data": {
-  "balance": "5027.00000000",
-  "balanceE8": 502700000000,
   "fromId": 69626,
   "perBlock": [
    {
+    "actions": {
+     "wartTransfers": [...],
+     "tokenTransfers": [...],
+     "newOrders": [...],
+     "matches": [...],
+     "liquidityDeposits": [...],
+     "liquidityWithdrawals": [...],
+     "assetCreations": [...],
+     "cancelations": [...],
+     "orderCancelations": [...],
+     "reward": null
+    },
     "confirmations": 9949,
-    "height": 366700,
-    "transactions": {
-     "rewards": [],
-     "transfers": [
-      {
-       "amount": "5000.00000000",
-       "amountE8": 500000000000,
-       "fee": "0.00000001",
-       "feeE8": 1,
-       "fromAddress": "1711cadfe5a66a5f5f245fc78b2335f79da362178a72de2e",
-       "nonceId": 131630562,
-       "pinHeight": 366688,
-       "toAddress": "8733d0e21bc791f44785f02753bb589b8423eb56cd938fbc",
-       "txHash": "f364da997bf7a3c3bc8ead22041509228d6bdea39fcbcdc6be56030433d54219"
-      }
-     ]
-    }
-   },
-   {
-    "confirmations": 298316,
-    "height": 78333,
-    "transactions": {
-     "rewards": [
-      {
-       "amount": "3.00000000",
-       "amountE8": 300000000,
-       "toAddress": "8733d0e21bc791f44785f02753bb589b8423eb56cd938fbc",
-       "txHash": "bc1b3a369c63884b013ff798ecb1d964685706d25bfaa8519d301779a6566b2a"
-      }
-     ],
-     "transfers": []
-    }
-   },
-   .
-   .
-   .
+    "height": 366700
+   }
   ]
  }
 }
 ```
 
-### `GET /account/richlist/:token`
+For detailed JSON structure of each action type, see [!ref Block Actions](rest/block-actions.md).
 
-Show richlist for a specific token.
+### `GET /account/richlist/:tokenspec`
 
-**TODO: Add JSON output example**
+Show richlist for a specific token. Example output of `/account/richlist/asset:0e4825ef...`:
+
+```json
+{
+ "code": 0,
+ "data": {
+  "richlist": [
+   {
+    "address": "2de77d5e23dc63e4c4149d394c979361e9e8e966336c8cd4",
+    "balance": { "str": "50000.0000", "u64": 500000000, "decimals": 4 }
+   },
+   {
+    "address": "8733d0e21bc791f44785f02753bb589b8423eb56cd938fbc",
+    "balance": { "str": "25000.0000", "u64": 250000000, "decimals": 4 }
+   }
+  ],
+  "token": { "id": 7, "name": "TOK2", "precision": 4, "spec": "asset:0e4825ef..." }
+ }
+}
+```
 
 ### `GET /peers/ip_count`
 
 Show count of connections per IP address.
 
-**TODO: Add JSON output example**
+```json
+{
+ "code": 0,
+ "data": [
+  [ "51.75.21.134", 2 ]
+ ]
+}
+```
 
 ### `GET /peers/banned`
 
-Show list of banned peers.
+Show list of banned peers. Example output of `/peers/banned`:
 
-**TODO: Add JSON output example**
+```json
+{
+ "code": 0,
+ "data": [
+  {
+   "banuntil": 1773043430,
+   "ip": "51.75.21.134",
+   "reason": "Invalid POW"
+  }
+ ]
+}
+```
 
 ### `GET /peers/offenses/:page`
 
-Show paginated list of peer offenses.
+Show paginated list of peer offenses. Example output of `/peers/offenses/0`:
 
-**TODO: Add JSON output example**
+```json
+{
+ "code": 0,
+ "data": [
+  {
+   "ip": "51.75.21.134",
+   "offense": "Invalid POW",
+   "time": 1772443430
+  }
+ ]
+}
+```
+
+The `time` field is a Unix timestamp.
 
 ### `GET /peers/connected/connection`
 
 Show connection information of connected peers.
 
-**TODO: Add JSON output example**
+```json
+{
+ "code": 0,
+ "data": [
+  {
+   "ip": "51.75.21.134",
+   "port": 9186,
+   "since": 1772443430
+  }
+ ]
+}
+```
 
 ### `GET /peers/connection_schedule`
 
 Show the connection schedule for peers.
 
-**TODO: Add JSON output example**
+```json
+{
+ "code": 0,
+ "data": {
+  "schedule": [...]
+ }
+}
+```
 
 ### `GET /peers/unban`
 
 Unban all banned peers.
 
-**TODO: Add JSON output example**
+```json
+{ "code": 0 }
+```
 
 ### `GET /peers/connected`
 
-Show detailed information about connected peers.
+Show detailed information about connected peers. Example output of `/peers/connected`:
 
-**TODO: Add JSON output example**
+```json
+{
+ "code": 0,
+ "data": [
+  {
+   "chain": {
+    "descriptor": 4,
+    "forkLower": 0,
+    "forkUpper": 0,
+    "grid": ["..."],
+    "length": 1198931,
+    "worksum": 1.008584641271857e+19,
+    "worksumHex": "0x..."
+   },
+   "connection": {
+    "ip": "51.75.21.134",
+    "port": 9186,
+    "since": 1772443430
+   },
+   "leaderPriority": {
+    "ack": { "priority": 0, "since": 0 },
+    "theirs": { "priority": 0, "since": 0 }
+   },
+   "throttle": {
+    "blockRequest": { "priority": 0, "since": 0 },
+    "delay": 0,
+    "headerRequest": { "priority": 0, "since": 0 }
+   }
+  }
+ ]
+}
+```
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `chain` | object | Chain state of the peer |
+| `chain.grid` | array | Header grid for chain comparison |
+| `chain.length` | integer | Chain height of the peer |
+| `chain.worksum` | number | Total work in the chain |
+| `connection` | object | Connection info |
+| `connection.ip` | string | Peer IP address |
+| `connection.port` | integer | Peer port |
+| `connection.since` | integer | Unix timestamp of connection start |
+| `leaderPriority` | object | Leader election priority |
+| `throttle` | object | Throttling state for block/header requests |
 
 ### `GET /peers/disconnect/:id`
 
 Disconnect a specific peer by connection ID.
 
-**TODO: Add JSON output example**
+```json
+{ "code": 0 }
+```
 
 ### `GET /peers/throttled`
 
 Show throttled peers.
 
-**TODO: Add JSON output example**
+```json
+{
+ "code": 0,
+ "data": [
+  {
+   "connection": { "endpoint": "51.75.21.134:9186", "id": 12345 },
+   "throttle": {
+    "blockRequest": { "priority": 0, "since": 0 },
+    "delay": 5000,
+    "headerRequest": { "priority": 0, "since": 0 }
+   }
+  }
+ ]
+}
+```
 
 ### `GET /peers/transmission_hours`
 
 Show transmission statistics aggregated by hours.
 
-**TODO: Add JSON output example**
+```json
+{
+ "code": 0,
+ "data": {
+  "byHost": {
+   "51.75.21.134:9186": [
+    { "rxBytes": 1024000, "timestamp": 1772443430, "txBytes": 512000 },
+    { "rxBytes": 2048000, "timestamp": 1772447030, "txBytes": 1024000 }
+   ]
+  }
+ }
+}
+```
 
 ### `GET /peers/transmission_minutes`
 
-Show transmission statistics aggregated by minutes.
-
-**TODO: Add JSON output example**
+Show transmission statistics aggregated by minutes. Same structure as `/peers/transmission_hours` but with per-minute granularity.
 
 ### `GET /tools/encode16bit/from_e8/:feeE8`
 
@@ -998,8 +1197,7 @@ Example output of `/tools/info`:
   "uptime": {
    "formatted": "0d 0h 6m 8s",
    "seconds": 368,
-   "sinceTimestamp": 1763453691,
-   "sinceUTC": "2025-11-18 08:14:51 UTC"
+   "since": 1763453691
   },
   "version": {
    "commit": "dd054a2",
@@ -1083,45 +1281,78 @@ Example output of `/tools/sample_verified_peers/5`:
 
 ### `GET /debug/header_download`
 
-Show header download status for debugging purposes.
+Show header download status for debugging purposes. Example output:
 
-**TODO: Add JSON output example**
+```json
+{
+ "code": 0,
+ "data": {
+  "config": {
+   "maxLeaders": 10,
+   "pendingDepth": 10
+  },
+  "leaderListSize": 5,
+  "minWork": "0x1d00ffff",
+  "queuedBatches": {
+   "51.75.21.134:9186": {
+    "batchSize": 2000,
+    "leaderRefsSize": 0,
+    "originId": 12345,
+    "probeRefsSize": 2000
+   }
+  },
+  "verifierMapSize": 100
+ }
+}
+```
 
 ### `GET /loadtest/block_request/:conn_id`
 
 Load test endpoint for block requests.
 
-**TODO: Add JSON output example**
+```json
+{ "code": 0 }
+```
 
 ### `GET /loadtest/header_request/:conn_id`
 
 Load test endpoint for header requests.
 
-**TODO: Add JSON output example**
+```json
+{ "code": 0 }
+```
 
 ### `GET /loadtest/disable/:conn_id`
 
 Disable a load test connection.
 
-**TODO: Add JSON output example**
+```json
+{ "code": 0 }
+```
 
 ### `GET /debug/fakemine`
 
 Generate fake mining data using the default address.
 
-**TODO: Add JSON output example**
+```json
+{ "code": 0 }
+```
 
 ### `GET /debug/rollback`
 
 Rollback the chain by one block.
 
-**TODO: Add JSON output example**
+```json
+{ "code": 0 }
+```
 
 ### `GET /debug/fakemine/:address`
 
 Generate fake mining data for a specific address.
 
-**TODO: Add JSON output example**
+```json
+{ "code": 0 }
+```
 
 ### `GET /chart/candles/:asset/:interval`
 

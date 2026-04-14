@@ -1,8 +1,14 @@
 # API Documentation Agent Guide
 
+!!!
+This documentation was partially generated with AI augmentation. Report inconsistencies at [github.com/warthog-network/docs/issues](https://github.com/warthog-network/docs/issues).
+!!!
+
 ## 1. Purpose
 
 This directory contains the source-of-truth reference files for the Warthog node REST API. AI agents use these files to automatically generate, correct, and keep the API documentation up to date whenever the node is updated.
+
+> **This file is a living document.** As new friction points are discovered during the update process, add them here to streamline future executions.
 
 ## 2. Reference Files
 
@@ -51,7 +57,21 @@ Transaction Endpoints
 
 ## 5. How to Interpret `schemas.json`
 
-`schemas.json` is a single-line JSON array. To look up a schema, find the entry whose key matches the return type from `api.txt`.
+`schemas.json` is a single-line JSON array (~42KB). To look up a schema, find the entry whose key matches the return type from `api.txt`.
+
+### Schema Extraction Commands
+
+Since `schemas.json` is a single line, use these Python commands to extract schemas:
+
+**Look up a top-level schema by name:**
+```bash
+python3 -c "import json; d=json.load(open('schemas.json')); print(json.dumps(d.get('SchemaName'), indent=2))"
+```
+
+**Look up a `$defs` entry:**
+```bash
+python3 -c "import json; d=json.load(open('schemas.json')); print(json.dumps(d['\$defs'].get('TypeName'), indent=2))"
+```
 
 For example, `-> TransactionMinfeeResult` maps to:
 
@@ -60,7 +80,7 @@ For example, `-> TransactionMinfeeResult` maps to:
   "TransactionMinfeeResult": {
     "type": "object",
     "properties": {
-      "minFeeE8": { "$ref": "#/$defs/Wart" }
+      "minFee": { "$ref": "#/$defs/CompactFee" }
     },
     "additionalProperties": false
   }
@@ -81,12 +101,41 @@ The schemas use C++ type names as `$ref` targets. Common mappings:
 | `Timestamp` | Unix timestamp (seconds) |
 | `Height` | block height (uint32_t) |
 | `FundsDecimal` | decimal string (e.g. `"100.500000"`) |
-| `Wart` | smallest unit of WART (uint64_t as string) |
+| `Wart` | `{ "E8": number, "str": string }` |
 | `std::vector<X>` | array of `X` |
 | `std::optional<X>` | `X` or `null` |
 | `std::tuple<A,B,C>` | array `[A, B, C]` (fixed length) |
+| `std::string` (return type only) | no schema — document as plain string |
 
-To find a `$ref` target (e.g. `#/$defs/Wart`), search for `" Wart"` in `schemas.json`.
+To find a `$ref` target (e.g. `#/$defs/Wart`), search for the type name in `$defs`.
+
+### Walking the `$defs` Chain
+
+Many schemas use nested `$ref` targets. The agent must walk the chain to find the actual fields.
+
+**Example: `TransactionMinfeeResult.minFee` → `CompactFee`**
+1. Look up `TransactionMinfeeResult` → has `minFee: { "$ref": "#/$defs/CompactFee" }`
+2. Look up `CompactFee` in `$defs` → has `{ "E8", "str", "bytes" }`
+3. Result: `minFee` is an object with three fields
+
+### Schema Key → Return Type Lookup
+
+Not all schema keys match the C++ return type names from `api.txt` exactly:
+
+| api.txt return type | schema key to look up |
+|----------------------|-----------------------|
+| `-> TransactionMinfeeResult` | `TransactionMinfeeResult` |
+| `-> std::vector<MempoolEntry>` | `MempoolEntry` |
+| `-> std::vector<BanEntry>` | `BanEntry` |
+| `-> api::glaze::HashrateInfo` | `HashrateInfo` |
+| `-> api::glaze::AccountHistory` | `api::glaze::AccountHistory` |
+| `-> api::glaze::PeerinfoConnection` | `api::glaze::PeerinfoConnection` |
+| `-> api::glaze::HeaderDownload` | `api::glaze::HeaderDownload` |
+| `-> std::string` | no schema — document as "string" |
+| `-> void` | no schema — no `data` returned |
+| `-> double` | no schema — document as "number" |
+
+For `std::vector<X>`, look up the item type `X`. For namespaces like `api::glaze::`, include the full path.
 
 ## 6. Response Wrapper Pattern
 
@@ -121,16 +170,48 @@ Two endpoints in `api.txt` do not follow the standard wrapper pattern:
 
 These are source-of-truth endpoints used to generate the reference files. Do not document their return values in `rest.md` — they exist only for documentation tooling.
 
-## 8. Rules for Updating `rest.md`
+## 8. Variant Handling
+
+Some return types use C++ `std::variant` for polymorphic results:
+
+- `TransactionDetails.transaction` — variant of all transaction types (Reward, WartTransfer, TokenTransfer, NewOrder, Match, etc.)
+- `MempoolEntry.transaction` — variant of all signed transaction types
+- `SignedTransactionProcessed<A, P>` — wraps a processed transaction with data + processed result
+
+**Rule:** Pick ONE concrete type for the documentation example (e.g., "Reward" for a reward transaction). Describe the variant briefly in the prose, but do not try to show all possible variants in the JSON. Use the most representative example.
+
+## 9. Block-Actions Special Format
+
+The file `rest/block-actions.md` documents block body transaction types (wartTransfers, tokenTransfers, newOrders, matches, etc.) in a **flattened human-readable format**.
+
+The raw schemas use nested structures like:
+```
+{ data: { amount, toAddress }, hash: "...", signedCommon: { fee, nonceId, ... } }
+```
+
+But `block-actions.md` intentionally flattens this into a single object for developer readability. **When updating `block-actions.md`:**
+- Preserve the flattened format — do NOT use nested `{ data, signedCommon, hash }` structure
+- Fields from `signedCommon` (originAddress, fee, nonceId, pinHeight) are merged into the top level
+- The format in `block-actions.md` is the canonical human-readable representation
+- Use the schema only to verify field names and types, not to restructure the presentation
+
+## 10. Known Schema-to-Reality Gaps
+
+Some schemas may not fully reflect the actual API output. When in doubt:
+1. Compare the schema against the existing example in `block-actions.md` — that file represents the human-readable canonical format
+2. Compare the schema against the example in `rest.md` for the corresponding endpoint
+3. If neither matches, ask the user for clarification or C++ source code (`tx_to_json` functions)
+
+## 11. Rules for Updating `rest.md`
 
 `rest.md` is the main REST API reference document. Follow these rules strictly:
 
-### Overview table (lines 37–97)
+### Overview table
 
 - **MUST** reflect `api.txt` exactly — every endpoint present in `api.txt` must appear in the table, with correct path, method, and description
 - **MUST** match the category order from `api.txt`
 - **MUST** add new endpoints that appear in `api.txt` but not in `rest.md`
-- **MUST** remove endpoints that are in `rest.md` but not in `api.txt` (e.g. `/market/:market/order/:historyId`)
+- **MUST** remove endpoints that are in `rest.md` but not in `api.txt`
 - **MUST** rename endpoints that changed path (e.g. `/market/:market` → `/dex/market/:market`)
 - **MUST** update the version string at the top to match `api.txt`
 
@@ -148,24 +229,42 @@ Group query parameters in a table. Do not list them inline in the description te
 
 ### JSON examples
 
-Use abbreviated JSON with `...` for truncated values. Focus on structure, not full data.
+Use abbreviated JSON with `...` for truncated values. Focus on structure, not full data. Specific rules:
+- Use abbreviated hex: `"hash": "4b3bc482..."` not the full 64-char value
+- Use `...` or `[...]` for truncated arrays/objects
+- Use realistic but generic values: `1`, `100`, `12345` for IDs
+- Include ALL required fields; omit optional fields that are `null`
 
 ### Anchor links
 
-Update all anchor links (`#anchor`) to match renamed endpoint paths.
+Update all anchor links (`#anchor`) to match renamed endpoint paths. The format is:
+- Strip leading `/`
+- Replace `/` with `-`
+- Replace `:` with empty string
+- Example: `GET /dex/market/:market` → `#get-dexmarketmarket`
 
-## 9. Rules for Updating `block-transactions.md`
+### Schema-derived example generation
 
-`block-transactions.md` documents the fields of all block body transaction types. It must stay consistent with the `BlockActions` schema in `schemas.json`.
+When generating a new example from a schema:
+1. Look up the return type schema from `api.txt`
+2. Walk the `$defs` chain for all nested types
+3. For each field: use the type to pick an appropriate abbreviated value
+4. For arrays: show one representative entry, use `...` for the rest
+5. For variants: pick one concrete type (see Section 8)
+6. Compare against any existing example — if the structure differs significantly, the existing example is stale and should be replaced
 
-- Cross-check all 10 block action types against their schemas
+## 12. Rules for Updating `block-actions.md`
+
+`rest/block-actions.md` documents the fields of all block body transaction types. It must stay consistent with the `BlockActions` schema in `schemas.json`.
+
+- Cross-check all block action types against their schemas in `schemas.json`
 - Correct field names, types, and structures to match the schema
 - Keep the existing human-readable descriptions and formatting — only correct structure
 - If a schema defines a new field not yet in the docs, add it
 - Schema names (e.g. `SignedTransactionProcessed`) do not need to appear in the documentation — use them only to verify correctness
-- Ask the user if the C++ code that generated the schema is available, as it may contain additional context (naming, comments, invariants)
+- Ask the user if the C++ source code (`tx_to_json` functions) is available, as it may contain additional context (naming, comments, invariants)
 
-## 10. Documentation Conventions
+## 13. Documentation Conventions
 
 When updating documentation, maintain these conventions:
 
@@ -175,8 +274,47 @@ When updating documentation, maintain these conventions:
 - Retype link pattern: `[!ref Label](path.md)` for navigation
 - Do not add comments in code examples
 - Do not add emoji unless explicitly requested
+- Fix stray formatting artifacts (e.g. stray code fences, broken lists) when editing sections
 
-## 11. Asking Questions
+## 14. Step-by-Step Update Checklist
+
+When `api.txt` or `schemas.json` changes, follow this sequence:
+
+1. **Update version** — Top of `rest.md`: replace version string with the one from `api.txt` line 2
+
+2. **Rebuild Overview table** — Compare `api.txt` line-by-line against the table:
+   - Add rows for new endpoints
+   - Remove rows for deleted endpoints
+   - Rename paths that changed
+   - Reorder rows to match `api.txt` category order
+
+3. **Rename section anchors** — For each renamed endpoint, update its section heading anchor (`### `GET /old/path`` → `### `GET /new/path``)
+
+4. **Remove stale sections** — If a detailed section exists for an endpoint NOT in `api.txt`, delete it entirely (e.g. `/market/:market/order/:historyId`)
+
+5. **Update detailed sections** — For each endpoint in `api.txt`:
+   a. Find its return type in `api.txt`
+   b. Extract the schema from `schemas.json` using the extraction commands
+   c. Walk `$defs` chain for nested types
+   d. Compare schema against existing example in `rest.md`
+   e. If example is stale (field names/structure don't match): rewrite it
+   f. If example is missing: generate one from the schema
+   g. For variants: pick one concrete type, describe others in prose
+
+6. **Update `block-actions.md`** — Compare each action type against its schema:
+   a. Verify field names and types match
+   b. Verify example format (flattened, not nested)
+   c. Add new fields if missing
+   d. Keep existing descriptions — do not replace with schema-only text
+
+7. **Verify no TODO placeholders remain** — Search for `TODO` in `rest.md` and `block-actions.md`; all should be replaced with schema-consistent examples
+
+8. **Fix broken links** — After renaming endpoints, verify all cross-references are consistent:
+   - Overview table links match section heading anchors
+   - `block-actions.md` links are relative to `rest/`
+   - `[!ref]` patterns use the correct Retype syntax
+
+## 15. Asking Questions
 
 If you encounter ambiguities during the update process, ask the user before proceeding. Examples of situations requiring clarification:
 
@@ -185,3 +323,15 @@ If you encounter ambiguities during the update process, ask the user before proc
 - A field in the schema appears to be internal (not meant for API consumers)
 - The agent needs C++ source code to understand the exact semantics of a field
 - There is conflicting information between `api.txt` and `schemas.json`
+- The schema does not match any existing example and the agent is unsure which variant to document
+
+## 16. Improving This Guide
+
+This guide is a living document. After each update session, add friction points discovered during execution:
+
+- Any schema that required special handling or interpretation
+- Any endpoint whose schema was unclear or incomplete
+- Any decision that required user input
+- Any formatting or structural conventions that were not documented here
+
+Add new friction points as numbered items in the appropriate section, or create new sections as needed.
