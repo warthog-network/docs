@@ -1,0 +1,92 @@
+
+API for Warthog node version v0.10.3 "a26330e"
+Transaction Endpoints
+
+    POST /transaction/add -> TransactionAddResult
+    GET /transaction/mempool -> std::vector<MempoolEntry>
+    GET /transaction/lookup/:txid -> TransactionDetails
+    GET /transaction/latest -> ActionsByBlock
+    GET /transaction/minfee -> TransactionMinfeeResult
+
+Settings Endpoints
+
+    GET /settings/mempool/minfee/:feeE8 -> MempoolUpdateResult
+
+Chain Endpoints
+
+    GET /chain/head -> ChainHeadSynced
+    GET /chain/grid -> HeaderGrid
+    GET /chain/block/:id/hash -> std::string
+    GET /chain/block/:id/header -> HeaderResult
+    GET /chain/block/:id/binary -> BlockBinary
+    GET /chain/block/:id -> Block
+    GET /chain/mine/:account -> MiningState
+    GET /chain/txcache -> std::vector<TransactionId>
+    GET /chain/hashrate/:window -> api::glaze::HashrateInfo
+    GET /chain/signed_snapshot -> SignedSnapshot
+    POST /chain/append -> void
+
+Asset Endpoints
+
+    GET /asset/complete?namePrefix=...&hashPrefix=... -> AssetSearchResult
+    GET /asset/lookup/:asset -> AssetDetail
+
+DEX Endpoints
+
+    GET /dex/market/:market -> MarketDetails
+
+Account Endpoints
+
+    GET /account/:account/mempool -> std::vector<MempoolEntry>
+    GET /account/:account/open_orders -> std::vector<MarketOrders>
+    GET /account/:account/open_orders/:asset -> MarketOrders
+    GET /account/:account/balance/:tokenspec -> TokenBalanceLookup
+    GET /account/:account/wart_balance -> WartBalanceResult
+    GET /account/:account/history/:beforeTxIndex -> api::glaze::AccountHistory
+    GET /account/richlist/:tokenspec -> RichlistResult
+
+Peers Endpoints
+
+    GET /peers/ip_count -> std::vector<std::pair<std::__cxx11::basic_string<char>, long unsigned int>>
+    GET /peers/banned -> std::vector<BanEntry>
+    GET /peers/offenses/:page -> std::vector<OffenseEntry>
+    GET /peers/connected/connection -> std::vector<api::glaze::PeerinfoConnection>
+    GET /peers/connection_schedule -> ConnectionSchedule
+    GET /peers/unban -> void
+    GET /peers/connected -> std::vector<Peerinfo>
+    GET /peers/disconnect/:id -> void
+    GET /peers/throttled -> std::vector<ThrottledPeer>
+    GET /peers/transmission_hours -> TransmissionChartsResult
+    GET /peers/transmission_minutes -> TransmissionChartsResult
+
+Chart Endpoints
+
+    GET /chart/candles/:asset/:interval?from=...&to=...&n=... -> std::vector<std::tuple<Timestamp,Height,Open,High,Low,Close,Base,Quote>>
+    GET /chart/trades/:asset?from=...&to=...&n=... -> std::vector<std::tuple<Timestamp,Height,Base,Quote>>
+    GET /chart/hashrate/block/:from/:to/:window -> HashrateBlockChart
+    GET /chart/hashrate/time/:from/:to/:interval -> HashrateTimeChart
+
+Tools Endpoints
+
+    GET /tools/encode16bit/from_e8/:feeE8 -> RoundedFeeResult
+    GET /tools/encode16bit/from_string/:string -> RoundedFeeResult
+    GET /tools/parse_price/:price/:decimals -> ParsedPrice
+    GET /tools/info -> NodeInfoResult
+    GET /tools/wallet/new -> Wallet
+    GET /tools/wallet/from_privkey/:privkey -> Wallet
+    GET /tools/janushash_number/:headerhex -> double
+    GET /tools/sample_verified_peers/:number -> std::vector<std::string>
+
+Debug Endpoints
+
+    GET /debug/header_download -> api::glaze::HeaderDownload
+    GET /loadtest/block_request/:conn_id -> void
+    GET /loadtest/header_request/:conn_id -> void
+    GET /loadtest/disable/:conn_id -> void
+    GET /debug/fakemine -> void
+    GET /debug/rollback -> void
+    GET /debug/fakemine/:address -> void
+    GET /debug/json_schemas -> JSON
+    GET /debug/html_schemas -> JSON
+
+
