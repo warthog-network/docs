@@ -105,114 +105,442 @@ For WebSocket API documentation, see [WebSocket API](WebSocket.md).
 ### `POST /transaction/add`
 
 Create new transactions as described [here](rest/create-transaction.md). Returns transaction hash in hex format:
+```json
+{
+ "code": 0,
+ "txHash": "4c3bc48295742b71ff7c3b98ede5b652fafd16c67f0d2db6226e936a1cdbf0e5"
+}
+```
+
 
 ### `GET /transaction/mempool`
 
-Show content of mempool. Example output:
+Show content of mempool as an array transactions. Each transaction is returned in the form
+```json
+{
+ "type": "<string>",     // type of the transaction
+ "transaction": {
+  "data": ...,           // transaction specific data
+  "hash": "f364da99...", // transaction hash
+  "signedCommon": ...    // signature related data
+ }
+}
+```
+The content of the `data` field depends on the transaction type specified in the "type" field. See [Transactions](./rest/transactions.md) for details.
 
+==- Example Output:
 ```json
 {
  "code": 0,
  "data": [
   {
-   "tag": "wart_transfer",
+   "type": "wartTransfer",
    "transaction": {
-    "data": { "amount": { "E8": 100000000, "str": "1.00000000" }, "toAddress": "8733d0e..." },
-    "hash": "f364da997bf7a3c3...",
-    "signedCommon": { "fee": { "E8": 9992, "str": "0.00009992" }, "nonceId": 0, "originAddress": "2de77d5e...", "originId": 12345, "pinHeight": 0 }
+    "data": {
+     "toAddress": "0000000000000000000000000000000000000000de47c9b2",
+     "amount": {
+      "str": "1.00000000",
+      "E8": 100000000
+     }
+    },
+    "hash": "dcb7959bcbc9403757121e491bee3cddc647271152c505913aac8b3b0d2c5a17",
+    "signedCommon": {
+     "originId": 9,
+     "originAddress": "2de77d5e23dc63e4c4149d394c979361e9e8e966",
+     "fee": {
+      "str": "1.99884800",
+      "E8": 199884800
+     },
+     "nonceId": 13311,
+     "pinHeight": 0
+    }
    }
   }
  ]
 }
 ```
+===
 
 ### `GET /transaction/lookup/:txid`
 
-Transaction lookup by transaction id. Example output of `/transaction/lookup/4b3bc48295742b71ff7c3b98ede5b652fafd16c67f0d2db6226e936a1cdbf0a5`:
+Transaction lookup by transaction id.
+```json
+{
+ "confirmations": 1      // number of block confirmations of this transaction, 0 if in mempool
+ "mined": ...,           // null or details on history id and block
+ "type": "<string>",     // type of the transaction
+ "transaction": {
+  "data": ...,           // transaction specific data
+  "hash": "f364da99...", // transaction hash
+  "processed": ...,      // this field is present only for some transaction types, holds null or processed data
+  "signedCommon": ...    // signature related data
+ }
+}
+```
+Compared to returned structure of [`/transaction/mempool`](#get-transactionmempool), here we have the additional fields `confirmations`, `mined` and for some transaction types `processed`.
+The content of the `data` field depends on the transaction type specified in the `type` field. For some transaction types there exists the field `processed` which is null if and only if `mined` is null, i.e. if the transaction is still in mempool. See [Transactions](./rest/transactions.md) for details.
+==- Example output of `/transaction/lookup/50f860f2c626c002aaac9db9b1db566ba280b10fc24fa470728b0b4ed88008f9`:
 
 ```json
 {
  "code": 0,
  "data": {
-  "type": "Reward",
-  "confirmations": 8,
-  "mined": {
-   "blockHeight": 376696,
-   "timestamp": 1695472249,
-   "utc": "2023-09-23 12:30:49 UTC"
-  },
   "transaction": {
-   "data": { "amount": { "E8": 300000000, "str": "3.00000000" }, "toAddress": "848b08b..." },
-   "hash": "4b3bc48295742b71ff7c3b98ede5b652fafd16c67f0d2db6226e936a1cdbf0a5",
-   "signedCommon": { "fee": { "E8": 0, "str": "0" }, "nonceId": 0, "originAddress": "00000000...", "originId": 376695, "pinHeight": 0 }
+   "data": {
+    "toAddress": "0000000000000000000000000000000000000000de47c9b2",
+    "amount": {
+     "str": "3.00000001",
+     "E8": 300000001
+    }
+   },
+   "hash": "50f860f2c626c002aaac9db9b1db566ba280b10fc24fa470728b0b4ed88008f9"
+  },
+  "type": "reward",
+  "mined": {
+   "historyId": 17,
+   "block": {
+    "hegiht": 11,
+    "hash": "363ac2530f8c38708dc313c9dfd9cddaa884fe29cf814b7bc316fed5298989d5",
+    "timestamp": 1771583754
    }
+  },
+  "confirmations": 15
  }
 }
+```
+===
 
 ### `GET /transaction/latest`
 
-Show latest transactions. Returns the most recent blocks with their actions.
+Show latest transactions. Returns the most recent blocks with their actions. On the top level the strucutre of returned data is
+```json
+{
+ "fromId": 1       // the earliest transaction id returned
+ "perBlock": [...] // array of transactions embedded in block structure
+}
+```
+Each block in the returned `perBlock` array has the structure
+```json
+{
+ "actions":{
+  "reward": ... // null or reward
+  "wartTransfers": [...],
+  "tokenTransfers": [...],
+  "newOrders": [...],
+  "matches": [...],
+  "liquidityDeposits": [...],
+  "liquidityWithdrawals": [...],
+  "assetCreations": [...],
+  "cancelations": [...]
+ }
+}
+```
+All entries above in `actions` are of the structure `{ "historyId": ..., "transaction": ...}` where `historyId` is an unsigned 64 bit integer and `transaction` has the structure
+```json
+{
+ "data": ...,           // transaction specific data
+ "hash": "f364da99...", // transaction hash
+ "processed": ...,      // this field is present only for some transaction types, holds processed data
+ "signedCommon": ...    // signature related data
+}
+```
+See [Transactions](./rest/transactions.md) for details. In contrast to the `/transaction/lookup/:txid` endpoint, the `processed` field, if it is present, can never be `null` because we return mined transactions in this endpoint whereas the transaction returned by `/transaction/lookup/:txid` may still be in mempool which is exactly the case where `null` is returned for `processed`.
 
-**Output:**
-- `fromId` — the lowest history ID in the result set
-- `perBlock` — array of blocks, each containing `height`, `confirmations`, and `actions` (see [!ref Block Actions](rest/block-actions.md))
-
-Example output of `/transaction/latest`:
-
+==- Example output of `/transaction/latest`:
 ```json
 {
  "code": 0,
  "data": {
   "perBlock": [
    {
-    "height": 21,
-    "confirmations": 4,
+    "height": 1,
+    "confirmations": 25,
     "actions": {
      "reward": {
-      "historyId": 39,
       "transaction": {
-       "data": { "amount": { "E8": 300039969, "str": "3.00039969" }, "toAddress": "00000000..." },
-       "hash": "91b5330d1a3f3c9..."
-      }
+       "data": {
+        "toAddress": "3661579d61abde5837a8686dc4d65348a2fc61b1fe5f4093",
+        "amount": {
+         "str": "3.00000000",
+         "E8": 300000000
+        }
+       },
+       "hash": "da3dcfbc0dcb60be544a8510589f973b82651b48ddcb7943718dc3dcf93ae234"
+      },
+      "historyId": 1
      },
-     "wartTransfers": [
+     "wartTransfers": [],
+     "tokenTransfers": [],
+     "newOrders": [],
+     "matches": [],
+     "liquidityDeposits": [],
+     "liquidityWithdrawals": [],
+     "assetCreations": [],
+     "cancelations": []
+    }
+   },
+   {
+    "height": 2,
+    "confirmations": 24,
+    "actions": {
+     "reward": {
+      "transaction": {
+       "data": {
+        "toAddress": "3661579d61abde5837a8686dc4d65348a2fc61b1fe5f4093",
+        "amount": {
+         "str": "3.00000000",
+         "E8": 300000000
+        }
+       },
+       "hash": "c870e807a46e6a5cf756165f95d511c7270a7dcd4eb51ddf7df047de3cfa1d8b"
+      },
+      "historyId": 2
+     },
+     "wartTransfers": [],
+     "tokenTransfers": [],
+     "newOrders": [],
+     "matches": [],
+     "liquidityDeposits": [],
+     "liquidityWithdrawals": [],
+     "assetCreations": [],
+     "cancelations": []
+    }
+   },
+   {
+    "height": 3,
+    "confirmations": 23,
+    "actions": {
+     "reward": {
+      "transaction": {
+       "data": {
+        "toAddress": "3661579d61abde5837a8686dc4d65348a2fc61b1fe5f4093",
+        "amount": {
+         "str": "3.00009992",
+         "E8": 300009992
+        }
+       },
+       "hash": "49d16e7f40c9ca4d681bf00569e9d5ede9ad006d0123c7bdb665434e5c7bf03d"
+      },
+      "historyId": 3
+     },
+     "wartTransfers": [],
+     "tokenTransfers": [],
+     "newOrders": [],
+     "matches": [],
+     "liquidityDeposits": [],
+     "liquidityWithdrawals": [],
+     "assetCreations": [
       {
-       "historyId": 40,
        "transaction": {
-        "data": { "amount": { "E8": 100000000, "str": "1.00000000" }, "toAddress": "00000000..." },
-        "hash": "897b3cc72950b41e...",
-        "signedCommon": { "fee": { "E8": 9992, "str": "0.00009992" }, "nonceId": 0, "originAddress": "3661579d...", "originId": 12344, "pinHeight": 0 }
-       }
+        "data": {
+         "name": "TOK2",
+         "supply": {
+          "str": "100000000.0000",
+          "u64": 1000000000000,
+          "decimals": 4
+         }
+        },
+        "processed": {
+         "assetId": 2
+        },
+        "hash": "f45b113119c7f7c000234f1090d5d181ab60b8b24526f1edd2f563aa1ca329f2",
+        "signedCommon": {
+         "originId": 1,
+         "originAddress": "3661579d61abde5837a8686dc4d65348a2fc61b1",
+         "fee": {
+          "str": "0.00009992",
+          "E8": 9992
+         },
+         "nonceId": 11,
+         "pinHeight": 0
+        }
+       },
+       "historyId": 4
       }
      ],
-     "tokenTransfers": [
+     "cancelations": []
+    }
+   },
+   {
+    "height": 4,
+    "confirmations": 22,
+    "actions": {
+     "reward": {
+      "transaction": {
+       "data": {
+        "toAddress": "0000000000000000000000000000000000000000de47c9b2",
+        "amount": {
+         "str": "3.00009992",
+         "E8": 300009992
+        }
+       },
+       "hash": "5174ff690e763de12d212bf5a8cba8d2b58d5aa5545dbd7e28ed9e6b18f24982"
+      },
+      "historyId": 5
+     },
+     "wartTransfers": [],
+     "tokenTransfers": [],
+     "newOrders": [],
+     "matches": [],
+     "liquidityDeposits": [],
+     "liquidityWithdrawals": [],
+     "assetCreations": [
       {
-       "historyId": 41,
        "transaction": {
-        "data": { "amount": { "str": "99.9912", "u64": 999912, "decimals": 4 }, "asset": { "hash": "f45b1131...", "id": 2, "name": "TOK2", "decimals": 4 }, "isLiquidity": false, "toAddress": "00000000...", "tokenSpec": "asset:f45b1131..." },
-        "hash": "87a8f53490f32a2...",
-        "signedCommon": { "fee": { "E8": 9992, "str": "0.00009992" }, "nonceId": 1, "originAddress": "3661579d...", "originId": 12344, "pinHeight": 0 }
-       }
+        "data": {
+         "name": "TOK2",
+         "supply": {
+          "str": "100000000.0000",
+          "u64": 1000000000000,
+          "decimals": 4
+         }
+        },
+        "processed": {
+         "assetId": 5
+        },
+        "hash": "58a74b758516d13e7f882922b483fca1627758c85b491e2cb9303e92e270ba88",
+        "signedCommon": {
+         "originId": 1,
+         "originAddress": "3661579d61abde5837a8686dc4d65348a2fc61b1",
+         "fee": {
+          "str": "0.00009992",
+          "E8": 9992
+         },
+         "nonceId": 12,
+         "pinHeight": 0
+        }
+       },
+       "historyId": 6
       }
      ],
-     "newOrders": [...],
-     "matches": [...],
-     "liquidityDeposits": [...],
-     "liquidityWithdrawals": [...],
-     "assetCreations": [...],
-     "cancelations": [...]
+     "cancelations": []
+    }
+   },
+   {
+    "height": 5,
+    "confirmations": 21,
+    "actions": {
+     "reward": {
+      "transaction": {
+       "data": {
+        "toAddress": "0000000000000000000000000000000000000000de47c9b2",
+        "amount": {
+         "str": "3.00000000",
+         "E8": 300000000
+        }
+       },
+       "hash": "788f920a7eac73f1b3ad7701b3d9e4972e795a164b7f270f68c8f962ae17cf33"
+      },
+      "historyId": 7
+     },
+     "wartTransfers": [],
+     "tokenTransfers": [],
+     "newOrders": [],
+     "matches": [],
+     "liquidityDeposits": [],
+     "liquidityWithdrawals": [],
+     "assetCreations": [],
+     "cancelations": []
+    }
+   },
+   {
+    "height": 6,
+    "confirmations": 20,
+    "actions": {
+     "reward": {
+      "transaction": {
+       "data": {
+        "toAddress": "0000000000000000000000000000000000000000de47c9b2",
+        "amount": {
+         "str": "3.00000000",
+         "E8": 300000000
+        }
+       },
+       "hash": "a0a7a6bc04c7f3be940b464225eabb309273bd9de738045dc56ce10d6a49807f"
+      },
+      "historyId": 8
+     },
+     "wartTransfers": [],
+     "tokenTransfers": [],
+     "newOrders": [],
+     "matches": [],
+     "liquidityDeposits": [],
+     "liquidityWithdrawals": [],
+     "assetCreations": [],
+     "cancelations": []
+    }
+   },
+   {
+    "height": 7,
+    "confirmations": 19,
+    "actions": {
+     "reward": {
+      "transaction": {
+       "data": {
+        "toAddress": "0000000000000000000000000000000000000000de47c9b2",
+        "amount": {
+         "str": "3.00009992",
+         "E8": 300009992
+        }
+       },
+       "hash": "3d4786acec1659164abf635a2a1cf5847b55705533620e75dbf5d5c3ed9993ad"
+      },
+      "historyId": 9
+     },
+     "wartTransfers": [],
+     "tokenTransfers": [],
+     "newOrders": [],
+     "matches": [],
+     "liquidityDeposits": [],
+     "liquidityWithdrawals": [],
+     "assetCreations": [
+      {
+       "transaction": {
+        "data": {
+         "name": "TOK2",
+         "supply": {
+          "str": "100000000.0000",
+          "u64": 1000000000000,
+          "decimals": 4
+         }
+        },
+        "processed": {
+         "assetId": 7
+        },
+        "hash": "0e4825efffa294610d2ac376713e3bcc9b53d378e823834b64e5df01f75d3b0c",
+        "signedCommon": {
+         "originId": 1,
+         "originAddress": "3661579d61abde5837a8686dc4d65348a2fc61b1",
+         "fee": {
+          "str": "0.00009992",
+          "E8": 9992
+         },
+         "nonceId": 13,
+         "pinHeight": 0
+        }
+       },
+       "historyId": 10
+      }
+     ],
+     "cancelations": []
     }
    },
    {
     "height": 8,
-    "confirmations": 17,
+    "confirmations": 18,
     "actions": {
      "reward": {
-      "historyId": 11,
       "transaction": {
-       "data": { "amount": { "E8": 300009992, "str": "3.00009992" }, "toAddress": "00000000..." },
-       "hash": "576da5fde183f4b..."
-      }
+       "data": {
+        "toAddress": "0000000000000000000000000000000000000000de47c9b2",
+        "amount": {
+         "str": "3.00009992",
+         "E8": 300009992
+        }
+       },
+       "hash": "576da5fde183f4bb7d3731cef903c8a01083875f0d40063235267580a4ea79ea"
+      },
+      "historyId": 11
      },
      "wartTransfers": [],
      "tokenTransfers": [],
@@ -220,31 +548,1351 @@ Example output of `/transaction/latest`:
      "matches": [],
      "liquidityDeposits": [
       {
-       "historyId": 12,
        "transaction": {
-        "data": { "baseAsset": { "hash": "f45b1131...", "id": 2, "name": "TOK2", "decimals": 4 }, "deposited": { "base": { "str": "99.9912", "u64": 999912, "decimals": 4 }, "quote": { "str": "0.00999912", "E8": 999912 } },
-        "hash": "a3f6d1d3ee13cb8...",
-        "processed": { "sharesReceived": { "str": "99.9912", "u64": 999912, "decimals": 4 } },
-        "signedCommon": { "fee": { "E8": 9992, "str": "0.00009992" }, "nonceId": 25, "originAddress": "3661579d...", "originId": 12344, "pinHeight": 0 }
-       }
+        "data": {
+         "baseAsset": {
+          "hash": "f45b113119c7f7c000234f1090d5d181ab60b8b24526f1edd2f563aa1ca329f2",
+          "id": 2,
+          "name": "TOK2",
+          "decimals": 4
+         },
+         "deposited": {
+          "base": {
+           "str": "99.9912",
+           "u64": 999912,
+           "decimals": 4
+          },
+          "quote": {
+           "str": "0.00999912",
+           "E8": 999912
+          }
+         }
+        },
+        "processed": {
+         "sharesReceived": {
+          "str": "99.9912",
+          "u64": 999912,
+          "decimals": 4
+         }
+        },
+        "hash": "a3f6d1d3ee13cb8a85afb4dc28a3cbdb889c5c42ff1cc479469c4ff62fbca636",
+        "signedCommon": {
+         "originId": 1,
+         "originAddress": "3661579d61abde5837a8686dc4d65348a2fc61b1",
+         "fee": {
+          "str": "0.00009992",
+          "E8": 9992
+         },
+         "nonceId": 25,
+         "pinHeight": 0
+        }
+       },
+       "historyId": 12
       }
      ],
      "liquidityWithdrawals": [],
-     "assetCreations": [...],
+     "assetCreations": [],
      "cancelations": []
     }
    },
-   ...
+   {
+    "height": 9,
+    "confirmations": 17,
+    "actions": {
+     "reward": {
+      "transaction": {
+       "data": {
+        "toAddress": "2de77d5e23dc63e4c4149d394c979361e9e8e966336c8cd4",
+        "amount": {
+         "str": "3.00000000",
+         "E8": 300000000
+        }
+       },
+       "hash": "fed36c8133b30251421ac98948643d929490ab4d7ebbc934c98b4041391ad6d8"
+      },
+      "historyId": 13
+     },
+     "wartTransfers": [],
+     "tokenTransfers": [],
+     "newOrders": [],
+     "matches": [],
+     "liquidityDeposits": [],
+     "liquidityWithdrawals": [],
+     "assetCreations": [],
+     "cancelations": []
+    }
+   },
+   {
+    "height": 10,
+    "confirmations": 16,
+    "actions": {
+     "reward": {
+      "transaction": {
+       "data": {
+        "toAddress": "0000000000000000000000000000000000000000de47c9b2",
+        "amount": {
+         "str": "3.00000001",
+         "E8": 300000001
+        }
+       },
+       "hash": "e627d65d0bc43c6f4511e6fa802d886148ad7b431e5817ff757d599cb2a2fd84"
+      },
+      "historyId": 14
+     },
+     "wartTransfers": [],
+     "tokenTransfers": [],
+     "newOrders": [
+      {
+       "transaction": {
+        "data": {
+         "baseAsset": {
+          "hash": "0e4825efffa294610d2ac376713e3bcc9b53d378e823834b64e5df01f75d3b0c",
+          "id": 7,
+          "name": "TOK2",
+          "decimals": 4
+         },
+         "amount": {
+          "str": "0.00010000",
+          "u64": 10000,
+          "decimals": 8
+         },
+         "limit": {
+          "precExponent10": 4,
+          "exponent2": -2,
+          "mantissa": 40000,
+          "hex": "9c404d",
+          "doubleAdjusted": 1,
+          "doubleRaw": 10000
+         },
+         "buy": true
+        },
+        "processed": {
+         "remaining": {
+          "str": "0",
+          "u64": 0,
+          "decimals": 4
+         }
+        },
+        "hash": "ed0ac4049643f1b8905b9b8ca209106869d47dbc677a679ef051b02eba21fa12",
+        "signedCommon": {
+         "originId": 9,
+         "originAddress": "2de77d5e23dc63e4c4149d394c979361e9e8e966",
+         "fee": {
+          "str": "0.00000001",
+          "E8": 1
+         },
+         "nonceId": 111,
+         "pinHeight": 0
+        }
+       },
+       "historyId": 15
+      }
+     ],
+     "matches": [
+      {
+       "transaction": {
+        "data": {
+         "baseAsset": {
+          "hash": "0e4825efffa294610d2ac376713e3bcc9b53d378e823834b64e5df01f75d3b0c",
+          "id": 7,
+          "name": "TOK2",
+          "decimals": 4
+         },
+         "poolBefore": {
+          "base": {
+           "str": "0",
+           "u64": 0,
+           "decimals": 4
+          },
+          "quote": {
+           "str": "0",
+           "E8": 0
+          }
+         },
+         "poolAfter": {
+          "base": {
+           "str": "0",
+           "u64": 0,
+           "decimals": 4
+          },
+          "quote": {
+           "str": "0",
+           "E8": 0
+          }
+         },
+         "buySwaps": [],
+         "sellSwaps": []
+        },
+        "hash": "9716a483ea3d7a5d959697f201958149efb7ec851695c47c6d522aff3e0e0201"
+       },
+       "historyId": 16
+      }
+     ],
+     "liquidityDeposits": [],
+     "liquidityWithdrawals": [],
+     "assetCreations": [],
+     "cancelations": []
+    }
+   },
+   {
+    "height": 11,
+    "confirmations": 15,
+    "actions": {
+     "reward": {
+      "transaction": {
+       "data": {
+        "toAddress": "0000000000000000000000000000000000000000de47c9b2",
+        "amount": {
+         "str": "3.00000001",
+         "E8": 300000001
+        }
+       },
+       "hash": "50f860f2c626c002aaac9db9b1db566ba280b10fc24fa470728b0b4ed88008f9"
+      },
+      "historyId": 17
+     },
+     "wartTransfers": [],
+     "tokenTransfers": [],
+     "newOrders": [
+      {
+       "transaction": {
+        "data": {
+         "baseAsset": {
+          "hash": "0e4825efffa294610d2ac376713e3bcc9b53d378e823834b64e5df01f75d3b0c",
+          "id": 7,
+          "name": "TOK2",
+          "decimals": 4
+         },
+         "amount": {
+          "str": "10000.0000",
+          "u64": 100000000,
+          "decimals": 4
+         },
+         "limit": {
+          "precExponent10": 4,
+          "exponent2": -2,
+          "mantissa": 40000,
+          "hex": "9c404d",
+          "doubleAdjusted": 1,
+          "doubleRaw": 10000
+         },
+         "buy": false
+        },
+        "processed": {
+         "remaining": {
+          "str": "10000.0000",
+          "u64": 100000000,
+          "decimals": 4
+         }
+        },
+        "hash": "c37cb4d58fdc54e281c172ab50cc9cb30fefddcfc8092d8793a52161a75b9dda",
+        "signedCommon": {
+         "originId": 9,
+         "originAddress": "2de77d5e23dc63e4c4149d394c979361e9e8e966",
+         "fee": {
+          "str": "0.00000001",
+          "E8": 1
+         },
+         "nonceId": 1,
+         "pinHeight": 0
+        }
+       },
+       "historyId": 18
+      }
+     ],
+     "matches": [
+      {
+       "transaction": {
+        "data": {
+         "baseAsset": {
+          "hash": "0e4825efffa294610d2ac376713e3bcc9b53d378e823834b64e5df01f75d3b0c",
+          "id": 7,
+          "name": "TOK2",
+          "decimals": 4
+         },
+         "poolBefore": {
+          "base": {
+           "str": "0",
+           "u64": 0,
+           "decimals": 4
+          },
+          "quote": {
+           "str": "0",
+           "E8": 0
+          }
+         },
+         "poolAfter": {
+          "base": {
+           "str": "0",
+           "u64": 0,
+           "decimals": 4
+          },
+          "quote": {
+           "str": "0",
+           "E8": 0
+          }
+         },
+         "buySwaps": [],
+         "sellSwaps": []
+        },
+        "hash": "906a6eb271ef650b695cd20931d7a4b6cecd550528a0c9277b3dc1431f822ae5"
+       },
+       "historyId": 19
+      }
+     ],
+     "liquidityDeposits": [],
+     "liquidityWithdrawals": [],
+     "assetCreations": [],
+     "cancelations": []
+    }
+   },
+   {
+    "height": 12,
+    "confirmations": 14,
+    "actions": {
+     "reward": {
+      "transaction": {
+       "data": {
+        "toAddress": "0000000000000000000000000000000000000000de47c9b2",
+        "amount": {
+         "str": "3.99942401",
+         "E8": 399942401
+        }
+       },
+       "hash": "01c993d3b5112f8b29552892c6002a46f00cd860cca65e886123b77528c14196"
+      },
+      "historyId": 20
+     },
+     "wartTransfers": [],
+     "tokenTransfers": [],
+     "newOrders": [
+      {
+       "transaction": {
+        "data": {
+         "baseAsset": {
+          "hash": "0e4825efffa294610d2ac376713e3bcc9b53d378e823834b64e5df01f75d3b0c",
+          "id": 7,
+          "name": "TOK2",
+          "decimals": 4
+         },
+         "amount": {
+          "str": "1.00000000",
+          "u64": 100000000,
+          "decimals": 8
+         },
+         "limit": {
+          "precExponent10": 4,
+          "exponent2": -1,
+          "mantissa": 40000,
+          "hex": "9c404e",
+          "doubleAdjusted": 2,
+          "doubleRaw": 20000
+         },
+         "buy": true
+        },
+        "processed": {
+         "remaining": {
+          "str": "0",
+          "u64": 0,
+          "decimals": 4
+         }
+        },
+        "hash": "dfbd7e086eee4cd230c5d19fe6ed03bce7f3e9f388c52b0f25a5192e4e380229",
+        "signedCommon": {
+         "originId": 9,
+         "originAddress": "2de77d5e23dc63e4c4149d394c979361e9e8e966",
+         "fee": {
+          "str": "0.00000001",
+          "E8": 1
+         },
+         "nonceId": 3,
+         "pinHeight": 0
+        }
+       },
+       "historyId": 22
+      },
+      {
+       "transaction": {
+        "data": {
+         "baseAsset": {
+          "hash": "0e4825efffa294610d2ac376713e3bcc9b53d378e823834b64e5df01f75d3b0c",
+          "id": 7,
+          "name": "TOK2",
+          "decimals": 4
+         },
+         "amount": {
+          "str": "300.0000",
+          "u64": 3000000,
+          "decimals": 4
+         },
+         "limit": {
+          "precExponent10": 4,
+          "exponent2": -5,
+          "mantissa": 64000,
+          "hex": "fa004a",
+          "doubleAdjusted": 0.2,
+          "doubleRaw": 2000
+         },
+         "buy": false
+        },
+        "processed": {
+         "remaining": {
+          "str": "300.0000",
+          "u64": 3000000,
+          "decimals": 4
+         }
+        },
+        "hash": "c116706c3a6682c5e3e358fbae00c0b1aab0a8e3cff1b5883ab037bcf567b9b8",
+        "signedCommon": {
+         "originId": 9,
+         "originAddress": "2de77d5e23dc63e4c4149d394c979361e9e8e966",
+         "fee": {
+          "str": "0.99942400",
+          "E8": 99942400
+         },
+         "nonceId": 12213,
+         "pinHeight": 0
+        }
+       },
+       "historyId": 21
+      }
+     ],
+     "matches": [
+      {
+       "transaction": {
+        "data": {
+         "baseAsset": {
+          "hash": "0e4825efffa294610d2ac376713e3bcc9b53d378e823834b64e5df01f75d3b0c",
+          "id": 7,
+          "name": "TOK2",
+          "decimals": 4
+         },
+         "poolBefore": {
+          "base": {
+           "str": "0",
+           "u64": 0,
+           "decimals": 4
+          },
+          "quote": {
+           "str": "0",
+           "E8": 0
+          }
+         },
+         "poolAfter": {
+          "base": {
+           "str": "0",
+           "u64": 0,
+           "decimals": 4
+          },
+          "quote": {
+           "str": "0",
+           "E8": 0
+          }
+         },
+         "buySwaps": [],
+         "sellSwaps": []
+        },
+        "hash": "dd149af828af5edd0c8c1accb0ff0ff400082d65207ec616fdb7b858b159aa87"
+       },
+       "historyId": 23
+      }
+     ],
+     "liquidityDeposits": [],
+     "liquidityWithdrawals": [],
+     "assetCreations": [],
+     "cancelations": []
+    }
+   },
+   {
+    "height": 13,
+    "confirmations": 13,
+    "actions": {
+     "reward": {
+      "transaction": {
+       "data": {
+        "toAddress": "0000000000000000000000000000000000000000de47c9b2",
+        "amount": {
+         "str": "3.00000002",
+         "E8": 300000002
+        }
+       },
+       "hash": "6ff011029afa60268b580f5881498c99f2fd6e8e6d5844c1417943bdcb2d224a"
+      },
+      "historyId": 24
+     },
+     "wartTransfers": [],
+     "tokenTransfers": [],
+     "newOrders": [
+      {
+       "transaction": {
+        "data": {
+         "baseAsset": {
+          "hash": "0e4825efffa294610d2ac376713e3bcc9b53d378e823834b64e5df01f75d3b0c",
+          "id": 7,
+          "name": "TOK2",
+          "decimals": 4
+         },
+         "amount": {
+          "str": "1.00000000",
+          "u64": 100000000,
+          "decimals": 8
+         },
+         "limit": {
+          "precExponent10": 4,
+          "exponent2": 4,
+          "mantissa": 62500,
+          "hex": "f42453",
+          "doubleAdjusted": 100,
+          "doubleRaw": 1000000
+         },
+         "buy": true
+        },
+        "processed": {
+         "remaining": {
+          "str": "0",
+          "u64": 0,
+          "decimals": 4
+         }
+        },
+        "hash": "8476384a00e0b5815c08ed28fa8142395748fb882b399a15a61b1d75472d770c",
+        "signedCommon": {
+         "originId": 9,
+         "originAddress": "2de77d5e23dc63e4c4149d394c979361e9e8e966",
+         "fee": {
+          "str": "0.00000001",
+          "E8": 1
+         },
+         "nonceId": 123213,
+         "pinHeight": 0
+        }
+       },
+       "historyId": 26
+      },
+      {
+       "transaction": {
+        "data": {
+         "baseAsset": {
+          "hash": "0e4825efffa294610d2ac376713e3bcc9b53d378e823834b64e5df01f75d3b0c",
+          "id": 7,
+          "name": "TOK2",
+          "decimals": 4
+         },
+         "amount": {
+          "str": "1000.0000",
+          "u64": 10000000,
+          "decimals": 4
+         },
+         "limit": {
+          "precExponent10": 4,
+          "exponent2": -6,
+          "mantissa": 64000,
+          "hex": "fa0049",
+          "doubleAdjusted": 0.1,
+          "doubleRaw": 1000
+         },
+         "buy": false
+        },
+        "processed": {
+         "remaining": {
+          "str": "979.9990",
+          "u64": 9799990,
+          "decimals": 4
+         }
+        },
+        "hash": "37bb2e782a32065a61962ae5e9637bfb8f45b5874db64a5b4bbd54c115d0a183",
+        "signedCommon": {
+         "originId": 9,
+         "originAddress": "2de77d5e23dc63e4c4149d394c979361e9e8e966",
+         "fee": {
+          "str": "0.00000001",
+          "E8": 1
+         },
+         "nonceId": 32423,
+         "pinHeight": 0
+        }
+       },
+       "historyId": 25
+      }
+     ],
+     "matches": [
+      {
+       "transaction": {
+        "data": {
+         "baseAsset": {
+          "hash": "0e4825efffa294610d2ac376713e3bcc9b53d378e823834b64e5df01f75d3b0c",
+          "id": 7,
+          "name": "TOK2",
+          "decimals": 4
+         },
+         "poolBefore": {
+          "base": {
+           "str": "0",
+           "u64": 0,
+           "decimals": 4
+          },
+          "quote": {
+           "str": "0",
+           "E8": 0
+          }
+         },
+         "poolAfter": {
+          "base": {
+           "str": "0",
+           "u64": 0,
+           "decimals": 4
+          },
+          "quote": {
+           "str": "0",
+           "E8": 0
+          }
+         },
+         "buySwaps": [],
+         "sellSwaps": []
+        },
+        "hash": "3d02070a3b689bce949a39d33a67051c88384c5b6002081a40bcd6e716de6d60"
+       },
+       "historyId": 27
+      }
+     ],
+     "liquidityDeposits": [],
+     "liquidityWithdrawals": [],
+     "assetCreations": [],
+     "cancelations": []
+    }
+   },
+   {
+    "height": 14,
+    "confirmations": 12,
+    "actions": {
+     "reward": {
+      "transaction": {
+       "data": {
+        "toAddress": "0000000000000000000000000000000000000000de47c9b2",
+        "amount": {
+         "str": "3.00000001",
+         "E8": 300000001
+        }
+       },
+       "hash": "ef27ccf46e2e4233c8e7a4f3869b2c74f925821561df28295cd98e6ffeff7c8e"
+      },
+      "historyId": 28
+     },
+     "wartTransfers": [],
+     "tokenTransfers": [],
+     "newOrders": [
+      {
+       "transaction": {
+        "data": {
+         "baseAsset": {
+          "hash": "0e4825efffa294610d2ac376713e3bcc9b53d378e823834b64e5df01f75d3b0c",
+          "id": 7,
+          "name": "TOK2",
+          "decimals": 4
+         },
+         "amount": {
+          "str": "1000.0000",
+          "u64": 10000000,
+          "decimals": 4
+         },
+         "limit": {
+          "precExponent10": 4,
+          "exponent2": -6,
+          "mantissa": 64000,
+          "hex": "fa0049",
+          "doubleAdjusted": 0.1,
+          "doubleRaw": 1000
+         },
+         "buy": false
+        },
+        "processed": {
+         "remaining": {
+          "str": "0",
+          "u64": 0,
+          "decimals": 4
+         }
+        },
+        "hash": "91f4fc7cdb5d3aaaf9eecdee8023b7186b594677450b2f2f300877a6bfdbf5f4",
+        "signedCommon": {
+         "originId": 9,
+         "originAddress": "2de77d5e23dc63e4c4149d394c979361e9e8e966",
+         "fee": {
+          "str": "0.00000001",
+          "E8": 1
+         },
+         "nonceId": 9,
+         "pinHeight": 0
+        }
+       },
+       "historyId": 29
+      }
+     ],
+     "matches": [
+      {
+       "transaction": {
+        "data": {
+         "baseAsset": {
+          "hash": "0e4825efffa294610d2ac376713e3bcc9b53d378e823834b64e5df01f75d3b0c",
+          "id": 7,
+          "name": "TOK2",
+          "decimals": 4
+         },
+         "poolBefore": {
+          "base": {
+           "str": "0",
+           "u64": 0,
+           "decimals": 4
+          },
+          "quote": {
+           "str": "0",
+           "E8": 0
+          }
+         },
+         "poolAfter": {
+          "base": {
+           "str": "0",
+           "u64": 0,
+           "decimals": 4
+          },
+          "quote": {
+           "str": "0",
+           "E8": 0
+          }
+         },
+         "buySwaps": [],
+         "sellSwaps": []
+        },
+        "hash": "887dfb7c44c4a2e88b4ad1fb245166e475a3a38c895c26163aa725704c12028c"
+       },
+       "historyId": 30
+      }
+     ],
+     "liquidityDeposits": [],
+     "liquidityWithdrawals": [],
+     "assetCreations": [],
+     "cancelations": []
+    }
+   },
+   {
+    "height": 15,
+    "confirmations": 11,
+    "actions": {
+     "reward": {
+      "transaction": {
+       "data": {
+        "toAddress": "0000000000000000000000000000000000000000de47c9b2",
+        "amount": {
+         "str": "3.00000000",
+         "E8": 300000000
+        }
+       },
+       "hash": "43c3f3132ccbcef167b42c1632cdcef02fa45f8dc1ca274d22a0a1f0336f4824"
+      },
+      "historyId": 31
+     },
+     "wartTransfers": [],
+     "tokenTransfers": [],
+     "newOrders": [],
+     "matches": [],
+     "liquidityDeposits": [],
+     "liquidityWithdrawals": [],
+     "assetCreations": [],
+     "cancelations": []
+    }
+   },
+   {
+    "height": 16,
+    "confirmations": 10,
+    "actions": {
+     "reward": {
+      "transaction": {
+       "data": {
+        "toAddress": "0000000000000000000000000000000000000000de47c9b2",
+        "amount": {
+         "str": "3.00000000",
+         "E8": 300000000
+        }
+       },
+       "hash": "1212214fc805cd150607aa4db0b442afa7a78484d92a62974c61b1ec51a3608c"
+      },
+      "historyId": 32
+     },
+     "wartTransfers": [],
+     "tokenTransfers": [],
+     "newOrders": [],
+     "matches": [],
+     "liquidityDeposits": [],
+     "liquidityWithdrawals": [],
+     "assetCreations": [],
+     "cancelations": []
+    }
+   },
+   {
+    "height": 17,
+    "confirmations": 9,
+    "actions": {
+     "reward": {
+      "transaction": {
+       "data": {
+        "toAddress": "0000000000000000000000000000000000000000de47c9b2",
+        "amount": {
+         "str": "3.00000000",
+         "E8": 300000000
+        }
+       },
+       "hash": "ac54374e7fa0c461466c51dd23304bf5222dba1c89ab2b8fd9d486d7c62d977b"
+      },
+      "historyId": 33
+     },
+     "wartTransfers": [],
+     "tokenTransfers": [],
+     "newOrders": [],
+     "matches": [],
+     "liquidityDeposits": [],
+     "liquidityWithdrawals": [],
+     "assetCreations": [],
+     "cancelations": []
+    }
+   },
+   {
+    "height": 18,
+    "confirmations": 8,
+    "actions": {
+     "reward": {
+      "transaction": {
+       "data": {
+        "toAddress": "0000000000000000000000000000000000000000de47c9b2",
+        "amount": {
+         "str": "3.00000000",
+         "E8": 300000000
+        }
+       },
+       "hash": "bca37d6b73ad8d73d1185f528e92b18e62f8f42023a62965b2cadf695af556e7"
+      },
+      "historyId": 34
+     },
+     "wartTransfers": [],
+     "tokenTransfers": [],
+     "newOrders": [],
+     "matches": [],
+     "liquidityDeposits": [],
+     "liquidityWithdrawals": [],
+     "assetCreations": [],
+     "cancelations": []
+    }
+   },
+   {
+    "height": 19,
+    "confirmations": 7,
+    "actions": {
+     "reward": {
+      "transaction": {
+       "data": {
+        "toAddress": "0000000000000000000000000000000000000000de47c9b2",
+        "amount": {
+         "str": "3.00000000",
+         "E8": 300000000
+        }
+       },
+       "hash": "a67d70cc28acba01c93798891bbf2cd390ee8a2ea45cc446b730380a02b0b145"
+      },
+      "historyId": 35
+     },
+     "wartTransfers": [],
+     "tokenTransfers": [],
+     "newOrders": [],
+     "matches": [],
+     "liquidityDeposits": [],
+     "liquidityWithdrawals": [],
+     "assetCreations": [],
+     "cancelations": []
+    }
+   },
+   {
+    "height": 20,
+    "confirmations": 6,
+    "actions": {
+     "reward": {
+      "transaction": {
+       "data": {
+        "toAddress": "0000000000000000000000000000000000000000de47c9b2",
+        "amount": {
+         "str": "3.00000001",
+         "E8": 300000001
+        }
+       },
+       "hash": "7fcb1490e61206bcca62ce8694d58f6e6ec3927cd6b06ab36f562e628ae484d4"
+      },
+      "historyId": 36
+     },
+     "wartTransfers": [],
+     "tokenTransfers": [],
+     "newOrders": [
+      {
+       "transaction": {
+        "data": {
+         "baseAsset": {
+          "hash": "0e4825efffa294610d2ac376713e3bcc9b53d378e823834b64e5df01f75d3b0c",
+          "id": 7,
+          "name": "TOK2",
+          "decimals": 4
+         },
+         "amount": {
+          "str": "100.0000",
+          "u64": 1000000,
+          "decimals": 4
+         },
+         "limit": {
+          "precExponent10": 4,
+          "exponent2": -6,
+          "mantissa": 64000,
+          "hex": "fa0049",
+          "doubleAdjusted": 0.1,
+          "doubleRaw": 1000
+         },
+         "buy": false
+        },
+        "processed": {
+         "remaining": {
+          "str": "100.0000",
+          "u64": 1000000,
+          "decimals": 4
+         }
+        },
+        "hash": "c6fbade2df322654ece3bd7cb372a80812630a2478eff8db801bd89062d8f209",
+        "signedCommon": {
+         "originId": 9,
+         "originAddress": "2de77d5e23dc63e4c4149d394c979361e9e8e966",
+         "fee": {
+          "str": "0.00000001",
+          "E8": 1
+         },
+         "nonceId": 99,
+         "pinHeight": 0
+        }
+       },
+       "historyId": 37
+      }
+     ],
+     "matches": [
+      {
+       "transaction": {
+        "data": {
+         "baseAsset": {
+          "hash": "0e4825efffa294610d2ac376713e3bcc9b53d378e823834b64e5df01f75d3b0c",
+          "id": 7,
+          "name": "TOK2",
+          "decimals": 4
+         },
+         "poolBefore": {
+          "base": {
+           "str": "0",
+           "u64": 0,
+           "decimals": 4
+          },
+          "quote": {
+           "str": "0",
+           "E8": 0
+          }
+         },
+         "poolAfter": {
+          "base": {
+           "str": "0",
+           "u64": 0,
+           "decimals": 4
+          },
+          "quote": {
+           "str": "0",
+           "E8": 0
+          }
+         },
+         "buySwaps": [
+          {
+           "swapped": {
+            "base": {
+             "str": "10.0000",
+             "u64": 100000,
+             "decimals": 4
+            },
+            "quote": {
+             "str": "1.00000000",
+             "E8": 100000000
+            }
+           },
+           "historyId": 26
+          },
+          {
+           "swapped": {
+            "base": {
+             "str": "10.0000",
+             "u64": 100000,
+             "decimals": 4
+            },
+            "quote": {
+             "str": "1.00000000",
+             "E8": 100000000
+            }
+           },
+           "historyId": 22
+          },
+          {
+           "swapped": {
+            "base": {
+             "str": "0.0010",
+             "u64": 10,
+             "decimals": 4
+            },
+            "quote": {
+             "str": "0.00010000",
+             "E8": 10000
+            }
+           },
+           "historyId": 15
+          }
+         ],
+         "sellSwaps": [
+          {
+           "swapped": {
+            "base": {
+             "str": "20.0010",
+             "u64": 200010,
+             "decimals": 4
+            },
+            "quote": {
+             "str": "2.00010000",
+             "E8": 200010000
+            }
+           },
+           "historyId": 25
+          }
+         ]
+        },
+        "hash": "2ecefa2fb405cd4ab51c5a392ee38d1f26d51885fb1e9cac059e2bc059b53949"
+       },
+       "historyId": 38
+      }
+     ],
+     "liquidityDeposits": [],
+     "liquidityWithdrawals": [],
+     "assetCreations": [],
+     "cancelations": []
+    }
+   },
+   {
+    "height": 21,
+    "confirmations": 5,
+    "actions": {
+     "reward": {
+      "transaction": {
+       "data": {
+        "toAddress": "0000000000000000000000000000000000000000de47c9b2",
+        "amount": {
+         "str": "3.00039969",
+         "E8": 300039969
+        }
+       },
+       "hash": "91b5330d1a3f3c9495bda05a46a0dcae86a6af441493c0a68817872d56a5def8"
+      },
+      "historyId": 39
+     },
+     "wartTransfers": [
+      {
+       "transaction": {
+        "data": {
+         "toAddress": "0000000000000000000000000000000000000000de47c9b2",
+         "amount": {
+          "str": "1.00000000",
+          "E8": 100000000
+         }
+        },
+        "hash": "897b3cc72950b41ee71527dc05a5bb6745801abbfb6179ad91dd0ccf2834eea8",
+        "signedCommon": {
+         "originId": 1,
+         "originAddress": "3661579d61abde5837a8686dc4d65348a2fc61b1",
+         "fee": {
+          "str": "0.00009992",
+          "E8": 9992
+         },
+         "nonceId": 0,
+         "pinHeight": 0
+        }
+       },
+       "historyId": 40
+      }
+     ],
+     "tokenTransfers": [
+      {
+       "transaction": {
+        "data": {
+         "toAddress": "0000000000000000000000000000000000000000de47c9b2",
+         "amount": {
+          "str": "99.9912",
+          "u64": 999912,
+          "decimals": 4
+         },
+         "asset": {
+          "hash": "f45b113119c7f7c000234f1090d5d181ab60b8b24526f1edd2f563aa1ca329f2",
+          "id": 2,
+          "name": "TOK2",
+          "decimals": 4
+         },
+         "isLiquidity": false,
+         "tokenSpec": "asset:f45b113119c7f7c000234f1090d5d181ab60b8b24526f1edd2f563aa1ca329f2"
+        },
+        "hash": "87a8f53490f32a29905554f4e23699774dd8c3e38c34033ba4812720824b5404",
+        "signedCommon": {
+         "originId": 1,
+         "originAddress": "3661579d61abde5837a8686dc4d65348a2fc61b1",
+         "fee": {
+          "str": "0.00009992",
+          "E8": 9992
+         },
+         "nonceId": 1,
+         "pinHeight": 0
+        }
+       },
+       "historyId": 41
+      }
+     ],
+     "newOrders": [],
+     "matches": [],
+     "liquidityDeposits": [
+      {
+       "transaction": {
+        "data": {
+         "baseAsset": {
+          "hash": "0e4825efffa294610d2ac376713e3bcc9b53d378e823834b64e5df01f75d3b0c",
+          "id": 7,
+          "name": "TOK2",
+          "decimals": 4
+         },
+         "deposited": {
+          "base": {
+           "str": "100.0000",
+           "u64": 1000000,
+           "decimals": 4
+          },
+          "quote": {
+           "str": "1.00000000",
+           "E8": 100000000
+          }
+         }
+        },
+        "processed": {
+         "sharesReceived": {
+          "str": "1000.0000",
+          "u64": 10000000,
+          "decimals": 4
+         }
+        },
+        "hash": "1db23925133e7d397c8acec355bfe04a8186ba4fb5926e16fcbf74293b300508",
+        "signedCommon": {
+         "originId": 9,
+         "originAddress": "2de77d5e23dc63e4c4149d394c979361e9e8e966",
+         "fee": {
+          "str": "0.00000001",
+          "E8": 1
+         },
+         "nonceId": 111111,
+         "pinHeight": 0
+        }
+       },
+       "historyId": 43
+      },
+      {
+       "transaction": {
+        "data": {
+         "baseAsset": {
+          "hash": "f45b113119c7f7c000234f1090d5d181ab60b8b24526f1edd2f563aa1ca329f2",
+          "id": 2,
+          "name": "TOK2",
+          "decimals": 4
+         },
+         "deposited": {
+          "base": {
+           "str": "99.9912",
+           "u64": 999912,
+           "decimals": 4
+          },
+          "quote": {
+           "str": "0.00999912",
+           "E8": 999912
+          }
+         }
+        },
+        "processed": {
+         "sharesReceived": {
+          "str": "99.9912",
+          "u64": 999912,
+          "decimals": 4
+         }
+        },
+        "hash": "47c50348397eed92b918501ec13c368e11df533388d199c895aebf57d9d8d0d3",
+        "signedCommon": {
+         "originId": 1,
+         "originAddress": "3661579d61abde5837a8686dc4d65348a2fc61b1",
+         "fee": {
+          "str": "0.00009992",
+          "E8": 9992
+         },
+         "nonceId": 3,
+         "pinHeight": 0
+        }
+       },
+       "historyId": 42
+      }
+     ],
+     "liquidityWithdrawals": [],
+     "assetCreations": [
+      {
+       "transaction": {
+        "data": {
+         "name": "TOK2",
+         "supply": {
+          "str": "100000000.0000",
+          "u64": 1000000000000,
+          "decimals": 4
+         }
+        },
+        "processed": {
+         "assetId": 11
+        },
+        "hash": "d645efa5c0a64b409e44725d1d9b84ed7d800fca8ca5b3d71301d361652eddbc",
+        "signedCommon": {
+         "originId": 1,
+         "originAddress": "3661579d61abde5837a8686dc4d65348a2fc61b1",
+         "fee": {
+          "str": "0.00009992",
+          "E8": 9992
+         },
+         "nonceId": 2,
+         "pinHeight": 0
+        }
+       },
+       "historyId": 44
+      }
+     ],
+     "cancelations": []
+    }
+   },
+   {
+    "height": 22,
+    "confirmations": 4,
+    "actions": {
+     "reward": {
+      "transaction": {
+       "data": {
+        "toAddress": "0000000000000000000000000000000000000000de47c9b2",
+        "amount": {
+         "str": "3.00000000",
+         "E8": 300000000
+        }
+       },
+       "hash": "2c8201847cc4f49b956a909eb90ecb090d2053453819e519774f08f0ac5419b8"
+      },
+      "historyId": 45
+     },
+     "wartTransfers": [],
+     "tokenTransfers": [],
+     "newOrders": [],
+     "matches": [],
+     "liquidityDeposits": [],
+     "liquidityWithdrawals": [],
+     "assetCreations": [],
+     "cancelations": []
+    }
+   },
+   {
+    "height": 23,
+    "confirmations": 3,
+    "actions": {
+     "reward": {
+      "transaction": {
+       "data": {
+        "toAddress": "0000000000000000000000000000000000000000de47c9b2",
+        "amount": {
+         "str": "3.00000000",
+         "E8": 300000000
+        }
+       },
+       "hash": "b616e4ad61747aa42abe9a5a68bea168f946e897ce51b247c082d5b430f90d88"
+      },
+      "historyId": 46
+     },
+     "wartTransfers": [],
+     "tokenTransfers": [],
+     "newOrders": [],
+     "matches": [],
+     "liquidityDeposits": [],
+     "liquidityWithdrawals": [],
+     "assetCreations": [],
+     "cancelations": []
+    }
+   },
+   {
+    "height": 24,
+    "confirmations": 2,
+    "actions": {
+     "reward": {
+      "transaction": {
+       "data": {
+        "toAddress": "0000000000000000000000000000000000000000de47c9b2",
+        "amount": {
+         "str": "3.00000000",
+         "E8": 300000000
+        }
+       },
+       "hash": "78e50eb43f6e7ddc3ced5bc1b4375413ec4e87ba2afd63905c534d684a80e9e2"
+      },
+      "historyId": 47
+     },
+     "wartTransfers": [],
+     "tokenTransfers": [],
+     "newOrders": [],
+     "matches": [],
+     "liquidityDeposits": [],
+     "liquidityWithdrawals": [],
+     "assetCreations": [],
+     "cancelations": []
+    }
+   },
+   {
+    "height": 25,
+    "confirmations": 1,
+    "actions": {
+     "reward": {
+      "transaction": {
+       "data": {
+        "toAddress": "2de77d5e23dc63e4c4149d394c979361e9e8e966336c8cd4",
+        "amount": {
+         "str": "3.00000000",
+         "E8": 300000000
+        }
+       },
+       "hash": "a60e4e800b5461ff7371e84d812fdca1907ae3e58c411c6e85ab7e52b0e3d21f"
+      },
+      "historyId": 48
+     },
+     "wartTransfers": [],
+     "tokenTransfers": [],
+     "newOrders": [],
+     "matches": [],
+     "liquidityDeposits": [],
+     "liquidityWithdrawals": [],
+     "assetCreations": [],
+     "cancelations": []
+    }
+   }
   ],
   "fromId": 1
  }
 }
 ```
+===
 
 For detailed JSON structure of each action type, see [!ref Block Actions](rest/block-actions.md).
 ### `GET /transaction/minfee`
 
-Show the minimum fee required by this node. Transactions with a lower fee will not be accepted or requested by the node.
+Show the minimum mempool fee required by this node. Transactions with a lower fee will not be accepted or requested by the node on mempool level. This does not affect block validation, i.e. transaction fees in mined blcoks are not matched against this value.
 
 Example output:
 
@@ -259,54 +1907,219 @@ Example output:
   }
  }
 }
+```
 
-### `GET /dex/market/:market`
+### `GET /settings/mempool/minfee/:feeE8`
 
-Show market orders and liquidity pool for a specific asset. The `:market` parameter is the asset identifier.
+Set the minimum fee required fee for transactions to be accepted into mempool. The integer argument `:feeE8` is the WART value multiplied by 10^8. The number of transactions that were excluded from the mempool by applying the submitted minimal fee is returned in the `deleted` field of the return value.
 
-Example output of `/dex/market/7`:
-
+Example output:
 ```json
 {
  "code": 0,
  "data": {
-  "baseAsset": { "decimals": 4, "hash": "0e4825ef...", "id": 7, "name": "TOK2" },
-  "wartToAssetSwaps": [
-   {
-    "amount": { "str": "100.0000", "u64": 1000000, "decimals": 4 },
-    "filled": { "str": "0", "u64": 0, "decimals": 4 },
-    "inMempool": false,
-    "limit": { "doubleAdjusted": 0.1, "doubleRaw": 1000.0, "exponent2": -6, "hex": "fa0049", "mantissa": 64000, "precExponent10": 4 },
-    "txHash": "c6fbade2..."
-   }
-  ],
-  "assetToWartSwaps": [...],
-  "liquidityPool": {
-   "asset": { "str": "1000.0000", "u64": 10000000, "decimals": 4 },
-   "shares": { "str": "100.0000", "u64": 1000000, "decimals": 4 },
-   "wart": { "E8": 100000000, "str": "1.00000000" }
-  },
-  "match": {
-   "baseAsset": { "decimals": 4, "hash": "0e4825ef...", "id": 7, "name": "TOK2" },
-   "buySwaps": [...],
-   "poolAfter": { "base": { "str": "10.0000", "u64": 100000, "decimals": 4 }, "quote": { "str": "1.00000000", "E8": 100000000 } },
-   "poolBefore": { "base": { "str": "0", "u64": 0, "decimals": 4 }, "quote": { "str": "0", "E8": 0 } },
-   "sellSwaps": [...]
-  }
+  "deleted": 10
  }
 }
 ```
+
+### `GET /dex/market/:asset`
+
+Show orders, liquidity pool and matching for the market with specified base asset and WART as quote asset. The `:asset` parameter can be the asset hash or the asset id. The returned structure is as follows:
+
+```json
+{
+ "assetToWartSwaps": [
+  {
+   "amount": { "str": "100.0000", "u64": 1000000, "decimals": 4 },
+   "filled": { "str": "0", "u64": 0, "decimals": 4 },
+   "inMempool": false,
+   "limit": { "doubleAdjusted": 0.1, "doubleRaw": 1000.0, "exponent2": -6, "hex": "fa0049", "mantissa": 64000, "precExponent10": 4 },
+   "txHash": "c6fbade2..."
+  }
+ ],
+ "baseAsset": { "decimals": 4, "hash": "0e4825ef...", "id": 7, "name": "TOK2" },
+ "liquidityPool": {
+  "asset": { "str": "1000.0000", "u64": 10000000, "decimals": 4 },
+  "shares": { "str": "100.0000", "u64": 1000000, "decimals": 4 },
+  "wart": { "E8": 100000000, "str": "1.00000000" }
+ },
+ "match": {
+  "filled": { "base": { "str": "100.0000", "u64": 1000000, "decimals": 4 }, "quote": { "E8": 100000000, "str": "1.00000000" }},
+  "toPool": { "amount": { "str": "100.0000", "u64": 1000000, "decimals": 4 }, "isQuote": false},
+ }
+ "wartToAssetSwaps": [...], // same structure as "wartToAssetSwaps"
+}
+```
+The order book is represented by `assetToWartSwaps` and `wartToAssetSwaps` fields which are both arrays containing elements of the form
+
+```json
+{
+ "amount": { "str": "100.0000", "u64": 1000000, "decimals": 4 },
+ "filled": { "str": "0", "u64": 0, "decimals": 4 },
+ "inMempool": false,
+ "limit": { "doubleAdjusted": 0.1, "doubleRaw": 1000.0, "exponent2": -6, "hex": "fa0049", "mantissa": 64000, "precExponent10": 4 },
+ "txHash": "c6fbade2..."
+}
+```
+
+The `match` field uses Warthog's custom sandwich-free [matching engine for sandwich-free matching](/unique-features/sandwich-proof-defi/matching-engine).
+
+==- Example output of `/dex/market/0e4825efffa294610d2ac376713e3bcc9b53d378e823834b64e5df01f75d3b0c`:
+```json
+{
+  "code": 0,
+  "data": {
+    "baseAsset": {
+      "hash": "0e4825efffa294610d2ac376713e3bcc9b53d378e823834b64e5df01f75d3b0c",
+      "id": 7,
+      "name": "TOK2",
+      "decimals": 4
+    },
+    "wartToAssetSwaps": [],
+    "assetToWartSwaps": [
+      {
+        "inMempool": false,
+        "txHash": "37bb2e782a32065a61962ae5e9637bfb8f45b5874db64a5b4bbd54c115d0a183",
+        "limit": {
+          "precExponent10": 4,
+          "exponent2": -6,
+          "mantissa": 64000,
+          "hex": "fa0049",
+          "doubleAdjusted": 0.1,
+          "doubleRaw": 1000
+        },
+        "amount": {
+          "str": "1000.0000",
+          "u64": 10000000,
+          "decimals": 4
+        },
+        "filled": {
+          "str": "20.0010",
+          "u64": 200010,
+          "decimals": 4
+        }
+      },
+      {
+        "inMempool": false,
+        "txHash": "c6fbade2df322654ece3bd7cb372a80812630a2478eff8db801bd89062d8f209",
+        "limit": {
+          "precExponent10": 4,
+          "exponent2": -6,
+          "mantissa": 64000,
+          "hex": "fa0049",
+          "doubleAdjusted": 0.1,
+          "doubleRaw": 1000
+        },
+        "amount": {
+          "str": "100.0000",
+          "u64": 1000000,
+          "decimals": 4
+        },
+        "filled": {
+          "str": "0",
+          "u64": 0,
+          "decimals": 4
+        }
+      },
+      {
+        "inMempool": false,
+        "txHash": "c116706c3a6682c5e3e358fbae00c0b1aab0a8e3cff1b5883ab037bcf567b9b8",
+        "limit": {
+          "precExponent10": 4,
+          "exponent2": -5,
+          "mantissa": 64000,
+          "hex": "fa004a",
+          "doubleAdjusted": 0.2,
+          "doubleRaw": 2000
+        },
+        "amount": {
+          "str": "300.0000",
+          "u64": 3000000,
+          "decimals": 4
+        },
+        "filled": {
+          "str": "0",
+          "u64": 0,
+          "decimals": 4
+        }
+      },
+      {
+        "inMempool": false,
+        "txHash": "c37cb4d58fdc54e281c172ab50cc9cb30fefddcfc8092d8793a52161a75b9dda",
+        "limit": {
+          "precExponent10": 4,
+          "exponent2": -2,
+          "mantissa": 40000,
+          "hex": "9c404d",
+          "doubleAdjusted": 1,
+          "doubleRaw": 10000
+        },
+        "amount": {
+          "str": "10000.0000",
+          "u64": 100000000,
+          "decimals": 4
+        },
+        "filled": {
+          "str": "0",
+          "u64": 0,
+          "decimals": 4
+        }
+      }
+    ],
+    "liquidityPool": {
+      "asset": {
+        "str": "100.0000",
+        "u64": 1000000,
+        "decimals": 4
+      },
+      "wart": {
+        "str": "1.00000000",
+        "E8": 100000000
+      },
+      "shares": {
+        "str": "0.10000000",
+        "u64": 10000000,
+        "decimals": 8
+      }
+    },
+    "match": {
+      "filled": {
+        "base": {
+          "str": "0",
+          "u64": 0,
+          "decimals": 4
+        },
+        "quote": {
+          "str": "0",
+          "E8": 0
+        }
+      },
+      "toPool": {
+        "isQuote": false,
+        "amount": {
+          "str": "0",
+          "u64": 0,
+          "decimals": 4
+        }
+      }
+    }
+  }
+}
+```
+===
 
 ### `GET /account/:account/mempool`
 
 Show mempool transactions for a specific account. Same structure as `GET /transaction/mempool` but filtered to this account.
 
+Example output:
 ```json
 {
  "code": 0,
  "data": [
   {
-   "tag": "wart_transfer",
+   "type": "wartTransfer",
    "transaction": {
     "data": { "amount": { "E8": 100000000, "str": "1.00000000" }, "toAddress": "8733d0e..." },
     "hash": "f364da997bf7a3c3...",
@@ -360,7 +2173,7 @@ Show balance of an account for a specific asset. The `:account` parameter is the
  | `locked` | Balance locked in open orders |
  | `mempool` | Balance currently used by pending transactions in the mempool |
 
- Spendable amount is `total - locked` and can be reused for new transactions. If `total - locked` is sufficient but `total - locked - mempool` is not, the system may evict lower-fee transactions from the mempool to make room for a higher-fee transaction. 
+ Spendable amount is `total - locked` and can be reused for new transactions. If `total - locked` is sufficient but `total - locked - mempool` is not, the system may evict lower-fee transactions from the mempool to make room for a higher-fee transaction.
 
  Example output:
 
