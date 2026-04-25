@@ -1,5 +1,4 @@
-
-API for Warthog node version v0.10.3 "a26330e"
+API for Warthog node version v0.10.3 "ad17ee8"
 Transaction Endpoints
 
     POST /transaction/add -> TransactionAddResult
@@ -16,7 +15,7 @@ Chain Endpoints
 
     GET /chain/head -> ChainHeadSynced
     GET /chain/grid -> HeaderGrid
-    GET /chain/block/:id/hash -> std::string
+    GET /chain/block/:height/hash -> std::string
     GET /chain/block/:id/header -> HeaderResult
     GET /chain/block/:id/binary -> BlockBinary
     GET /chain/block/:id -> Block
@@ -33,7 +32,7 @@ Asset Endpoints
 
 DEX Endpoints
 
-    GET /dex/market/:market -> MarketDetails
+    GET /dex/market/:asset -> MarketDetails
 
 Account Endpoints
 
@@ -88,5 +87,3 @@ Debug Endpoints
     GET /debug/fakemine/:address -> void
     GET /debug/json_schemas -> JSON
     GET /debug/html_schemas -> JSON
-
-

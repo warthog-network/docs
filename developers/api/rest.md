@@ -65,7 +65,7 @@ Below we assume the RPC socket is accessible at `localhost:3000`. On startup the
 | `GET` | [`/account/:account/open_orders/:asset`](#get-accountaccountopen_ordersasset) | Show open orders for account and specific asset |
 | `GET` | [`/account/:account/balance/:tokenspec`](#get-accountaccountbalancetokenspec) | Show balance of specific account for a token |
 | `GET` | [`/account/:account/wart_balance`](#get-accountaccountwart_balance) | Show WART balance of specific account |
-| `GET` | [`/account/:account/history/:beforeTxIndex`](#get-accountaccounthistorybeforetxindex) | Show transaction history of specific account |
+| `GET` | [`/account/:account/history/:beforeId`](#get-accountaccounthistorybeforeid) | Show transaction history of specific account |
 | `GET` | [`/account/richlist/:tokenspec`](#get-accountrichlisttokenspec) | Show richlist for a specific token |
 | `GET` | [`/peers/ip_count`](#get-peersip_count) | Show peer IP counts |
 | `GET` | [`/peers/banned`](#get-peersbanned) | Show banned peers |
@@ -1923,9 +1923,373 @@ Example output:
 }
 ```
 
+
+
+### `GET /chain/head`
+
+Show the current chain head and sync status.
+
+Example:
+```json
+{
+ "code": 0,
+ "data": {
+  "chainHead": {
+   "difficulty": 14142941042437.885,
+   "hash": "80b200a9ac37d7c41d98ad1cc2d6add8ab50a3905bf52d8347b56955923c28bc",
+   "hashrate": 140000000000000,
+   "height": 1949776,
+   "is_janushash": true,
+   "pinHash": "568e30a9abdbc510c9a21ec2dcb636e66cd4d1fb60028a31c65906069114e988",
+   "pinHeight": 1949760,
+   "worksum": 29360669698622464000,
+   "worksumHex": "0x00000000000000000000000000000000000000000000000197760d8809f796a0"
+  },
+  "synced": true
+ }
+}
+```
+### `GET /chain/grid`
+
+Show the header grid used for chain synchronization. The grid represents block headers at mesh size 8640. Returns a list of these block headers in hex format.
+
+Example:
+```json
+{
+ "code": 0,
+ "data": {
+  "headers": [
+   "05b42d206f8a4b2b8094199fd28423151af8aa54a5073ac6e6805f42096dc3a20ae7cde7f3c41bf363fe94eb448bf924f791f77c22a2ebd6a3a5d8948f8aff019f072bea",
+   "8c8811ee10a9c5c7d23f6f4791cbf03b781531574d53f224278cb78531a4c2fe0ae7cde7dcfeba982307da35c0098709c20f4ea0a4f04e0bbcd1b0c34c8ecc30157159eb"
+  ]
+ }
+}
+```
+
+### `GET /chain/block/:height/hash`
+
+Show the hash of block at specified height for positive `:height` parameter or genesis hash for `:height` parameter `0`.
+
+Example:
+```json
+{
+ "code": 0,
+ "data": "80b200a9ac37d7c41d98ad1cc2d6add8ab50a3905bf52d8347b56955923c28bc"
+}
+```
+
+### `GET /chain/block/:id/header`
+
+Show the header of a specific block. The `:id` parameter can be a block height (positive integer) or block hash (hex).
+
+==- Example:
+```json
+{
+ "code": 0,
+ "data": {
+  "header": {
+   "hash": "80b200a9ac37d7c41d98ad1cc2d6add8ab50a3905bf52d8347b56955923c28bc",
+   "merkleroot": "f3c41bf363fe94eb448bf924f791f77c22a2ebd6a3a5d8948f8aff019f072bea",
+   "nonce": "2719fef5",
+   "pow": {
+    "floatSha256t": 0.010330632328987122,
+    "floatVerus": 6.267357060779177e-13,
+    "hashSha256t": "02a507400db273886cd1bdc61e05bc4bde6978d74ce6e48d33a46fa705c59ae1",
+    "hashVerus": "0000000000b069112cc0caf14507169f6adf1e5278a2ef286cddc89f1162d7ca",
+    "verusV2.2": true
+   },
+   "prevHash": "05b42d206f8a4b2b8094199fd28423151af8aa54a5073ac6e6805f42096dc3a2",
+   "raw": "05b42d206f8a4b2b8094199fd28423151af8aa54a5073ac6e6805f42096dc3a20ae7cde7f3c41bf363fe94eb448bf924f791f77c22a2ebd6a3a5d8948f8aff019f072bea0000000366f2fefb2719fef5",
+   "target": "0ae7cde7",
+   "time": 1727201019,
+   "version": "00000003"
+  },
+  "height": 1949766
+ }
+}
+```
+===
+### `GET /chain/block/:id/binary`
+
+Show the raw binary data of a specific block. The `structure` field is a tree of byte-range annotations with `beginOffset` and `endOffset` positions and optional nested `children`.
+
+==- Example:
+```json
+{
+ "code": 0,
+ "data": {
+  "bytes": "0000000000000000000000013661579d61abde5837a8686dc4d65348a2fc61b100000000000000010000000011e1a30000000000000000000000",
+  "structure": [
+   {
+    "tag": "extraNonce",
+    "beginOffset": 0,
+    "endOffset": 10,
+    "children": []
+   },
+   {
+    "tag": "newAddresses",
+    "beginOffset": 10,
+    "endOffset": 32,
+    "children": [
+     {
+      "tag": "length",
+      "beginOffset": 10,
+      "endOffset": 12,
+      "children": []
+     }
+    ]
+   },
+   {
+    "tag": "reward",
+    "beginOffset": 32,
+    "endOffset": 48,
+    "children": [
+     {
+      "tag": "toAccountId",
+      "beginOffset": 32,
+      "endOffset": 40,
+      "children": []
+     },
+     {
+      "tag": "wart",
+      "beginOffset": 40,
+      "endOffset": 48,
+      "children": []
+     }
+    ]
+   },
+   {
+    "tag": "wartTransfers",
+    "beginOffset": 48,
+    "endOffset": 52,
+    "children": [
+     {
+      "tag": "length",
+      "beginOffset": 48,
+      "endOffset": 52,
+      "children": []
+     }
+    ]
+   },
+   {
+    "tag": "cancelations",
+    "beginOffset": 52,
+    "endOffset": 54,
+    "children": [
+     {
+      "tag": "length",
+      "beginOffset": 52,
+      "endOffset": 54,
+      "children": []
+     }
+    ]
+   },
+   {
+    "tag": "tokenSections",
+    "beginOffset": 54,
+    "endOffset": 56,
+    "children": [
+     {
+      "tag": "length",
+      "beginOffset": 54,
+      "endOffset": 56,
+      "children": []
+     }
+    ]
+   },
+   {
+    "tag": "assetCreations",
+    "beginOffset": 56,
+    "endOffset": 58,
+    "children": [
+     {
+      "tag": "length",
+      "beginOffset": 56,
+      "endOffset": 58,
+      "children": []
+     }
+    ]
+   }
+  ]
+ }
+}
+```
+===
+### `GET /chain/block/:id`
+
+Show the full block including header and body. The `:id` parameter can be a block height (integer) or block hash (hex). The `body` parameter has the same structure as returned in `perBlock` in the `/transaction/latest` endpoint except that the `reward` transaction cannot be `null` here. See [Transactions](./rest/transactions.md) for details on each body field.
+
+==- Example:
+```json
+{
+ "code": 0,
+ "data": {
+  "header": {
+   "raw": "b29988793c29118a842ba38ea4ab13d43e3dce3f04511ba6ca3340542dfd8537077fffffeab3b88a101b745e8d7b530eb129a789f571a4718edc07435ae74998981a3a7f000000036948246d00000000",
+   "time": {
+    "UTC": "2025-12-21 16:46:37 UTC",
+    "timestamp": 1766335597
+   },
+   "target": "077fffff",
+   "hash": "6851377f19b814ab3a4354c811a96908afba9c47cf3e4b85048d95de11e3f6aa",
+   "pow": {
+    "verusV2_2": false,
+    "hashVerus": "2443706cf33a161fd811fa69c7180787f4ddbc518f9e8cacd4efef29b3cc22a9",
+    "hashSha256t": "353389ceb7bccd1efe58d3ff45b97c4efd99d0a460070d554a2f78edd92482b7",
+    "floatVerus": 0.14165403973311186,
+    "floatSha256t": 0.20781766204163432
+   },
+   "merkleroot": "eab3b88a101b745e8d7b530eb129a789f571a4718edc07435ae74998981a3a7f",
+   "nonce": "00000000",
+   "prevHash": "b29988793c29118a842ba38ea4ab13d43e3dce3f04511ba6ca3340542dfd8537",
+   "version": "00000003"
+  },
+  "body": {
+   "reward": {
+    "transaction": {
+     "data": {
+      "toAddress": "3661579d61abde5837a8686dc4d65348a2fc61b1fe5f4093",
+      "amount": {
+       "str": "3.00000000",
+       "E8": 300000000
+      }
+     },
+     "hash": "da3dcfbc0dcb60be544a8510589f973b82651b48ddcb7943718dc3dcf93ae234"
+    },
+    "historyId": 1
+   },
+   "wartTransfers": [],
+   "tokenTransfers": [],
+   "newOrders": [],
+   "matches": [],
+   "liquidityDeposits": [],
+   "liquidityWithdrawals": [],
+   "assetCreations": [],
+   "cancelations": []
+  },
+  "confirmations": 25,
+  "height": 1
+ }
+}
+```
+===
+### `GET /chain/mine/:account`
+
+Generate the block header, body, and merkle prefix data required for mining. The `:account` parameter is the miner's account address (hex).
+
+==- Example:
+```json
+{
+ "code": 0,
+ "data": {
+  "blockReward": { "E8": 300000000, "str": "3.00000000" },
+  "body": "0a3661579d2a59c6a98042f29ec87d1fc0f44a6c3ceea2479766d6e8f5a",
+  "difficulty": 14142941042437.885,
+  "header": "05b42d206f8a4b2b8094199fd28423151af8aa54a5073ac6e6805f42096dc3a2",
+  "height": 1949776,
+  "merklePrefix": "f3c41bf363fe94eb448bf924f791f77c22a2ebd6a3a5d8948f8aff019f072bea",
+  "synced": true,
+  "testnet": false
+ }
+}
+```
+===
+### `GET /chain/txcache`
+
+Show the transaction cache, a list of transaction ids which have been recently mined. This is Warthog's mechanism to prevent double spend. Only most recent transaction id's need to be cached because every transaction signature includes the block hash of a previous block (`pinHash`) which cannot be too far in the past. Only transaction id's of past transactions that are reachable by this back-reference are required to be cached to avoid double-spend.
+==- Example:
+```json
+{
+ "code": 0,
+ "data": [
+  { "accountId": 2, "nonceId": 3, "pinHeight": 10 },
+  { "accountId": 5, "nonceId": 1, "pinHeight": 0 }
+ ]
+}
+```
+===
+### `GET /chain/hashrate/:window`
+
+Show the estimated hashrate based on the latest N blocks. The `:window` parameter is the number of blocks to average over. If `:window` is greater than the chain length, only the available blocks are used to form the average.
+
+==- Example:
+```json
+{
+ "code": 0,
+ "data": {
+  "estimate": 140000000000000,
+  "nBlocks": 120
+ }
+}
+```
+===
+### `POST /chain/append`
+
+Append a mined block to the chain. Takes a block payload in the request body. Returns `null` on success.
+
+==- Example:
+```json
+{
+ "code": 0,
+ "data": null
+}
+```
+===
+### `GET /asset/complete?namePrefix=...&hashPrefix=...`
+
+Search assets by name and/or hash prefix. Both query parameters are optional; if no parameter is provided, a truncated list of all assets is returned.
+
+==- Example:
+```json
+{
+ "code": 0,
+ "data": {
+  "hashPrefix": "f45b",
+  "matches": [
+   {
+    "decimals": 4,
+    "groupId": 0,
+    "hash": "f45b1131a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b",
+    "height": 12345,
+    "id": 2,
+    "name": "TOK2",
+    "ownerAccountId": 1,
+    "parentId": null,
+    "totalSupply": { "decimals": 4, "str": "100000000.0000", "u64": 1000000000000 }
+   }
+  ],
+  "namePrefix": "TO"
+ }
+}
+```
+===
+### `GET /asset/lookup/:asset`
+
+Asset lookup by ID or hash. The `:asset` parameter can be the asset ID (integer) or the asset hash (hex string).
+
+==- Example:
+```json
+{
+ "code": 0,
+ "data": {
+  "decimals": 4,
+  "groupId": 0,
+  "hash": "f45b1131a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b",
+  "height": 12345,
+  "id": 2,
+  "name": "TOK2",
+  "ownerAccountId": 1,
+  "parentId": null,
+  "totalSupply": { "decimals": 4, "str": "100000000.0000", "u64": 1000000000000 }
+ }
+}
+```
+===
+
+
 ### `GET /dex/market/:asset`
 
-Show orders, liquidity pool and matching for the market with specified base asset and WART as quote asset. The `:asset` parameter can be the asset hash or the asset id. The returned structure is as follows:
+Show orders, liquidity pool and matching for the market with specified base asset and WART as quote asset. The `:asset` parameter can be the asset hash or the asset ID. The returned structure is as follows:
 
 ```json
 {
@@ -1968,150 +2332,150 @@ The `match` field uses Warthog's custom sandwich-free [matching engine for sandw
 ==- Example output of `/dex/market/0e4825efffa294610d2ac376713e3bcc9b53d378e823834b64e5df01f75d3b0c`:
 ```json
 {
-  "code": 0,
-  "data": {
-    "baseAsset": {
-      "hash": "0e4825efffa294610d2ac376713e3bcc9b53d378e823834b64e5df01f75d3b0c",
-      "id": 7,
-      "name": "TOK2",
-      "decimals": 4
+ "code": 0,
+ "data": {
+  "baseAsset": {
+   "hash": "0e4825efffa294610d2ac376713e3bcc9b53d378e823834b64e5df01f75d3b0c",
+   "id": 7,
+   "name": "TOK2",
+   "decimals": 4
+  },
+  "wartToAssetSwaps": [],
+  "assetToWartSwaps": [
+   {
+    "inMempool": false,
+    "txHash": "37bb2e782a32065a61962ae5e9637bfb8f45b5874db64a5b4bbd54c115d0a183",
+    "limit": {
+     "precExponent10": 4,
+     "exponent2": -6,
+     "mantissa": 64000,
+     "hex": "fa0049",
+     "doubleAdjusted": 0.1,
+     "doubleRaw": 1000
     },
-    "wartToAssetSwaps": [],
-    "assetToWartSwaps": [
-      {
-        "inMempool": false,
-        "txHash": "37bb2e782a32065a61962ae5e9637bfb8f45b5874db64a5b4bbd54c115d0a183",
-        "limit": {
-          "precExponent10": 4,
-          "exponent2": -6,
-          "mantissa": 64000,
-          "hex": "fa0049",
-          "doubleAdjusted": 0.1,
-          "doubleRaw": 1000
-        },
-        "amount": {
-          "str": "1000.0000",
-          "u64": 10000000,
-          "decimals": 4
-        },
-        "filled": {
-          "str": "20.0010",
-          "u64": 200010,
-          "decimals": 4
-        }
-      },
-      {
-        "inMempool": false,
-        "txHash": "c6fbade2df322654ece3bd7cb372a80812630a2478eff8db801bd89062d8f209",
-        "limit": {
-          "precExponent10": 4,
-          "exponent2": -6,
-          "mantissa": 64000,
-          "hex": "fa0049",
-          "doubleAdjusted": 0.1,
-          "doubleRaw": 1000
-        },
-        "amount": {
-          "str": "100.0000",
-          "u64": 1000000,
-          "decimals": 4
-        },
-        "filled": {
-          "str": "0",
-          "u64": 0,
-          "decimals": 4
-        }
-      },
-      {
-        "inMempool": false,
-        "txHash": "c116706c3a6682c5e3e358fbae00c0b1aab0a8e3cff1b5883ab037bcf567b9b8",
-        "limit": {
-          "precExponent10": 4,
-          "exponent2": -5,
-          "mantissa": 64000,
-          "hex": "fa004a",
-          "doubleAdjusted": 0.2,
-          "doubleRaw": 2000
-        },
-        "amount": {
-          "str": "300.0000",
-          "u64": 3000000,
-          "decimals": 4
-        },
-        "filled": {
-          "str": "0",
-          "u64": 0,
-          "decimals": 4
-        }
-      },
-      {
-        "inMempool": false,
-        "txHash": "c37cb4d58fdc54e281c172ab50cc9cb30fefddcfc8092d8793a52161a75b9dda",
-        "limit": {
-          "precExponent10": 4,
-          "exponent2": -2,
-          "mantissa": 40000,
-          "hex": "9c404d",
-          "doubleAdjusted": 1,
-          "doubleRaw": 10000
-        },
-        "amount": {
-          "str": "10000.0000",
-          "u64": 100000000,
-          "decimals": 4
-        },
-        "filled": {
-          "str": "0",
-          "u64": 0,
-          "decimals": 4
-        }
-      }
-    ],
-    "liquidityPool": {
-      "asset": {
-        "str": "100.0000",
-        "u64": 1000000,
-        "decimals": 4
-      },
-      "wart": {
-        "str": "1.00000000",
-        "E8": 100000000
-      },
-      "shares": {
-        "str": "0.10000000",
-        "u64": 10000000,
-        "decimals": 8
-      }
+    "amount": {
+     "str": "1000.0000",
+     "u64": 10000000,
+     "decimals": 4
     },
-    "match": {
-      "filled": {
-        "base": {
-          "str": "0",
-          "u64": 0,
-          "decimals": 4
-        },
-        "quote": {
-          "str": "0",
-          "E8": 0
-        }
-      },
-      "toPool": {
-        "isQuote": false,
-        "amount": {
-          "str": "0",
-          "u64": 0,
-          "decimals": 4
-        }
-      }
+    "filled": {
+     "str": "20.0010",
+     "u64": 200010,
+     "decimals": 4
     }
+   },
+   {
+    "inMempool": false,
+    "txHash": "c6fbade2df322654ece3bd7cb372a80812630a2478eff8db801bd89062d8f209",
+    "limit": {
+     "precExponent10": 4,
+     "exponent2": -6,
+     "mantissa": 64000,
+     "hex": "fa0049",
+     "doubleAdjusted": 0.1,
+     "doubleRaw": 1000
+    },
+    "amount": {
+     "str": "100.0000",
+     "u64": 1000000,
+     "decimals": 4
+    },
+    "filled": {
+     "str": "0",
+     "u64": 0,
+     "decimals": 4
+    }
+   },
+   {
+    "inMempool": false,
+    "txHash": "c116706c3a6682c5e3e358fbae00c0b1aab0a8e3cff1b5883ab037bcf567b9b8",
+    "limit": {
+     "precExponent10": 4,
+     "exponent2": -5,
+     "mantissa": 64000,
+     "hex": "fa004a",
+     "doubleAdjusted": 0.2,
+     "doubleRaw": 2000
+    },
+    "amount": {
+     "str": "300.0000",
+     "u64": 3000000,
+     "decimals": 4
+    },
+    "filled": {
+     "str": "0",
+     "u64": 0,
+     "decimals": 4
+    }
+   },
+   {
+    "inMempool": false,
+    "txHash": "c37cb4d58fdc54e281c172ab50cc9cb30fefddcfc8092d8793a52161a75b9dda",
+    "limit": {
+     "precExponent10": 4,
+     "exponent2": -2,
+     "mantissa": 40000,
+     "hex": "9c404d",
+     "doubleAdjusted": 1,
+     "doubleRaw": 10000
+    },
+    "amount": {
+     "str": "10000.0000",
+     "u64": 100000000,
+     "decimals": 4
+    },
+    "filled": {
+     "str": "0",
+     "u64": 0,
+     "decimals": 4
+    }
+   }
+  ],
+  "liquidityPool": {
+   "asset": {
+    "str": "100.0000",
+    "u64": 1000000,
+    "decimals": 4
+   },
+   "wart": {
+    "str": "1.00000000",
+    "E8": 100000000
+   },
+   "shares": {
+    "str": "0.10000000",
+    "u64": 10000000,
+    "decimals": 8
+   }
+  },
+  "match": {
+   "filled": {
+    "base": {
+     "str": "0",
+     "u64": 0,
+     "decimals": 4
+    },
+    "quote": {
+     "str": "0",
+     "E8": 0
+    }
+   },
+   "toPool": {
+    "isQuote": false,
+    "amount": {
+     "str": "0",
+     "u64": 0,
+     "decimals": 4
+    }
+   }
   }
+ }
 }
 ```
 ===
 
 ### `GET /account/:account/mempool`
 
-Show mempool transactions for a specific account. Same structure as `GET /transaction/mempool` but filtered to this account.
+Show mempool transactions for a specific account specified by either address or account ID. Same structure as `GET /transaction/mempool` but filtered to this account.
 
 Example output:
 ```json
@@ -2132,7 +2496,7 @@ Example output:
 
 ### `GET /account/:account/open_orders`
 
-Show all open orders for a specific account across all markets.
+Show all open orders for a specific account across all markets. The account is specified by either address or account ID.
 
 ```json
 {
@@ -2159,6 +2523,27 @@ Show all open orders for a specific account across all markets.
 
 Show open orders for a specific account and specific base asset. Same structure as above, filtered to one asset.
 
+==- Example:
+```json
+{
+  "code": 0,
+  "data": {
+    "baseAsset": { "decimals": 4, "hash": "0e4825ef...", "id": 7, "name": "TOK2" },
+    "wartToAssetSwaps": [
+      {
+        "amount": { "decimals": 4, "str": "100.0000", "u64": 1000000 },
+        "filled": { "decimals": 4, "str": "10.0000", "u64": 100000 },
+        "inMempool": false,
+        "limit": { "doubleAdjusted": 0.1, "doubleRaw": 1000.0, "exponent2": -6, "hex": "fa0049", "mantissa": 64000, "precExponent10": 4 },
+        "txHash": "c6fbade2..."
+      }
+    ],
+    "assetToWartSwaps": []
+  }
+}
+```
+===
+
 ### `GET /account/:account/balance/:tokenspec`
 
 Show balance of an account for a specific asset. The `:account` parameter is the account address, and `:tokenspec` is the token spec (e.g., `asset:0e4825efffa294610d2ac376713e3bcc9b53d378e823834b64e5df01f75d3b0c`).
@@ -2173,48 +2558,48 @@ Show balance of an account for a specific asset. The `:account` parameter is the
  | `locked` | Balance locked in open orders |
  | `mempool` | Balance currently used by pending transactions in the mempool |
 
- Spendable amount is `total - locked` and can be reused for new transactions. If `total - locked` is sufficient but `total - locked - mempool` is not, the system may evict lower-fee transactions from the mempool to make room for a higher-fee transaction.
+ Spendable amount is `total - locked` and can be reused for new transactions. When inserting new transactions, if `total - locked` is sufficient to cover the expenses required for the transaction but `total - locked - mempool` is not, the system may evict lower-fee transactions from the mempool to make room for a higher-fee transaction.
 
  Example output:
 
- ```json
- {
-  "code": 0,
-  "data": {
-   "account": {
-    "accountId": 9,
-    "address": "2de77d5e23dc63e4c4149d394c979361e9e8e966336c8cd4"
-   },
-   "balance": {
-    "locked": {
-     "precision": 4,
-     "str": "12479.9990",
-     "u64": 124799990
+  ```json
+  {
+   "code": 0,
+   "data": {
+    "account": {
+     "accountId": 9,
+     "address": "2de77d5e23dc63e4c4149d394c979361e9e8e966"
     },
-    "mempool": {
-     "precision": 4,
-     "str": "100.0000",
-     "u64": 1000000
+    "balance": {
+     "locked": {
+      "decimals": 4,
+      "str": "12479.9990",
+      "u64": 124799990
+     },
+     "mempool": {
+      "decimals": 4,
+      "str": "100.0000",
+      "u64": 1000000
+     },
+     "total": {
+      "decimals": 4,
+      "str": "30899.9999",
+      "u64": 308999999
+     }
     },
-    "total": {
-     "precision": 4,
-     "str": "30899.9999",
-     "u64": 308999999
+    "lookupTrace": {
+     "fails": [],
+     "snapshotHeight": null
+    },
+    "token": {
+     "decimals": 4,
+     "id": 15,
+     "name": "TOK2",
+     "spec": "asset:0e4825efffa294610d2ac376713e3bcc9b53d378e823834b64e5df01f75d3b0c"
     }
-   },
-   "lookupTrace": {
-    "fails": [],
-    "snapshotHeight": null
-   },
-   "token": {
-    "id": 15,
-    "name": "TOK2",
-    "precision": 4,
-    "spec": "asset:0e4825efffa294610d2ac376713e3bcc9b53d378e823834b64e5df01f75d3b0c"
    }
   }
- }
-```
+  ```
 
 ### `GET /account/:account/wart_balance`
 
@@ -2239,43 +2624,571 @@ Example output of `account/2de77d5e23dc63e4c4149d394c979361e9e8e966336c8cd4/wart
 }
 ```
 
-### `GET /account/:account/history/:beforeTxIndex`
+### `GET /account/:account/history/:beforeId`
 
-Show transaction history of specific account. Returns blocks containing actions relevant to the account, structured as `perBlock[].actions` (see [Block Actions](rest/block-actions.md) for field details).
-
-Example output:
-
+Show transaction history of specific account (specified by address or account ID) with latest history ID smaller than specified in `:beforeId`. Use a very large number in this parameter to retrieve the latest history of the account. Returned data is structured as
 ```json
 {
- "code": 0,
- "data": {
-  "fromId": 69626,
-  "perBlock": [
-   {
-     "actions": {
-      "wartTransfers": [...],
-      "tokenTransfers": [...],
-      "newOrders": [...],
-      "matches": [...],
-      "liquidityDeposits": [...],
-      "liquidityWithdrawals": [...],
-      "assetCreations": [...],
-      "cancelations": [...],
-      "reward": null
-     },
-    "confirmations": 9949,
-    "height": 366700
-   }
-  ]
- }
+  "fromId": <integer>, // earliest returned history ID
+  "perBlock": [...]    // array of actions per block
 }
 ```
+Every processed transaction is assigned an incrementally ascending history ID during block processing. The `fromId` field returns the earliest returned history ID. It serves as a bookmark position and can be used to iteratively retrieve earlier results in a loop. If no results are available, `fromId` is set to `0`.
 
-For detailed JSON structure of each action type, see [!ref Block Actions](rest/block-actions.md).
+The `perBlock` parameter has the same structure as the [`/transaction/latest`](#get-transactionlatest). Note that the last returned block is not necessarily complete, i.e. there might be more transactions in the same block that were not returned in this request.
+
+==- Example output
+```json
+{
+  "code": 0,
+  "data": {
+    "fromId": 1,
+    "perBlock": [
+      {
+        "header": {
+          "raw": "309c66716609a3257aeac8f317fa6dda728efb588d943c5b61726a2308a5a8fd077fffff5f99ee004dabcc4d2f4b604d99c69fecd261e8447c52043b8880acd8f535dc5a0000000469d65b8b00000000",
+          "time": {
+            "UTC": "2026-04-08 13:43:39 UTC",
+            "timestamp": 1775655819
+          },
+          "target": "077fffff",
+          "hash": "5797db9168c5b8bac134aa9bcea95f9bcd07ef3cb0f64dc31f49a96700177264",
+          "pow": {
+            "verusV2_2": true,
+            "hashVerus": "6521b7cfb46cabb9f19891686ead024686b99dd5b44bab43f432c64133c94e98",
+            "hashSha256t": "af1023b3084000bb686df8ba108ec5608d1d303addc1386b3fc4e3633f3fbdb2",
+            "floatVerus": 0.39504574588499963,
+            "floatSha256t": 0.6838400184642524
+          },
+          "merkleroot": "5f99ee004dabcc4d2f4b604d99c69fecd261e8447c52043b8880acd8f535dc5a",
+          "nonce": "00000000",
+          "prevHash": "309c66716609a3257aeac8f317fa6dda728efb588d943c5b61726a2308a5a8fd",
+          "version": "00000004"
+        },
+        "body": {
+          "reward": null,
+          "wartTransfers": [
+            {
+              "transaction": {
+                "data": {
+                  "toAddress": "0000000000000000000000000000000000000000de47c9b2",
+                  "amount": {
+                    "str": "1.00000000",
+                    "E8": 100000000
+                  }
+                },
+                "hash": "897b3cc72950b41ee71527dc05a5bb6745801abbfb6179ad91dd0ccf2834eea8",
+                "signedCommon": {
+                  "originId": 1,
+                  "originAddress": "3661579d61abde5837a8686dc4d65348a2fc61b1",
+                  "fee": {
+                    "str": "0.00009992",
+                    "E8": 9992
+                  },
+                  "nonceId": 0,
+                  "pinHeight": 0
+                }
+              },
+              "historyId": 40
+            }
+          ],
+          "tokenTransfers": [
+            {
+              "transaction": {
+                "data": {
+                  "toAddress": "0000000000000000000000000000000000000000de47c9b2",
+                  "amount": {
+                    "str": "99.9912",
+                    "u64": 999912,
+                    "decimals": 4
+                  },
+                  "asset": {
+                    "hash": "f45b113119c7f7c000234f1090d5d181ab60b8b24526f1edd2f563aa1ca329f2",
+                    "id": 2,
+                    "name": "TOK2",
+                    "decimals": 4
+                  },
+                  "isLiquidity": false,
+                  "tokenSpec": "asset:f45b113119c7f7c000234f1090d5d181ab60b8b24526f1edd2f563aa1ca329f2"
+                },
+                "hash": "87a8f53490f32a29905554f4e23699774dd8c3e38c34033ba4812720824b5404",
+                "signedCommon": {
+                  "originId": 1,
+                  "originAddress": "3661579d61abde5837a8686dc4d65348a2fc61b1",
+                  "fee": {
+                    "str": "0.00009992",
+                    "E8": 9992
+                  },
+                  "nonceId": 1,
+                  "pinHeight": 0
+                }
+              },
+              "historyId": 41
+            }
+          ],
+          "newOrders": [],
+          "matches": [],
+          "liquidityDeposits": [
+            {
+              "transaction": {
+                "data": {
+                  "baseAsset": {
+                    "hash": "f45b113119c7f7c000234f1090d5d181ab60b8b24526f1edd2f563aa1ca329f2",
+                    "id": 2,
+                    "name": "TOK2",
+                    "decimals": 4
+                  },
+                  "deposited": {
+                    "base": {
+                      "str": "99.9912",
+                      "u64": 999912,
+                      "decimals": 4
+                    },
+                    "quote": {
+                      "str": "0.00999912",
+                      "E8": 999912
+                    }
+                  }
+                },
+                "processed": {
+                  "sharesReceived": {
+                    "str": "99.9912",
+                    "u64": 999912,
+                    "decimals": 4
+                  }
+                },
+                "hash": "47c50348397eed92b918501ec13c368e11df533388d199c895aebf57d9d8d0d3",
+                "signedCommon": {
+                  "originId": 1,
+                  "originAddress": "3661579d61abde5837a8686dc4d65348a2fc61b1",
+                  "fee": {
+                    "str": "0.00009992",
+                    "E8": 9992
+                  },
+                  "nonceId": 3,
+                  "pinHeight": 0
+                }
+              },
+              "historyId": 42
+            }
+          ],
+          "liquidityWithdrawals": [],
+          "assetCreations": [
+            {
+              "transaction": {
+                "data": {
+                  "name": "TOK2",
+                  "supply": {
+                    "str": "100000000.0000",
+                    "u64": 1000000000000,
+                    "decimals": 4
+                  }
+                },
+                "processed": {
+                  "assetId": 11
+                },
+                "hash": "d645efa5c0a64b409e44725d1d9b84ed7d800fca8ca5b3d71301d361652eddbc",
+                "signedCommon": {
+                  "originId": 1,
+                  "originAddress": "3661579d61abde5837a8686dc4d65348a2fc61b1",
+                  "fee": {
+                    "str": "0.00009992",
+                    "E8": 9992
+                  },
+                  "nonceId": 2,
+                  "pinHeight": 0
+                }
+              },
+              "historyId": 44
+            }
+          ],
+          "cancelations": []
+        },
+        "confirmations": 5,
+        "height": 21
+      },
+      {
+        "header": {
+          "raw": "cf132179a2e2895819572a0373eb880f03b0c026f5bbbd2fb30b913e628ada07077fffff561c2850138f1d76c87019ea1eeb0da7f9d50baa9a87c98f2260195d7c6d86ca0000000469524f7700000000",
+          "time": {
+            "UTC": "2025-12-29 09:52:55 UTC",
+            "timestamp": 1767001975
+          },
+          "target": "077fffff",
+          "hash": "5e6d289e5633edb1e5c93ff9156a225258c4b2057bfe86ce75c2830be5ea4b16",
+          "pow": {
+            "verusV2_2": true,
+            "hashVerus": "c2c080f447fa0758c0a0d2415bcc8066b55f45e17bcb2f4f6c40ece46c13a69b",
+            "hashSha256t": "fc8b272e7dbbe3fdd9235b32724f74af62ad1a3fa3cbaa68cd8fccea0b40a5c8",
+            "floatVerus": 0.7607498737052083,
+            "floatSha256t": 0.9864983069710433
+          },
+          "merkleroot": "561c2850138f1d76c87019ea1eeb0da7f9d50baa9a87c98f2260195d7c6d86ca",
+          "nonce": "00000000",
+          "prevHash": "cf132179a2e2895819572a0373eb880f03b0c026f5bbbd2fb30b913e628ada07",
+          "version": "00000004"
+        },
+        "body": {
+          "reward": null,
+          "wartTransfers": [],
+          "tokenTransfers": [],
+          "newOrders": [],
+          "matches": [],
+          "liquidityDeposits": [
+            {
+              "transaction": {
+                "data": {
+                  "baseAsset": {
+                    "hash": "f45b113119c7f7c000234f1090d5d181ab60b8b24526f1edd2f563aa1ca329f2",
+                    "id": 2,
+                    "name": "TOK2",
+                    "decimals": 4
+                  },
+                  "deposited": {
+                    "base": {
+                      "str": "99.9912",
+                      "u64": 999912,
+                      "decimals": 4
+                    },
+                    "quote": {
+                      "str": "0.00999912",
+                      "E8": 999912
+                    }
+                  }
+                },
+                "processed": {
+                  "sharesReceived": {
+                    "str": "99.9912",
+                    "u64": 999912,
+                    "decimals": 4
+                  }
+                },
+                "hash": "a3f6d1d3ee13cb8a85afb4dc28a3cbdb889c5c42ff1cc479469c4ff62fbca636",
+                "signedCommon": {
+                  "originId": 1,
+                  "originAddress": "3661579d61abde5837a8686dc4d65348a2fc61b1",
+                  "fee": {
+                    "str": "0.00009992",
+                    "E8": 9992
+                  },
+                  "nonceId": 25,
+                  "pinHeight": 0
+                }
+              },
+              "historyId": 12
+            }
+          ],
+          "liquidityWithdrawals": [],
+          "assetCreations": [],
+          "cancelations": []
+        },
+        "confirmations": 18,
+        "height": 8
+      },
+      {
+        "header": {
+          "raw": "9062306d5214ea3498efa06723741867777b4645818064b79402e898a4fc6cd5077fffff4532477af8b889ecae0c7c2673d9a0c9416bca6f5d5f299407ffc4c103994428000000046952494500000000",
+          "time": {
+            "UTC": "2025-12-29 09:26:29 UTC",
+            "timestamp": 1767000389
+          },
+          "target": "077fffff",
+          "hash": "cf132179a2e2895819572a0373eb880f03b0c026f5bbbd2fb30b913e628ada07",
+          "pow": {
+            "verusV2_2": true,
+            "hashVerus": "bd055c1891f95d0a95ba24ba53e0e398dd0f638333c596b883be7141495e6ab8",
+            "hashSha256t": "f1f8c6e37542f443540dffb4b7075128020a8e8f84c22d7c70b13db3a2668327",
+            "floatVerus": 0.7383630331605673,
+            "floatSha256t": 0.9452022842597216
+          },
+          "merkleroot": "4532477af8b889ecae0c7c2673d9a0c9416bca6f5d5f299407ffc4c103994428",
+          "nonce": "00000000",
+          "prevHash": "9062306d5214ea3498efa06723741867777b4645818064b79402e898a4fc6cd5",
+          "version": "00000004"
+        },
+        "body": {
+          "reward": null,
+          "wartTransfers": [],
+          "tokenTransfers": [],
+          "newOrders": [],
+          "matches": [],
+          "liquidityDeposits": [],
+          "liquidityWithdrawals": [],
+          "assetCreations": [
+            {
+              "transaction": {
+                "data": {
+                  "name": "TOK2",
+                  "supply": {
+                    "str": "100000000.0000",
+                    "u64": 1000000000000,
+                    "decimals": 4
+                  }
+                },
+                "processed": {
+                  "assetId": 7
+                },
+                "hash": "0e4825efffa294610d2ac376713e3bcc9b53d378e823834b64e5df01f75d3b0c",
+                "signedCommon": {
+                  "originId": 1,
+                  "originAddress": "3661579d61abde5837a8686dc4d65348a2fc61b1",
+                  "fee": {
+                    "str": "0.00009992",
+                    "E8": 9992
+                  },
+                  "nonceId": 13,
+                  "pinHeight": 0
+                }
+              },
+              "historyId": 10
+            }
+          ],
+          "cancelations": []
+        },
+        "confirmations": 19,
+        "height": 7
+      },
+      {
+        "header": {
+          "raw": "0be65b99324fd4e798b2c633d0d98c990928775a4512e6226d4d08f84a9bc00d077fffff9b56be97d9af47584ca549d6c900299a67cdb4c4449b601572ed0e36f17da2af000000046952491e00000000",
+          "time": {
+            "UTC": "2025-12-29 09:25:50 UTC",
+            "timestamp": 1767000350
+          },
+          "target": "077fffff",
+          "hash": "f3e430a109ef514263ac7049920ffae76c4aab25b886d888f38de5d0ff0288c2",
+          "pow": {
+            "verusV2_2": true,
+            "hashVerus": "dcaa7c25c2455c031f2d7bf06c073e74cf998e2cdb1a36957f4e385a5644a429",
+            "hashSha256t": "5a5b94aa27d66b66b1286eadb03e13bc83526b9b4d888822b92e21166e5d958f",
+            "floatVerus": 0.861976393731311,
+            "floatSha256t": 0.3529599108733237
+          },
+          "merkleroot": "9b56be97d9af47584ca549d6c900299a67cdb4c4449b601572ed0e36f17da2af",
+          "nonce": "00000000",
+          "prevHash": "0be65b99324fd4e798b2c633d0d98c990928775a4512e6226d4d08f84a9bc00d",
+          "version": "00000004"
+        },
+        "body": {
+          "reward": null,
+          "wartTransfers": [],
+          "tokenTransfers": [],
+          "newOrders": [],
+          "matches": [],
+          "liquidityDeposits": [],
+          "liquidityWithdrawals": [],
+          "assetCreations": [
+            {
+              "transaction": {
+                "data": {
+                  "name": "TOK2",
+                  "supply": {
+                    "str": "100000000.0000",
+                    "u64": 1000000000000,
+                    "decimals": 4
+                  }
+                },
+                "processed": {
+                  "assetId": 5
+                },
+                "hash": "58a74b758516d13e7f882922b483fca1627758c85b491e2cb9303e92e270ba88",
+                "signedCommon": {
+                  "originId": 1,
+                  "originAddress": "3661579d61abde5837a8686dc4d65348a2fc61b1",
+                  "fee": {
+                    "str": "0.00009992",
+                    "E8": 9992
+                  },
+                  "nonceId": 12,
+                  "pinHeight": 0
+                }
+              },
+              "historyId": 6
+            }
+          ],
+          "cancelations": []
+        },
+        "confirmations": 22,
+        "height": 4
+      },
+      {
+        "header": {
+          "raw": "e55ad07c558e15b5594c9cb00995c7f651e08c6b8c3fe9d83c2bc554dab7b074077fffff83f0e4680c3ae441ae6a357bf834034dff1eb8a9b7b424ba7b9672f386c38685000000046948247f00000000",
+          "time": {
+            "UTC": "2025-12-21 16:46:55 UTC",
+            "timestamp": 1766335615
+          },
+          "target": "077fffff",
+          "hash": "0be65b99324fd4e798b2c633d0d98c990928775a4512e6226d4d08f84a9bc00d",
+          "pow": {
+            "verusV2_2": true,
+            "hashVerus": "dc106fb863fc979178b32145f8c9a5249587af6d146642b947b2011bea616ac1",
+            "hashSha256t": "500c1d5d1c6f64b230c468aee35d197837268c2e8bab73ea863f3e446ff1729c",
+            "floatVerus": 0.8596257995814085,
+            "floatSha256t": 0.31268485565669835
+          },
+          "merkleroot": "83f0e4680c3ae441ae6a357bf834034dff1eb8a9b7b424ba7b9672f386c38685",
+          "nonce": "00000000",
+          "prevHash": "e55ad07c558e15b5594c9cb00995c7f651e08c6b8c3fe9d83c2bc554dab7b074",
+          "version": "00000004"
+        },
+        "body": {
+          "reward": {
+            "transaction": {
+              "data": {
+                "toAddress": "3661579d61abde5837a8686dc4d65348a2fc61b1fe5f4093",
+                "amount": {
+                  "str": "3.00009992",
+                  "E8": 300009992
+                }
+              },
+              "hash": "49d16e7f40c9ca4d681bf00569e9d5ede9ad006d0123c7bdb665434e5c7bf03d"
+            },
+            "historyId": 3
+          },
+          "wartTransfers": [],
+          "tokenTransfers": [],
+          "newOrders": [],
+          "matches": [],
+          "liquidityDeposits": [],
+          "liquidityWithdrawals": [],
+          "assetCreations": [
+            {
+              "transaction": {
+                "data": {
+                  "name": "TOK2",
+                  "supply": {
+                    "str": "100000000.0000",
+                    "u64": 1000000000000,
+                    "decimals": 4
+                  }
+                },
+                "processed": {
+                  "assetId": 2
+                },
+                "hash": "f45b113119c7f7c000234f1090d5d181ab60b8b24526f1edd2f563aa1ca329f2",
+                "signedCommon": {
+                  "originId": 1,
+                  "originAddress": "3661579d61abde5837a8686dc4d65348a2fc61b1",
+                  "fee": {
+                    "str": "0.00009992",
+                    "E8": 9992
+                  },
+                  "nonceId": 11,
+                  "pinHeight": 0
+                }
+              },
+              "historyId": 4
+            }
+          ],
+          "cancelations": []
+        },
+        "confirmations": 23,
+        "height": 3
+      },
+      {
+        "header": {
+          "raw": "6851377f19b814ab3a4354c811a96908afba9c47cf3e4b85048d95de11e3f6aa077fffffa8e704f5d5485b743571f1742c2c4d7e83478d636a5a42f4cf255881ac7a062a000000036948247800000000",
+          "time": {
+            "UTC": "2025-12-21 16:46:48 UTC",
+            "timestamp": 1766335608
+          },
+          "target": "077fffff",
+          "hash": "e55ad07c558e15b5594c9cb00995c7f651e08c6b8c3fe9d83c2bc554dab7b074",
+          "pow": {
+            "verusV2_2": false,
+            "hashVerus": "75de656c07275c4605af9c1b05b07fe9ee143f1d6e224a3097f4ae64a250f86b",
+            "hashSha256t": "52776be4dd3b65ee93e0bbcb5e00e3ba2fb478e6d6eee777787faa268cd96d72",
+            "floatVerus": 0.46042474638670683,
+            "floatSha256t": 0.3221347266808152
+          },
+          "merkleroot": "a8e704f5d5485b743571f1742c2c4d7e83478d636a5a42f4cf255881ac7a062a",
+          "nonce": "00000000",
+          "prevHash": "6851377f19b814ab3a4354c811a96908afba9c47cf3e4b85048d95de11e3f6aa",
+          "version": "00000003"
+        },
+        "body": {
+          "reward": {
+            "transaction": {
+              "data": {
+                "toAddress": "3661579d61abde5837a8686dc4d65348a2fc61b1fe5f4093",
+                "amount": {
+                  "str": "3.00000000",
+                  "E8": 300000000
+                }
+              },
+              "hash": "c870e807a46e6a5cf756165f95d511c7270a7dcd4eb51ddf7df047de3cfa1d8b"
+            },
+            "historyId": 2
+          },
+          "wartTransfers": [],
+          "tokenTransfers": [],
+          "newOrders": [],
+          "matches": [],
+          "liquidityDeposits": [],
+          "liquidityWithdrawals": [],
+          "assetCreations": [],
+          "cancelations": []
+        },
+        "confirmations": 24,
+        "height": 2
+      },
+      {
+        "header": {
+          "raw": "b29988793c29118a842ba38ea4ab13d43e3dce3f04511ba6ca3340542dfd8537077fffffeab3b88a101b745e8d7b530eb129a789f571a4718edc07435ae74998981a3a7f000000036948246d00000000",
+          "time": {
+            "UTC": "2025-12-21 16:46:37 UTC",
+            "timestamp": 1766335597
+          },
+          "target": "077fffff",
+          "hash": "6851377f19b814ab3a4354c811a96908afba9c47cf3e4b85048d95de11e3f6aa",
+          "pow": {
+            "verusV2_2": false,
+            "hashVerus": "2443706cf33a161fd811fa69c7180787f4ddbc518f9e8cacd4efef29b3cc22a9",
+            "hashSha256t": "353389ceb7bccd1efe58d3ff45b97c4efd99d0a460070d554a2f78edd92482b7",
+            "floatVerus": 0.14165403973311186,
+            "floatSha256t": 0.20781766204163432
+          },
+          "merkleroot": "eab3b88a101b745e8d7b530eb129a789f571a4718edc07435ae74998981a3a7f",
+          "nonce": "00000000",
+          "prevHash": "b29988793c29118a842ba38ea4ab13d43e3dce3f04511ba6ca3340542dfd8537",
+          "version": "00000003"
+        },
+        "body": {
+          "reward": {
+            "transaction": {
+              "data": {
+                "toAddress": "3661579d61abde5837a8686dc4d65348a2fc61b1fe5f4093",
+                "amount": {
+                  "str": "3.00000000",
+                  "E8": 300000000
+                }
+              },
+              "hash": "da3dcfbc0dcb60be544a8510589f973b82651b48ddcb7943718dc3dcf93ae234"
+            },
+            "historyId": 1
+          },
+          "wartTransfers": [],
+          "tokenTransfers": [],
+          "newOrders": [],
+          "matches": [],
+          "liquidityDeposits": [],
+          "liquidityWithdrawals": [],
+          "assetCreations": [],
+          "cancelations": []
+        },
+        "confirmations": 25,
+        "height": 1
+      }
+    ]
+  }
+}
+```
+===
 
 ### `GET /account/richlist/:tokenspec`
 
-Show richlist for a specific token. Example output of `/account/richlist/asset:0e4825ef...`:
+Show richlist for a specific token. The `:tokenspec` has the form `asset:<asset hash>` or `liquidity:<asset hash>` to address either the balance of the asset itself or the associated liquidity in the corresponding pool with WART as quote currency.  Example output of `/account/richlist/asset:0e4825ef...`:
 
 ```json
 {
@@ -2291,14 +3204,14 @@ Show richlist for a specific token. Example output of `/account/richlist/asset:0
     "balance": { "str": "25000.0000", "u64": 250000000, "decimals": 4 }
    }
   ],
-  "token": { "id": 7, "name": "TOK2", "precision": 4, "spec": "asset:0e4825ef..." }
+  "token": { "id": 7, "name": "TOK2", "decimals": 4, "spec": "asset:0e4825ef..." }
  }
 }
 ```
 
 ### `GET /peers/ip_count`
 
-Show count of connections per IP address.
+Show number of connections per IP address.
 
 ```json
 {
@@ -2364,16 +3277,47 @@ Show connection information of connected peers.
 
 ### `GET /peers/connection_schedule`
 
-Show the connection schedule for peers.
+Show the connection schedule for peers. Returns one of two variants: `TCPConnectionSchedule` for native nodes (with `connectedVerified`, `disconnectedVerified`, and `feelers` fields) or `WSConnectionSchedule` for browser nodes (empty object for now).
 
+==- Example for native nodes:
 ```json
 {
- "code": 0,
- "data": {
-  "schedule": [...]
- }
+  "code": 0,
+  "data": {
+    "connectedVerified": [
+      {
+        "schedule": {
+          "address": "tcp://51.222.248.202:9186",
+          "expiresIn": null,
+          "lastError": null,
+          "sleepDuration": 3600
+        },
+        "secondsSinceVerified": 42
+      }
+    ],
+    "disconnectedVerified": [
+      {
+        "schedule": {
+          "address": "tcp://213.199.59.252:20016",
+          "expiresIn": 86400,
+          "lastError": null,
+          "sleepDuration": 7200
+        },
+        "secondsSinceVerified": 3600
+      }
+    ],
+    "feelers": [
+      {
+        "address": "tcp://65.21.76.159:9186",
+        "expiresIn": null,
+        "lastError": "connection refused",
+        "sleepDuration": 300
+      }
+    ]
+  }
 }
 ```
+===
 
 ### `GET /peers/unban`
 
@@ -2483,43 +3427,167 @@ Show transmission statistics aggregated by hours.
 
 Show transmission statistics aggregated by minutes. Same structure as `/peers/transmission_hours` but with per-minute granularity.
 
-### `GET /tools/encode16bit/from_e8/:feeE8`
+### `GET /chart/candles/:asset/:interval`
 
- Round raw fee integer representation (coin amount is this number divided by 10^8) to closest 16 bit representation. This is required for fee specification in the `/transaction/add` endpoint. Example output of `/tools/encode16bit/from_e8/5002`
+Show OHLCV candle data for a specific asset and interval accepting query parameters `from`, `to` and `n`.
+
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `:asset` | integer/string | Asset ID (e.g. `7`) or hash (e.g. `0e4825efffa294610d2ac376713e3bcc9b53d378e823834b64e5df01f75d3b0c`)|
+| `:interval` | string | Timeframe: `5m` (5 minutes), `1h` (1 hour), `1d` (1 day) |
+| `from` | Unix timestamp | Start time (optional) |
+| `to` | Unix timestamp | End time (optional) |
+| `n` | integer | Limit number of results (optional, default: 100) |
+
+**Query parameter rules:**
+- Not all three optional parameters (`from`, `to`, `n`) can be specified at the same time.
+- If only `from` is specified, the earliest entries from `from` are returned.
+- If only `to` is specified, the latest entries up to `to` are returned.
+- If `from` and `to` are specified, all entries from `from` to `to` are returned.
+- The total number of entries is limited to 200. The default value for `n` is 100.
+
+Returns an array of candles, where each candle is an 8-element array: `[begin_timestamp, height, open, high, low, close, base, quote]`.
+
+Example output of `/chart/candles/7/5m`:
 
 ```json
 {
  "code": 0,
- "data": {
-  "16bit": 12514,
-  "originalAmount": "0.00005002",
-  "originalE8": 5002,
-  "roundedAmount": "0.00005000",
-  "roundedE8": 5000
- }
+ "data": [
+  [
+   1772265900,          // begin timestamp of the candle
+   7,                   // height
+   0.09999999999999999, // open
+   0.09999999999999999, // high
+   0.09999999999999999, // low
+   0.09999999999999999, // close
+   40.00200000000001,   // asset amount (base)
+   4.0002               // WART amount (quote)
+  ]
+ ]
+}
+```
+
+
+### `GET /chart/trades/:asset`
+
+Show historic trade data for a specific asset accepting query parameters `from`, `to` and `n`.
+
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `:asset` | integer/string | Asset ID (e.g. `7`) or hash (e.g. `0e4825efffa294610d2ac376713e3bcc9b53d378e823834b64e5df01f75d3b0c`) |
+| `from` | block height | Start block (optional) |
+| `to` | block height | End block (optional) |
+| `n` | integer | Limit number of results (optional, default: 100) |
+
+**Query parameter rules:**
+- Not all three optional parameters (`from`, `to`, `n`) can be specified at the same time.
+- If only `from` is specified, the earliest entries from `from` are returned.
+- If only `to` is specified, the latest entries up to `to` are returned.
+- If `from` and `to` are specified, all entries from `from` to `to` are returned.
+- The total number of entries is limited to 200. The default value for `n` is 100.
+
+Returns an array of trades, where each trade is a 4-element array: `[height, timestamp, base, quote]`.
+
+Example output of `/chart/trades/7`:
+
+```json
+{
+ "code": 0,
+ "data": [
+  [
+   7,                 // height
+   1772266091,        // timestamp of the block containing the trade
+   40.00200000000001, // total asset amount traded in the block
+   4.0002             // total WART amount traded in the block
+  ]
+ ]
+}
+```
+
+### `GET /chart/hashrate/block/:from/:to/:window`
+
+Show hashrate chart data over a block range. `:from` and `:to` are block heights, `:window` is the averaging window in blocks.
+
+==- Example:
+```json
+{
+  "code": 0,
+  "data": {
+    "range": { "begin": 1949600, "end": 1949760 },
+    "data": [140000000000000, 141000000000000, 139500000000000]
+  }
+}
+```
+===
+
+### `GET /chart/hashrate/time/:from/:to/:interval`
+
+Show hashrate chart data over a time range. `:from` and `:to` are Unix timestamps, `:interval` is the bucket size in seconds.
+
+==- Example:
+```json
+{
+  "code": 0,
+  "data": {
+    "range": { "begin": 1727200000, "end": 1727286400 },
+    "interval": 3600,
+    "data": [
+      { "hashrate": 140000000000000, "height": 1949700, "timestamp": 1727200000 },
+      { "hashrate": 141000000000000, "height": 1949720, "timestamp": 1727203600 }
+    ]
+  }
+}
+```
+===
+
+### `GET /tools/encode16bit/from_e8/:feeE8`
+
+ Round raw fee integer representation (coin amount is this number divided by 10^8) to closest 16 bit representation. This is required for fee specification in the `/transaction/add` endpoint. Fee rounding is also implemented in the [official client libraries](../libraries.md).
+
+!!!warning Note
+The recommended way to create 16 bit encoded fee values for transaction generation is to implement the rounding method on the client side, see [Fee Encoding](./rest/create-transaction.md#fee-encoding). This tool is a fallback method for quick prototyping.
+!!!
+
+Example output of `/tools/encode16bit/from_e8/5002`
+
+```json
+{
+  "code": 0,
+  "data": {
+    "original": { "E8": 5002, "str": "0.00005002" },
+    "rounded": { "E8": 5000, "str": "0.00005000", "bytes": "1388" }
+  }
 }
 ```
 
 ### `GET /tools/encode16bit/from_string/:string`
 
- Round fee amount string to closest 16 bit representation. This is required for fee specification in the `/transaction/add` endpoint. Example output of `/tools/encode16bit/from_string/0.001`:
+ Round fee amount string to closest 16 bit representation. This is required for fee specification in the `/transaction/add` endpoint.
+
+!!!warning Note
+The recommended way to create 16 bit encoded fee values for transaction generation is to implement the rounding method on the client side, see [Fee Encoding](./rest/create-transaction.md#fee-encoding). This tool is a fallback method for quick prototyping.
+!!!
+
+Example output of `/tools/encode16bit/from_string/0.001`:
 
 ```json
 {
- "code": 0,
- "data": {
-  "16bit": 16922,
-  "originalAmount": "0.00100000",
-  "originalE8": 100000,
-  "roundedAmount": "0.00099968",
-  "roundedE8": 99968
- }
+  "code": 0,
+  "data": {
+    "original": { "E8": 100000, "str": "0.001" },
+    "rounded": { "E8": 99968, "str": "0.00099968", "bytes": "4220" }
+  }
 }
 ```
 
 ### `GET /tools/parse_price/:price/:decimals`
 
-Parse price adjusted for asset precision.
+Parse price adjusted for the specified number of decimals. The `doubleAdjusted` property is the human-readable representation of the parsed price.
 
 Example output of `/tools/parse_price/0.123456/3`:
 
@@ -2527,22 +3595,22 @@ Example output of `/tools/parse_price/0.123456/3`:
 {
  "code": 0,
  "data": {
-  "assetPrecision": 3,
-  "ceil": {
-   "doubleAdjusted": 0.12345750000000001,
-   "doubleRaw": 12345.75,
-   "exponent2": -2,
-   "hex": "c0e74d",
-   "mantissa": 49383,
-   "precExponent10": 5
-  },
+  "decimals": 3,
   "floor": {
-   "doubleAdjusted": 0.12345500000000001,
-   "doubleRaw": 12345.5,
+   "precExponent10": 5,
    "exponent2": -2,
-   "hex": "c0e64d",
    "mantissa": 49382,
-   "precExponent10": 5
+   "hex": "c0e64d",
+   "doubleAdjusted": 0.12345500000000001,
+   "doubleRaw": 12345.5
+  },
+  "ceil": {
+   "precExponent10": 5,
+   "exponent2": -2,
+   "mantissa": 49383,
+   "hex": "c0e74d",
+   "doubleAdjusted": 0.12345750000000001,
+   "doubleRaw": 12345.75
   }
  }
 }
@@ -2614,6 +3682,10 @@ Example output of `/tools/wallet/from_privkey/d3ce2210adf0fccabe31b61309e2b80c02
  }
 }
 ```
+
+!!!warning Warning
+This endpoint should only be used for testing purposes. For security reasons the node should not be involved in wallet-related operations involving a private key.
+!!!
 
 ### `GET /tools/janushash_number/:headerhex`
 Show number interpretation of a header's Janushash. Mining corresponds to finding headers with this number smaller than some threshold dictated by the header difficulty.
@@ -2700,7 +3772,7 @@ Disable a load test connection.
 
 ### `GET /debug/fakemine`
 
-Generate fake mining data using the default address.
+Generate fake mining data using the burn address `0000000000000000000000000000000000000000de47c9b2`. This operation is against the protocol and other nodes will ban your node.
 
 ```json
 { "code": 0 }
@@ -2716,89 +3788,9 @@ Rollback the chain by one block.
 
 ### `GET /debug/fakemine/:address`
 
-Generate fake mining data for a specific address.
+Generate fake mining data for a specific address. This operation is aginst the protocol and other nodes will ban your node.
 
 ```json
 { "code": 0 }
 ```
 
-### `GET /chart/candles/:asset/:interval`
-
-Show OHLCV candle data for a specific asset and interval.
-
-**Parameters:**
-
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| `:asset` | integer/string | Asset ID (e.g. `7`) or hash (e.g. `0e4825efffa294610d2ac376713e3bcc9b53d378e823834b64e5df01f75d3b0c`)|
-| `:interval` | string | Timeframe: `5m` (5 minutes), `1h` (1 hour), `1d` (1 day) |
-| `from` | Unix timestamp | Start time (optional) |
-| `to` | Unix timestamp | End time (optional) |
-| `n` | integer | Limit number of results (optional, default: 100) |
-
-**Query parameter rules:**
-- Not all three optional parameters (`from`, `to`, `n`) can be specified at the same time.
-- If only `from` is specified, the earliest entries from `from` are returned.
-- If only `to` is specified, the latest entries up to `to` are returned.
-- If `from` and `to` are specified, all entries from `from` to `to` are returned.
-- The total number of entries is limited to 200. The default value for `n` is 100.
-
-Example output of `/chart/candles/7/5m`:
-
-```json
-{
- "code": 0,
- "data": [
-  [
-   1772265900,          // begin timestamp of the candle
-   7,                   // height
-   0.09999999999999999, // open
-   0.09999999999999999, // high
-   0.09999999999999999, // low
-   0.09999999999999999, // close
-   40.00200000000001,   // asset amount (base)
-   4.0002               // WART amount (quote)
-  ]
- ]
-}
-```
-
-Each candle is a 8-element array: `[begin_timestamp, height, open, high, low, close, base, quote]`.
-
-### `GET /chart/trades/:asset`
-
-Show trade data for a specific asset.
-
-**Parameters:**
-
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| `:asset` | integer/string | Asset ID (e.g. `7`) or hash (e.g. `0e4825efffa294610d2ac376713e3bcc9b53d378e823834b64e5df01f75d3b0c`) |
-| `from` | block height | Start block (optional) |
-| `to` | block height | End block (optional) |
-| `n` | integer | Limit number of results (optional, default: 100) |
-
-**Query parameter rules:**
-- Not all three optional parameters (`from`, `to`, `n`) can be specified at the same time.
-- If only `from` is specified, the earliest entries from `from` are returned.
-- If only `to` is specified, the latest entries up to `to` are returned.
-- If `from` and `to` are specified, all entries from `from` to `to` are returned.
-- The total number of entries is limited to 200. The default value for `n` is 100.
-
-Example output of `/chart/trades/7`:
-
-```json
-{
- "code": 0,
- "data": [
-  [
-   7,                 // height
-   1772266091,        // timestamp of the block containing the trade
-   40.00200000000001, // total asset amount traded in the block
-   4.0002             // total WART amount traded in the block
-  ]
- ]
-}
-```
-
-Each trade is a 4-element array: `[height, timestamp, base, quote]`.
