@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.5.3.830424924380">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.5.3.830438677581">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 4.5.3">
@@ -37,12 +37,12 @@
 
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../../../resources/css/retype.css?v=4.5.3.830424924380" rel="stylesheet">
+    <link href="../../../../resources/css/retype.css?v=4.5.3.830438677581" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../../../resources/js/config.js?v=4.5.3.830424924380" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../../../resources/js/config.js?v=4.5.3.830438677581" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../../../resources/js/retype.js?v=4.5.3" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../../../resources/js/lunr.js?v=4.5.3.830424924380" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../../../../resources/js/prism.js?v=4.5.3.830424924380" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../../../resources/js/lunr.js?v=4.5.3.830438677581" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../../../../resources/js/prism.js?v=4.5.3.830438677581" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -180,6 +180,75 @@
 <li><strong>LiquidityWithdrawals</strong> Withdraws liquidity from a liquidity pool.</li>
 <li><strong>NewOrders</strong> Creates a new order for a specific WART trading pair (Warthog only supports pairs with WART as quote currency).</li>
 </ol>
+<p>Transaction type labels returned by the API:</p>
+<div class="table-wrapper scrollbar overflow-hidden">
+<table class="comfortable">
+<thead>
+<tr>
+<th>Type</th>
+<th>Explanation</th>
+<th><code translate="no" v-pre>processed</code>?</th>
+<th><code translate="no" v-pre>signedCommon</code>?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code translate="no" v-pre>wartTransfer</code></td>
+<td>Transfer WART to another account</td>
+<td> </td>
+<td> </td>
+</tr>
+<tr>
+<td><code translate="no" v-pre>tokenTransfer</code></td>
+<td>Transfer a non-WART token to another account</td>
+<td> </td>
+<td> </td>
+</tr>
+<tr>
+<td><code translate="no" v-pre>assetCreation</code></td>
+<td>Create a new asset</td>
+<td> </td>
+<td> </td>
+</tr>
+<tr>
+<td><code translate="no" v-pre>cancelation</code></td>
+<td>Cancel a transaction / pending order</td>
+<td> </td>
+<td> </td>
+</tr>
+<tr>
+<td><code translate="no" v-pre>liquidityDeposit</code></td>
+<td>Deposit liquidity into a liquidity pool</td>
+<td> </td>
+<td> </td>
+</tr>
+<tr>
+<td><code translate="no" v-pre>liquidityWithdrawal</code></td>
+<td>Withdraw liquidity from a liquidity pool</td>
+<td> </td>
+<td> </td>
+</tr>
+<tr>
+<td><code translate="no" v-pre>limitSwap</code></td>
+<td>Create a limit order on the DEX</td>
+<td> </td>
+<td> </td>
+</tr>
+<tr>
+<td><code translate="no" v-pre>reward</code></td>
+<td>Block reward paid to miner</td>
+<td> </td>
+<td> </td>
+</tr>
+<tr>
+<td><code translate="no" v-pre>match</code></td>
+<td>Batch-matched orders from a block</td>
+<td> </td>
+<td> </td>
+</tr>
+</tbody>
+</table>
+</div>
 <h3 id="induced-transactions">Induced Transactions</h3>
 <p>These are transactions that are induced by the logic of how Warthog processes a block.
 Currently we have the following induced transactions</p>

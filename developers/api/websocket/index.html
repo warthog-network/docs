@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.5.3.830424924380">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.5.3.830438677581">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 4.5.3">
@@ -12,7 +12,7 @@
     <!-- Primary Meta Tags -->
     <title>WebSocket</title>
     <meta name="title" content="WebSocket">
-    <meta name="description" content="AI-Augmented Documentation — This file was updated to match the live node API schema (v0.10.3 a26330e). All examples reflect the schema structure. Report discrepancies to the maintainers.">
+    <meta name="description" content="AI-Augmented Documentation — This file was updated to match the live node API schema (v0.10.3 996c267). All examples reflect the schema structure. Report discrepancies to the maintainers.">
 
     <!-- Canonical -->
     <link rel="canonical" href="https://docs.warthog.network/developers/api/websocket/">
@@ -22,7 +22,7 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://docs.warthog.network/developers/api/websocket/">
     <meta property="og:title" content="WebSocket">
-    <meta property="og:description" content="AI-Augmented Documentation — This file was updated to match the live node API schema (v0.10.3 a26330e). All examples reflect the schema structure. Report discrepancies to the maintainers.">
+    <meta property="og:description" content="AI-Augmented Documentation — This file was updated to match the live node API schema (v0.10.3 996c267). All examples reflect the schema structure. Report discrepancies to the maintainers.">
     <meta property="og:site_name" content="Warthog Network">
     <meta property="og:locale" content="en_US">
 
@@ -30,19 +30,19 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://docs.warthog.network/developers/api/websocket/">
     <meta name="twitter:title" content="WebSocket">
-    <meta name="twitter:description" content="AI-Augmented Documentation — This file was updated to match the live node API schema (v0.10.3 a26330e). All examples reflect the schema structure. Report discrepancies to the maintainers.">
+    <meta name="twitter:description" content="AI-Augmented Documentation — This file was updated to match the live node API schema (v0.10.3 996c267). All examples reflect the schema structure. Report discrepancies to the maintainers.">
 
     <!-- Alternate Markdown -->
     <link rel="alternate" type="text/markdown" href="https://docs.warthog.network/developers/api/websocket.md">
 
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../../resources/css/retype.css?v=4.5.3.830424924380" rel="stylesheet">
+    <link href="../../../resources/css/retype.css?v=4.5.3.830438677581" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.5.3.830424924380" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.5.3.830438677581" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../../resources/js/retype.js?v=4.5.3" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.5.3.830424924380" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../../../resources/js/prism.js?v=4.5.3.830424924380" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.5.3.830438677581" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../../../resources/js/prism.js?v=4.5.3.830438677581" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -159,7 +159,7 @@
                 <!-- Page content  -->
 <h1 id="websocket-api">WebSocket API</h1>
 <blockquote>
-<p><strong>AI-Augmented Documentation</strong> — This file was updated to match the live node API schema (<code translate="no" v-pre>v0.10.3 &quot;a26330e&quot;</code>). All examples reflect the schema structure. Report discrepancies to the maintainers.</p>
+<p><strong>AI-Augmented Documentation</strong> — This file was updated to match the live node API schema (<code translate="no" v-pre>v0.10.3 &quot;996c267&quot;</code>). All examples reflect the schema structure. Report discrepancies to the maintainers.</p>
 </blockquote>
 <p>The WebSocket endpoint allows real-time data streams on several topics such as <code translate="no" v-pre>chain</code>, <code translate="no" v-pre>account</code> and <code translate="no" v-pre>connection</code> related information. Subscribe with a message containing <code translate="no" v-pre>&quot;action&quot;: &quot;subscribe&quot;</code> and unsubscribe similarly with <code translate="no" v-pre>&quot;action&quot;: &quot;unsubscribe&quot;</code>, as shown below.</p>
 <h2 id="endpoint">Endpoint</h2>
@@ -190,14 +190,14 @@
             &quot;hash&quot;: &quot;fe33577de3186c1869f9084bfe0aeaee2e92c8fe10f87eedb438036b341b98ef&quot;
           }
         },
-        &quot;wartTransfers&quot;: [],
-        &quot;tokenTransfers&quot;: [],
-        &quot;newOrders&quot;: [],
-        &quot;matches&quot;: [],
-        &quot;liquidityDeposits&quot;: [],
-        &quot;liquidityWithdrawals&quot;: [],
-        &quot;assetCreations&quot;: [],
-        &quot;cancelations&quot;: []
+        &quot;wartTransfer&quot;: [],
+        &quot;tokenTransfer&quot;: [],
+        &quot;limitSwap&quot;: [],
+        &quot;match&quot;: [],
+        &quot;liquidityDeposit&quot;: [],
+        &quot;liquidityWithdrawal&quot;: [],
+        &quot;assetCreation&quot;: [],
+        &quot;cancelation&quot;: []
       },
       &quot;confirmations&quot;: 11,
       &quot;header&quot;: {
@@ -255,14 +255,14 @@
       {
         &quot;body&quot;: {
           &quot;reward&quot;: null,
-          &quot;wartTransfers&quot;: [],
-          &quot;tokenTransfers&quot;: [],
-          &quot;newOrders&quot;: [],
-          &quot;matches&quot;: [],
-          &quot;liquidityDeposits&quot;: [],
-          &quot;liquidityWithdrawals&quot;: [],
-          &quot;assetCreations&quot;: [],
-          &quot;cancelations&quot;: []
+          &quot;wartTransfer&quot;: [],
+          &quot;tokenTransfer&quot;: [],
+          &quot;limitSwap&quot;: [],
+          &quot;match&quot;: [],
+          &quot;liquidityDeposit&quot;: [],
+          &quot;liquidityWithdrawal&quot;: [],
+          &quot;assetCreation&quot;: [],
+          &quot;cancelation&quot;: []
         },
         &quot;confirmations&quot;: 0,
         &quot;header&quot;: {
@@ -317,14 +317,14 @@
               &quot;hash&quot;: &quot;a19c2b9410440e569c670ca223504379aa09697f7b061e8dbf04c2a7870fd9b1&quot;
             }
           },
-          &quot;wartTransfers&quot;: [],
-          &quot;tokenTransfers&quot;: [],
-          &quot;newOrders&quot;: [],
-          &quot;matches&quot;: [],
-          &quot;liquidityDeposits&quot;: [],
-          &quot;liquidityWithdrawals&quot;: [],
-          &quot;assetCreations&quot;: [],
-          &quot;cancelations&quot;: []
+          &quot;wartTransfer&quot;: [],
+          &quot;tokenTransfer&quot;: [],
+          &quot;limitSwap&quot;: [],
+          &quot;match&quot;: [],
+          &quot;liquidityDeposit&quot;: [],
+          &quot;liquidityWithdrawal&quot;: [],
+          &quot;assetCreation&quot;: [],
+          &quot;cancelation&quot;: []
         },
         &quot;confirmations&quot;: 11,
         &quot;header&quot;: {
@@ -397,14 +397,14 @@
               &quot;hash&quot;: &quot;fe33577de3186c1869f9084bfe0aeaee2e92c8fe10f87eedb438036b341b98ef&quot;
             }
           },
-          &quot;wartTransfers&quot;: [],
-          &quot;tokenTransfers&quot;: [],
-          &quot;newOrders&quot;: [],
-          &quot;matches&quot;: [],
-          &quot;liquidityDeposits&quot;: [],
-          &quot;liquidityWithdrawals&quot;: [],
-          &quot;assetCreations&quot;: [],
-          &quot;cancelations&quot;: []
+          &quot;wartTransfer&quot;: [],
+          &quot;tokenTransfer&quot;: [],
+          &quot;limitSwap&quot;: [],
+          &quot;match&quot;: [],
+          &quot;liquidityDeposit&quot;: [],
+          &quot;liquidityWithdrawal&quot;: [],
+          &quot;assetCreation&quot;: [],
+          &quot;cancelation&quot;: []
         },
         &quot;confirmations&quot;: 0,
         &quot;header&quot;: {

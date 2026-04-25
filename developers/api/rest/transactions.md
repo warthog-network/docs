@@ -22,6 +22,20 @@ Currently Warthog supports the following signed transactions:
 6. **LiquidityWithdrawals** Withdraws liquidity from a liquidity pool.
 7. **NewOrders** Creates a new order for a specific WART trading pair (Warthog only supports pairs with WART as quote currency).
 
+Transaction type labels returned by the API:
+
+| Type | Explanation | `processed`? |  `signedCommon`?
+|---|---|---|
+| `wartTransfer` | Transfer WART to another account | 
+| `tokenTransfer` | Transfer a non-WART token to another account | 
+| `assetCreation` | Create a new asset | 
+| `cancelation` | Cancel a transaction / pending order | 
+| `liquidityDeposit` | Deposit liquidity into a liquidity pool | 
+| `liquidityWithdrawal` | Withdraw liquidity from a liquidity pool |
+| `limitSwap` | Create a limit order on the DEX | 
+| `reward` | Block reward paid to miner |
+| `match` | Batch-matched orders from a block |
+
 ### Induced Transactions
 These are transactions that are induced by the logic of how Warthog processes a block.
 Currently we have the following induced transactions

@@ -1,6 +1,6 @@
 # WebSocket API
 
-> **AI-Augmented Documentation** — This file was updated to match the live node API schema (`v0.10.3 "a26330e"`). All examples reflect the schema structure. Report discrepancies to the maintainers.
+> **AI-Augmented Documentation** — This file was updated to match the live node API schema (`v0.10.3 "996c267"`). All examples reflect the schema structure. Report discrepancies to the maintainers.
 
 The WebSocket endpoint allows real-time data streams on several topics such as `chain`, `account` and `connection` related information. Subscribe with a message containing `"action": "subscribe"` and unsubscribe similarly with `"action": "unsubscribe"`, as shown below.
 
@@ -40,14 +40,14 @@ Receive 10 latest blocks.
             "hash": "fe33577de3186c1869f9084bfe0aeaee2e92c8fe10f87eedb438036b341b98ef"
           }
         },
-        "wartTransfers": [],
-        "tokenTransfers": [],
-        "newOrders": [],
-        "matches": [],
-        "liquidityDeposits": [],
-        "liquidityWithdrawals": [],
-        "assetCreations": [],
-        "cancelations": []
+        "wartTransfer": [],
+        "tokenTransfer": [],
+        "limitSwap": [],
+        "match": [],
+        "liquidityDeposit": [],
+        "liquidityWithdrawal": [],
+        "assetCreation": [],
+        "cancelation": []
       },
       "confirmations": 11,
       "header": {
@@ -107,14 +107,14 @@ Receive 10 latest blocks.
       {
         "body": {
           "reward": null,
-          "wartTransfers": [],
-          "tokenTransfers": [],
-          "newOrders": [],
-          "matches": [],
-          "liquidityDeposits": [],
-          "liquidityWithdrawals": [],
-          "assetCreations": [],
-          "cancelations": []
+          "wartTransfer": [],
+          "tokenTransfer": [],
+          "limitSwap": [],
+          "match": [],
+          "liquidityDeposit": [],
+          "liquidityWithdrawal": [],
+          "assetCreation": [],
+          "cancelation": []
         },
         "confirmations": 0,
         "header": {
@@ -171,14 +171,14 @@ Receive 10 latest blocks.
               "hash": "a19c2b9410440e569c670ca223504379aa09697f7b061e8dbf04c2a7870fd9b1"
             }
           },
-          "wartTransfers": [],
-          "tokenTransfers": [],
-          "newOrders": [],
-          "matches": [],
-          "liquidityDeposits": [],
-          "liquidityWithdrawals": [],
-          "assetCreations": [],
-          "cancelations": []
+          "wartTransfer": [],
+          "tokenTransfer": [],
+          "limitSwap": [],
+          "match": [],
+          "liquidityDeposit": [],
+          "liquidityWithdrawal": [],
+          "assetCreation": [],
+          "cancelation": []
         },
         "confirmations": 11,
         "header": {
@@ -259,14 +259,14 @@ Subscribe to account updates such as new transactions and balance changes. Addre
               "hash": "fe33577de3186c1869f9084bfe0aeaee2e92c8fe10f87eedb438036b341b98ef"
             }
           },
-          "wartTransfers": [],
-          "tokenTransfers": [],
-          "newOrders": [],
-          "matches": [],
-          "liquidityDeposits": [],
-          "liquidityWithdrawals": [],
-          "assetCreations": [],
-          "cancelations": []
+          "wartTransfer": [],
+          "tokenTransfer": [],
+          "limitSwap": [],
+          "match": [],
+          "liquidityDeposit": [],
+          "liquidityWithdrawal": [],
+          "assetCreation": [],
+          "cancelation": []
         },
         "confirmations": 0,
         "header": {
