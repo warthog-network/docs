@@ -38,10 +38,10 @@
 #### REST API
 
 - [REST](https://docs.warthog.network/developers/api/rest.md): This documentation was partially generated with AI augmentation. Report inconsistencies at github.com/warthog-network/docs/issues.
-- [Block Actions](https://docs.warthog.network/developers/api/rest/block-actions.md): This documentation was partially generated with AI augmentation. Report inconsistencies at github.com/warthog-network/docs/issues.
+- [Transactions](https://docs.warthog.network/developers/api/rest/transactions.md): Warthog nodes return two types of transactions:
 - [Create Transaction](https://docs.warthog.network/developers/api/rest/create-transaction.md): This documentation was partially generated with AI augmentation. Report inconsistencies at github.com/warthog-network/docs/issues.
 - [Mempool transactions](https://docs.warthog.network/developers/api/rest/mempool-transactions.md)
-- [WebSocket](https://docs.warthog.network/developers/api/websocket.md): The WebSocket endpoint allows real-time data streams on several topics such as chain, account and connection related information. Subscribe with a message containing action: subscribe and unsubscribe similarly with action: unsubscribe, as shown below.
+- [WebSocket](https://docs.warthog.network/developers/api/websocket.md): AI-Augmented Documentation — This file was updated to match the live node API schema (v0.10.3 a26330e). All examples reflect the schema structure. Report discrepancies to the maintainers.
 
 ### Integration
 
@@ -82,4 +82,5 @@
 ### Sandwich-Proof DeFi
 
 - [Sandwich-Proof DeFi](https://docs.warthog.network/unique-features/sandwich-proof-defi.md)
+- [Matching Engine](https://docs.warthog.network/unique-features/sandwich-proof-defi/matching-engine.md): TODO
 - [DeFi in Warthog](https://docs.warthog.network/unique-features/sandwich-proof-defi/hcdefi.md): Warthog implements a novel approach to Decentraled Finance (DeFi) by hard-coding the underlying logic directly into the node instead of relying on smart contract implementations.

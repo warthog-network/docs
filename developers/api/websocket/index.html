@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.5.3.829485167244">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.5.3.830424924380">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 4.5.3">
@@ -12,7 +12,7 @@
     <!-- Primary Meta Tags -->
     <title>WebSocket</title>
     <meta name="title" content="WebSocket">
-    <meta name="description" content="The WebSocket endpoint allows real-time data streams on several topics such as chain, account and connection related information. Subscribe with a message containing action: subscribe and unsubscribe similarly with action: unsubscribe, as shown below.">
+    <meta name="description" content="AI-Augmented Documentation — This file was updated to match the live node API schema (v0.10.3 a26330e). All examples reflect the schema structure. Report discrepancies to the maintainers.">
 
     <!-- Canonical -->
     <link rel="canonical" href="https://docs.warthog.network/developers/api/websocket/">
@@ -22,7 +22,7 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://docs.warthog.network/developers/api/websocket/">
     <meta property="og:title" content="WebSocket">
-    <meta property="og:description" content="The WebSocket endpoint allows real-time data streams on several topics such as chain, account and connection related information. Subscribe with a message containing action: subscribe and unsubscribe similarly with action: unsubscribe, as shown below.">
+    <meta property="og:description" content="AI-Augmented Documentation — This file was updated to match the live node API schema (v0.10.3 a26330e). All examples reflect the schema structure. Report discrepancies to the maintainers.">
     <meta property="og:site_name" content="Warthog Network">
     <meta property="og:locale" content="en_US">
 
@@ -30,19 +30,19 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://docs.warthog.network/developers/api/websocket/">
     <meta name="twitter:title" content="WebSocket">
-    <meta name="twitter:description" content="The WebSocket endpoint allows real-time data streams on several topics such as chain, account and connection related information. Subscribe with a message containing action: subscribe and unsubscribe similarly with action: unsubscribe, as shown below.">
+    <meta name="twitter:description" content="AI-Augmented Documentation — This file was updated to match the live node API schema (v0.10.3 a26330e). All examples reflect the schema structure. Report discrepancies to the maintainers.">
 
     <!-- Alternate Markdown -->
     <link rel="alternate" type="text/markdown" href="https://docs.warthog.network/developers/api/websocket.md">
 
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../../resources/css/retype.css?v=4.5.3.829485167244" rel="stylesheet">
+    <link href="../../../resources/css/retype.css?v=4.5.3.830424924380" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.5.3.829485167244" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.5.3.830424924380" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../../resources/js/retype.js?v=4.5.3" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.5.3.829485167244" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../../../resources/js/prism.js?v=4.5.3.829485167244" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.5.3.830424924380" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../../../resources/js/prism.js?v=4.5.3.830424924380" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -158,6 +158,9 @@
 
                 <!-- Page content  -->
 <h1 id="websocket-api">WebSocket API</h1>
+<blockquote>
+<p><strong>AI-Augmented Documentation</strong> — This file was updated to match the live node API schema (<code translate="no" v-pre>v0.10.3 &quot;a26330e&quot;</code>). All examples reflect the schema structure. Report discrepancies to the maintainers.</p>
+</blockquote>
 <p>The WebSocket endpoint allows real-time data streams on several topics such as <code translate="no" v-pre>chain</code>, <code translate="no" v-pre>account</code> and <code translate="no" v-pre>connection</code> related information. Subscribe with a message containing <code translate="no" v-pre>&quot;action&quot;: &quot;subscribe&quot;</code> and unsubscribe similarly with <code translate="no" v-pre>&quot;action&quot;: &quot;unsubscribe&quot;</code>, as shown below.</p>
 <h2 id="endpoint">Endpoint</h2>
 <div id="endpoint-code-1" class="codeblock-wrapper"><doc-codeblock>
@@ -177,19 +180,27 @@
   &quot;latestBlocks&quot;: [
     {
       &quot;body&quot;: {
-        &quot;rewards&quot;: [
-          {
-            &quot;amount&quot;: &quot;3.00000000&quot;,
-            &quot;amountE8&quot;: 300000000,
-            &quot;toAddress&quot;: &quot;f07353f22a59c6a98042f29ec87d1fc0f44a6c3ceea24797&quot;,
-            &quot;txHash&quot;: &quot;fe33577de3186c1869f9084bfe0aeaee2e92c8fe10f87eedb438036b341b98ef&quot;
+        &quot;reward&quot;: {
+          &quot;historyId&quot;: 123456789,
+          &quot;transaction&quot;: {
+            &quot;data&quot;: {
+              &quot;amount&quot;: &quot;3.00000000&quot;,
+              &quot;toAddress&quot;: &quot;f07353f22a59c6a98042f29ec87d1fc0f44a6c3ceea24797&quot;
+            },
+            &quot;hash&quot;: &quot;fe33577de3186c1869f9084bfe0aeaee2e92c8fe10f87eedb438036b341b98ef&quot;
           }
-        ],
-        &quot;transfers&quot;: []
+        },
+        &quot;wartTransfers&quot;: [],
+        &quot;tokenTransfers&quot;: [],
+        &quot;newOrders&quot;: [],
+        &quot;matches&quot;: [],
+        &quot;liquidityDeposits&quot;: [],
+        &quot;liquidityWithdrawals&quot;: [],
+        &quot;assetCreations&quot;: [],
+        &quot;cancelations&quot;: []
       },
       &quot;confirmations&quot;: 11,
       &quot;header&quot;: {
-        &quot;difficulty&quot;: 14142941042437.885,
         &quot;hash&quot;: &quot;80b200a9ac37d7c41d98ad1cc2d6add8ab50a3905bf52d8347b56955923c28bc&quot;,
         &quot;merkleroot&quot;: &quot;f3c41bf363fe94eb448bf924f791f77c22a2ebd6a3a5d8948f8aff019f072bea&quot;,
         &quot;nonce&quot;: &quot;2719fef5&quot;,
@@ -203,13 +214,10 @@
         &quot;prevHash&quot;: &quot;05b42d206f8a4b2b8094199fd28423151af8aa54a5073ac6e6805f42096dc3a2&quot;,
         &quot;raw&quot;: &quot;05b42d206f8a4b2b8094199fd28423151af8aa54a5073ac6e6805f42096dc3a20ae7cde7f3c41bf363fe94eb448bf924f791f77c22a2ebd6a3a5d8948f8aff019f072bea0000000366f2fefb2719fef5&quot;,
         &quot;target&quot;: &quot;0ae7cde7&quot;,
-        &quot;timestamp&quot;: 1727201019,
-        &quot;utc&quot;: &quot;2024-09-24 18:03:39 UTC&quot;,
+        &quot;time&quot;: 1727201019,
         &quot;version&quot;: &quot;00000003&quot;
       },
-      &quot;height&quot;: 1949766,
-      &quot;timestamp&quot;: 1727201019,
-      &quot;utc&quot;: &quot;2024-09-24 18:03:39 UTC&quot;
+      &quot;height&quot;: 1949766
     },
     ...
   ],
@@ -217,6 +225,7 @@
   &quot;head&quot;: {
     &quot;difficulty&quot;: 14142941042437.885,
     &quot;hash&quot;: &quot;cbaa8aefc5c5df6a4cfa8134bb6780895c0389f40a8c0f8ca9c627e1177ea2df&quot;,
+    &quot;hashrate&quot;: 140000000000000,
     &quot;height&quot;: 1949776,
     &quot;is_janushash&quot;: true,
     &quot;pinHash&quot;: &quot;568e30a9abdbc510c9a21ec2dcb636e66cd4d1fb60028a31c65906069114e988&quot;,
@@ -233,6 +242,7 @@
   &quot;head&quot;: {
     &quot;difficulty&quot;: 14142941042437.885,
     &quot;hash&quot;: &quot;1edd2043a92ac4747487aecaa7dc8145b6bf8ae4509c3bae4e4d9ad9727fe4ee&quot;,
+    &quot;hashrate&quot;: 140000000000000,
     &quot;height&quot;: 1950121,
     &quot;is_janushash&quot;: true,
     &quot;pinHash&quot;: &quot;ae8e35d5e0ab86b4a30612b37717e29ea2d4d21f039abe130fcb94b03079e073&quot;,
@@ -244,12 +254,18 @@
     &quot;data&quot;: [
       {
         &quot;body&quot;: {
-          &quot;rewards&quot;: [],
-          &quot;transfers&quot;: []
+          &quot;reward&quot;: null,
+          &quot;wartTransfers&quot;: [],
+          &quot;tokenTransfers&quot;: [],
+          &quot;newOrders&quot;: [],
+          &quot;matches&quot;: [],
+          &quot;liquidityDeposits&quot;: [],
+          &quot;liquidityWithdrawals&quot;: [],
+          &quot;assetCreations&quot;: [],
+          &quot;cancelations&quot;: []
         },
         &quot;confirmations&quot;: 0,
         &quot;header&quot;: {
-          &quot;difficulty&quot;: 14142941042437.885,
           &quot;hash&quot;: &quot;1edd2043a92ac4747487aecaa7dc8145b6bf8ae4509c3bae4e4d9ad9727fe4ee&quot;,
           &quot;merkleroot&quot;: &quot;dcfeba982307da35c0098709c20f4ea0a4f04e0bbcd1b0c34c8ecc30157159eb&quot;,
           &quot;nonce&quot;: &quot;1aace551&quot;,
@@ -263,13 +279,10 @@
           &quot;prevHash&quot;: &quot;8c8811ee10a9c5c7d23f6f4791cbf03b781531574d53f224278cb78531a4c2fe&quot;,
           &quot;raw&quot;: &quot;8c8811ee10a9c5c7d23f6f4791cbf03b781531574d53f224278cb78531a4c2fe0ae7cde7dcfeba982307da35c0098709c20f4ea0a4f04e0bbcd1b0c34c8ecc30157159eb0000000366f31e3c1aace551&quot;,
           &quot;target&quot;: &quot;0ae7cde7&quot;,
-          &quot;timestamp&quot;: 1727209020,
-          &quot;utc&quot;: &quot;2024-09-24 20:17:00 UTC&quot;,
+          &quot;time&quot;: 1727209020,
           &quot;version&quot;: &quot;00000003&quot;
         },
-        &quot;height&quot;: 1950121,
-        &quot;timestamp&quot;: 1727209020,
-        &quot;utc&quot;: &quot;2024-09-24 20:17:00 UTC&quot;
+        &quot;height&quot;: 1950121
       }
     ]
   }
@@ -282,6 +295,7 @@
   &quot;head&quot;: {
     &quot;difficulty&quot;: 14142941042437.885,
     &quot;hash&quot;: &quot;8bb4c08b71a496921d121460c55041678943c89107a59306fda948dfc2c8dc8a&quot;,
+    &quot;hashrate&quot;: 140000000000000,
     &quot;height&quot;: 1950129,
     &quot;is_janushash&quot;: true,
     &quot;pinHash&quot;: &quot;ae8e35d5e0ab86b4a30612b37717e29ea2d4d21f039abe130fcb94b03079e073&quot;,
@@ -293,19 +307,27 @@
     &quot;data&quot;: [
       {
         &quot;body&quot;: {
-          &quot;rewards&quot;: [
-            {
-              &quot;amount&quot;: &quot;3.00000000&quot;,
-              &quot;amountE8&quot;: 300000000,
-              &quot;toAddress&quot;: &quot;e4f3052d8c5858ddeca667b2130eec5886c8e9d7fcdea3ec&quot;,
-              &quot;txHash&quot;: &quot;a19c2b9410440e569c670ca223504379aa09697f7b061e8dbf04c2a7870fd9b1&quot;
+          &quot;reward&quot;: {
+            &quot;historyId&quot;: 123456790,
+            &quot;transaction&quot;: {
+              &quot;data&quot;: {
+                &quot;amount&quot;: &quot;3.00000000&quot;,
+                &quot;toAddress&quot;: &quot;e4f3052d8c5858ddeca667b2130eec5886c8e9d7fcdea3ec&quot;
+              },
+              &quot;hash&quot;: &quot;a19c2b9410440e569c670ca223504379aa09697f7b061e8dbf04c2a7870fd9b1&quot;
             }
-          ],
-          &quot;transfers&quot;: []
+          },
+          &quot;wartTransfers&quot;: [],
+          &quot;tokenTransfers&quot;: [],
+          &quot;newOrders&quot;: [],
+          &quot;matches&quot;: [],
+          &quot;liquidityDeposits&quot;: [],
+          &quot;liquidityWithdrawals&quot;: [],
+          &quot;assetCreations&quot;: [],
+          &quot;cancelations&quot;: []
         },
         &quot;confirmations&quot;: 11,
         &quot;header&quot;: {
-          &quot;difficulty&quot;: 14142941042437.885,
           &quot;hash&quot;: &quot;10b5ed6868f0e5c4fbd859a8dd5a68d7cf4c9038025acde37a004e9f02e7c85e&quot;,
           &quot;merkleroot&quot;: &quot;9205c8127aabd555acb7ff3f95733bd6ec19cb110c2878c55ae77b893fdec7ec&quot;,
           &quot;nonce&quot;: &quot;46f6a275&quot;,
@@ -313,19 +335,16 @@
             &quot;floatSha256t&quot;: 0.012585171731188893,
             &quot;floatVerus&quot;: 3.504885418321763e-15,
             &quot;hashSha256t&quot;: &quot;0338c8258ed30e6088b4b81cba45f5c40553be12af0323abb7418e2cf63becd7&quot;,
-            &quot;hashVerus&quot;: &quot;000000000000fc8db96d150937429ce192e0ad69458311c4d8415b720e59b6c0&quot;,
+            &quot;hashVerus&quot;: &quot;0000000000fc8db96d150937429ce192e0ad69458311c4d8415b720e59b6c0&quot;,
             &quot;verusV2.2&quot;: true
           },
           &quot;prevHash&quot;: &quot;30537a679be7d6082cc905be4a717ea7985f0853403a40dedea1be4e224916dd&quot;,
           &quot;raw&quot;: &quot;30537a679be7d6082cc905be4a717ea7985f0853403a40dedea1be4e224916dd0ae7cde79205c8127aabd555acb7ff3f95733bd6ec19cb110c2878c55ae77b893fdec7ec0000000366f31e0c46f6a275&quot;,
           &quot;target&quot;: &quot;0ae7cde7&quot;,
-          &quot;timestamp&quot;: 1727208972,
-          &quot;utc&quot;: &quot;2024-09-24 20:16:12 UTC&quot;,
+          &quot;time&quot;: 1727208972,
           &quot;version&quot;: &quot;00000003&quot;
         },
-        &quot;height&quot;: 1950119,
-        &quot;timestamp&quot;: 1727208972,
-        &quot;utc&quot;: &quot;2024-09-24 20:16:12 UTC&quot;
+        &quot;height&quot;: 1950119
       },
       ...
     ]
@@ -344,8 +363,11 @@
 <div id="1-accountstate-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-json"><code v-pre class="language-json">{
   &quot;address&quot;: &quot;f07353f22a59c6a98042f29ec87d1fc0f44a6c3ceea24797&quot;,
-  &quot;balance&quot;: &quot;51557.99973680&quot;,
-  &quot;balanceE8&quot;: 5155799973680,
+  &quot;wart&quot;: {
+    &quot;locked&quot;: &quot;0.00000000&quot;,
+    &quot;mempool&quot;: &quot;6.00000000&quot;,
+    &quot;total&quot;: &quot;51557.99973680&quot;
+  },
   &quot;eventName&quot;: &quot;account.state&quot;,
   &quot;history&quot;: []
 }</code></pre>
@@ -354,26 +376,38 @@
 <div id="2-accountdelta-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-json"><code v-pre class="language-json">{
   &quot;address&quot;: &quot;f07353f22a59c6a98042f29ec87d1fc0f44a6c3ceea24797&quot;,
-  &quot;balance&quot;: &quot;51551.99973680&quot;,
-  &quot;balanceE8&quot;: 5155199973680,
+  &quot;wart&quot;: {
+    &quot;locked&quot;: &quot;0.00000000&quot;,
+    &quot;mempool&quot;: &quot;6.00000000&quot;,
+    &quot;total&quot;: &quot;51551.99973680&quot;
+  },
   &quot;eventName&quot;: &quot;account.delta&quot;,
   &quot;history&quot;: {
-    &quot;data&quot;: [
+    &quot;fromId&quot;: 123456789,
+    &quot;perBlock&quot;: [
       {
         &quot;body&quot;: {
-          &quot;rewards&quot;: [
-            {
-              &quot;amount&quot;: &quot;3.00000000&quot;,
-              &quot;amountE8&quot;: 300000000,
-              &quot;toAddress&quot;: &quot;f07353f22a59c6a98042f29ec87d1fc0f44a6c3ceea24797&quot;,
-              &quot;txHash&quot;: &quot;fe33577de3186c1869f9084bfe0aeaee2e92c8fe10f87eedb438036b341b98ef&quot;
+          &quot;reward&quot;: {
+            &quot;historyId&quot;: 123456789,
+            &quot;transaction&quot;: {
+              &quot;data&quot;: {
+                &quot;amount&quot;: &quot;3.00000000&quot;,
+                &quot;toAddress&quot;: &quot;f07353f22a59c6a98042f29ec87d1fc0f44a6c3ceea24797&quot;
+              },
+              &quot;hash&quot;: &quot;fe33577de3186c1869f9084bfe0aeaee2e92c8fe10f87eedb438036b341b98ef&quot;
             }
-          ],
-          &quot;transfers&quot;: []
+          },
+          &quot;wartTransfers&quot;: [],
+          &quot;tokenTransfers&quot;: [],
+          &quot;newOrders&quot;: [],
+          &quot;matches&quot;: [],
+          &quot;liquidityDeposits&quot;: [],
+          &quot;liquidityWithdrawals&quot;: [],
+          &quot;assetCreations&quot;: [],
+          &quot;cancelations&quot;: []
         },
         &quot;confirmations&quot;: 0,
         &quot;header&quot;: {
-          &quot;difficulty&quot;: 14142941042437.885,
           &quot;hash&quot;: &quot;80b200a9ac37d7c41d98ad1cc2d6add8ab50a3905bf52d8347b56955923c28bc&quot;,
           &quot;merkleroot&quot;: &quot;f3c41bf363fe94eb448bf924f791f77c22a2ebd6a3a5d8948f8aff019f072bea&quot;,
           &quot;nonce&quot;: &quot;2719fef5&quot;,
@@ -387,13 +421,10 @@
           &quot;prevHash&quot;: &quot;05b42d206f8a4b2b8094199fd28423151af8aa54a5073ac6e6805f42096dc3a2&quot;,
           &quot;raw&quot;: &quot;05b42d206f8a4b2b8094199fd28423151af8aa54a5073ac6e6805f42096dc3a20ae7cde7f3c41bf363fe94eb448bf924f791f77c22a2ebd6a3a5d8948f8aff019f072bea0000000366f2fefb2719fef5&quot;,
           &quot;target&quot;: &quot;0ae7cde7&quot;,
-          &quot;timestamp&quot;: 1727201019,
-          &quot;utc&quot;: &quot;2024-09-24 18:03:39 UTC&quot;,
+          &quot;time&quot;: 1727201019,
           &quot;version&quot;: &quot;00000003&quot;
         },
-        &quot;height&quot;: 1949766,
-        &quot;timestamp&quot;: 1727201019,
-        &quot;utc&quot;: &quot;2024-09-24 18:03:39 UTC&quot;
+        &quot;height&quot;: 1949766
       }
     ]
   }
@@ -411,17 +442,13 @@
 <pre translate="no" class="language-json"><code v-pre class="language-json">{
   &quot;connections&quot;: [
     {
-      &quot;id&quot;: 22,
-      &quot;inbound&quot;: false,
-      &quot;peerAddr&quot;: &quot;tcp://213.199.59.252:20016&quot;,
-      &quot;since&quot;: 0
+      &quot;endpoint&quot;: &quot;tcp://213.199.59.252:20016&quot;,
+      &quot;id&quot;: 22
     },
     ...
     {
-      &quot;id&quot;: 1261,
-      &quot;inbound&quot;: false,
-      &quot;peerAddr&quot;: &quot;tcp://51.222.248.202:9186&quot;,
-      &quot;since&quot;: 0
+      &quot;endpoint&quot;: &quot;tcp://51.222.248.202:9186&quot;,
+      &quot;id&quot;: 1261
     }
   ],
   &quot;eventName&quot;: &quot;connection.state&quot;,
@@ -432,10 +459,8 @@
 <div id="2-connectionadd-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-json"><code v-pre class="language-json">{
   &quot;connection&quot;: {
-    &quot;id&quot;: 83,
-    &quot;inbound&quot;: false,
-    &quot;peerAddr&quot;: &quot;tcp://65.21.76.159:9186&quot;,
-    &quot;since&quot;: 0
+    &quot;endpoint&quot;: &quot;tcp://65.21.76.159:9186&quot;,
+    &quot;id&quot;: 83
   },
   &quot;eventName&quot;: &quot;connection.add&quot;,
   &quot;total&quot;: 3

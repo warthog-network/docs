@@ -362,7 +362,9 @@ For efficiency, fees are encoded as 2-byte floating-point numbers (16 bits):
 - First 6 bits: exponent
 - Remaining 10 bits: 11-bit mantissa (with implicit leading 1)
 
-Only 64-bit values exactly representable in 16 bits are accepted. Use these endpoints to round arbitrary values:
+Only 64-bit values exactly representable in 16 bits are accepted. 
+
+The recommended way is to round on client side, see the [official client libraries](../libraries.md) for reference. For quick prototyping use these endpoints to round arbitrary values on node side:
 
 - `GET /tools/encode16bit/from_e8/:feeE8` - Round from numeric value
 - `GET /tools/encode16bit/from_string/:string` - Round from string
