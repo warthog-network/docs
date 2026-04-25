@@ -12,7 +12,7 @@ This directory contains the source-of-truth reference files for the Warthog node
 
 ### Scope
 
-All API-related documentation files must be kept in sync with `api.txt` and `schemas.json`. **Nothing shall be left stale.** Any example, field name, type, or structure that diverges from the schema is a bug. This includes but is not limited to:
+All API-related documentation files must be kept in sync with `api.html` and `schemas.json`. **Nothing shall be left stale.** Any example, field name, type, or structure that diverges from the schema is a bug. This includes but is not limited to:
 
 - `rest.md` — overview table, endpoint examples, field names, types, anchors
 - `rest/block-actions.md` — block body field structures
@@ -20,13 +20,13 @@ All API-related documentation files must be kept in sync with `api.txt` and `sch
 - `rest/mempool-transactions.md` — mempool field structures (currently empty; pending live API verification)
 - `websocket.md` — if applicable
 
-When in doubt: schema wins. If `api.txt` or `schemas.json` changes, all affected API docs must be updated accordingly.
+When in doubt: schema wins. If `api.html` or `schemas.json` changes, all affected API docs must be updated accordingly.
 
 ## 2. Reference Files
 
 | File | Description | Source |
 |------|-------------|--------|
-| `api.txt` | Categorized list of all endpoints with C++ return types | Stripped version of `/debug/html_schemas` (links removed) |
+| `api.html` | Raw HTML output of the node's `/debug/html_schemas` endpoint |
 | `schemas.json` | JSON array of all JSON schemas for return types | Raw output of `/debug/json_schemas` |
 | `Agents.md` | This file — guide for AI agents | Manual |
 
@@ -34,24 +34,24 @@ When in doubt: schema wins. If `api.txt` or `schemas.json` changes, all affected
 
 ### Option A — Paste files (current)
 
-1. User pastes `api.txt` and `schemas.json` into `_agents/`
+1. User pastes `api.html` and `schemas.json` into `_agents/`
 2. AI agent reads these files to update documentation
 
 ### Option B — Direct API calls (future)
 
 1. AI agent asks user for the RPC port (default `3000`)
 2. AI agent calls `GET http://localhost:<port>/debug/json_schemas` → `schemas.json`
-3. AI agent calls `GET http://localhost:<port>/debug/html_schemas` → `api.txt` (strip links)
+3. AI agent calls `GET http://localhost:<port>/debug/html_schemas` → `api.html` (strip links)
 4. AI agent uses response to update documentation
 
 Both options produce identical content.
 
-## 4. How to Interpret `api.txt`
+## 4. How to Interpret `api.html`
 
-`api.txt` is organized into category sections, each starting with a heading line:
+`api.html` is organized into category sections, each starting with a heading line:
 
 ```
-API for Warthog node version v0.10.3 "a26330e"
+API for Warthog node version v0.10.3 "996c267"
 Transaction Endpoints
 
     POST /transaction/add -> TransactionAddResult
@@ -69,7 +69,7 @@ Transaction Endpoints
 
 ## 5. How to Interpret `schemas.json`
 
-`schemas.json` is a single-line JSON array (~42KB). To look up a schema, find the entry whose key matches the return type from `api.txt`.
+`schemas.json` is a single-line JSON array (~42KB). To look up a schema, find the entry whose key matches the return type from `api.html`.
 
 ### Schema Extraction Commands
 
@@ -132,9 +132,9 @@ Many schemas use nested `$ref` targets. The agent must walk the chain to find th
 
 ### Schema Key → Return Type Lookup
 
-Not all schema keys match the C++ return type names from `api.txt` exactly:
+Not all schema keys match the C++ return type names from `api.html` exactly:
 
-| api.txt return type | schema key to look up |
+| api.html return type | schema key to look up |
 |----------------------|-----------------------|
 | `-> TransactionMinfeeResult` | `TransactionMinfeeResult` |
 | `-> std::vector<MempoolEntry>` | `MempoolEntry` |
@@ -157,7 +157,7 @@ Every API endpoint returns an outer wrapper object:
 ```json
 {
   "code": 0,
-  "data": <inner return type from api.txt>
+  "data": <inner return type from api.html>
 }
 ```
 
@@ -173,7 +173,7 @@ Documentation examples should show the inner type. The wrapper should not be rep
 
 ## 7. Special Endpoints
 
-Two endpoints in `api.txt` do not follow the standard wrapper pattern:
+Two endpoints in `api.html` do not follow the standard wrapper pattern:
 
 | Endpoint | Description |
 |----------|-------------|
@@ -224,7 +224,7 @@ Every action entry follows this pattern:
 
 The schema is the source of truth. The `BlockActions` schema lists exactly 9 action types:
 
-`reward`, `wartTransfers`, `tokenTransfers`, `newOrders`, `matches`, `liquidityDeposits`, `liquidityWithdrawals`, `assetCreations`, `cancelations`
+`reward`, `wartTransfer`, `tokenTransfer`, `limitSwap`, `match`, `liquidityDeposit`, `liquidityWithdrawal`, `assetCreation`, `cancelation`
 
 Any action type not in this list should not be documented. Any field within an action type that is not in its schema should not be documented. When the schema and the live API output differ, the schema definition in `schemas.json` is authoritative for documentation purposes. If neither matches, ask the user for clarification or C++ source code (`tx_to_json` functions).
 
@@ -234,12 +234,12 @@ Any action type not in this list should not be documented. Any field within an a
 
 ### Overview table
 
-- **MUST** reflect `api.txt` exactly — every endpoint present in `api.txt` must appear in the table, with correct path, method, and description
-- **MUST** match the category order from `api.txt`
-- **MUST** add new endpoints that appear in `api.txt` but not in `rest.md`
-- **MUST** remove endpoints that are in `rest.md` but not in `api.txt`
+- **MUST** reflect `api.html` exactly — every endpoint present in `api.html` must appear in the table, with correct path, method, and description
+- **MUST** match the category order from `api.html`
+- **MUST** add new endpoints that appear in `api.html` but not in `rest.md`
+- **MUST** remove endpoints that are in `rest.md` but not in `api.html`
 - **MUST** rename endpoints that changed path (e.g. `/market/:market` → `/dex/market/:market`)
-- **MUST** update the version string at the top to match `api.txt`
+- **MUST** update the version string at the top to match `api.html`
 
 ### Detailed sections
 
@@ -248,7 +248,7 @@ Any action type not in this list should not be documented. Any field within an a
 - **Add** new fields that exist in `schemas.json` but are missing from the docs
 - **Augment** with information from `schemas.json` (structure, types, optional vs required)
 - **REMOVE** fields that exist in the documentation but NOT in `schemas.json` — the schema is authoritative. Do not keep stale fields for backward compatibility or readability reasons.
-- If a detailed section exists in `rest.md` but the endpoint is not in `api.txt`, **remove it**
+- If a detailed section exists in `rest.md` but the endpoint is not in `api.html`, **remove it**
 
 ### Query parameters
 
@@ -273,7 +273,7 @@ Update all anchor links (`#anchor`) to match renamed endpoint paths. The format 
 ### Schema-derived example generation
 
 When generating a new example from a schema:
-1. Look up the return type schema from `api.txt`
+1. Look up the return type schema from `api.html`
 2. Walk the `$defs` chain for all nested types
 3. For each field: use the type to pick an appropriate abbreviated value
 4. For arrays: show one representative entry, use `...` for the rest
@@ -307,22 +307,22 @@ When updating documentation, maintain these conventions:
 
 ## 14. Step-by-Step Update Checklist
 
-When `api.txt` or `schemas.json` changes, follow this sequence:
+When `api.html` or `schemas.json` changes, follow this sequence:
 
-1. **Update version** — Top of `rest.md`: replace version string with the one from `api.txt` line 2
+1. **Update version** — Top of `rest.md`: replace version string with the one from `api.html` line 2
 
-2. **Rebuild Overview table** — Compare `api.txt` line-by-line against the table:
+2. **Rebuild Overview table** — Compare `api.html` line-by-line against the table:
    - Add rows for new endpoints
    - Remove rows for deleted endpoints
    - Rename paths that changed
-   - Reorder rows to match `api.txt` category order
+   - Reorder rows to match `api.html` category order
 
 3. **Rename section anchors** — For each renamed endpoint, update its section heading anchor (`### `GET /old/path`` → `### `GET /new/path``)
 
-4. **Remove stale sections** — If a detailed section exists for an endpoint NOT in `api.txt`, delete it entirely (e.g. `/market/:market/order/:historyId`)
+4. **Remove stale sections** — If a detailed section exists for an endpoint NOT in `api.html`, delete it entirely (e.g. `/market/:market/order/:historyId`)
 
-5. **Update detailed sections** — For each endpoint in `api.txt`:
-   a. Find its return type in `api.txt`
+5. **Update detailed sections** — For each endpoint in `api.html`:
+   a. Find its return type in `api.html`
    b. Extract the schema from `schemas.json` using the extraction commands
    c. Walk `$defs` chain for nested types
    d. Compare schema against existing example in `rest.md`
@@ -351,7 +351,7 @@ If you encounter ambiguities during the update process, ask the user before proc
 - An endpoint has changed purpose but the new behavior is unclear
 - A field in the schema appears to be internal (not meant for API consumers)
 - The agent needs C++ source code to understand the exact semantics of a field
-- There is conflicting information between `api.txt` and `schemas.json`
+- There is conflicting information between `api.html` and `schemas.json`
 - The schema does not match any existing example and the agent is unsure which variant to document
 
 ## 16. Improving This Guide

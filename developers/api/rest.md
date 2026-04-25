@@ -7,7 +7,7 @@ title: REST
 This documentation was partially generated with AI augmentation. Report inconsistencies at [github.com/warthog-network/docs/issues](https://github.com/warthog-network/docs/issues).
 !!!
 
-API for Warthog node version v0.10.3 "a26330e"
+API for Warthog node version v0.10.3 "996c267"
 
 ## Configuration
 
@@ -48,7 +48,7 @@ Below we assume the RPC socket is accessible at `localhost:3000`. On startup the
 | `GET` | [`/settings/mempool/minfee/:feeE8`](#get-settingsmempoolminfeefeee8) | Adjust the minimum transaction fee |
 | `GET` | [`/chain/head`](#get-chainhead) | Show info on chain head |
 | `GET` | [`/chain/grid`](#get-chaingrid) | Show header grid (used for sync) |
-| `GET` | [`/chain/block/:id/hash`](#get-chainblockidhash) | Show hash of specific block |
+| `GET` | [`/chain/block/:height/hash`](#get-chainblockheighthash) | Show hash of specific block |
 | `GET` | [`/chain/block/:id/header`](#get-chainblockidheader) | Show header of specific block |
 | `GET` | [`/chain/block/:id/binary`](#get-chainblockidbinary) | Show binary data of specific block |
 | `GET` | [`/chain/block/:id`](#get-chainblockid) | Show header and body of specific block |
@@ -222,16 +222,16 @@ Show latest transactions. Returns the most recent blocks with their actions. On 
 Each block in the returned `perBlock` array has the structure
 ```json
 {
- "actions":{
+ "body":{
   "reward": ... // null or reward
-  "wartTransfers": [...],
-  "tokenTransfers": [...],
-  "newOrders": [...],
-  "matches": [...],
-  "liquidityDeposits": [...],
-  "liquidityWithdrawals": [...],
-  "assetCreations": [...],
-  "cancelations": [...]
+  "wartTransfer": [...],
+  "tokenTransfer": [...],
+  "limitSwap": [...],
+  "match": [...],
+  "liquidityDeposit": [...],
+  "liquidityWithdrawal": [...],
+  "assetCreation": [...],
+  "cancelation": [...]
  }
 }
 ```
@@ -255,7 +255,7 @@ See [Transactions](./rest/transactions.md) for details. In contrast to the `/tra
    {
     "height": 1,
     "confirmations": 25,
-    "actions": {
+    "body": {
      "reward": {
       "transaction": {
        "data": {
@@ -269,20 +269,20 @@ See [Transactions](./rest/transactions.md) for details. In contrast to the `/tra
       },
       "historyId": 1
      },
-     "wartTransfers": [],
-     "tokenTransfers": [],
-     "newOrders": [],
-     "matches": [],
-     "liquidityDeposits": [],
-     "liquidityWithdrawals": [],
-     "assetCreations": [],
-     "cancelations": []
+     "wartTransfer": [],
+     "tokenTransfer": [],
+     "limitSwap": [],
+     "match": [],
+     "liquidityDeposit": [],
+     "liquidityWithdrawal": [],
+     "assetCreation": [],
+     "cancelation": []
     }
    },
    {
     "height": 2,
     "confirmations": 24,
-    "actions": {
+    "body": {
      "reward": {
       "transaction": {
        "data": {
@@ -296,20 +296,20 @@ See [Transactions](./rest/transactions.md) for details. In contrast to the `/tra
       },
       "historyId": 2
      },
-     "wartTransfers": [],
-     "tokenTransfers": [],
-     "newOrders": [],
-     "matches": [],
-     "liquidityDeposits": [],
-     "liquidityWithdrawals": [],
-     "assetCreations": [],
-     "cancelations": []
+     "wartTransfer": [],
+     "tokenTransfer": [],
+     "limitSwap": [],
+     "match": [],
+     "liquidityDeposit": [],
+     "liquidityWithdrawal": [],
+     "assetCreation": [],
+     "cancelation": []
     }
    },
    {
     "height": 3,
     "confirmations": 23,
-    "actions": {
+    "body": {
      "reward": {
       "transaction": {
        "data": {
@@ -323,13 +323,13 @@ See [Transactions](./rest/transactions.md) for details. In contrast to the `/tra
       },
       "historyId": 3
      },
-     "wartTransfers": [],
-     "tokenTransfers": [],
-     "newOrders": [],
-     "matches": [],
-     "liquidityDeposits": [],
-     "liquidityWithdrawals": [],
-     "assetCreations": [
+     "wartTransfer": [],
+     "tokenTransfer": [],
+     "limitSwap": [],
+     "match": [],
+     "liquidityDeposit": [],
+     "liquidityWithdrawal": [],
+     "assetCreation": [
       {
        "transaction": {
         "data": {
@@ -358,13 +358,13 @@ See [Transactions](./rest/transactions.md) for details. In contrast to the `/tra
        "historyId": 4
       }
      ],
-     "cancelations": []
+     "cancelation": []
     }
    },
    {
     "height": 4,
     "confirmations": 22,
-    "actions": {
+    "body": {
      "reward": {
       "transaction": {
        "data": {
@@ -378,13 +378,13 @@ See [Transactions](./rest/transactions.md) for details. In contrast to the `/tra
       },
       "historyId": 5
      },
-     "wartTransfers": [],
-     "tokenTransfers": [],
-     "newOrders": [],
-     "matches": [],
-     "liquidityDeposits": [],
-     "liquidityWithdrawals": [],
-     "assetCreations": [
+     "wartTransfer": [],
+     "tokenTransfer": [],
+     "limitSwap": [],
+     "match": [],
+     "liquidityDeposit": [],
+     "liquidityWithdrawal": [],
+     "assetCreation": [
       {
        "transaction": {
         "data": {
@@ -413,13 +413,13 @@ See [Transactions](./rest/transactions.md) for details. In contrast to the `/tra
        "historyId": 6
       }
      ],
-     "cancelations": []
+     "cancelation": []
     }
    },
    {
     "height": 5,
     "confirmations": 21,
-    "actions": {
+    "body": {
      "reward": {
       "transaction": {
        "data": {
@@ -433,20 +433,20 @@ See [Transactions](./rest/transactions.md) for details. In contrast to the `/tra
       },
       "historyId": 7
      },
-     "wartTransfers": [],
-     "tokenTransfers": [],
-     "newOrders": [],
-     "matches": [],
-     "liquidityDeposits": [],
-     "liquidityWithdrawals": [],
-     "assetCreations": [],
-     "cancelations": []
+     "wartTransfer": [],
+     "tokenTransfer": [],
+     "limitSwap": [],
+     "match": [],
+     "liquidityDeposit": [],
+     "liquidityWithdrawal": [],
+     "assetCreation": [],
+     "cancelation": []
     }
    },
    {
     "height": 6,
     "confirmations": 20,
-    "actions": {
+    "body": {
      "reward": {
       "transaction": {
        "data": {
@@ -460,20 +460,20 @@ See [Transactions](./rest/transactions.md) for details. In contrast to the `/tra
       },
       "historyId": 8
      },
-     "wartTransfers": [],
-     "tokenTransfers": [],
-     "newOrders": [],
-     "matches": [],
-     "liquidityDeposits": [],
-     "liquidityWithdrawals": [],
-     "assetCreations": [],
-     "cancelations": []
+     "wartTransfer": [],
+     "tokenTransfer": [],
+     "limitSwap": [],
+     "match": [],
+     "liquidityDeposit": [],
+     "liquidityWithdrawal": [],
+     "assetCreation": [],
+     "cancelation": []
     }
    },
    {
     "height": 7,
     "confirmations": 19,
-    "actions": {
+    "body": {
      "reward": {
       "transaction": {
        "data": {
@@ -487,13 +487,13 @@ See [Transactions](./rest/transactions.md) for details. In contrast to the `/tra
       },
       "historyId": 9
      },
-     "wartTransfers": [],
-     "tokenTransfers": [],
-     "newOrders": [],
-     "matches": [],
-     "liquidityDeposits": [],
-     "liquidityWithdrawals": [],
-     "assetCreations": [
+     "wartTransfer": [],
+     "tokenTransfer": [],
+     "limitSwap": [],
+     "match": [],
+     "liquidityDeposit": [],
+     "liquidityWithdrawal": [],
+     "assetCreation": [
       {
        "transaction": {
         "data": {
@@ -522,13 +522,13 @@ See [Transactions](./rest/transactions.md) for details. In contrast to the `/tra
        "historyId": 10
       }
      ],
-     "cancelations": []
+     "cancelation": []
     }
    },
    {
     "height": 8,
     "confirmations": 18,
-    "actions": {
+    "body": {
      "reward": {
       "transaction": {
        "data": {
@@ -542,11 +542,11 @@ See [Transactions](./rest/transactions.md) for details. In contrast to the `/tra
       },
       "historyId": 11
      },
-     "wartTransfers": [],
-     "tokenTransfers": [],
-     "newOrders": [],
-     "matches": [],
-     "liquidityDeposits": [
+     "wartTransfer": [],
+     "tokenTransfer": [],
+     "limitSwap": [],
+     "match": [],
+     "liquidityDeposit": [
       {
        "transaction": {
         "data": {
@@ -590,15 +590,15 @@ See [Transactions](./rest/transactions.md) for details. In contrast to the `/tra
        "historyId": 12
       }
      ],
-     "liquidityWithdrawals": [],
-     "assetCreations": [],
-     "cancelations": []
+     "liquidityWithdrawal": [],
+     "assetCreation": [],
+     "cancelation": []
     }
    },
    {
     "height": 9,
     "confirmations": 17,
-    "actions": {
+    "body": {
      "reward": {
       "transaction": {
        "data": {
@@ -612,20 +612,20 @@ See [Transactions](./rest/transactions.md) for details. In contrast to the `/tra
       },
       "historyId": 13
      },
-     "wartTransfers": [],
-     "tokenTransfers": [],
-     "newOrders": [],
-     "matches": [],
-     "liquidityDeposits": [],
-     "liquidityWithdrawals": [],
-     "assetCreations": [],
-     "cancelations": []
+     "wartTransfer": [],
+     "tokenTransfer": [],
+     "limitSwap": [],
+     "match": [],
+     "liquidityDeposit": [],
+     "liquidityWithdrawal": [],
+     "assetCreation": [],
+     "cancelation": []
     }
    },
    {
     "height": 10,
     "confirmations": 16,
-    "actions": {
+    "body": {
      "reward": {
       "transaction": {
        "data": {
@@ -639,9 +639,9 @@ See [Transactions](./rest/transactions.md) for details. In contrast to the `/tra
       },
       "historyId": 14
      },
-     "wartTransfers": [],
-     "tokenTransfers": [],
-     "newOrders": [
+     "wartTransfer": [],
+     "tokenTransfer": [],
+     "limitSwap": [
       {
        "transaction": {
         "data": {
@@ -688,7 +688,7 @@ See [Transactions](./rest/transactions.md) for details. In contrast to the `/tra
        "historyId": 15
       }
      ],
-     "matches": [
+     "match": [
       {
        "transaction": {
         "data": {
@@ -728,16 +728,16 @@ See [Transactions](./rest/transactions.md) for details. In contrast to the `/tra
        "historyId": 16
       }
      ],
-     "liquidityDeposits": [],
-     "liquidityWithdrawals": [],
-     "assetCreations": [],
-     "cancelations": []
+     "liquidityDeposit": [],
+     "liquidityWithdrawal": [],
+     "assetCreation": [],
+     "cancelation": []
     }
    },
    {
     "height": 11,
     "confirmations": 15,
-    "actions": {
+    "body": {
      "reward": {
       "transaction": {
        "data": {
@@ -751,9 +751,9 @@ See [Transactions](./rest/transactions.md) for details. In contrast to the `/tra
       },
       "historyId": 17
      },
-     "wartTransfers": [],
-     "tokenTransfers": [],
-     "newOrders": [
+     "wartTransfer": [],
+     "tokenTransfer": [],
+     "limitSwap": [
       {
        "transaction": {
         "data": {
@@ -800,7 +800,7 @@ See [Transactions](./rest/transactions.md) for details. In contrast to the `/tra
        "historyId": 18
       }
      ],
-     "matches": [
+     "match": [
       {
        "transaction": {
         "data": {
@@ -840,16 +840,16 @@ See [Transactions](./rest/transactions.md) for details. In contrast to the `/tra
        "historyId": 19
       }
      ],
-     "liquidityDeposits": [],
-     "liquidityWithdrawals": [],
-     "assetCreations": [],
-     "cancelations": []
+     "liquidityDeposit": [],
+     "liquidityWithdrawal": [],
+     "assetCreation": [],
+     "cancelation": []
     }
    },
    {
     "height": 12,
     "confirmations": 14,
-    "actions": {
+    "body": {
      "reward": {
       "transaction": {
        "data": {
@@ -863,9 +863,9 @@ See [Transactions](./rest/transactions.md) for details. In contrast to the `/tra
       },
       "historyId": 20
      },
-     "wartTransfers": [],
-     "tokenTransfers": [],
-     "newOrders": [
+     "wartTransfer": [],
+     "tokenTransfer": [],
+     "limitSwap": [
       {
        "transaction": {
         "data": {
@@ -957,7 +957,7 @@ See [Transactions](./rest/transactions.md) for details. In contrast to the `/tra
        "historyId": 21
       }
      ],
-     "matches": [
+     "match": [
       {
        "transaction": {
         "data": {
@@ -997,16 +997,16 @@ See [Transactions](./rest/transactions.md) for details. In contrast to the `/tra
        "historyId": 23
       }
      ],
-     "liquidityDeposits": [],
-     "liquidityWithdrawals": [],
-     "assetCreations": [],
-     "cancelations": []
+     "liquidityDeposit": [],
+     "liquidityWithdrawal": [],
+     "assetCreation": [],
+     "cancelation": []
     }
    },
    {
     "height": 13,
     "confirmations": 13,
-    "actions": {
+    "body": {
      "reward": {
       "transaction": {
        "data": {
@@ -1020,9 +1020,9 @@ See [Transactions](./rest/transactions.md) for details. In contrast to the `/tra
       },
       "historyId": 24
      },
-     "wartTransfers": [],
-     "tokenTransfers": [],
-     "newOrders": [
+     "wartTransfer": [],
+     "tokenTransfer": [],
+     "limitSwap": [
       {
        "transaction": {
         "data": {
@@ -1114,7 +1114,7 @@ See [Transactions](./rest/transactions.md) for details. In contrast to the `/tra
        "historyId": 25
       }
      ],
-     "matches": [
+     "match": [
       {
        "transaction": {
         "data": {
@@ -1154,16 +1154,16 @@ See [Transactions](./rest/transactions.md) for details. In contrast to the `/tra
        "historyId": 27
       }
      ],
-     "liquidityDeposits": [],
-     "liquidityWithdrawals": [],
-     "assetCreations": [],
-     "cancelations": []
+     "liquidityDeposit": [],
+     "liquidityWithdrawal": [],
+     "assetCreation": [],
+     "cancelation": []
     }
    },
    {
     "height": 14,
     "confirmations": 12,
-    "actions": {
+    "body": {
      "reward": {
       "transaction": {
        "data": {
@@ -1177,9 +1177,9 @@ See [Transactions](./rest/transactions.md) for details. In contrast to the `/tra
       },
       "historyId": 28
      },
-     "wartTransfers": [],
-     "tokenTransfers": [],
-     "newOrders": [
+     "wartTransfer": [],
+     "tokenTransfer": [],
+     "limitSwap": [
       {
        "transaction": {
         "data": {
@@ -1226,7 +1226,7 @@ See [Transactions](./rest/transactions.md) for details. In contrast to the `/tra
        "historyId": 29
       }
      ],
-     "matches": [
+     "match": [
       {
        "transaction": {
         "data": {
@@ -1266,16 +1266,16 @@ See [Transactions](./rest/transactions.md) for details. In contrast to the `/tra
        "historyId": 30
       }
      ],
-     "liquidityDeposits": [],
-     "liquidityWithdrawals": [],
-     "assetCreations": [],
-     "cancelations": []
+     "liquidityDeposit": [],
+     "liquidityWithdrawal": [],
+     "assetCreation": [],
+     "cancelation": []
     }
    },
    {
     "height": 15,
     "confirmations": 11,
-    "actions": {
+    "body": {
      "reward": {
       "transaction": {
        "data": {
@@ -1289,20 +1289,20 @@ See [Transactions](./rest/transactions.md) for details. In contrast to the `/tra
       },
       "historyId": 31
      },
-     "wartTransfers": [],
-     "tokenTransfers": [],
-     "newOrders": [],
-     "matches": [],
-     "liquidityDeposits": [],
-     "liquidityWithdrawals": [],
-     "assetCreations": [],
-     "cancelations": []
+     "wartTransfer": [],
+     "tokenTransfer": [],
+     "limitSwap": [],
+     "match": [],
+     "liquidityDeposit": [],
+     "liquidityWithdrawal": [],
+     "assetCreation": [],
+     "cancelation": []
     }
    },
    {
     "height": 16,
     "confirmations": 10,
-    "actions": {
+    "body": {
      "reward": {
       "transaction": {
        "data": {
@@ -1316,20 +1316,20 @@ See [Transactions](./rest/transactions.md) for details. In contrast to the `/tra
       },
       "historyId": 32
      },
-     "wartTransfers": [],
-     "tokenTransfers": [],
-     "newOrders": [],
-     "matches": [],
-     "liquidityDeposits": [],
-     "liquidityWithdrawals": [],
-     "assetCreations": [],
-     "cancelations": []
+     "wartTransfer": [],
+     "tokenTransfer": [],
+     "limitSwap": [],
+     "match": [],
+     "liquidityDeposit": [],
+     "liquidityWithdrawal": [],
+     "assetCreation": [],
+     "cancelation": []
     }
    },
    {
     "height": 17,
     "confirmations": 9,
-    "actions": {
+    "body": {
      "reward": {
       "transaction": {
        "data": {
@@ -1343,20 +1343,20 @@ See [Transactions](./rest/transactions.md) for details. In contrast to the `/tra
       },
       "historyId": 33
      },
-     "wartTransfers": [],
-     "tokenTransfers": [],
-     "newOrders": [],
-     "matches": [],
-     "liquidityDeposits": [],
-     "liquidityWithdrawals": [],
-     "assetCreations": [],
-     "cancelations": []
+     "wartTransfer": [],
+     "tokenTransfer": [],
+     "limitSwap": [],
+     "match": [],
+     "liquidityDeposit": [],
+     "liquidityWithdrawal": [],
+     "assetCreation": [],
+     "cancelation": []
     }
    },
    {
     "height": 18,
     "confirmations": 8,
-    "actions": {
+    "body": {
      "reward": {
       "transaction": {
        "data": {
@@ -1370,20 +1370,20 @@ See [Transactions](./rest/transactions.md) for details. In contrast to the `/tra
       },
       "historyId": 34
      },
-     "wartTransfers": [],
-     "tokenTransfers": [],
-     "newOrders": [],
-     "matches": [],
-     "liquidityDeposits": [],
-     "liquidityWithdrawals": [],
-     "assetCreations": [],
-     "cancelations": []
+     "wartTransfer": [],
+     "tokenTransfer": [],
+     "limitSwap": [],
+     "match": [],
+     "liquidityDeposit": [],
+     "liquidityWithdrawal": [],
+     "assetCreation": [],
+     "cancelation": []
     }
    },
    {
     "height": 19,
     "confirmations": 7,
-    "actions": {
+    "body": {
      "reward": {
       "transaction": {
        "data": {
@@ -1397,20 +1397,20 @@ See [Transactions](./rest/transactions.md) for details. In contrast to the `/tra
       },
       "historyId": 35
      },
-     "wartTransfers": [],
-     "tokenTransfers": [],
-     "newOrders": [],
-     "matches": [],
-     "liquidityDeposits": [],
-     "liquidityWithdrawals": [],
-     "assetCreations": [],
-     "cancelations": []
+     "wartTransfer": [],
+     "tokenTransfer": [],
+     "limitSwap": [],
+     "match": [],
+     "liquidityDeposit": [],
+     "liquidityWithdrawal": [],
+     "assetCreation": [],
+     "cancelation": []
     }
    },
    {
     "height": 20,
     "confirmations": 6,
-    "actions": {
+    "body": {
      "reward": {
       "transaction": {
        "data": {
@@ -1424,9 +1424,9 @@ See [Transactions](./rest/transactions.md) for details. In contrast to the `/tra
       },
       "historyId": 36
      },
-     "wartTransfers": [],
-     "tokenTransfers": [],
-     "newOrders": [
+     "wartTransfer": [],
+     "tokenTransfer": [],
+     "limitSwap": [
       {
        "transaction": {
         "data": {
@@ -1473,7 +1473,7 @@ See [Transactions](./rest/transactions.md) for details. In contrast to the `/tra
        "historyId": 37
       }
      ],
-     "matches": [
+     "match": [
       {
        "transaction": {
         "data": {
@@ -1571,16 +1571,16 @@ See [Transactions](./rest/transactions.md) for details. In contrast to the `/tra
        "historyId": 38
       }
      ],
-     "liquidityDeposits": [],
-     "liquidityWithdrawals": [],
-     "assetCreations": [],
-     "cancelations": []
+     "liquidityDeposit": [],
+     "liquidityWithdrawal": [],
+     "assetCreation": [],
+     "cancelation": []
     }
    },
    {
     "height": 21,
     "confirmations": 5,
-    "actions": {
+    "body": {
      "reward": {
       "transaction": {
        "data": {
@@ -1594,7 +1594,7 @@ See [Transactions](./rest/transactions.md) for details. In contrast to the `/tra
       },
       "historyId": 39
      },
-     "wartTransfers": [
+     "wartTransfer": [
       {
        "transaction": {
         "data": {
@@ -1619,7 +1619,7 @@ See [Transactions](./rest/transactions.md) for details. In contrast to the `/tra
        "historyId": 40
       }
      ],
-     "tokenTransfers": [
+     "tokenTransfer": [
       {
        "transaction": {
         "data": {
@@ -1653,9 +1653,9 @@ See [Transactions](./rest/transactions.md) for details. In contrast to the `/tra
        "historyId": 41
       }
      ],
-     "newOrders": [],
-     "matches": [],
-     "liquidityDeposits": [
+     "limitSwap": [],
+     "match": [],
+     "liquidityDeposit": [
       {
        "transaction": {
         "data": {
@@ -1741,8 +1741,8 @@ See [Transactions](./rest/transactions.md) for details. In contrast to the `/tra
        "historyId": 42
       }
      ],
-     "liquidityWithdrawals": [],
-     "assetCreations": [
+     "liquidityWithdrawal": [],
+     "assetCreation": [
       {
        "transaction": {
         "data": {
@@ -1771,13 +1771,13 @@ See [Transactions](./rest/transactions.md) for details. In contrast to the `/tra
        "historyId": 44
       }
      ],
-     "cancelations": []
+     "cancelation": []
     }
    },
    {
     "height": 22,
     "confirmations": 4,
-    "actions": {
+    "body": {
      "reward": {
       "transaction": {
        "data": {
@@ -1791,20 +1791,20 @@ See [Transactions](./rest/transactions.md) for details. In contrast to the `/tra
       },
       "historyId": 45
      },
-     "wartTransfers": [],
-     "tokenTransfers": [],
-     "newOrders": [],
-     "matches": [],
-     "liquidityDeposits": [],
-     "liquidityWithdrawals": [],
-     "assetCreations": [],
-     "cancelations": []
+     "wartTransfer": [],
+     "tokenTransfer": [],
+     "limitSwap": [],
+     "match": [],
+     "liquidityDeposit": [],
+     "liquidityWithdrawal": [],
+     "assetCreation": [],
+     "cancelation": []
     }
    },
    {
     "height": 23,
     "confirmations": 3,
-    "actions": {
+    "body": {
      "reward": {
       "transaction": {
        "data": {
@@ -1818,20 +1818,20 @@ See [Transactions](./rest/transactions.md) for details. In contrast to the `/tra
       },
       "historyId": 46
      },
-     "wartTransfers": [],
-     "tokenTransfers": [],
-     "newOrders": [],
-     "matches": [],
-     "liquidityDeposits": [],
-     "liquidityWithdrawals": [],
-     "assetCreations": [],
-     "cancelations": []
+     "wartTransfer": [],
+     "tokenTransfer": [],
+     "limitSwap": [],
+     "match": [],
+     "liquidityDeposit": [],
+     "liquidityWithdrawal": [],
+     "assetCreation": [],
+     "cancelation": []
     }
    },
    {
     "height": 24,
     "confirmations": 2,
-    "actions": {
+    "body": {
      "reward": {
       "transaction": {
        "data": {
@@ -1845,20 +1845,20 @@ See [Transactions](./rest/transactions.md) for details. In contrast to the `/tra
       },
       "historyId": 47
      },
-     "wartTransfers": [],
-     "tokenTransfers": [],
-     "newOrders": [],
-     "matches": [],
-     "liquidityDeposits": [],
-     "liquidityWithdrawals": [],
-     "assetCreations": [],
-     "cancelations": []
+     "wartTransfer": [],
+     "tokenTransfer": [],
+     "limitSwap": [],
+     "match": [],
+     "liquidityDeposit": [],
+     "liquidityWithdrawal": [],
+     "assetCreation": [],
+     "cancelation": []
     }
    },
    {
     "height": 25,
     "confirmations": 1,
-    "actions": {
+    "body": {
      "reward": {
       "transaction": {
        "data": {
@@ -1872,14 +1872,14 @@ See [Transactions](./rest/transactions.md) for details. In contrast to the `/tra
       },
       "historyId": 48
      },
-     "wartTransfers": [],
-     "tokenTransfers": [],
-     "newOrders": [],
-     "matches": [],
-     "liquidityDeposits": [],
-     "liquidityWithdrawals": [],
-     "assetCreations": [],
-     "cancelations": []
+     "wartTransfer": [],
+     "tokenTransfer": [],
+     "limitSwap": [],
+     "match": [],
+     "liquidityDeposit": [],
+     "liquidityWithdrawal": [],
+     "assetCreation": [],
+     "cancelation": []
     }
    }
   ],
@@ -1889,7 +1889,6 @@ See [Transactions](./rest/transactions.md) for details. In contrast to the `/tra
 ```
 ===
 
-For detailed JSON structure of each action type, see [!ref Block Actions](rest/block-actions.md).
 ### `GET /transaction/minfee`
 
 Show the minimum mempool fee required by this node. Transactions with a lower fee will not be accepted or requested by the node on mempool level. This does not affect block validation, i.e. transaction fees in mined blcoks are not matched against this value.
@@ -2059,7 +2058,7 @@ Show the raw binary data of a specific block. The `structure` field is a tree of
     ]
    },
    {
-    "tag": "wartTransfers",
+    "tag": "wartTransfer",
     "beginOffset": 48,
     "endOffset": 52,
     "children": [
@@ -2072,7 +2071,7 @@ Show the raw binary data of a specific block. The `structure` field is a tree of
     ]
    },
    {
-    "tag": "cancelations",
+    "tag": "cancelation",
     "beginOffset": 52,
     "endOffset": 54,
     "children": [
@@ -2098,7 +2097,7 @@ Show the raw binary data of a specific block. The `structure` field is a tree of
     ]
    },
    {
-    "tag": "assetCreations",
+    "tag": "assetCreation",
     "beginOffset": 56,
     "endOffset": 58,
     "children": [
@@ -2158,14 +2157,14 @@ Show the full block including header and body. The `:id` parameter can be a bloc
     },
     "historyId": 1
    },
-   "wartTransfers": [],
-   "tokenTransfers": [],
-   "newOrders": [],
-   "matches": [],
-   "liquidityDeposits": [],
-   "liquidityWithdrawals": [],
-   "assetCreations": [],
-   "cancelations": []
+   "wartTransfer": [],
+   "tokenTransfer": [],
+   "limitSwap": [],
+   "match": [],
+   "liquidityDeposit": [],
+   "liquidityWithdrawal": [],
+   "assetCreation": [],
+   "cancelation": []
   },
   "confirmations": 25,
   "height": 1
@@ -2245,7 +2244,7 @@ Search assets by name and/or hash prefix. Both query parameters are optional; if
  "code": 0,
  "data": {
   "hashPrefix": "f45b",
-  "matches": [
+  "match": [
    {
     "decimals": 4,
     "groupId": 0,
@@ -2667,7 +2666,7 @@ The `perBlock` parameter has the same structure as the [`/transaction/latest`](#
         },
         "body": {
           "reward": null,
-          "wartTransfers": [
+          "wartTransfer": [
             {
               "transaction": {
                 "data": {
@@ -2692,7 +2691,7 @@ The `perBlock` parameter has the same structure as the [`/transaction/latest`](#
               "historyId": 40
             }
           ],
-          "tokenTransfers": [
+          "tokenTransfer": [
             {
               "transaction": {
                 "data": {
@@ -2726,9 +2725,9 @@ The `perBlock` parameter has the same structure as the [`/transaction/latest`](#
               "historyId": 41
             }
           ],
-          "newOrders": [],
-          "matches": [],
-          "liquidityDeposits": [
+          "limitSwap": [],
+          "match": [],
+          "liquidityDeposit": [
             {
               "transaction": {
                 "data": {
@@ -2772,8 +2771,8 @@ The `perBlock` parameter has the same structure as the [`/transaction/latest`](#
               "historyId": 42
             }
           ],
-          "liquidityWithdrawals": [],
-          "assetCreations": [
+          "liquidityWithdrawal": [],
+          "assetCreation": [
             {
               "transaction": {
                 "data": {
@@ -2802,7 +2801,7 @@ The `perBlock` parameter has the same structure as the [`/transaction/latest`](#
               "historyId": 44
             }
           ],
-          "cancelations": []
+          "cancelation": []
         },
         "confirmations": 5,
         "height": 21
@@ -2830,11 +2829,11 @@ The `perBlock` parameter has the same structure as the [`/transaction/latest`](#
         },
         "body": {
           "reward": null,
-          "wartTransfers": [],
-          "tokenTransfers": [],
-          "newOrders": [],
-          "matches": [],
-          "liquidityDeposits": [
+          "wartTransfer": [],
+          "tokenTransfer": [],
+          "limitSwap": [],
+          "match": [],
+          "liquidityDeposit": [
             {
               "transaction": {
                 "data": {
@@ -2878,9 +2877,9 @@ The `perBlock` parameter has the same structure as the [`/transaction/latest`](#
               "historyId": 12
             }
           ],
-          "liquidityWithdrawals": [],
-          "assetCreations": [],
-          "cancelations": []
+          "liquidityWithdrawal": [],
+          "assetCreation": [],
+          "cancelation": []
         },
         "confirmations": 18,
         "height": 8
@@ -2908,13 +2907,13 @@ The `perBlock` parameter has the same structure as the [`/transaction/latest`](#
         },
         "body": {
           "reward": null,
-          "wartTransfers": [],
-          "tokenTransfers": [],
-          "newOrders": [],
-          "matches": [],
-          "liquidityDeposits": [],
-          "liquidityWithdrawals": [],
-          "assetCreations": [
+          "wartTransfer": [],
+          "tokenTransfer": [],
+          "limitSwap": [],
+          "match": [],
+          "liquidityDeposit": [],
+          "liquidityWithdrawal": [],
+          "assetCreation": [
             {
               "transaction": {
                 "data": {
@@ -2943,7 +2942,7 @@ The `perBlock` parameter has the same structure as the [`/transaction/latest`](#
               "historyId": 10
             }
           ],
-          "cancelations": []
+          "cancelation": []
         },
         "confirmations": 19,
         "height": 7
@@ -2971,13 +2970,13 @@ The `perBlock` parameter has the same structure as the [`/transaction/latest`](#
         },
         "body": {
           "reward": null,
-          "wartTransfers": [],
-          "tokenTransfers": [],
-          "newOrders": [],
-          "matches": [],
-          "liquidityDeposits": [],
-          "liquidityWithdrawals": [],
-          "assetCreations": [
+          "wartTransfer": [],
+          "tokenTransfer": [],
+          "limitSwap": [],
+          "match": [],
+          "liquidityDeposit": [],
+          "liquidityWithdrawal": [],
+          "assetCreation": [
             {
               "transaction": {
                 "data": {
@@ -3006,7 +3005,7 @@ The `perBlock` parameter has the same structure as the [`/transaction/latest`](#
               "historyId": 6
             }
           ],
-          "cancelations": []
+          "cancelation": []
         },
         "confirmations": 22,
         "height": 4
@@ -3046,13 +3045,13 @@ The `perBlock` parameter has the same structure as the [`/transaction/latest`](#
             },
             "historyId": 3
           },
-          "wartTransfers": [],
-          "tokenTransfers": [],
-          "newOrders": [],
-          "matches": [],
-          "liquidityDeposits": [],
-          "liquidityWithdrawals": [],
-          "assetCreations": [
+          "wartTransfer": [],
+          "tokenTransfer": [],
+          "limitSwap": [],
+          "match": [],
+          "liquidityDeposit": [],
+          "liquidityWithdrawal": [],
+          "assetCreation": [
             {
               "transaction": {
                 "data": {
@@ -3081,7 +3080,7 @@ The `perBlock` parameter has the same structure as the [`/transaction/latest`](#
               "historyId": 4
             }
           ],
-          "cancelations": []
+          "cancelation": []
         },
         "confirmations": 23,
         "height": 3
@@ -3121,14 +3120,14 @@ The `perBlock` parameter has the same structure as the [`/transaction/latest`](#
             },
             "historyId": 2
           },
-          "wartTransfers": [],
-          "tokenTransfers": [],
-          "newOrders": [],
-          "matches": [],
-          "liquidityDeposits": [],
-          "liquidityWithdrawals": [],
-          "assetCreations": [],
-          "cancelations": []
+          "wartTransfer": [],
+          "tokenTransfer": [],
+          "limitSwap": [],
+          "match": [],
+          "liquidityDeposit": [],
+          "liquidityWithdrawal": [],
+          "assetCreation": [],
+          "cancelation": []
         },
         "confirmations": 24,
         "height": 2
@@ -3168,14 +3167,14 @@ The `perBlock` parameter has the same structure as the [`/transaction/latest`](#
             },
             "historyId": 1
           },
-          "wartTransfers": [],
-          "tokenTransfers": [],
-          "newOrders": [],
-          "matches": [],
-          "liquidityDeposits": [],
-          "liquidityWithdrawals": [],
-          "assetCreations": [],
-          "cancelations": []
+          "wartTransfer": [],
+          "tokenTransfer": [],
+          "limitSwap": [],
+          "match": [],
+          "liquidityDeposit": [],
+          "liquidityWithdrawal": [],
+          "assetCreation": [],
+          "cancelation": []
         },
         "confirmations": 25,
         "height": 1
