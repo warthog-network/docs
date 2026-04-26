@@ -3,98 +3,80 @@ order: 1
 ---
 
 # Transactions
-## Structure
-Warthog nodes return two types of transactions:
-### Signed Transactions
-Such transactions are signed. Their API structure is as follows:
 
-```json
-  "transaction": {
-    "data": { ... },
-    "hash": "...",
-    "signedCommon": { ... }
-    "processed": { ... }
-  }
-```
-Currently Warthog supports the following signed transactions:
+Warthog supports the following transactions, some of which are signed and can have a `processed` property:
 
-1. **WartTransfer** Transfer WART to another account.
-2. **TokenTransfers** Transfers a non-WART token to another account.
-3. **AssetCreation** Creates a new asset.
-4. **Cancelations** Cancels a transaction if mined first and also cancels a pending order from the order book.
-5. **LiquidityDeposits** Deposits liquidity into a liquidity pool.
-6. **LiquidityWithdrawals** Withdraws liquidity from a liquidity pool.
-7. **NewOrders** Creates a new order for a specific WART trading pair (Warthog only supports pairs with WART as quote currency).
-
-Transaction type labels returned by the API:
-
-| Type | Explanation | `processed`? |  `signedCommon`?
+| Type | Explanation |  signed | `processed`
 |---|---|---|
-| `wartTransfer` | Transfer WART to another account | 
-| `tokenTransfer` | Transfer a non-WART token to another account | 
-| `assetCreation` | Create a new asset | 
-| `cancelation` | Cancel a transaction / pending order | 
-| `liquidityDeposit` | Deposit liquidity into a liquidity pool | 
-| `liquidityWithdrawal` | Withdraw liquidity from a liquidity pool |
-| `limitSwap` | Create a limit order on the DEX | 
-| `reward` | Block reward paid to miner |
-| `match` | Batch-matched orders from a block |
+| `wartTransfer` | Transfer WART to another account | X|
+| `tokenTransfer` | Transfer a non-WART token to another account | X |
+| `assetCreation` | Create a new asset | X | X
+| `cancelation` | Cancel a transaction / pending order |  X | X
+| `liquidityDeposit` | Deposit liquidity into a liquidity pool | X | X
+| `liquidityWithdrawal` | Withdraw liquidity from a liquidity pool | X | X
+| `limitSwap` | Create a limit order on the DEX | X | X
+| `reward` | Block reward paid to miner |  |
+| `match` | Batch-matched orders from a block |  |
 
-### Induced Transactions
-These are transactions that are induced by the logic of how Warthog processes a block.
-Currently we have the following induced transactions
-
-8. **Reward** This transaction represents the block reward.
-9. **Match** This transaction represents a match of three DeFi liquidity sources: buy swap orders, sell swap orders and the liquidity pool. The swaps are executed using Warthog's custom [matching engine](/unique-features/sandwich-proof-defi/matching-engine.md)
-
-    Sinc induced transactions were not signed by any user but are rather a side effect of block processing, compared to signed transactions we do not have the `signedCommon` fields but apart from that, the structure is similar: 
+## Type Specification
+The API returns transactions either in a block or individually.
+### Within Block
+In a block, transactions are grouped by their type such that the type of each transaction is clear:
 ```json
-  "transaction": {
-    "data": { ... },
-    "hash": "...",
-    "processed": { ... }
-  }
-```
-
-## Transaction properties
-We now explain the four properties `data`, `hash`, `signedCommon` and `processed`. 
-### Property `signedCommon`
-The `signedCommon` property only exists in signed transactions. It always has the structure
-```json
-"signedCommon": {
-  "fee": {                          // fee used for the transaction
-    "E8": 9992,                     // integer representation of the fee (multiplied by 10^8)
-    "str": "0.00009992"             // string representation  of the fee
-  },
-  "nonceId": 1,                     // nonce id used to sign the transaction
-  "originAddress": "3661...e8f5a",  // signer/origin address
-  "originId": 12344,                // signer/origin account id
-  "pinHeight": 0                    // pin height used to sign the transaction
+{
+ "body":{
+  "reward": ...                  // null or reward transaction
+  "wartTransfer": [...],         // contains wartTransfer transactions
+  "tokenTransfer": [...],        // contains tokenTransfer transactions
+  "limitSwap": [...],            // contains limitSwap transactions
+  "match": [...],                // contains match transactions
+  "liquidityDeposit": [...],     // contains liquidityDeposit transactions
+  "liquidityWithdrawal": [...],  // contains liquidityWithdrawal transactions
+  "assetCreation": [...],        // contains assetCreation transactions
+  "cancelation": [...]           // contains cancelation transactions
+ }
 }
 ```
-### Property `hash`
-Every transaction has a transaction hash. For signed transactions this is the hash that is used to generate the signature. For induced transactions this hash is generated when the block is included in the chain.
-### Properties `data` and `processed`
-
-`data` contains the user-supplied transaction parameters (what is signed). `processed` contains the chain-computed result — present only for transactions that go through block processing (NewOrder, LiquidityDeposit, LiquidityWithdrawal, AssetCreation, Cancelation). Reward and Match are unsigned (no `signedCommon`) and have no `processed`.
-
-#### 1. Reward (`data` only — unsigned, no `processed`)
-
-Block reward paid to the miner who produced the block. Unsigned — it is a side effect of block production, not submitted by a user. No `signedCommon`, no `processed`.
-
+### Individually
+When a single transaction is returned, its type is annotated by a `type` property:
 ```json
-"data": {
-  "amount": {                  // block reward paid to the miner
-    "E8": 300000000,           // integer representation (1 WART = 10^8 E8)
-    "str": "3.00000000"        // human-readable decimal string
-  },
-  "toAddress": "3661...e8f5a"  // miner receiving the reward
+{
+ "type": "<type>",     // String like "wartTransfer", "tokenTransfer", etc.
+ "transaction": {...}, // Actual transaction object
+ ...
 }
 ```
 
-#### 2. WartTransfer (`data` only — signed, no `processed`)
 
-WART coin transfer from one account to another. Signed — the sender signs the transaction. No `processed` since a simple transfer has no chain-computed result beyond the balance change.
+
+## Signed and Implicit Transactions
+### Signed Transactions
+Signed transactions are signed by some address. Their API structure is
+
+```json
+{
+  "data": { ... },
+  "hash": "...",
+  "signedCommon": {
+   "fee": {                          // fee used for the transaction
+     "E8": 9992,                     // integer representation of the fee (multiplied by 10^8)
+     "str": "0.00009992"             // string representation  of the fee
+   },
+   "nonceId": 1,                     // nonce id used to sign the transaction
+   "originAddress": "3661...e8f5a",  // signer/origin address
+   "originId": 12344,                // signer/origin account id
+   "pinHeight": 0                    // pin height used to sign the transaction
+  },
+  "processed": { ... }               // Not always present, see below
+}
+```
+The `hash` property contains the transaction hash that is used to generate the signature. The structure of the `data` and `processed` properties depends on the actual transaction type. The `processed` property does not exist for all transaction types and provides information about the outcome or current state of the transaction **after** it was mined.
+
+The following 7 transaction types are signed:
+
+#### 1. WartTransfer (no `processed` state)
+
+WART coin transfer from one account to another.
 
 ```json
 "data": {
@@ -105,10 +87,11 @@ WART coin transfer from one account to another. Signed — the sender signs the 
   "toAddress": "0000000000000000000000000000000000000000000000000000000000000000" // recipient address
 }
 ```
+If the transaction was mined, the transfer was completed, there is no `processed` state.
 
-#### 3. TokenTransfer (`data` only — signed, no `processed`)
+#### 2. TokenTransfer (no `processed` state)
 
-Transfer of a non-WART token between accounts. `isLiquidity` is `true` if the transferred token is a liquidity pool share. Signed. No `processed` — the balance changes are the result.
+Transfer of a non-WART token between accounts. The `isLiquidity` property reveals if the transferred token is the specified asset's pool liquidity or the asset itself..
 
 ```json
 "data": {
@@ -128,11 +111,11 @@ Transfer of a non-WART token between accounts. `isLiquidity` is `true` if the tr
   "tokenSpec": "asset:f45b1...5a6b" // token specification string
 }
 ```
+If the transaction was mined, the transfer was completed, there is no `processed` state.
 
-#### 4. NewOrder (`data` + `processed`)
+#### 3. `limitSwap` (has `processed` state)
 
-A limit order on the DEX for a trading pair where WART is always the quote currency. Signed. The `processed.remaining` field shows how much of the order was not matched in the same block — if fully matched, `remaining` is zero. A non-zero `remaining` means the order (or remainder) stays in the order book.
-
+A limit order on the DEX for a trading pair where WART is always the quote currency.
 ```json
 "data": {                      // what the user signed (mirrored in processed)
   "amount": {                  // order amount
@@ -158,10 +141,10 @@ A limit order on the DEX for a trading pair where WART is always the quote curre
 },
 ```
 
-Processed:
+After the transaction was mined, the `processed` fields contains information about the currently remaining amount of the order. If the order was already completely filled or canceled, the returned value is 0:
 ```json
 "processed": {
-  "remaining": {                // amount of the order that was NOT matched in this block
+  "remaining": {                // remaining amount of the order
     "decimals": 4,
     "str": "0.00000000",
     "u64": 0
@@ -169,9 +152,137 @@ Processed:
 }
 ```
 
-#### 5. Match (`data` only — unsigned, no `processed`)
+#### 4. LiquidityDeposit (has `processed` state)
 
-Batch-matched orders from a single block. Unsigned — this is a side effect of block processing. The `poolBefore`/`poolAfter` fields show the liquidity pool state before and after this match. Each entry in `buySwaps` and `sellSwaps` references the matched order via `historyId`. Matching uses Fair Batch Matching (see the [matching engine](/unique-features/sandwich-proof-defi/matching-engine.md)) — no intrinsic ordering among matched orders, making the algorithm MEV-proof.
+Deposit of a base asset and WART into a liquidity pool, receiving LP shares in return.
+
+```json
+"data": {
+  "baseAsset": {                // asset being deposited alongside WART
+    "decimals": 4,
+    "hash": "0e4825ef123456789abcdef0123456789abcdef0123456789abcdef0123",
+    "id": 7,
+    "name": "TOK2"
+  },
+  "deposited": {                // amounts deposited into the liquidity pool
+    "base": { "decimals": 4, "str": "100.0000", "u64": 1000000 },
+    "quote": { "E8": 100000000, "str": "1.00000000" }
+  }
+},
+```
+
+After the transaction was mined, the `processed` specifies the amount of liquidity pool shares minted to the depositor.
+Processed:
+```json
+"processed": {
+  "sharesReceived": {           // liquidity pool shares minted to the depositor
+    "decimals": 8,
+    "str": "0.1",
+    "u64": 10000000
+  }
+}
+```
+
+#### 5. LiquidityWithdrawal (has `processed` state)
+
+Redemption of liquidity pool shares to withdraw the underlying liquidity in base asset and WART.
+```json
+"data": {
+  "baseAsset": {                // asset being withdrawn alongside WART
+    "decimals": 4,
+    "hash": "0e4825ef123456789abcdef0123456789abcdef0123456789abcdef0123",
+    "id": 7,
+    "name": "TOK2"
+  },
+  "sharesRedeemed": {           // liquidity pool shares being burned
+    "decimals": 4,
+    "str": "100.0000",
+    "u64": 1000000
+  }
+},
+```
+
+After the transaction was mined, the `processed` property provides information about the received amount of base asset and WART (`quote`):
+```json
+"processed": {
+  "received": {                 // amounts withdrawn from the liquidity pool
+    "base": { "decimals": 4, "str": "100.0000", "u64": 1000000 },
+    "quote": { "E8": 100000000, "str": "1.00000000" }
+  }
+}
+```
+
+#### 6. AssetCreation (has `processed` state)
+
+Creation of a new token with a given name and total supply.
+
+```json
+"data": {
+  "name": "TOK2",               // token name
+  "supply": {                   // total token supply
+    "decimals": 4,
+    "str": "100000000.0000",
+    "u64": 1000000000000
+  }
+},
+```
+
+After the transaction was mined, the `processed` property provides the assigned asset ID. This ID is permanent but note that in case the block containing the asset generation was rolled back, a different ID could have been assigned to the asset. Therefore it is safer to always address assets by hash. The asset hash is the hash of the transaction creating the asset which can be extracted from the `hash` property if the transaction.
+```json
+"processed": {
+  "assetId": 7                  // ID assigned to the newly created asset
+}
+```
+
+#### 7. Cancelation (has `processed` state)
+
+This transaction is used to cancel a pending (not yet mined) transaction and also to cancel an open (not completely filled) order from the order book. The target transaction is defined by its `TransactionId` (`accountId`, `nonceId`, `pinHeight`). Once mined, no transaction with the referenced ID can be included in the same or any future block, effectively blocking it from ever being mined. Also, if an open order can be matched, it will be canceled.
+
+```json
+"data": {
+  "cancelTxid": {                 // reference to the transaction being cancelled
+    "accountId": 2,               // account ID of the transaction to cancel
+    "nonceId": 3,                 // nonce ID of the transaction to cancel
+    "pinHeight": 10               // pin height of the transaction to cancel
+  }
+},
+```
+
+After the transaction was mined the `processed` states provides the hash of the canceled active order, or `null` if no such active order was matched by the cancelation.
+```json
+"processed": {
+  "canceledTxHash": ... // either null or string (hash of the cancelled order)
+}
+```
+
+### Implicit Transactions
+Implicit transactions represent implicitly generated side effects during block processing. They don't have a `signedCommon` property and for now they also never have a `processed` state:
+```json
+  "transaction": {
+    "data": { ... },
+    "hash": "...",
+  }
+```
+The `hash` is automatically generated when the block is included in the chain whereas the structure of the `data` property depends on the actual transaction type. There are two implicit transactions.
+
+#### 1. Reward
+Block reward paid to the miner who produced the block.
+
+```json
+"data": {
+  "amount": {                  // block reward paid to the miner
+    "E8": 300000000,           // integer representation (1 WART = 10^8 E8)
+    "str": "3.00000000"        // human-readable decimal string
+  },
+  "toAddress": "3661...e8f5a"  // miner receiving the reward
+}
+```
+
+#### 2. Match
+Match of three DeFi liquidity sources using Warthog's custom [matching engine](/unique-features/sandwich-proof-defi/matching-engine.md): buy swap orders, sell swap orders and the liquidity pool.
+
+The `poolBefore`/`poolAfter` fields show the liquidity pool state before and after this match. Each entry in `buySwaps` and `sellSwaps` references the matched order via `historyId`.
+Matching uses Fair Batch Matching (see the [matching engine](/unique-features/sandwich-proof-defi/matching-engine.md)). No intrinsic ordering among matched orders exists, making the algorithm MEV-proof.
 
 ```json
 "data": {
@@ -210,107 +321,3 @@ Batch-matched orders from a single block. Unsigned — this is a side effect of 
 }
 ```
 
-#### 6. LiquidityDeposit (`data` + `processed`)
-
-Deposit of a base asset and WART into a liquidity pool, receiving LP shares in return. Signed. `processed.sharesReceived` is the amount of liquidity pool shares minted to the depositor.
-
-```json
-"data": {
-  "baseAsset": {                // asset being deposited alongside WART
-    "decimals": 4,
-    "hash": "0e4825ef123456789abcdef0123456789abcdef0123456789abcdef0123",
-    "id": 7,
-    "name": "TOK2"
-  },
-  "deposited": {                // amounts deposited into the liquidity pool
-    "base": { "decimals": 4, "str": "100.0000", "u64": 1000000 },
-    "quote": { "E8": 100000000, "str": "1.00000000" }
-  }
-},
-```
-
-Processed:
-```json
-"processed": {
-  "sharesReceived": {           // liquidity pool shares minted to the depositor
-    "decimals": 4,
-    "str": "1000.0000",
-    "u64": 10000000
-  }
-}
-```
-
-#### 7. LiquidityWithdrawal (`data` + `processed`)
-
-Redemption of liquidity pool shares to withdraw the underlying base asset and WART. Signed. `processed.received` shows the actual amounts withdrawn, which may differ slightly from the proportional share due to rounding or pool state changes.
-
-```json
-"data": {
-  "baseAsset": {                // asset being withdrawn alongside WART
-    "decimals": 4,
-    "hash": "0e4825ef123456789abcdef0123456789abcdef0123456789abcdef0123",
-    "id": 7,
-    "name": "TOK2"
-  },
-  "sharesRedeemed": {           // liquidity pool shares being burned
-    "decimals": 4,
-    "str": "100.0000",
-    "u64": 1000000
-  }
-},
-```
-
-Processed:
-```json
-"processed": {
-  "received": {                 // amounts withdrawn from the liquidity pool
-    "base": { "decimals": 4, "str": "100.0000", "u64": 1000000 },
-    "quote": { "E8": 100000000, "str": "1.00000000" }
-  }
-}
-```
-
-#### 8. AssetCreation (`data` + `processed`)
-
-Creation of a new token with a given name and total supply. Signed. `processed.assetId` is the ID assigned to the newly created asset.
-
-```json
-"data": {
-  "name": "TOK2",               // token name
-  "supply": {                   // total token supply
-    "decimals": 4,
-    "str": "100000000.0000",
-    "u64": 1000000000000
-  }
-},
-```
-
-Processed:
-```json
-"processed": {
-  "assetId": 7                  // ID assigned to the newly created asset
-}
-```
-
-#### 9. Cancelation (`data` + `processed`)
-
-Cancellation by referencing a target transaction via its `TransactionId` (`accountId`, `nonceId`, `pinHeight`). Signed. Once mined, no transaction with the referenced ID can be included in the same or any future block — effectively blocking it from ever being mined. `processed.canceledTxHash` confirms the hash of the cancelled transaction.
-
-==- data
-```json
-"data": {
-  "cancelTxid": {                 // reference to the transaction being cancelled
-    "accountId": 2,               // account ID of the transaction to cancel
-    "nonceId": 3,                 // nonce ID of the transaction to cancel
-    "pinHeight": 10               // pin height of the transaction to cancel
-  }
-},
-```
-
-==- Processed
-```json
-"processed": {
-  "canceledTxHash": "ed0a...2f3a" // hash of the cancelled transaction
-}
-```
-===

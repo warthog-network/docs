@@ -98,7 +98,11 @@ Below we assume the RPC socket is accessible at `localhost:3000`. On startup the
 | `GET` | [`/debug/rollback`](#get-debugrollback) | Rollback chain |
 | `GET` | [`/debug/fakemine/:address`](#get-debugfakemineaddress) | Generate fake mining data for address |
 
-For WebSocket API documentation, see [WebSocket API](WebSocket.md).
+For now  [WebSocket API](WebSocket.md) is temporarily disabled.
+
+## JSON Schemas
+
+The Warthog node supports an automatically generated JSON Schema output of all output properties available at `/debug/json_schemas`. This can be especially useful in connection with AI coding assistants.
 
 ## Detailed Description
 
@@ -127,6 +131,8 @@ Show content of mempool as an array transactions. Each transaction is returned i
 }
 ```
 The content of the `data` field depends on the transaction type specified in the "type" field. See [Transactions](./rest/transactions.md) for details.
+
+Note that the mempool contains only transactions that were not yet mined, such that there are no [implicit transactions](./rest/transactions.md#implicit-transactions). This is why all returned transactions are signed (i.e. have a `signedCommon` field) and don't contain a `processed` field.
 
 ==- Example Output:
 ```json
@@ -178,8 +184,19 @@ Transaction lookup by transaction id.
 }
 ```
 Compared to returned structure of [`/transaction/mempool`](#get-transactionmempool), here we have the additional fields `confirmations`, `mined` and for some transaction types `processed`.
-The content of the `data` field depends on the transaction type specified in the `type` field. For some transaction types there exists the field `processed` which is null if and only if `mined` is null, i.e. if the transaction is still in mempool. See [Transactions](./rest/transactions.md) for details.
-==- Example output of `/transaction/lookup/50f860f2c626c002aaac9db9b1db566ba280b10fc24fa470728b0b4ed88008f9`:
+The content of the `data` field depends on the transaction type specified in the `type` field. For some transaction types there exists the field `processed` which is null if and only if `mined` is null, i.e. if the transaction is still in mempool. See [Transactions](./rest/transactions.md) for details. If the transaction is already mined, `confirmations` will be non-zero and the `mined` field will be an object of structure
+```json
+{
+ historyId: 7,           // history ID
+ block: {                // details on the block where the transaction was mined
+  hegiht: 11,            // block height
+  hash: "363a...89d5",   // block hash
+  timestamp: 1771583754  // block timestamp
+ }
+}
+```
+
+==- Example output
 
 ```json
 {
@@ -219,10 +236,13 @@ Show latest transactions. Returns the most recent blocks with their actions. On 
  "perBlock": [...] // array of transactions embedded in block structure
 }
 ```
-Each block in the returned `perBlock` array has the structure
+Each block in the returned `perBlock` array has the structure as returned by [`/chain/block/:id`](#get-chainblockid)
 ```json
 {
- "body":{
+ "confirmations": ... ,
+ "header": {...}, // block header as in /chain/block/:id/header
+ "height": ...,
+ "body": {
   "reward": ... // null or reward
   "wartTransfer": [...],
   "tokenTransfer": [...],
@@ -235,7 +255,7 @@ Each block in the returned `perBlock` array has the structure
  }
 }
 ```
-All entries above in `actions` are of the structure `{ "historyId": ..., "transaction": ...}` where `historyId` is an unsigned 64 bit integer and `transaction` has the structure
+All entries above in `body` are of the structure `{ "historyId": ..., "transaction": ...}` where `historyId` is an unsigned 64 bit integer and `transaction` has the structure
 ```json
 {
  "data": ...,           // transaction specific data
@@ -244,9 +264,9 @@ All entries above in `actions` are of the structure `{ "historyId": ..., "transa
  "signedCommon": ...    // signature related data
 }
 ```
-See [Transactions](./rest/transactions.md) for details. In contrast to the `/transaction/lookup/:txid` endpoint, the `processed` field, if it is present, can never be `null` because we return mined transactions in this endpoint whereas the transaction returned by `/transaction/lookup/:txid` may still be in mempool which is exactly the case where `null` is returned for `processed`.
+See [Transactions](./rest/transactions.md) for details. In contrast to the `/transaction/lookup/:txid` endpoint, the `processed` field, if it is present for the respective transaction type, can never be `null` because we return mined transactions in this endpoint whereas the transaction returned by `/transaction/lookup/:txid` may still be in mempool which is exactly the case where `null` is returned for `processed`.
 
-==- Example output of `/transaction/latest`:
+==- Example output
 ```json
 {
  "code": 0,
@@ -2116,7 +2136,7 @@ Show the raw binary data of a specific block. The `structure` field is a tree of
 ===
 ### `GET /chain/block/:id`
 
-Show the full block including header and body. The `:id` parameter can be a block height (integer) or block hash (hex). The `body` parameter has the same structure as returned in `perBlock` in the `/transaction/latest` endpoint except that the `reward` transaction cannot be `null` here. See [Transactions](./rest/transactions.md) for details on each body field.
+Show the full block including header and body. The `:id` parameter can be a block height (integer) or block hash (hex). The `body` parameter has the same structure as returned in `perBlock` in the [`/transaction/latest`](#get-transactionlatest) endpoint except that the `reward` transaction cannot be `null` here. See [Transactions](./rest/transactions.md) for details on each `body` field.
 
 ==- Example:
 ```json
@@ -2474,7 +2494,7 @@ The `match` field uses Warthog's custom sandwich-free [matching engine for sandw
 
 ### `GET /account/:account/mempool`
 
-Show mempool transactions for a specific account specified by either address or account ID. Same structure as `GET /transaction/mempool` but filtered to this account.
+Show mempool transactions for a specific account specified by either address or account ID. Same structure as [`/transaction/mempool`](#get-transactionmempool) but filtered to this account.
 
 Example output:
 ```json
