@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.5.3.830438677581">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.5.3.830536778185">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 4.5.3">
@@ -12,7 +12,7 @@
     <!-- Primary Meta Tags -->
     <title>Transactions</title>
     <meta name="title" content="Transactions">
-    <meta name="description" content="Warthog nodes return two types of transactions:">
+    <meta name="description" content="Warthog supports the following transactions, some of which are signed and can have a processed property:">
 
     <!-- Canonical -->
     <link rel="canonical" href="https://docs.warthog.network/developers/api/rest/transactions/">
@@ -22,7 +22,7 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://docs.warthog.network/developers/api/rest/transactions/">
     <meta property="og:title" content="Transactions">
-    <meta property="og:description" content="Warthog nodes return two types of transactions:">
+    <meta property="og:description" content="Warthog supports the following transactions, some of which are signed and can have a processed property:">
     <meta property="og:site_name" content="Warthog Network">
     <meta property="og:locale" content="en_US">
 
@@ -30,19 +30,19 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://docs.warthog.network/developers/api/rest/transactions/">
     <meta name="twitter:title" content="Transactions">
-    <meta name="twitter:description" content="Warthog nodes return two types of transactions:">
+    <meta name="twitter:description" content="Warthog supports the following transactions, some of which are signed and can have a processed property:">
 
     <!-- Alternate Markdown -->
     <link rel="alternate" type="text/markdown" href="https://docs.warthog.network/developers/api/rest/transactions.md">
 
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../../../resources/css/retype.css?v=4.5.3.830438677581" rel="stylesheet">
+    <link href="../../../../resources/css/retype.css?v=4.5.3.830536778185" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../../../resources/js/config.js?v=4.5.3.830438677581" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../../../resources/js/config.js?v=4.5.3.830536778185" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../../../resources/js/retype.js?v=4.5.3" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../../../resources/js/lunr.js?v=4.5.3.830438677581" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../../../../resources/js/prism.js?v=4.5.3.830438677581" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../../../resources/js/lunr.js?v=4.5.3.830536778185" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../../../../resources/js/prism.js?v=4.5.3.830536778185" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -158,81 +158,59 @@
 
                 <!-- Page content  -->
 <h1 id="transactions">Transactions</h1>
-<h2 id="structure">Structure</h2>
-<p>Warthog nodes return two types of transactions:</p>
-<h3 id="signed-transactions">Signed Transactions</h3>
-<p>Such transactions are signed. Their API structure is as follows:</p>
-<div id="signed-transactions-code-1" class="codeblock-wrapper"><doc-codeblock>
-<pre translate="no" class="language-json"><code v-pre class="language-json">  &quot;transaction&quot;: {
-    &quot;data&quot;: { ... },
-    &quot;hash&quot;: &quot;...&quot;,
-    &quot;signedCommon&quot;: { ... }
-    &quot;processed&quot;: { ... }
-  }</code></pre>
-</doc-codeblock></div>
-<p>Currently Warthog supports the following signed transactions:</p>
-<ol>
-<li><strong>WartTransfer</strong> Transfer WART to another account.</li>
-<li><strong>TokenTransfers</strong> Transfers a non-WART token to another account.</li>
-<li><strong>AssetCreation</strong> Creates a new asset.</li>
-<li><strong>Cancelations</strong> Cancels a transaction if mined first and also cancels a pending order from the order book.</li>
-<li><strong>LiquidityDeposits</strong> Deposits liquidity into a liquidity pool.</li>
-<li><strong>LiquidityWithdrawals</strong> Withdraws liquidity from a liquidity pool.</li>
-<li><strong>NewOrders</strong> Creates a new order for a specific WART trading pair (Warthog only supports pairs with WART as quote currency).</li>
-</ol>
-<p>Transaction type labels returned by the API:</p>
+<p>Warthog supports the following transactions, some of which are signed and can have a <code translate="no" v-pre>processed</code> property:</p>
 <div class="table-wrapper scrollbar overflow-hidden">
 <table class="comfortable">
 <thead>
 <tr>
 <th>Type</th>
 <th>Explanation</th>
-<th><code translate="no" v-pre>processed</code>?</th>
-<th><code translate="no" v-pre>signedCommon</code>?</th>
+<th>signed</th>
+<th><code translate="no" v-pre>processed</code></th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><code translate="no" v-pre>wartTransfer</code></td>
 <td>Transfer WART to another account</td>
-<td> </td>
+<td>X</td>
 <td> </td>
 </tr>
 <tr>
 <td><code translate="no" v-pre>tokenTransfer</code></td>
 <td>Transfer a non-WART token to another account</td>
-<td> </td>
+<td>X</td>
 <td> </td>
 </tr>
 <tr>
 <td><code translate="no" v-pre>assetCreation</code></td>
 <td>Create a new asset</td>
-<td> </td>
-<td> </td>
+<td>X</td>
+<td>X</td>
 </tr>
 <tr>
 <td><code translate="no" v-pre>cancelation</code></td>
 <td>Cancel a transaction / pending order</td>
-<td> </td>
-<td> </td>
+<td>X</td>
+<td>X</td>
 </tr>
 <tr>
 <td><code translate="no" v-pre>liquidityDeposit</code></td>
 <td>Deposit liquidity into a liquidity pool</td>
-<td> </td>
-<td> </td>
+<td>X</td>
+<td>X</td>
 </tr>
 <tr>
 <td><code translate="no" v-pre>liquidityWithdrawal</code></td>
 <td>Withdraw liquidity from a liquidity pool</td>
-<td> </td>
-<td> </td>
+<td>X</td>
+<td>X</td>
 </tr>
 <tr>
 <td><code translate="no" v-pre>limitSwap</code></td>
 <td>Create a limit order on the DEX</td>
-<td> </td>
-<td> </td>
+<td>X</td>
+<td>X</td>
 </tr>
 <tr>
 <td><code translate="no" v-pre>reward</code></td>
@@ -249,59 +227,59 @@
 </tbody>
 </table>
 </div>
-<h3 id="induced-transactions">Induced Transactions</h3>
-<p>These are transactions that are induced by the logic of how Warthog processes a block.
-Currently we have the following induced transactions</p>
-<ol start="8">
-<li>
-<p><strong>Reward</strong> This transaction represents the block reward.</p>
-</li>
-<li>
-<p><strong>Match</strong> This transaction represents a match of three DeFi liquidity sources: buy swap orders, sell swap orders and the liquidity pool. The swaps are executed using Warthog&#x27;s custom <a href="../../../../unique-features/sandwich-proof-defi/matching-engine/">matching engine</a></p>
-<p>Sinc induced transactions were not signed by any user but are rather a side effect of block processing, compared to signed transactions we do not have the <code translate="no" v-pre>signedCommon</code> fields but apart from that, the structure is similar:</p>
-</li>
-</ol>
-<div id="induced-transactions-code-1" class="codeblock-wrapper"><doc-codeblock>
-<pre translate="no" class="language-json"><code v-pre class="language-json">  &quot;transaction&quot;: {
-    &quot;data&quot;: { ... },
-    &quot;hash&quot;: &quot;...&quot;,
-    &quot;processed&quot;: { ... }
-  }</code></pre>
-</doc-codeblock></div>
-<h2 id="transaction-properties">Transaction properties</h2>
-<p>We now explain the four properties <code translate="no" v-pre>data</code>, <code translate="no" v-pre>hash</code>, <code translate="no" v-pre>signedCommon</code> and <code translate="no" v-pre>processed</code>.</p>
-<h3 id="property-signedcommon">Property <code translate="no" v-pre>signedCommon</code></h3>
-<p>The <code translate="no" v-pre>signedCommon</code> property only exists in signed transactions. It always has the structure</p>
-<div id="property-signedcommon-code-1" class="codeblock-wrapper"><doc-codeblock>
-<pre translate="no" class="language-json"><code v-pre class="language-json">&quot;signedCommon&quot;: {
-  &quot;fee&quot;: {                          // fee used for the transaction
-    &quot;E8&quot;: 9992,                     // integer representation of the fee (multiplied by 10^8)
-    &quot;str&quot;: &quot;0.00009992&quot;             // string representation  of the fee
-  },
-  &quot;nonceId&quot;: 1,                     // nonce id used to sign the transaction
-  &quot;originAddress&quot;: &quot;3661...e8f5a&quot;,  // signer/origin address
-  &quot;originId&quot;: 12344,                // signer/origin account id
-  &quot;pinHeight&quot;: 0                    // pin height used to sign the transaction
+<h2 id="type-specification">Type Specification</h2>
+<p>The API returns transactions either in a block or individually.</p>
+<h3 id="within-block">Within Block</h3>
+<p>In a block, transactions are grouped by their type such that the type of each transaction is clear:</p>
+<div id="within-block-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-json"><code v-pre class="language-json">{
+ &quot;body&quot;:{
+  &quot;reward&quot;: ...                  // null or reward transaction
+  &quot;wartTransfer&quot;: [...],         // contains wartTransfer transactions
+  &quot;tokenTransfer&quot;: [...],        // contains tokenTransfer transactions
+  &quot;limitSwap&quot;: [...],            // contains limitSwap transactions
+  &quot;match&quot;: [...],                // contains match transactions
+  &quot;liquidityDeposit&quot;: [...],     // contains liquidityDeposit transactions
+  &quot;liquidityWithdrawal&quot;: [...],  // contains liquidityWithdrawal transactions
+  &quot;assetCreation&quot;: [...],        // contains assetCreation transactions
+  &quot;cancelation&quot;: [...]           // contains cancelation transactions
+ }
 }</code></pre>
 </doc-codeblock></div>
-<h3 id="property-hash">Property <code translate="no" v-pre>hash</code></h3>
-<p>Every transaction has a transaction hash. For signed transactions this is the hash that is used to generate the signature. For induced transactions this hash is generated when the block is included in the chain.</p>
-<h3 id="properties-data-and-processed">Properties <code translate="no" v-pre>data</code> and <code translate="no" v-pre>processed</code></h3>
-<p><code translate="no" v-pre>data</code> contains the user-supplied transaction parameters (what is signed). <code translate="no" v-pre>processed</code> contains the chain-computed result — present only for transactions that go through block processing (NewOrder, LiquidityDeposit, LiquidityWithdrawal, AssetCreation, Cancelation). Reward and Match are unsigned (no <code translate="no" v-pre>signedCommon</code>) and have no <code translate="no" v-pre>processed</code>.</p>
-<h4 id="1-reward-data-only--unsigned-no-processed">1. Reward (<code translate="no" v-pre>data</code> only — unsigned, no <code translate="no" v-pre>processed</code>)</h4>
-<p>Block reward paid to the miner who produced the block. Unsigned — it is a side effect of block production, not submitted by a user. No <code translate="no" v-pre>signedCommon</code>, no <code translate="no" v-pre>processed</code>.</p>
-<div id="1-reward-data-only--unsigned-no-processed-code-1" class="codeblock-wrapper"><doc-codeblock>
-<pre translate="no" class="language-json"><code v-pre class="language-json">&quot;data&quot;: {
-  &quot;amount&quot;: {                  // block reward paid to the miner
-    &quot;E8&quot;: 300000000,           // integer representation (1 WART = 10^8 E8)
-    &quot;str&quot;: &quot;3.00000000&quot;        // human-readable decimal string
-  },
-  &quot;toAddress&quot;: &quot;3661...e8f5a&quot;  // miner receiving the reward
+<h3 id="individually">Individually</h3>
+<p>When a single transaction is returned, its type is annotated by a <code translate="no" v-pre>type</code> property:</p>
+<div id="individually-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-json"><code v-pre class="language-json">{
+ &quot;type&quot;: &quot;&lt;type&gt;&quot;,     // String like &quot;wartTransfer&quot;, &quot;tokenTransfer&quot;, etc.
+ &quot;transaction&quot;: {...}, // Actual transaction object
+ ...
 }</code></pre>
 </doc-codeblock></div>
-<h4 id="2-warttransfer-data-only--signed-no-processed">2. WartTransfer (<code translate="no" v-pre>data</code> only — signed, no <code translate="no" v-pre>processed</code>)</h4>
-<p>WART coin transfer from one account to another. Signed — the sender signs the transaction. No <code translate="no" v-pre>processed</code> since a simple transfer has no chain-computed result beyond the balance change.</p>
-<div id="2-warttransfer-data-only--signed-no-processed-code-1" class="codeblock-wrapper"><doc-codeblock>
+<h2 id="signed-and-implicit-transactions">Signed and Implicit Transactions</h2>
+<h3 id="signed-transactions">Signed Transactions</h3>
+<p>Signed transactions are signed by some address. Their API structure is</p>
+<div id="signed-transactions-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-json"><code v-pre class="language-json">{
+  &quot;data&quot;: { ... },
+  &quot;hash&quot;: &quot;...&quot;,
+  &quot;signedCommon&quot;: {
+   &quot;fee&quot;: {                          // fee used for the transaction
+     &quot;E8&quot;: 9992,                     // integer representation of the fee (multiplied by 10^8)
+     &quot;str&quot;: &quot;0.00009992&quot;             // string representation  of the fee
+   },
+   &quot;nonceId&quot;: 1,                     // nonce id used to sign the transaction
+   &quot;originAddress&quot;: &quot;3661...e8f5a&quot;,  // signer/origin address
+   &quot;originId&quot;: 12344,                // signer/origin account id
+   &quot;pinHeight&quot;: 0                    // pin height used to sign the transaction
+  },
+  &quot;processed&quot;: { ... }               // Not always present, see below
+}</code></pre>
+</doc-codeblock></div>
+<p>The <code translate="no" v-pre>hash</code> property contains the transaction hash that is used to generate the signature. The structure of the <code translate="no" v-pre>data</code> and <code translate="no" v-pre>processed</code> properties depends on the actual transaction type. The <code translate="no" v-pre>processed</code> property does not exist for all transaction types and provides information about the outcome or current state of the transaction <strong>after</strong> it was mined.</p>
+<p>The following 7 transaction types are signed:</p>
+<h4 id="1-warttransfer-no-processed-state">1. WartTransfer (no <code translate="no" v-pre>processed</code> state)</h4>
+<p>WART coin transfer from one account to another.</p>
+<div id="1-warttransfer-no-processed-state-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-json"><code v-pre class="language-json">&quot;data&quot;: {
   &quot;amount&quot;: {                  // WART amount transferred
     &quot;E8&quot;: 100000000,           // integer representation (1 WART = 10^8 E8)
@@ -310,9 +288,10 @@ Currently we have the following induced transactions</p>
   &quot;toAddress&quot;: &quot;0000000000000000000000000000000000000000000000000000000000000000&quot; // recipient address
 }</code></pre>
 </doc-codeblock></div>
-<h4 id="3-tokentransfer-data-only--signed-no-processed">3. TokenTransfer (<code translate="no" v-pre>data</code> only — signed, no <code translate="no" v-pre>processed</code>)</h4>
-<p>Transfer of a non-WART token between accounts. <code translate="no" v-pre>isLiquidity</code> is <code translate="no" v-pre>true</code> if the transferred token is a liquidity pool share. Signed. No <code translate="no" v-pre>processed</code> — the balance changes are the result.</p>
-<div id="3-tokentransfer-data-only--signed-no-processed-code-1" class="codeblock-wrapper"><doc-codeblock>
+<p>If the transaction was mined, the transfer was completed, there is no <code translate="no" v-pre>processed</code> state.</p>
+<h4 id="2-tokentransfer-no-processed-state">2. TokenTransfer (no <code translate="no" v-pre>processed</code> state)</h4>
+<p>Transfer of a non-WART token between accounts. The <code translate="no" v-pre>isLiquidity</code> property reveals if the transferred token is the specified asset&#x27;s pool liquidity or the asset itself..</p>
+<div id="2-tokentransfer-no-processed-state-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-json"><code v-pre class="language-json">&quot;data&quot;: {
   &quot;amount&quot;: {                       // token amount transferred
     &quot;decimals&quot;: 4,                  // token decimal places
@@ -330,9 +309,10 @@ Currently we have the following induced transactions</p>
   &quot;tokenSpec&quot;: &quot;asset:f45b1...5a6b&quot; // token specification string
 }</code></pre>
 </doc-codeblock></div>
-<h4 id="4-neworder-data--processed">4. NewOrder (<code translate="no" v-pre>data</code> + <code translate="no" v-pre>processed</code>)</h4>
-<p>A limit order on the DEX for a trading pair where WART is always the quote currency. Signed. The <code translate="no" v-pre>processed.remaining</code> field shows how much of the order was not matched in the same block — if fully matched, <code translate="no" v-pre>remaining</code> is zero. A non-zero <code translate="no" v-pre>remaining</code> means the order (or remainder) stays in the order book.</p>
-<div id="4-neworder-data--processed-code-1" class="codeblock-wrapper"><doc-codeblock>
+<p>If the transaction was mined, the transfer was completed, there is no <code translate="no" v-pre>processed</code> state.</p>
+<h4 id="3-limitswap-has-processed-state">3. <code translate="no" v-pre>limitSwap</code> (has <code translate="no" v-pre>processed</code> state)</h4>
+<p>A limit order on the DEX for a trading pair where WART is always the quote currency.</p>
+<div id="3-limitswap-has-processed-state-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-json"><code v-pre class="language-json">&quot;data&quot;: {                      // what the user signed (mirrored in processed)
   &quot;amount&quot;: {                  // order amount
     &quot;decimals&quot;: 4,
@@ -356,19 +336,129 @@ Currently we have the following induced transactions</p>
   }
 },</code></pre>
 </doc-codeblock></div>
-<p>Processed:</p>
-<div id="4-neworder-data--processed-code-2" class="codeblock-wrapper"><doc-codeblock>
+<p>After the transaction was mined, the <code translate="no" v-pre>processed</code> fields contains information about the currently remaining amount of the order. If the order was already completely filled or canceled, the returned value is 0:</p>
+<div id="3-limitswap-has-processed-state-code-2" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-json"><code v-pre class="language-json">&quot;processed&quot;: {
-  &quot;remaining&quot;: {                // amount of the order that was NOT matched in this block
+  &quot;remaining&quot;: {                // remaining amount of the order
     &quot;decimals&quot;: 4,
     &quot;str&quot;: &quot;0.00000000&quot;,
     &quot;u64&quot;: 0
   }
 }</code></pre>
 </doc-codeblock></div>
-<h4 id="5-match-data-only--unsigned-no-processed">5. Match (<code translate="no" v-pre>data</code> only — unsigned, no <code translate="no" v-pre>processed</code>)</h4>
-<p>Batch-matched orders from a single block. Unsigned — this is a side effect of block processing. The <code translate="no" v-pre>poolBefore</code>/<code translate="no" v-pre>poolAfter</code> fields show the liquidity pool state before and after this match. Each entry in <code translate="no" v-pre>buySwaps</code> and <code translate="no" v-pre>sellSwaps</code> references the matched order via <code translate="no" v-pre>historyId</code>. Matching uses Fair Batch Matching (see the <a href="../../../../unique-features/sandwich-proof-defi/matching-engine/">matching engine</a>) — no intrinsic ordering among matched orders, making the algorithm MEV-proof.</p>
-<div id="5-match-data-only--unsigned-no-processed-code-1" class="codeblock-wrapper"><doc-codeblock>
+<h4 id="4-liquiditydeposit-has-processed-state">4. LiquidityDeposit (has <code translate="no" v-pre>processed</code> state)</h4>
+<p>Deposit of a base asset and WART into a liquidity pool, receiving LP shares in return.</p>
+<div id="4-liquiditydeposit-has-processed-state-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-json"><code v-pre class="language-json">&quot;data&quot;: {
+  &quot;baseAsset&quot;: {                // asset being deposited alongside WART
+    &quot;decimals&quot;: 4,
+    &quot;hash&quot;: &quot;0e4825ef123456789abcdef0123456789abcdef0123456789abcdef0123&quot;,
+    &quot;id&quot;: 7,
+    &quot;name&quot;: &quot;TOK2&quot;
+  },
+  &quot;deposited&quot;: {                // amounts deposited into the liquidity pool
+    &quot;base&quot;: { &quot;decimals&quot;: 4, &quot;str&quot;: &quot;100.0000&quot;, &quot;u64&quot;: 1000000 },
+    &quot;quote&quot;: { &quot;E8&quot;: 100000000, &quot;str&quot;: &quot;1.00000000&quot; }
+  }
+},</code></pre>
+</doc-codeblock></div>
+<p>After the transaction was mined, the <code translate="no" v-pre>processed</code> specifies the amount of liquidity pool shares minted to the depositor.
+Processed:</p>
+<div id="4-liquiditydeposit-has-processed-state-code-2" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-json"><code v-pre class="language-json">&quot;processed&quot;: {
+  &quot;sharesReceived&quot;: {           // liquidity pool shares minted to the depositor
+    &quot;decimals&quot;: 8,
+    &quot;str&quot;: &quot;0.1&quot;,
+    &quot;u64&quot;: 10000000
+  }
+}</code></pre>
+</doc-codeblock></div>
+<h4 id="5-liquiditywithdrawal-has-processed-state">5. LiquidityWithdrawal (has <code translate="no" v-pre>processed</code> state)</h4>
+<p>Redemption of liquidity pool shares to withdraw the underlying liquidity in base asset and WART.</p>
+<div id="5-liquiditywithdrawal-has-processed-state-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-json"><code v-pre class="language-json">&quot;data&quot;: {
+  &quot;baseAsset&quot;: {                // asset being withdrawn alongside WART
+    &quot;decimals&quot;: 4,
+    &quot;hash&quot;: &quot;0e4825ef123456789abcdef0123456789abcdef0123456789abcdef0123&quot;,
+    &quot;id&quot;: 7,
+    &quot;name&quot;: &quot;TOK2&quot;
+  },
+  &quot;sharesRedeemed&quot;: {           // liquidity pool shares being burned
+    &quot;decimals&quot;: 4,
+    &quot;str&quot;: &quot;100.0000&quot;,
+    &quot;u64&quot;: 1000000
+  }
+},</code></pre>
+</doc-codeblock></div>
+<p>After the transaction was mined, the <code translate="no" v-pre>processed</code> property provides information about the received amount of base asset and WART (<code translate="no" v-pre>quote</code>):</p>
+<div id="5-liquiditywithdrawal-has-processed-state-code-2" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-json"><code v-pre class="language-json">&quot;processed&quot;: {
+  &quot;received&quot;: {                 // amounts withdrawn from the liquidity pool
+    &quot;base&quot;: { &quot;decimals&quot;: 4, &quot;str&quot;: &quot;100.0000&quot;, &quot;u64&quot;: 1000000 },
+    &quot;quote&quot;: { &quot;E8&quot;: 100000000, &quot;str&quot;: &quot;1.00000000&quot; }
+  }
+}</code></pre>
+</doc-codeblock></div>
+<h4 id="6-assetcreation-has-processed-state">6. AssetCreation (has <code translate="no" v-pre>processed</code> state)</h4>
+<p>Creation of a new token with a given name and total supply.</p>
+<div id="6-assetcreation-has-processed-state-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-json"><code v-pre class="language-json">&quot;data&quot;: {
+  &quot;name&quot;: &quot;TOK2&quot;,               // token name
+  &quot;supply&quot;: {                   // total token supply
+    &quot;decimals&quot;: 4,
+    &quot;str&quot;: &quot;100000000.0000&quot;,
+    &quot;u64&quot;: 1000000000000
+  }
+},</code></pre>
+</doc-codeblock></div>
+<p>After the transaction was mined, the <code translate="no" v-pre>processed</code> property provides the assigned asset ID. This ID is permanent but note that in case the block containing the asset generation was rolled back, a different ID could have been assigned to the asset. Therefore it is safer to always address assets by hash. The asset hash is the hash of the transaction creating the asset which can be extracted from the <code translate="no" v-pre>hash</code> property if the transaction.</p>
+<div id="6-assetcreation-has-processed-state-code-2" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-json"><code v-pre class="language-json">&quot;processed&quot;: {
+  &quot;assetId&quot;: 7                  // ID assigned to the newly created asset
+}</code></pre>
+</doc-codeblock></div>
+<h4 id="7-cancelation-has-processed-state">7. Cancelation (has <code translate="no" v-pre>processed</code> state)</h4>
+<p>This transaction is used to cancel a pending (not yet mined) transaction and also to cancel an open (not completely filled) order from the order book. The target transaction is defined by its <code translate="no" v-pre>TransactionId</code> (<code translate="no" v-pre>accountId</code>, <code translate="no" v-pre>nonceId</code>, <code translate="no" v-pre>pinHeight</code>). Once mined, no transaction with the referenced ID can be included in the same or any future block, effectively blocking it from ever being mined. Also, if an open order can be matched, it will be canceled.</p>
+<div id="7-cancelation-has-processed-state-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-json"><code v-pre class="language-json">&quot;data&quot;: {
+  &quot;cancelTxid&quot;: {                 // reference to the transaction being cancelled
+    &quot;accountId&quot;: 2,               // account ID of the transaction to cancel
+    &quot;nonceId&quot;: 3,                 // nonce ID of the transaction to cancel
+    &quot;pinHeight&quot;: 10               // pin height of the transaction to cancel
+  }
+},</code></pre>
+</doc-codeblock></div>
+<p>After the transaction was mined the <code translate="no" v-pre>processed</code> states provides the hash of the canceled active order, or <code translate="no" v-pre>null</code> if no such active order was matched by the cancelation.</p>
+<div id="7-cancelation-has-processed-state-code-2" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-json"><code v-pre class="language-json">&quot;processed&quot;: {
+  &quot;canceledTxHash&quot;: ... // either null or string (hash of the cancelled order)
+}</code></pre>
+</doc-codeblock></div>
+<h3 id="implicit-transactions">Implicit Transactions</h3>
+<p>Implicit transactions represent implicitly generated side effects during block processing. They don&#x27;t have a <code translate="no" v-pre>signedCommon</code> property and for now they also never have a <code translate="no" v-pre>processed</code> state:</p>
+<div id="implicit-transactions-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-json"><code v-pre class="language-json">  &quot;transaction&quot;: {
+    &quot;data&quot;: { ... },
+    &quot;hash&quot;: &quot;...&quot;,
+  }</code></pre>
+</doc-codeblock></div>
+<p>The <code translate="no" v-pre>hash</code> is automatically generated when the block is included in the chain whereas the structure of the <code translate="no" v-pre>data</code> property depends on the actual transaction type. There are two implicit transactions.</p>
+<h4 id="1-reward">1. Reward</h4>
+<p>Block reward paid to the miner who produced the block.</p>
+<div id="1-reward-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-json"><code v-pre class="language-json">&quot;data&quot;: {
+  &quot;amount&quot;: {                  // block reward paid to the miner
+    &quot;E8&quot;: 300000000,           // integer representation (1 WART = 10^8 E8)
+    &quot;str&quot;: &quot;3.00000000&quot;        // human-readable decimal string
+  },
+  &quot;toAddress&quot;: &quot;3661...e8f5a&quot;  // miner receiving the reward
+}</code></pre>
+</doc-codeblock></div>
+<h4 id="2-match">2. Match</h4>
+<p>Match of three DeFi liquidity sources using Warthog&#x27;s custom <a href="../../../../unique-features/sandwich-proof-defi/matching-engine/">matching engine</a>: buy swap orders, sell swap orders and the liquidity pool.</p>
+<p>The <code translate="no" v-pre>poolBefore</code>/<code translate="no" v-pre>poolAfter</code> fields show the liquidity pool state before and after this match. Each entry in <code translate="no" v-pre>buySwaps</code> and <code translate="no" v-pre>sellSwaps</code> references the matched order via <code translate="no" v-pre>historyId</code>.
+Matching uses Fair Batch Matching (see the <a href="../../../../unique-features/sandwich-proof-defi/matching-engine/">matching engine</a>). No intrinsic ordering among matched orders exists, making the algorithm MEV-proof.</p>
+<div id="2-match-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-json"><code v-pre class="language-json">&quot;data&quot;: {
   &quot;baseAsset&quot;: {                // asset being traded against WART
     &quot;decimals&quot;: 4,
@@ -404,100 +494,6 @@ Currently we have the following induced transactions</p>
   ]
 }</code></pre>
 </doc-codeblock></div>
-<h4 id="6-liquiditydeposit-data--processed">6. LiquidityDeposit (<code translate="no" v-pre>data</code> + <code translate="no" v-pre>processed</code>)</h4>
-<p>Deposit of a base asset and WART into a liquidity pool, receiving LP shares in return. Signed. <code translate="no" v-pre>processed.sharesReceived</code> is the amount of liquidity pool shares minted to the depositor.</p>
-<div id="6-liquiditydeposit-data--processed-code-1" class="codeblock-wrapper"><doc-codeblock>
-<pre translate="no" class="language-json"><code v-pre class="language-json">&quot;data&quot;: {
-  &quot;baseAsset&quot;: {                // asset being deposited alongside WART
-    &quot;decimals&quot;: 4,
-    &quot;hash&quot;: &quot;0e4825ef123456789abcdef0123456789abcdef0123456789abcdef0123&quot;,
-    &quot;id&quot;: 7,
-    &quot;name&quot;: &quot;TOK2&quot;
-  },
-  &quot;deposited&quot;: {                // amounts deposited into the liquidity pool
-    &quot;base&quot;: { &quot;decimals&quot;: 4, &quot;str&quot;: &quot;100.0000&quot;, &quot;u64&quot;: 1000000 },
-    &quot;quote&quot;: { &quot;E8&quot;: 100000000, &quot;str&quot;: &quot;1.00000000&quot; }
-  }
-},</code></pre>
-</doc-codeblock></div>
-<p>Processed:</p>
-<div id="6-liquiditydeposit-data--processed-code-2" class="codeblock-wrapper"><doc-codeblock>
-<pre translate="no" class="language-json"><code v-pre class="language-json">&quot;processed&quot;: {
-  &quot;sharesReceived&quot;: {           // liquidity pool shares minted to the depositor
-    &quot;decimals&quot;: 4,
-    &quot;str&quot;: &quot;1000.0000&quot;,
-    &quot;u64&quot;: 10000000
-  }
-}</code></pre>
-</doc-codeblock></div>
-<h4 id="7-liquiditywithdrawal-data--processed">7. LiquidityWithdrawal (<code translate="no" v-pre>data</code> + <code translate="no" v-pre>processed</code>)</h4>
-<p>Redemption of liquidity pool shares to withdraw the underlying base asset and WART. Signed. <code translate="no" v-pre>processed.received</code> shows the actual amounts withdrawn, which may differ slightly from the proportional share due to rounding or pool state changes.</p>
-<div id="7-liquiditywithdrawal-data--processed-code-1" class="codeblock-wrapper"><doc-codeblock>
-<pre translate="no" class="language-json"><code v-pre class="language-json">&quot;data&quot;: {
-  &quot;baseAsset&quot;: {                // asset being withdrawn alongside WART
-    &quot;decimals&quot;: 4,
-    &quot;hash&quot;: &quot;0e4825ef123456789abcdef0123456789abcdef0123456789abcdef0123&quot;,
-    &quot;id&quot;: 7,
-    &quot;name&quot;: &quot;TOK2&quot;
-  },
-  &quot;sharesRedeemed&quot;: {           // liquidity pool shares being burned
-    &quot;decimals&quot;: 4,
-    &quot;str&quot;: &quot;100.0000&quot;,
-    &quot;u64&quot;: 1000000
-  }
-},</code></pre>
-</doc-codeblock></div>
-<p>Processed:</p>
-<div id="7-liquiditywithdrawal-data--processed-code-2" class="codeblock-wrapper"><doc-codeblock>
-<pre translate="no" class="language-json"><code v-pre class="language-json">&quot;processed&quot;: {
-  &quot;received&quot;: {                 // amounts withdrawn from the liquidity pool
-    &quot;base&quot;: { &quot;decimals&quot;: 4, &quot;str&quot;: &quot;100.0000&quot;, &quot;u64&quot;: 1000000 },
-    &quot;quote&quot;: { &quot;E8&quot;: 100000000, &quot;str&quot;: &quot;1.00000000&quot; }
-  }
-}</code></pre>
-</doc-codeblock></div>
-<h4 id="8-assetcreation-data--processed">8. AssetCreation (<code translate="no" v-pre>data</code> + <code translate="no" v-pre>processed</code>)</h4>
-<p>Creation of a new token with a given name and total supply. Signed. <code translate="no" v-pre>processed.assetId</code> is the ID assigned to the newly created asset.</p>
-<div id="8-assetcreation-data--processed-code-1" class="codeblock-wrapper"><doc-codeblock>
-<pre translate="no" class="language-json"><code v-pre class="language-json">&quot;data&quot;: {
-  &quot;name&quot;: &quot;TOK2&quot;,               // token name
-  &quot;supply&quot;: {                   // total token supply
-    &quot;decimals&quot;: 4,
-    &quot;str&quot;: &quot;100000000.0000&quot;,
-    &quot;u64&quot;: 1000000000000
-  }
-},</code></pre>
-</doc-codeblock></div>
-<p>Processed:</p>
-<div id="8-assetcreation-data--processed-code-2" class="codeblock-wrapper"><doc-codeblock>
-<pre translate="no" class="language-json"><code v-pre class="language-json">&quot;processed&quot;: {
-  &quot;assetId&quot;: 7                  // ID assigned to the newly created asset
-}</code></pre>
-</doc-codeblock></div>
-<h4 id="9-cancelation-data--processed">9. Cancelation (<code translate="no" v-pre>data</code> + <code translate="no" v-pre>processed</code>)</h4>
-<p>Cancellation by referencing a target transaction via its <code translate="no" v-pre>TransactionId</code> (<code translate="no" v-pre>accountId</code>, <code translate="no" v-pre>nonceId</code>, <code translate="no" v-pre>pinHeight</code>). Signed. Once mined, no transaction with the referenced ID can be included in the same or any future block — effectively blocking it from ever being mined. <code translate="no" v-pre>processed.canceledTxHash</code> confirms the hash of the cancelled transaction.</p>
-<doc-panels expando>
-   <doc-panel id="data" collapsed>
-       <template #title>data</template>
-<div class="codeblock-wrapper"><doc-codeblock>
-<pre translate="no" class="language-json"><code v-pre class="language-json">&quot;data&quot;: {
-  &quot;cancelTxid&quot;: {                 // reference to the transaction being cancelled
-    &quot;accountId&quot;: 2,               // account ID of the transaction to cancel
-    &quot;nonceId&quot;: 3,                 // nonce ID of the transaction to cancel
-    &quot;pinHeight&quot;: 10               // pin height of the transaction to cancel
-  }
-},</code></pre>
-</doc-codeblock></div>
-   </doc-panel>
-   <doc-panel id="processed" collapsed>
-       <template #title>Processed</template>
-<div class="codeblock-wrapper"><doc-codeblock>
-<pre translate="no" class="language-json"><code v-pre class="language-json">&quot;processed&quot;: {
-  &quot;canceledTxHash&quot;: &quot;ed0a...2f3a&quot; // hash of the cancelled transaction
-}</code></pre>
-</doc-codeblock></div>
-   </doc-panel>
-</doc-panels>
 
                 
                 <!-- Required only on API pages -->

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.5.3.830438677581">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.5.3.830536778185">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 4.5.3">
@@ -37,12 +37,12 @@
 
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../../resources/css/retype.css?v=4.5.3.830438677581" rel="stylesheet">
+    <link href="../../../resources/css/retype.css?v=4.5.3.830536778185" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.5.3.830438677581" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.5.3.830536778185" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../../resources/js/retype.js?v=4.5.3" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.5.3.830438677581" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../../../resources/js/prism.js?v=4.5.3.830438677581" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.5.3.830536778185" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../../../resources/js/prism.js?v=4.5.3.830536778185" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -507,7 +507,9 @@
 </tbody>
 </table>
 </div>
-<p>For WebSocket API documentation, see <a href="../websocket/">WebSocket API</a>.</p>
+<p>For now  <a href="../websocket/">WebSocket API</a> is temporarily disabled.</p>
+<h2 id="json-schemas">JSON Schemas</h2>
+<p>The Warthog node supports an automatically generated JSON Schema output of all output properties available at <code translate="no" v-pre>/debug/json_schemas</code>. This can be especially useful in connection with AI coding assistants.</p>
 <h2 id="detailed-description">Detailed Description</h2>
 <h3 id="post-transactionadd"><code translate="no" v-pre>POST /transaction/add</code></h3>
 <p>Create new transactions as described <a href="create-transaction/">here</a>. Returns transaction hash in hex format:</p>
@@ -530,6 +532,7 @@
 }</code></pre>
 </doc-codeblock></div>
 <p>The content of the <code translate="no" v-pre>data</code> field depends on the transaction type specified in the &quot;type&quot; field. See <a href="transactions/">Transactions</a> for details.</p>
+<p>Note that the mempool contains only transactions that were not yet mined, such that there are no <a href="transactions/#implicit-transactions">implicit transactions</a>. This is why all returned transactions are signed (i.e. have a <code translate="no" v-pre>signedCommon</code> field) and don&#x27;t contain a <code translate="no" v-pre>processed</code> field.</p>
 <doc-panel id="example-output" collapsed>
     <template #title>Example Output:</template>
 <div class="codeblock-wrapper"><doc-codeblock>
@@ -579,9 +582,19 @@
 }</code></pre>
 </doc-codeblock></div>
 <p>Compared to returned structure of <doc-anchor-trigger to="#get-transactionmempool"><code translate="no" v-pre>/transaction/mempool</code></doc-anchor-trigger>, here we have the additional fields <code translate="no" v-pre>confirmations</code>, <code translate="no" v-pre>mined</code> and for some transaction types <code translate="no" v-pre>processed</code>.
-The content of the <code translate="no" v-pre>data</code> field depends on the transaction type specified in the <code translate="no" v-pre>type</code> field. For some transaction types there exists the field <code translate="no" v-pre>processed</code> which is null if and only if <code translate="no" v-pre>mined</code> is null, i.e. if the transaction is still in mempool. See <a href="transactions/">Transactions</a> for details.</p>
-<doc-panel id="example-output-of-transactionlookup50f860f2c626c002aaac9db9b1db566ba280b10fc24fa470728b0b4ed88008f9" collapsed>
-    <template #title>Example output of <code translate="no" v-pre>/transaction/lookup/50f860f2c626c002aaac9db9b1db566ba280b10fc24fa470728b0b4ed88008f9</code>:</template>
+The content of the <code translate="no" v-pre>data</code> field depends on the transaction type specified in the <code translate="no" v-pre>type</code> field. For some transaction types there exists the field <code translate="no" v-pre>processed</code> which is null if and only if <code translate="no" v-pre>mined</code> is null, i.e. if the transaction is still in mempool. See <a href="transactions/">Transactions</a> for details. If the transaction is already mined, <code translate="no" v-pre>confirmations</code> will be non-zero and the <code translate="no" v-pre>mined</code> field will be an object of structure</p>
+<div id="get-transactionlookuptxid-code-2" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-json"><code v-pre class="language-json">{
+ historyId: 7,           // history ID
+ block: {                // details on the block where the transaction was mined
+  hegiht: 11,            // block height
+  hash: &quot;363a...89d5&quot;,   // block hash
+  timestamp: 1771583754  // block timestamp
+ }
+}</code></pre>
+</doc-codeblock></div>
+<doc-panel id="example-output-1" collapsed>
+    <template #title>Example output</template>
 <div class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-json"><code v-pre class="language-json">{
  &quot;code&quot;: 0,
@@ -618,10 +631,13 @@ The content of the <code translate="no" v-pre>data</code> field depends on the t
  &quot;perBlock&quot;: [...] // array of transactions embedded in block structure
 }</code></pre>
 </doc-codeblock></div>
-<p>Each block in the returned <code translate="no" v-pre>perBlock</code> array has the structure</p>
+<p>Each block in the returned <code translate="no" v-pre>perBlock</code> array has the structure as returned by <doc-anchor-trigger to="#get-chainblockid"><code translate="no" v-pre>/chain/block/:id</code></doc-anchor-trigger></p>
 <div id="get-transactionlatest-code-2" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-json"><code v-pre class="language-json">{
- &quot;body&quot;:{
+ &quot;confirmations&quot;: ... ,
+ &quot;header&quot;: {...}, // block header as in /chain/block/:id/header
+ &quot;height&quot;: ...,
+ &quot;body&quot;: {
   &quot;reward&quot;: ... // null or reward
   &quot;wartTransfer&quot;: [...],
   &quot;tokenTransfer&quot;: [...],
@@ -634,7 +650,7 @@ The content of the <code translate="no" v-pre>data</code> field depends on the t
  }
 }</code></pre>
 </doc-codeblock></div>
-<p>All entries above in <code translate="no" v-pre>actions</code> are of the structure <code translate="no" v-pre>{ &quot;historyId&quot;: ..., &quot;transaction&quot;: ...}</code> where <code translate="no" v-pre>historyId</code> is an unsigned 64 bit integer and <code translate="no" v-pre>transaction</code> has the structure</p>
+<p>All entries above in <code translate="no" v-pre>body</code> are of the structure <code translate="no" v-pre>{ &quot;historyId&quot;: ..., &quot;transaction&quot;: ...}</code> where <code translate="no" v-pre>historyId</code> is an unsigned 64 bit integer and <code translate="no" v-pre>transaction</code> has the structure</p>
 <div id="get-transactionlatest-code-3" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-json"><code v-pre class="language-json">{
  &quot;data&quot;: ...,           // transaction specific data
@@ -643,9 +659,9 @@ The content of the <code translate="no" v-pre>data</code> field depends on the t
  &quot;signedCommon&quot;: ...    // signature related data
 }</code></pre>
 </doc-codeblock></div>
-<p>See <a href="transactions/">Transactions</a> for details. In contrast to the <code translate="no" v-pre>/transaction/lookup/:txid</code> endpoint, the <code translate="no" v-pre>processed</code> field, if it is present, can never be <code translate="no" v-pre>null</code> because we return mined transactions in this endpoint whereas the transaction returned by <code translate="no" v-pre>/transaction/lookup/:txid</code> may still be in mempool which is exactly the case where <code translate="no" v-pre>null</code> is returned for <code translate="no" v-pre>processed</code>.</p>
-<doc-panel id="example-output-of-transactionlatest" collapsed>
-    <template #title>Example output of <code translate="no" v-pre>/transaction/latest</code>:</template>
+<p>See <a href="transactions/">Transactions</a> for details. In contrast to the <code translate="no" v-pre>/transaction/lookup/:txid</code> endpoint, the <code translate="no" v-pre>processed</code> field, if it is present for the respective transaction type, can never be <code translate="no" v-pre>null</code> because we return mined transactions in this endpoint whereas the transaction returned by <code translate="no" v-pre>/transaction/lookup/:txid</code> may still be in mempool which is exactly the case where <code translate="no" v-pre>null</code> is returned for <code translate="no" v-pre>processed</code>.</p>
+<doc-panel id="example-output-2" collapsed>
+    <template #title>Example output</template>
 <div class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-json"><code v-pre class="language-json">{
  &quot;code&quot;: 0,
@@ -2494,7 +2510,7 @@ The content of the <code translate="no" v-pre>data</code> field depends on the t
 </doc-codeblock></div>
 </doc-panel>
 <h3 id="get-chainblockid"><code translate="no" v-pre>GET /chain/block/:id</code></h3>
-<p>Show the full block including header and body. The <code translate="no" v-pre>:id</code> parameter can be a block height (integer) or block hash (hex). The <code translate="no" v-pre>body</code> parameter has the same structure as returned in <code translate="no" v-pre>perBlock</code> in the <code translate="no" v-pre>/transaction/latest</code> endpoint except that the <code translate="no" v-pre>reward</code> transaction cannot be <code translate="no" v-pre>null</code> here. See <a href="transactions/">Transactions</a> for details on each body field.</p>
+<p>Show the full block including header and body. The <code translate="no" v-pre>:id</code> parameter can be a block height (integer) or block hash (hex). The <code translate="no" v-pre>body</code> parameter has the same structure as returned in <code translate="no" v-pre>perBlock</code> in the <doc-anchor-trigger to="#get-transactionlatest"><code translate="no" v-pre>/transaction/latest</code></doc-anchor-trigger> endpoint except that the <code translate="no" v-pre>reward</code> transaction cannot be <code translate="no" v-pre>null</code> here. See <a href="transactions/">Transactions</a> for details on each <code translate="no" v-pre>body</code> field.</p>
 <doc-panel id="example-2" collapsed>
     <template #title>Example:</template>
 <div class="codeblock-wrapper"><doc-codeblock>
@@ -2839,7 +2855,7 @@ The content of the <code translate="no" v-pre>data</code> field depends on the t
 </doc-codeblock></div>
 </doc-panel>
 <h3 id="get-accountaccountmempool"><code translate="no" v-pre>GET /account/:account/mempool</code></h3>
-<p>Show mempool transactions for a specific account specified by either address or account ID. Same structure as <code translate="no" v-pre>GET /transaction/mempool</code> but filtered to this account.</p>
+<p>Show mempool transactions for a specific account specified by either address or account ID. Same structure as <doc-anchor-trigger to="#get-transactionmempool"><code translate="no" v-pre>/transaction/mempool</code></doc-anchor-trigger> but filtered to this account.</p>
 <p>Example output:</p>
 <div id="get-accountaccountmempool-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-json"><code v-pre class="language-json">{
@@ -2998,7 +3014,7 @@ The content of the <code translate="no" v-pre>data</code> field depends on the t
 </doc-codeblock></div>
 <p>Every processed transaction is assigned an incrementally ascending history ID during block processing. The <code translate="no" v-pre>fromId</code> field returns the earliest returned history ID. It serves as a bookmark position and can be used to iteratively retrieve earlier results in a loop. If no results are available, <code translate="no" v-pre>fromId</code> is set to <code translate="no" v-pre>0</code>.</p>
 <p>The <code translate="no" v-pre>perBlock</code> parameter has the same structure as the <doc-anchor-trigger to="#get-transactionlatest"><code translate="no" v-pre>/transaction/latest</code></doc-anchor-trigger>. Note that the last returned block is not necessarily complete, i.e. there might be more transactions in the same block that were not returned in this request.</p>
-<doc-panel id="example-output-1" collapsed>
+<doc-panel id="example-output-3" collapsed>
     <template #title>Example output</template>
 <div class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-json"><code v-pre class="language-json">{

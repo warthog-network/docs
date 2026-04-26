@@ -38,7 +38,7 @@
 #### REST API
 
 - [REST](https://docs.warthog.network/developers/api/rest.md): This documentation was partially generated with AI augmentation. Report inconsistencies at github.com/warthog-network/docs/issues.
-- [Transactions](https://docs.warthog.network/developers/api/rest/transactions.md): Warthog nodes return two types of transactions:
+- [Transactions](https://docs.warthog.network/developers/api/rest/transactions.md): Warthog supports the following transactions, some of which are signed and can have a processed property:
 - [Create Transaction](https://docs.warthog.network/developers/api/rest/create-transaction.md): This documentation was partially generated with AI augmentation. Report inconsistencies at github.com/warthog-network/docs/issues.
 - [Mempool transactions](https://docs.warthog.network/developers/api/rest/mempool-transactions.md)
 - [WebSocket](https://docs.warthog.network/developers/api/websocket.md): AI-Augmented Documentation — This file was updated to match the live node API schema (v0.10.3 996c267). All examples reflect the schema structure. Report discrepancies to the maintainers.
