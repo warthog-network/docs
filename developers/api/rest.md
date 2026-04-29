@@ -185,7 +185,7 @@ The content of the `data` field depends on the transaction type specified in the
 {
  historyId: 7,           // history ID
  block: {                // details on the block where the transaction was mined
-  hegiht: 11,            // block height
+  height: 11,            // block height
   hash: "363a...89d5",   // block hash
   timestamp: 1771583754  // block timestamp
  }
@@ -212,7 +212,7 @@ The content of the `data` field depends on the transaction type specified in the
   "mined": {
    "historyId": 17,
    "block": {
-    "hegiht": 11,
+    "height": 11,
     "hash": "363ac2530f8c38708dc313c9dfd9cddaa884fe29cf814b7bc316fed5298989d5",
     "timestamp": 1771583754
    }
