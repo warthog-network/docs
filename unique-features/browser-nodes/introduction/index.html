@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.5.3.830790215187">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.5.3.831204960476">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 4.5.3">
@@ -12,7 +12,7 @@
     <!-- Primary Meta Tags -->
     <title>Browser Nodes</title>
     <meta name="title" content="Browser Nodes">
-    <meta name="description" content="Warthog is the first and only crypto project that brought full nodes to the browser. This is possible by harnessing latest technology such as OPFS and SQLite's recent support for it.">
+    <meta name="description" content="Browser nodes feature is techincally almost completely implemented but has lower priority for completion than the DeFi progress. This feature is not complete yet.">
 
     <!-- Canonical -->
     <link rel="canonical" href="https://docs.warthog.network/unique-features/browser-nodes/introduction/">
@@ -22,7 +22,7 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://docs.warthog.network/unique-features/browser-nodes/introduction/">
     <meta property="og:title" content="Browser Nodes">
-    <meta property="og:description" content="Warthog is the first and only crypto project that brought full nodes to the browser. This is possible by harnessing latest technology such as OPFS and SQLite's recent support for it.">
+    <meta property="og:description" content="Browser nodes feature is techincally almost completely implemented but has lower priority for completion than the DeFi progress. This feature is not complete yet.">
     <meta property="og:site_name" content="Warthog Network">
     <meta property="og:locale" content="en_US">
 
@@ -30,18 +30,18 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://docs.warthog.network/unique-features/browser-nodes/introduction/">
     <meta name="twitter:title" content="Browser Nodes">
-    <meta name="twitter:description" content="Warthog is the first and only crypto project that brought full nodes to the browser. This is possible by harnessing latest technology such as OPFS and SQLite's recent support for it.">
+    <meta name="twitter:description" content="Browser nodes feature is techincally almost completely implemented but has lower priority for completion than the DeFi progress. This feature is not complete yet.">
 
     <!-- Alternate Markdown -->
     <link rel="alternate" type="text/markdown" href="https://docs.warthog.network/unique-features/browser-nodes/introduction.md">
 
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../../resources/css/retype.css?v=4.5.3.830790215187" rel="stylesheet">
+    <link href="../../../resources/css/retype.css?v=4.5.3.831204960476" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.5.3.830790215187" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.5.3.831204960476" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../../resources/js/retype.js?v=4.5.3" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.5.3.830790215187" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.5.3.831204960476" data-turbo-eval="false" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -156,93 +156,113 @@
                 <doc-page-actions></doc-page-actions>
 
                 <!-- Page content  -->
+<div class="flex mb-6">
+    <div class="shrink-0 w-1.5 rounded-tl-lg rounded-bl-lg bg-callout-primary"></div>
+    <div class="flex w-full py-4 border border-l-0 rounded-tr-lg rounded-br-lg doc-callout bg-callout-base-bg border-callout-base-border" role="alert">
+        <div class="flex items-center ml-4 h-7">
+            <svg xmlns="http://www.w3.org/2000/svg" class="block text-callout-primary" width="22" height="22" viewBox="0 0 24 24" role="presentation">
+                <g fill="currentColor"><g>
+                    <path d="M12 1C5.93 1 1 5.93 1 12s4.93 11 11 11 11-4.93 11-11S18.07 1 12 1zm0 20c-4.96 0-9-4.04-9-9s4.04-9 9-9 9 4.04 9 9-4.04 9-9 9z"></path>
+                    <path d="M12 11c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1s1-.45 1-1v-4c0-.55-.45-1-1-1zM12.01 7c-.56 0-1 .45-1 1s.45 1 1 1 1-.45 1-1-.45-1-1-1z"></path>
+                    <path fill="none" d="M0 0h24v24H0z"></path>
+                </g></g>
+            </svg>
+        </div>
+        <div class="pr-5 ml-3 w-full">
+<p>Browser nodes feature is techincally almost completely implemented but has lower priority for completion than the DeFi progress. This feature is not complete yet.</p>
+        </div>
+    </div>
+</div>
 <h1 id="browser-nodes">Browser Nodes</h1>
-<h1 id="overview">Overview</h1>
-<p>Warthog is the first and only crypto project that brought full nodes to the browser. This is possible by harnessing latest technology such as <a href="https://sqlite.org/wasm/doc/trunk/persistence.md#opfs">OPFS</a> and <a href="https://sqlite.org/wasm/doc/trunk/persistence.md#opfs">SQLite&#x27;s recent support for it</a>.</p>
-<p>There are 3 types of Warthog nodes:</p>
+<h2 id="overview">Overview</h2>
+<p>Warthog is the first and only crypto project that brought full nodes to the browser. This is achieved by compiling the native C++ node code to WebAssembly and using modern browser storage APIs for persistence. Simply open a website to run a complete Warthog node in your browser.</p>
+<h2 id="technical-architecture">Technical Architecture</h2>
+<h3 id="webassembly">WebAssembly</h3>
+<p>The Warthog node is compiled to WebAssembly (WASM), a binary instruction format that runs in all modern browsers. This allows the same C++ codebase that powers normal and bridge nodes to run entirely client-side in the browser without plugins or extensions.</p>
+<h3 id="origin-private-file-system-opfs">Origin Private File System (OPFS)</h3>
+<p>Browser nodes persist the blockchain data using the Origin Private File System (OPFS), part of the File System API. OPFS provides:</p>
+<ul>
+<li><strong>Private storage</strong>: Data is scoped to the originating website and not accessible to other sites</li>
+<li><strong>Persistent files</strong>: Files survive browser restarts and page reloads</li>
+<li><strong>Synchronous access</strong>: Fast read/write operations suitable for database access</li>
+</ul>
+<p>The entire blockchain database (<code translate="no" v-pre>chain.db3</code>) is stored in OPFS as a SQLite database file. This means browser nodes maintain a complete, verified copy of the blockchain without relying on external servers.</p>
+<h3 id="wasmfs">WasmFS</h3>
+<p>WasmFS extends WebAssembly&#x27;s virtual filesystem to leverage OPFS under the hood. This provides transparent file persistence for the WASM module, enabling the node to maintain synchronization state across sessions.</p>
+<h2 id="node-types">Node Types</h2>
+<p>Warthog supports three node types, each with different capabilities:</p>
 <div class="table-wrapper scrollbar overflow-hidden">
 <table class="comfortable">
 <thead>
 <tr>
-<th>Node type</th>
-<th>Connection Protocols</th>
+<th>Node Type</th>
+<th>Protocols</th>
+<th>Storage</th>
+<th>Use Case</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>Normal</td>
 <td>TCP</td>
+<td>Local filesystem</td>
+<td>Standard full node operation</td>
 </tr>
 <tr>
 <td>Bridge</td>
-<td>TCP, Websocket, (later WebRTC support)</td>
+<td>TCP, WebSocket</td>
+<td>Local filesystem</td>
+<td>Gateway between TCP and WebSocket/WebRTC clients</td>
 </tr>
 <tr>
 <td>Browser</td>
-<td>Websocket, (later WebRTC support)</td>
+<td>WebSocket</td>
+<td>OPFS (browser)</td>
+<td>Lightweight client-side full node</td>
 </tr>
 </tbody>
 </table>
 </div>
-<p>For now browser nodes cannot communicate between each other and are only connected to bridge nodes. Warthog nodes of version 0.7.47 or above can be used as a bridge node.
-<div class="mb-6 px-5 py-4 flex justify-between relative border border-base-border hover:border-base-border-hover rounded transition-colors duration-150">
-    <div class="flex items-center text-base-500">
-        <span class="inline-flex items-center justify-center leading-none">
-            <svg xmlns="http://www.w3.org/2000/svg" class="block shrink-0" width="20" height="20" viewBox="0 0 24 24" role="presentation" fill="currentColor"><path fill="none" d="M0 0h24v24H0z"/><path d="M19.92 12.38a1 1 0 00-.22-1.09l-7-7a.996.996 0 10-1.41 1.41l5.3 5.3H5c-.55 0-1 .45-1 1s.45 1 1 1h11.59l-5.29 5.29a.996.996 0 000 1.41c.19.2.44.3.7.3s.51-.1.71-.29l7-7c.09-.09.16-.21.21-.33z"/></svg>
-        </span>
-        <span class="inline-block font-medium ml-2">bridge-node-setup.md</span>
-    </div>
-    <div class="flex items-center text-xs text-gray-400 dark:text-dark-400">
-        <span>../../_drafts/bridge-node-setup.md</span>
-    </div>
-    <a href="../../_drafts/bridge-node-setup.md" class="absolute block inset-0"></a>
-</div>
-</p>
-<h2 id="frequently-asked-questions">Frequently asked questions</h2>
-<div class="table-wrapper scrollbar overflow-hidden">
-<table class="comfortable">
-<thead>
-<tr>
-<th>Question</th>
-<th>Answer</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><em>What are browser nodes?</em></td>
-<td>Browser nodes are Warthog nodes that should run on every modern browser and run by just opening the website <a href="https://node.warthog.network">https://node.warthog.network</a> .</td>
-</tr>
-<tr>
-<td><em>Are browser nodes full nodes?</em></td>
-<td>Yes. They save and verify the whole chain.</td>
-</tr>
-<tr>
-<td><em>How much data is used by a browser node?</em></td>
-<td>Browsers nodes are full nodes and need the same amount of space as normal nodes. This is currently around 1.3 GB of data.</td>
-</tr>
-<tr>
-<td><em>Where do browser nodes save the chain data?</em></td>
-<td>Browsers support the <a href="https://developer.mozilla.org/en-US/docs/Web/API/File_System_API/Origin_private_file_system">Origin Private File System</a> (OPFS) which contains the chain.db3 file.</td>
-</tr>
-<tr>
-<td><em>How can I access the OPFS file system?</em></td>
-<td>OPFS is very new and browsers don&#x27;t offer a method to browse and access it easily. For Chrome browser there exists the <a href="https://chromewebstore.google.com/detail/opfs-explorer/acndjpgkpaclldomagafnognkcgjignd">OPFS explorer</a> to view files.</td>
-</tr>
-<tr>
-<td><em>Does the browser node need to be fully synchronized, or can I copy the chain.db3 from another node?</em></td>
-<td>Not now, maybe in the future browsers offer a way to copy files into your browser&#x27;s OPFS.</td>
-</tr>
-<tr>
-<td><em>Do I need to open the P2P port of the firewall to speed up the synchronization? Like port 9186.</em></td>
-<td>No, synchronization speed depends on the performance of your device and on the number of bridge nodes.</td>
-</tr>
-<tr>
-<td><em>Do browser nodes communicate peer to peer?</em></td>
-<td>For now browser nodes only communicate to bridge nodes, in the future we want to add P2P communication over WebRTC.</td>
-</tr>
-</tbody>
-</table>
-</div>
+<p>Bridge nodes act as intermediaries, translating between different network protocols. They can be run by anyone running Warthog version 0.7.47 or later.</p>
+<h2 id="p2p-communication">P2P Communication</h2>
+<h3 id="current-state">Current State</h3>
+<p>Browser nodes currently connect to bridge nodes via WebSocket. This allows them to participate in the network and synchronize the blockchain, but direct browser-to-browser communication is not yet active.</p>
+<h3 id="webrtc-support-future">WebRTC Support (Future)</h3>
+<p>Planned WebRTC support will enable direct peer-to-peer communication between browser nodes without requiring bridge nodes as intermediaries. This involves:</p>
+<ul>
+<li><strong>Signaling</strong>: A protocol for browsers to discover and establish connections with each other</li>
+<li><strong>NAT traversal</strong>: Techniques to punch through firewalls and router configurations for direct connections</li>
+<li><strong>Connection negotiation</strong>: Handshaking to agree on connection parameters</li>
+</ul>
+<p>The advantage of WebRTC is that it allows browsers to communicate directly, similar to how desktop nodes communicate over TCP, reducing dependence on bridge nodes and improving network decentralization.</p>
+<h2 id="synchronization">Synchronization</h2>
+<p>Browser nodes synchronize with the network through bridge nodes. The process:</p>
+<ol>
+<li>Connect to one or more bridge nodes via WebSocket</li>
+<li>Request chain headers and blocks</li>
+<li>Verify all blocks and transactions locally</li>
+<li>Store verified data in OPFS</li>
+</ol>
+<p>Synchronization speed depends on device performance and the number of available bridge node connections. Unlike normal nodes, browser nodes do not need to open any firewall ports.</p>
+<h2 id="storage-requirements">Storage Requirements</h2>
+<p>Browser nodes are full nodes and require approximately 1.3 GB of storage in OPFS. This stores the complete blockchain history, not just headers or recent transactions.</p>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<h3 id="what-are-browser-nodes">What are browser nodes?</h3>
+<p>Browser nodes are Warthog nodes that run directly in any modern browser by visiting <a href="https://node.warthog.network">https://node.warthog.network</a>. No installation or configuration required.</p>
+<h3 id="are-browser-nodes-full-nodes">Are browser nodes full nodes?</h3>
+<p>Yes. Browser nodes download and verify the entire blockchain, just like normal nodes. They independently validate all transactions and blocks.</p>
+<h3 id="how-much-data-does-a-browser-node-use">How much data does a browser node use?</h3>
+<p>Browser nodes are full nodes and require approximately 1.3 GB of storage, the same as normal nodes.</p>
+<h3 id="where-does-the-browser-node-save-chain-data">Where does the browser node save chain data?</h3>
+<p>Browser nodes use the Origin Private File System (OPFS) to store the chain database file (chain.db3). This storage is private to the website and persists across sessions.</p>
+<h3 id="how-can-i-access-the-opfs-filesystem">How can I access the OPFS filesystem?</h3>
+<p>OPFS is not easily accessible through standard browser interfaces. For Chrome, you can use the <a href="https://chromewebstore.google.com/detail/opfs-explorer/acndjpgkpaclldomagafnognkcgjignd">OPFS Explorer</a> extension to view files.</p>
+<h3 id="can-i-copy-chain-data-from-another-node">Can I copy chain data from another node?</h3>
+<p>Currently, browsers do not provide a way to import files into OPFS programmatically. Future versions may allow importing a chain snapshot to speed up initial synchronization.</p>
+<h3 id="do-i-need-to-open-firewall-ports-for-browser-nodes">Do I need to open firewall ports for browser nodes?</h3>
+<p>No. Browser nodes connect outbound to bridge nodes via WebSocket, so no inbound ports need to be opened.</p>
+<h3 id="will-browser-nodes-support-direct-p2p-communication">Will browser nodes support direct P2P communication?</h3>
+<p>Yes, WebRTC support is planned for future versions, enabling direct browser-to-browser communication without bridge nodes.</p>
 
                 
                 <!-- Required only on API pages -->
@@ -258,20 +278,20 @@
             
                 <nav id="retype-nextprev" class="print:hidden flex mt-14">
                     <div class="w-1/2">
-                        <a class="px-5 py-4 h-full flex items-center break-normal font-medium text-body-link border border-base-border hover:border-base-border-hover rounded-l-lg transition-colors duration-150 relative hover:z-5" href="../../../unique-features/browser-nodes/">
+                        <a class="px-5 py-4 h-full flex items-center break-normal font-medium text-body-link border border-base-border hover:border-base-border-hover rounded-l-lg transition-colors duration-150 relative hover:z-5" href="../../../unique-features/janushash/highlevel/">
                             <svg xmlns="http://www.w3.org/2000/svg" class="mr-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19 11H7.41l5.29-5.29a.996.996 0 10-1.41-1.41l-7 7a1 1 0 000 1.42l7 7a1.024 1.024 0 001.42-.01.996.996 0 000-1.41L7.41 13H19c.55 0 1-.45 1-1s-.45-1-1-1z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
                             <span>
                                 <span class="block text-xs font-normal text-base-text-muted">Previous</span>
-                                <span class="block mt-1">Browser Nodes</span>
+                                <span class="block mt-1">Janushash made simple</span>
                             </span>
                         </a>
                     </div>
             
                     <div class="w-1/2">
-                        <a class="px-5 py-4 -mx-px h-full flex items-center justify-end break-normal font-medium text-body-link border border-base-border hover:border-base-border-hover rounded-r-lg transition-colors duration-150 relative hover:z-5" href="../../../unique-features/sandwich-proof-defi/">
+                        <a class="px-5 py-4 -mx-px h-full flex items-center justify-end break-normal font-medium text-body-link border border-base-border hover:border-base-border-hover rounded-r-lg transition-colors duration-150 relative hover:z-5" href="../../../unique-features/hard-coded-defi/">
                             <span>
                                 <span class="block text-xs font-normal text-right text-base-text-muted">Next</span>
-                                <span class="block mt-1">Sandwich-​Proof De​Fi</span>
+                                <span class="block mt-1">Hard-​Coded De​Fi</span>
                             </span>
                             <svg xmlns="http://www.w3.org/2000/svg" class="ml-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19.92 12.38a1 1 0 00-.22-1.09l-7-7a.996.996 0 10-1.41 1.41l5.3 5.3H5c-.55 0-1 .45-1 1s.45 1 1 1h11.59l-5.29 5.29a.996.996 0 000 1.41c.19.2.44.3.7.3s.51-.1.71-.29l7-7c.09-.09.16-.21.21-.33z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
                         </a>

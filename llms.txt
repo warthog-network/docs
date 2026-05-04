@@ -74,13 +74,11 @@
 - [Hashrate Ratio](https://docs.warthog.network/unique-features/janushash/analysis/hashrate-ratio.md): The hashrate ratio is the quotient a of Sha256t hashrate \mathfrak{h}_Y and Verushash v2.2 \mathfrak{h}_X:
 - [Janushash made simple](https://docs.warthog.network/unique-features/janushash/highlevel.md): The theory behind Warthog's Proof of Balanced Work and specifically the Janushash algorithm is dry and difficult to grasp. In this post we want to give a high-level understanding on how things work.
 
-### Browser Nodes
+### Browser nodes
 
-- [Browser Nodes](https://docs.warthog.network/unique-features/browser-nodes.md)
-- [Browser Nodes](https://docs.warthog.network/unique-features/browser-nodes/introduction.md): Warthog is the first and only crypto project that brought full nodes to the browser. This is possible by harnessing latest technology such as OPFS and SQLite's recent support for it.
+- [Browser Nodes](https://docs.warthog.network/unique-features/browser-nodes/introduction.md): Browser nodes feature is techincally almost completely implemented but has lower priority for completion than the DeFi progress. This feature is not complete yet.
 
-### Sandwich-Proof DeFi
+### Hard-Coded DeFi
 
-- [Sandwich-Proof DeFi](https://docs.warthog.network/unique-features/sandwich-proof-defi.md)
-- [Matching Engine](https://docs.warthog.network/unique-features/sandwich-proof-defi/matching-engine.md): TODO
-- [DeFi in Warthog](https://docs.warthog.network/unique-features/sandwich-proof-defi/hcdefi.md): Warthog implements a novel approach to Decentraled Finance (DeFi) by hard-coding the underlying logic directly into the node instead of relying on smart contract implementations.
+- [Hard-Coded DeFi](https://docs.warthog.network/unique-features/hard-coded-defi/hard-coded-defi.md): Warthog implements a novel approach to Decentralized Finance (DeFi) by hard-coding the underlying logic directly into the node instead of relying on smart contract implementations.
+- [Fair Batch Matching](https://docs.warthog.network/unique-features/hard-coded-defi/fair-batch-matching.md): Fair Batch Matching (FBM) is a mathematical framework for matching swap orders with liquidity pools in a way that eliminates transaction ordering manipulation.

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.5.3.830790215187">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.5.3.831204960476">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 4.5.3">
@@ -37,12 +37,12 @@
 
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../../../resources/css/retype.css?v=4.5.3.830790215187" rel="stylesheet">
+    <link href="../../../../resources/css/retype.css?v=4.5.3.831204960476" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../../../resources/js/config.js?v=4.5.3.830790215187" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../../../resources/js/config.js?v=4.5.3.831204960476" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../../../resources/js/retype.js?v=4.5.3" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../../../resources/js/lunr.js?v=4.5.3.830790215187" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../../../../resources/js/prism.js?v=4.5.3.830790215187" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../../../resources/js/lunr.js?v=4.5.3.831204960476" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../../../../resources/js/prism.js?v=4.5.3.831204960476" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -455,9 +455,9 @@ Processed:</p>
 }</code></pre>
 </doc-codeblock></div>
 <h4 id="2-match">2. Match</h4>
-<p>Match of three DeFi liquidity sources using Warthog&#x27;s custom <a href="../../../../unique-features/sandwich-proof-defi/matching-engine/">matching engine</a>: buy swap orders, sell swap orders and the liquidity pool.</p>
+<p>Match of three DeFi liquidity sources using Warthog&#x27;s custom <a href="/unique-features/sandwich-proof-defi/matching-engine.md">matching engine</a>: buy swap orders, sell swap orders and the liquidity pool.</p>
 <p>The <code translate="no" v-pre>poolBefore</code>/<code translate="no" v-pre>poolAfter</code> fields show the liquidity pool state before and after this match. Each entry in <code translate="no" v-pre>buySwaps</code> and <code translate="no" v-pre>sellSwaps</code> references the matched order via <code translate="no" v-pre>historyId</code>.
-Matching uses Fair Batch Matching (see the <a href="../../../../unique-features/sandwich-proof-defi/matching-engine/">matching engine</a>). No intrinsic ordering among matched orders exists, making the algorithm MEV-proof.</p>
+Matching uses Fair Batch Matching (see the <a href="/unique-features/sandwich-proof-defi/matching-engine.md">matching engine</a>). No intrinsic ordering among matched orders exists, making the algorithm MEV-proof.</p>
 <div id="2-match-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-json"><code v-pre class="language-json">&quot;data&quot;: {
   &quot;baseAsset&quot;: {                // asset being traded against WART
