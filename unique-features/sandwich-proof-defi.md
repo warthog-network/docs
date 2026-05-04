@@ -1,3 +1,0 @@
----
-title: Sandwich-Proof DeFi
----
