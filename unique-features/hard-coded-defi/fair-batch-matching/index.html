@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.5.3.831204960476">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.5.3.831283828083">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 4.5.3">
@@ -12,7 +12,7 @@
     <!-- Primary Meta Tags -->
     <title>Fair Batch Matching</title>
     <meta name="title" content="Fair Batch Matching">
-    <meta name="description" content="Fair Batch Matching (FBM) is a mathematical framework for matching swap orders with liquidity pools in a way that eliminates transaction ordering manipulation.">
+    <meta name="description" content="Fair Batch Matching (FBM) is Warthog's defense against Sandwich and similar MEV attacks. While the full technical paper covers the mathematical details, this article explains how FBM works in plain terms.">
 
     <!-- Canonical -->
     <link rel="canonical" href="https://docs.warthog.network/unique-features/hard-coded-defi/fair-batch-matching/">
@@ -22,7 +22,7 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://docs.warthog.network/unique-features/hard-coded-defi/fair-batch-matching/">
     <meta property="og:title" content="Fair Batch Matching">
-    <meta property="og:description" content="Fair Batch Matching (FBM) is a mathematical framework for matching swap orders with liquidity pools in a way that eliminates transaction ordering manipulation.">
+    <meta property="og:description" content="Fair Batch Matching (FBM) is Warthog's defense against Sandwich and similar MEV attacks. While the full technical paper covers the mathematical details, this article explains how FBM works in plain terms.">
     <meta property="og:site_name" content="Warthog Network">
     <meta property="og:locale" content="en_US">
 
@@ -30,18 +30,18 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://docs.warthog.network/unique-features/hard-coded-defi/fair-batch-matching/">
     <meta name="twitter:title" content="Fair Batch Matching">
-    <meta name="twitter:description" content="Fair Batch Matching (FBM) is a mathematical framework for matching swap orders with liquidity pools in a way that eliminates transaction ordering manipulation.">
+    <meta name="twitter:description" content="Fair Batch Matching (FBM) is Warthog's defense against Sandwich and similar MEV attacks. While the full technical paper covers the mathematical details, this article explains how FBM works in plain terms.">
 
     <!-- Alternate Markdown -->
     <link rel="alternate" type="text/markdown" href="https://docs.warthog.network/unique-features/hard-coded-defi/fair-batch-matching.md">
 
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../../resources/css/retype.css?v=4.5.3.831204960476" rel="stylesheet">
+    <link href="../../../resources/css/retype.css?v=4.5.3.831283828083" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.5.3.831204960476" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.5.3.831283828083" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../../resources/js/retype.js?v=4.5.3" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.5.3.831204960476" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.5.3.831283828083" data-turbo-eval="false" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -157,95 +157,36 @@
 
                 <!-- Page content  -->
 <h1 id="fair-batch-matching">Fair Batch Matching</h1>
-<h2 id="overview">Overview</h2>
-<p>Fair Batch Matching (FBM) is a mathematical framework for matching swap orders with liquidity pools in a way that eliminates transaction ordering manipulation. Unlike traditional DeFi where orders are processed one at a time sequentially, FBM processes all orders within a block jointly, ensuring every participant receives the same fair price regardless of transaction order.</p>
-<p>This document explains how FBM works without mathematical equations. For the full mathematical treatment, see the <a href="https://github.com/CoinFuMasterShifu/FairBatchMatching/blob/main/FairBatchMatching.pdf">Fair Batch Matching paper</a>.</p>
+<p><em>Fair Batch Matching</em> (FBM) is Warthog&#x27;s defense against <em>Sandwich</em> and similar MEV attacks. While the <a href="https://github.com/CoinFuMasterShifu/FairBatchMatching/blob/main/FairBatchMatching.pdf">full technical paper</a> covers the mathematical details, this article explains how FBM works in plain terms.</p>
 <h2 id="liquidity-pools">Liquidity Pools</h2>
-<p>A liquidity pool is a smart contract that holds reserves of two assets - a base asset and a quote asset. In Warthog, the quote asset is always WART. This implies that no direct trades between non-WART tokens are possible, each swap happens against the native WART token.</p>
-<p>The pool operates on a simple rule: when you exchange assets with the pool, the product of the two reserve amounts must remain constant. This is called the Constant Product Market Maker (CPMM) formula, also used by Uniswap.</p>
-<p>For example, if a pool has 1000 base tokens and 100 WART, the product is 100,000. When someone buys base tokens, they deposit WART and receive base tokens. Ignoring any fees for now, the pool adjusts both reserves so their product stays 100,000. This means the more base tokens someone buys, the higher the price they pay - a natural price discovery mechanism. Requiring the product to be constant is just one way of defining a price curve for an automated market maker, however we do not consider different setups here.</p>
+<p>A liquidity pool is a smart contract that holds reserves of two assets, the asset we measure the price of is the <em>base asset</em> whereas the asset we express the price in is the <em>quote asset</em>. In Warthog the quote asset is always WART, i.e. all prices are expressed in WART and no direct trades between non-WART tokens are possible. Every swap happens against WART.</p>
+<p>The pool operates on a simple rule: when exchanging assets with the pool, the product of the two reserve amounts must remain constant. This is called the Constant Product Market Maker (CPMM) formula, also used by Uniswap.</p>
+<p>For example, if a pool has 1000 base tokens and 100 WART, the product is 100,000. When someone buys base tokens, they deposit WART and receive base tokens. Ignoring fees for now, the pool adjusts both reserves so the product stays 100,000. The more base tokens someone buys, the higher the price they pay - a natural price discovery mechanism.</p>
 <h2 id="order-books">Order Books</h2>
-<p>An order book consists of swap orders, where each order has two components:</p>
-<ul>
-<li>A <strong>limit price</strong> - the worst price the trader is willing to accept</li>
-<li>A <strong>quantity</strong> - how much they want to trade</li>
-</ul>
-<p>There are two types of orders:</p>
-<ul>
-<li><strong>Base swap orders</strong> (sell orders) - swap base into quote token, i.e. sell the base asset for WART</li>
-<li><strong>Quote swap orders</strong> (buy orders) - swap quote into base token, i.e. buy the base asset with WART</li>
-</ul>
-<p>Note that the amount to be swapped is always measured in the input currency here, compared to traditional order books where the amount traded is always measured in the base currency. For sell orders the behavior is identical but for buy orders, in WART the order specifies how much WART to spend on the purchase while traditional order books specify the amount of base asset to buy.</p>
-<p>When we look at a specific price point, we can determine which orders are filled:</p>
-<ul>
-<li>Sell orders with limit prices below that price are filled (someone willing to sell cheap)</li>
-<li>Buy orders with limit prices above that price are filled (someone willing to buy expensive)</li>
-<li>Orders on the other side of that price are not filled</li>
-<li>For the same price level we restrict that only one side can be partially filled (no partial fills for both, buyers and sellers).</li>
-</ul>
+<p>An order book consists of swap orders, where each order has two components. There&#x27;s a <strong>limit price</strong> - the worst price the trader is willing to accept - and a <strong>quantity</strong> - how much they want to trade.</p>
+<p>There are two types of orders. <strong>Base swap orders</strong> (sell orders) swap base into quote token, meaning you sell the base asset for WART. <strong>Quote swap orders</strong> (buy orders) swap quote into base token, meaning you buy the base asset with WART.</p>
+<p>In Warthog, the amount to be swapped is always measured in the input currency. This differs from traditional order books where amounts are measured in the base currency. For sell orders the behavior is identical, but for buy orders, WART orders specify how much WART to spend while traditional order books specify the amount of base asset to buy.</p>
+<p>When looking at a specific price point, we can determine which orders are filled. Sell orders with limit prices below that price are filled because someone is willing to sell cheap. Buy orders with limit prices above that price are filled because someone is willing to buy expensive. Orders on the other side of that price are not filled. At the same price level, only one side can be partially filled - no partial fills for both buyers and sellers.</p>
 <p>The total amount being bought and sold at a given price is called the fill sum.</p>
 <h2 id="pool-interaction">Pool Interaction</h2>
-<p>Since Warthog allows orders to interact with both the other side of the order book and the liquidity pool, we need rules for how this works.</p>
-<p>When buyers want to purchase base assets, they can either:</p>
-<ol>
-<li>Exchange directly with other traders who are selling (through the order book)</li>
-<li>Exchange with the liquidity pool</li>
-</ol>
-<p>The same applies to sellers.</p>
+<p>Since Warthog allows orders to interact with both the other side of the order book and the liquidity pool, rules are needed for how this works. When buyers want to purchase base assets, they can either exchange directly with other traders who are selling through the order book, or exchange with the liquidity pool. The same applies to sellers.</p>
 <p>The key question is: how much of the trading happens at the pool versus through direct exchange?</p>
 <h2 id="fair-pool-interaction">Fair Pool Interaction</h2>
-<p>If the price at the liquidity pool is more favorable for buyers or sellers compared to the order book, they prefer using the liquidity pool. A pool interaction is considered <em>fair</em> when both, buyers and sellers have offloaded the optimal amount of liquidity to the pool, i.e. when neither party prefers changing the amount of directly order-matched and pool-traded liquidity to improve their conversion rate.</p>
-<p>A fair interaction can be viewed as a Nash equilibrium - a state where no participant can get a better deal by unilaterally changing their strategy.</p>
+<p>If the price at the liquidity pool is more favorable for buyers or sellers compared to the order book, they prefer using the liquidity pool. A pool interaction is considered fair when both buyers and sellers have offloaded the optimal amount of liquidity to the pool - meaning neither party prefers changing the amount of directly order-matched and pool-traded liquidity to improve their conversion rate.</p>
+<p>A fair interaction can be viewed as a Nash equilibrium, a state where no participant can get a better deal by unilaterally changing their strategy.</p>
 <h2 id="the-fair-batch-matching-theorem">The Fair Batch Matching Theorem</h2>
 <p>A matching describes the amount of liquidity that buyers and sellers spend on pool interaction and filling the other party&#x27;s limit orders, which implicitly defines an average conversion price. A Fair Batch Matching is a matching with fair pool interaction.</p>
-<p>The key mathematical result of FBM is that for any order book and liquidity pool configuration, there always exists a <strong>unique</strong> Fair Batch Matching. This means:</p>
-<ol>
-<li><strong>Existence</strong>: A Fair Batch Matching always exists.</li>
-<li><strong>Uniqueness</strong>: That matching is the only one that can satisfy these conditions</li>
-</ol>
-<p>This theorem is crucial because it allows to define a fair price and guarantees that the Fair Batch Matching algorithm we have implemented in Warthog always finds a well-defined result.</p>
-<p>We are the first cryptocurrency project that has even formulated this result and also the only project that has successfully implemented an optimization algorithm for practical use. Technically interested readers can find the implementation of this matching algorithm <a href="https://github.com/warthog-network/core/tree/8ea077884bf325ab9495bd3ddebc90fa828bc051/src/shared/src/defi">here</a>. There is also a demo <a href="https://warthog.network/defi-demo">on the warthog website</a>.</p>
+<p>The key mathematical result of FBM is that for any order book and liquidity pool configuration, there always exists a unique Fair Batch Matching. This means a Fair Batch Matching always exists, and that matching is the only one that can satisfy these conditions.</p>
+<p>This theorem is crucial because it allows defining a fair price and guarantees that the Fair Batch Matching algorithm implemented in Warthog always finds a well-defined result.</p>
+<p>Warthog is the first cryptocurrency project to formulate this result and also the only project to have successfully implemented an optimization algorithm for practical use. Technically interested readers can find the implementation of this matching algorithm <a href="https://github.com/warthog-network/core/tree/8ea077884bf325ab9495bd3ddebc90fa828bc051/src/shared/src/defi">here</a>. There is also a demo <a href="https://warthog.network/defi-demo">on the warthog website</a>.</p>
 <h2 id="why-sandwich-attacks-fail">Why Sandwich Attacks Fail</h2>
-<p>Traditional DeFi is vulnerable to sandwich attacks because:</p>
-<ol>
-<li>Orders are processed one at a time against the pool</li>
-<li>Each order changes the pool state (reserves)</li>
-<li>An attacker can see a victim&#x27;s pending order in the mempool</li>
-<li>The attacker places one order before and one after the victim</li>
-<li>The attacker profits at the victim&#x27;s expense</li>
-</ol>
-<p>For example, if a victim wants to buy 1000 units:</p>
-<ol>
-<li>Attacker buys first at the current pool price</li>
-<li>Victim&#x27;s order now executes at a higher price (because attacker bought first)</li>
-<li>Attacker sells back at the higher price, keeping the profit</li>
-</ol>
-<p>With Fair Batch Matching, this attack becomes impossible:</p>
-<ol>
-<li>All orders within a block are collected</li>
-<li>The FBM algorithm finds the unique fair price</li>
-<li>All buyers pay the same price</li>
-<li>All sellers receive the same price</li>
-<li>The attacker&#x27;s front-run and back-run orders receive the same price as the victim</li>
-<li>No profit can be extracted from ordering manipulation</li>
-</ol>
-<p>The critical difference is that FBM processes orders <strong>jointly</strong> rather than <strong>sequentially</strong>. The ordering of transactions within a block becomes irrelevant.</p>
+<p>In traditional DeFi, sandwich attacks work because orders are processed one at a time against the pool. Each order changes the pool state, and an attacker monitoring the mempool can see a victim&#x27;s pending order. The attacker then places one order before and one after the victim, profiting at the victim&#x27;s expense.</p>
+<p>For example, if a victim wants to buy an asset, the attacker buys first at the current pool price. The victim&#x27;s order then executes at a higher price because the attacker bought first. The attacker sells back at the higher price, keeping the profit.</p>
+<p>With Fair Batch Matching, this attack becomes impossible. All orders within a block are collected, the FBM algorithm finds the unique fair price, all buyers pay the same price, and all sellers receive the same price. The attacker&#x27;s front-run and back-run orders receive the same price as the victim, so no profit can be extracted from ordering manipulation.</p>
+<p>The critical difference is that FBM processes orders jointly rather than sequentially. The ordering of transactions within a block becomes irrelevant. This is the huge advantage of hard-coding DeFi on consensus level rather than relying on second layer smart contract implementations.</p>
 <h2 id="how-matching-works-in-practice">How Matching Works in Practice</h2>
-<p>When a block is processed:</p>
-<ol>
-<li>The node collects all pending limit swap orders for each market</li>
-<li>It looks at the current liquidity pool state</li>
-<li>The FBM algorithm determines:
-<ul>
-<li>A single price at which all trades execute</li>
-<li>How much each order gets filled</li>
-<li>How much happens through the pool versus direct order matching</li>
-</ul>
-</li>
-<li>The node executes all matches atomically</li>
-<li>The pool state updates once with the combined result</li>
-</ol>
-<p>This means a victim&#x27;s order cannot be &quot;sandwiched&quot; because there is no before and after - all orders execute simultaneously at the fair price.</p>
+<p>When a block is processed, the node collects all pending limit swap orders for each market and looks at the current liquidity pool state. The FBM algorithm then determines a single price at which all trades execute, how much each order gets filled, and how much happens through the pool versus direct order matching. The node executes all matches atomically, and the pool state updates once with the combined result.</p>
+<p>This means a victim&#x27;s order cannot be sandwiched because there is no before and after - all orders execute simultaneously at the fair price.</p>
 <h2 id="key-benefits">Key Benefits</h2>
 <ul>
 <li><strong>No MEV extraction</strong>: Transaction ordering cannot be exploited for profit</li>
