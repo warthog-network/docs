@@ -1,5 +1,5 @@
 # TypeScript Library for Warthog
-Warthog provides an easy-to-use TypeScript library called `warthog-ts` intended for interacting with the Warthog ecosystem. This project is [hosted on GitHub](https://github.com/warthog-network/warthog-ts) and PRs are always welcome.
+Warthog provides an easy-to-use [TypeScript library called `warthog-ts`](https://www.npmjs.com/package/warthog-ts?activeTab=versions) intended for interacting with the Warthog ecosystem. This project is [hosted on GitHub](https://github.com/warthog-network/warthog-ts) and PRs are always welcome.
 
 ## Features
 
@@ -28,5 +28,5 @@ const result = await api.submitTransaction(tx);
 ## Installation
 
 ```bash
-npm install github:warthog-network/warthog-ts
+npm install warthog-ts
 ```
