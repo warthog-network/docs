@@ -60,3 +60,7 @@ The copy-on-write approach ensures efficiency: storage is only consumed when a c
 <!-- ## Links -->
 <!-- - [Fair Batch Matching Paper (PDF)](https://github.com/CoinFuMasterShifu/FairBatchMatching/blob/main/FairBatchMatching.pdf) -->
 <!-- - [DeFi Demo](https://warthog.network/defi-demo) -->
+
+## Registering Your Asset
+
+To add metadata for your asset, see the [Asset Registration guide](../../guides/asset-registration.md).

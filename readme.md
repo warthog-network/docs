@@ -31,6 +31,12 @@ Doc available here :
 - [wart-wallet (CLI)](guides/wallet/cli.md)
 
 
+## Asset Registration
+
+Doc available here :
+- [Adding your asset](guides/asset-registration.md)
+
+
 ## Mining
 Mining Warthog's Janushash algorithm requires both, a good CPU and a GPU.
 
