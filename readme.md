@@ -31,10 +31,16 @@ Doc available here :
 - [wart-wallet (CLI)](guides/wallet/cli.md)
 
 
-## Asset Registration
+## Providing Metadata on Assets
 
-Doc available here :
-- [Adding your asset](guides/asset-registration.md)
+This repository hosts public data for the Warthog community. Everyone is welcome to contribute.
+
+Docs available here:
+- [Public Data Overview](guides/public-data/index.md)
+- [Adding a Node](guides/public-data/nodes.md)
+- [Adding an Address Tag](guides/public-data/addresses.md)
+- [Submitting Hashrates](guides/public-data/hashrates.md)
+- [Registering an Asset](guides/public-data/assets.md)
 
 
 ## Mining
