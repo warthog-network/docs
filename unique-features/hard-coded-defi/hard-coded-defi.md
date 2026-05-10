@@ -24,3 +24,7 @@ This is a feature that is still in development.
 By using a lazy copy-on-write database and careful design, it is possible to fork existing balance distributions when creating new assets. When a new token is created this way, all holders of the original token receive an identical balance of the new token. This enables use cases such as creating new tokens with balance distribution cloned from an existing token and paying out dividends proportionally to the holdings at a specific point in time.
 
 The copy-on-write approach ensures efficiency: storage is only consumed when a cloned token holder makes their first transaction, diverging from the original distribution.
+
+## Registering Your Asset
+
+To add metadata for your asset, see the [Asset Registration guide](../../guides/asset-registration.md).

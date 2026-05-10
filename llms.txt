@@ -16,6 +16,14 @@
 - [Calculator](https://docs.warthog.network/guides/mining/calculator.md): A Mining calculator will help you to estimate your mining profitability, depending on your mining hardware.
 - [OpenCL Installation](https://docs.warthog.network/guides/mining/installing-opencl.md): To mine on your GPUs you need to install GPU drivers with OpenCL support.
 
+### Public Data
+
+- [Public Data](https://docs.warthog.network/guides/public-data/index.md): The public-data repository hosts public data for the Warthog community. This data is exported to API endpoints on data.warthog.network.
+- [Adding an Address Tag](https://docs.warthog.network/guides/public-data/addresses.md): Address tags help identify known WART addresses such as exchange wallets, pool payouts, and donation addresses.
+- [Registering Asset Metadata](https://docs.warthog.network/guides/public-data/assets.md): Warthog stores asset metadata off-chain in the public-data repository. This allows anyone to register information about assets on the Warthog chain.
+- [Submitting Hashrates](https://docs.warthog.network/guides/public-data/hashrates.md): Hashrate data helps miners estimate their expected Janushash performance when choosing GPU and CPU configurations.
+- [Adding a Public Node](https://docs.warthog.network/guides/public-data/nodes.md): Running a public node helps the Warthog network by providing infrastructure for users who cannot run their own node.
+
 ### Using a node
 
 - [Node](https://docs.warthog.network/guides/node/node.md): For some actions on the Warthog network (using a wallet or solo mining), you need to run an instance of the node on your computer. Currently, the pre-compiled node executable file are availabe for Windows, macOS (only arm), Linux (Ubuntu, Debian).

@@ -4,7 +4,8 @@ For some actions on the Warthog network (using a wallet or solo mining), you nee
 
 ## Public nodes
 
-If for some reasons, you cannot use a local node, you can use existing public nodes. They can be found [here](https://github.com/warthog-network/public-nodes)
+If for some reasons, you cannot use a local node, you can use existing public nodes. They can be found in the [public-data repository](https://github.com/warthog-network/public-data) and are available via API at [data.warthog.network/legacy-nodes.json](https://data.warthog.network/legacy-nodes.json).
+
 You can use them to connect your wallet without installing a local node, but **don't use public nodes for solo mining**
 
 ## Starting the node

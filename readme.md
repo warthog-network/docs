@@ -29,6 +29,17 @@ Doc available here :
 - [wart-dapp (GUI)](guides/wallet/wart-dapp.md)
 - [wart-wallet (CLI)](guides/wallet/cli.md)
 
+## Providing Metadata on Assets
+
+This repository hosts public data for the Warthog community. Everyone is welcome to contribute.
+
+Docs available here:
+- [Public Data Overview](guides/public-data/index.md)
+- [Adding a Node](guides/public-data/nodes.md)
+- [Adding an Address Tag](guides/public-data/addresses.md)
+- [Submitting Hashrates](guides/public-data/hashrates.md)
+- [Registering an Asset](guides/public-data/assets.md)
+
 ## Mining
 Mining Warthog's Janushash algorithm requires both, a good CPU and a GPU.
 
