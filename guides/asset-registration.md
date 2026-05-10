@@ -58,6 +58,7 @@ Once your asset is merged and deployed, the following endpoints will be availabl
 |----------|-------------|
 | [https://data.warthog.network/assets.json](https://data.warthog.network/assets.json) | List of all assets (hash, name, ticker) for autocompletion |
 | [https://data.warthog.network/assets/{hash}/info.json](https://data.warthog.network/assets/0000000000000000000000000000000000000000000000000000000000000000/info.json) | Individual asset metadata |
+| [https://data.warthog.network/assets/{hash}/image.png](https://data.warthog.network/assets/0000000000000000000000000000000000000000000000000000000000000000/image.png) | Asset logo image (optional) |
 
 ### Example Response
 
