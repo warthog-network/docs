@@ -183,12 +183,12 @@ Compared to returned structure of [`/transaction/mempool`](#get-transactionmempo
 The content of the `data` field depends on the transaction type specified in the `type` field. For some transaction types there exists the field `processed` which is null if and only if `mined` is null, i.e. if the transaction is still in mempool. See [Transactions](./rest/transactions.md) for details. If the transaction is already mined, `confirmations` will be non-zero and the `mined` field will be an object of structure
 ```json
 {
- historyId: 7,           // history ID
  block: {                // details on the block where the transaction was mined
   height: 11,            // block height
   hash: "363a...89d5",   // block hash
   timestamp: 1771583754  // block timestamp
- }
+ },
+ historyId: 7            // history ID
 }
 ```
 
@@ -2319,12 +2319,12 @@ Show orders, liquidity pool and matching for the market with specified base asse
   "asset": { "str": "1000.0000", "u64": 10000000, "decimals": 4 },
   "shares": { "str": "100.0000", "u64": 1000000, "decimals": 4 },
   "wart": { "E8": 100000000, "str": "1.00000000" }
- },
- "match": {
-  "filled": { "base": { "str": "100.0000", "u64": 1000000, "decimals": 4 }, "quote": { "E8": 100000000, "str": "1.00000000" }},
-  "toPool": { "amount": { "str": "100.0000", "u64": 1000000, "decimals": 4 }, "isQuote": false},
- }
- "wartToAssetSwaps": [...], // same structure as "wartToAssetSwaps"
+  },
+  "match": {
+   "filled": { "base": { "str": "100.0000", "u64": 1000000, "decimals": 4 }, "quote": { "E8": 100000000, "str": "1.00000000" }},
+   "toPool": { "amount": { "str": "100.0000", "u64": 1000000, "decimals": 4 }, "isQuote": false},
+  },
+  "wartToAssetSwaps": [...], // same structure as "assetToWartSwaps"
 }
 ```
 The order book is represented by `assetToWartSwaps` and `wartToAssetSwaps` fields which are both arrays containing elements of the form
