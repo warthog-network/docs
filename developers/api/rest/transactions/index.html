@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.5.3.832104060070">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.834166342319">
 
     <!-- See retype.com -->
-    <meta name="generator" content="Retype 4.5.3">
+    <meta name="generator" content="Retype 4.6.0">
 
     <!-- Primary Meta Tags -->
     <title>Transactions</title>
@@ -37,12 +37,12 @@
 
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../../../resources/css/retype.css?v=4.5.3.832104060070" rel="stylesheet">
+    <link href="../../../../resources/css/retype.css?v=4.6.0.834166342319" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../../../resources/js/config.js?v=4.5.3.832104060070" data-turbo-eval="false" defer></script>
-    <script data-cfasync="false" src="../../../../resources/js/retype.js?v=4.5.3" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../../../resources/js/lunr.js?v=4.5.3.832104060070" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../../../../resources/js/prism.js?v=4.5.3.832104060070" defer></script>
+    <script data-cfasync="false" src="../../../../resources/js/config.js?v=4.6.0.834166342319" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../../../resources/js/retype.js?v=4.6.0" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../../../resources/js/lunr.js?v=4.6.0.834166342319" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../../../../resources/js/prism.js?v=4.6.0.834166342319" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -159,6 +159,17 @@
                 <!-- Page content  -->
 <h1 id="transactions">Transactions</h1>
 <p>Warthog supports the following transactions, some of which are signed and can have a <code translate="no" v-pre>processed</code> property:</p>
+<retype-table copy-text="| Type | Explanation |  signed | `processed`
+|---|---|---|
+| `wartTransfer` | Transfer WART to another account | X|
+| `tokenTransfer` | Transfer a non-WART token to another account | X |
+| `assetCreation` | Create a new asset | X | X
+| `cancelation` | Cancel a transaction / pending order |  X | X
+| `liquidityDeposit` | Deposit liquidity into a liquidity pool | X | X
+| `liquidityWithdrawal` | Withdraw liquidity from a liquidity pool | X | X
+| `limitSwap` | Create a limit order on the DEX | X | X
+| `reward` | Block reward paid to miner |  |
+| `match` | Batch-matched orders from a block |  |">
 <div class="table-wrapper scrollbar overflow-hidden">
 <table class="comfortable">
 <thead>
@@ -227,6 +238,7 @@
 </tbody>
 </table>
 </div>
+</retype-table>
 <h2 id="type-specification">Type Specification</h2>
 <p>The API returns transactions either in a block or individually.</p>
 <h3 id="within-block">Within Block</h3>

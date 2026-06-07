@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.5.3.832104060070">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.834166342319">
 
     <!-- See retype.com -->
-    <meta name="generator" content="Retype 4.5.3">
+    <meta name="generator" content="Retype 4.6.0">
 
     <!-- Primary Meta Tags -->
     <title>Registering Asset Metadata</title>
@@ -37,12 +37,12 @@
 
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../../resources/css/retype.css?v=4.5.3.832104060070" rel="stylesheet">
+    <link href="../../../resources/css/retype.css?v=4.6.0.834166342319" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.5.3.832104060070" data-turbo-eval="false" defer></script>
-    <script data-cfasync="false" src="../../../resources/js/retype.js?v=4.5.3" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.5.3.832104060070" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../../../resources/js/prism.js?v=4.5.3.832104060070" defer></script>
+    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.6.0.834166342319" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../../resources/js/retype.js?v=4.6.0" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.6.0.834166342319" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../../../resources/js/prism.js?v=4.6.0.834166342319" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -179,6 +179,12 @@
 └── image.png      # Optional</code></pre>
 </doc-codeblock></div>
 <h3 id="infojson-schema">info.json Schema</h3>
+<retype-table copy-text="| Field | Required | Description |
+|-------|----------|-------------|
+| `name` | Yes | Long name of the asset (e.g., &quot;Warthog&quot;) |
+| `ticker` | Yes | Short ticker symbol (max 5 characters, e.g., &quot;WART&quot;) |
+| `description` | Yes | Description of the asset |
+| `url` | No | Website URL |">
 <div class="table-wrapper scrollbar overflow-hidden">
 <table class="comfortable">
 <thead>
@@ -212,6 +218,7 @@
 </tbody>
 </table>
 </div>
+</retype-table>
 <h3 id="example-infojson">Example info.json</h3>
 <div id="example-infojson-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-json"><code v-pre class="language-json">{
@@ -223,6 +230,11 @@
 </doc-codeblock></div>
 <h2 id="api-endpoints">API Endpoints</h2>
 <p>Once your asset is merged and deployed:</p>
+<retype-table copy-text="| Endpoint | Description |
+|----------|-------------|
+| [https://data.warthog.network/assets.json](https://data.warthog.network/assets.json) | Asset list for autocompletion |
+| [https://data.warthog.network/assets/\{hash\}/info.json](https://data.warthog.network/assets/0000000000000000000000000000000000000000000000000000000000000000/info.json) | Asset metadata |
+| [https://data.warthog.network/assets/\{hash\}/image.png](https://data.warthog.network/assets/0000000000000000000000000000000000000000000000000000000000000000/image.png) | Asset logo (optional) |">
 <div class="table-wrapper scrollbar overflow-hidden">
 <table class="comfortable">
 <thead>
@@ -247,6 +259,7 @@
 </tbody>
 </table>
 </div>
+</retype-table>
 <h2 id="need-help">Need Help?</h2>
 <p>Join the Warthog community on <a href="https://discord.com/invite/QMDV8bGTdQ">Discord</a> for assistance.</p>
 

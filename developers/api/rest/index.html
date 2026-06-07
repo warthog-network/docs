@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.5.3.832104060070">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.834166342319">
 
     <!-- See retype.com -->
-    <meta name="generator" content="Retype 4.5.3">
+    <meta name="generator" content="Retype 4.6.0">
 
     <!-- Primary Meta Tags -->
     <title>REST</title>
@@ -37,12 +37,12 @@
 
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../../resources/css/retype.css?v=4.5.3.832104060070" rel="stylesheet">
+    <link href="../../../resources/css/retype.css?v=4.6.0.834166342319" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.5.3.832104060070" data-turbo-eval="false" defer></script>
-    <script data-cfasync="false" src="../../../resources/js/retype.js?v=4.5.3" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.5.3.832104060070" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../../../resources/js/prism.js?v=4.5.3.832104060070" defer></script>
+    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.6.0.834166342319" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../../resources/js/retype.js?v=4.6.0" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.6.0.834166342319" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../../../resources/js/prism.js?v=4.6.0.834166342319" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -209,6 +209,65 @@
 <pre translate="no" class="language-bash"><code v-pre class="language-bash">[info] RPC endpoint is 127.0.0.1:3000.</code></pre>
 </doc-codeblock></div>
 <h2 id="overview">Overview</h2>
+<retype-table copy-text="| Method | Path | Description |
+|--------|------|-------------|
+| `POST` | [`/transaction/add`](#post-transactionadd) | Send transactions |
+| `GET` | [`/transaction/mempool`](#get-transactionmempool) | Show content of mempool |
+| `GET` | [`/transaction/lookup/:txid`](#get-transactionlookuptxid) | Transaction lookup by transaction ID |
+| `GET` | [`/transaction/latest`](#get-transactionlatest) | Show latest transactions |
+| `GET` | [`/transaction/minfee`](#get-transactionminfee) | Show the minimum fee required by this node |
+| `GET` | [`/settings/mempool/minfee/:feeE8`](#get-settingsmempoolminfeefeee8) | Adjust the minimum transaction fee |
+| `GET` | [`/chain/head`](#get-chainhead) | Show info on chain head |
+| `GET` | [`/chain/grid`](#get-chaingrid) | Show header grid (used for sync) |
+| `GET` | [`/chain/block/:height/hash`](#get-chainblockheighthash) | Show hash of specific block |
+| `GET` | [`/chain/block/:id/header`](#get-chainblockidheader) | Show header of specific block |
+| `GET` | [`/chain/block/:id/binary`](#get-chainblockidbinary) | Show binary data of specific block |
+| `GET` | [`/chain/block/:id`](#get-chainblockid) | Show header and body of specific block |
+| `GET` | [`/chain/mine/:account`](#get-chainmineaccount) | Generate data required for mining |
+| `GET` | [`/chain/txcache`](#get-chaintxcache) | Show transaction cache |
+| `GET` | [`/chain/hashrate/:window`](#get-chainhashratewindow) | Show current hashrate based on latest N blocks |
+| `GET` | [`/chain/signed_snapshot`](#get-chainsigned_snapshot) | Show chain snapshot |
+| `POST` | [`/chain/append`](#post-chainappend) | Append mined block |
+| `GET` | [`/asset/complete?namePrefix=...&amp;hashPrefix=...`](#get-assetcomplete) | Search assets by name and/or hash prefix |
+| `GET` | [`/asset/lookup/:asset`](#get-assetlookupasset) | Asset lookup (by ID or hash) |
+| `GET` | [`/dex/market/:market`](#get-dexmarketmarket) | Show market orders and liquidity pool |
+| `GET` | [`/account/:account/mempool`](#get-accountaccountmempool) | Show mempool transactions for account |
+| `GET` | [`/account/:account/open_orders`](#get-accountaccountopen_orders) | Show all open orders for account |
+| `GET` | [`/account/:account/open_orders/:asset`](#get-accountaccountopen_ordersasset) | Show open orders for account and specific asset |
+| `GET` | [`/account/:account/balance/:tokenspec`](#get-accountaccountbalancetokenspec) | Show balance of specific account for a token |
+| `GET` | [`/account/:account/wart_balance`](#get-accountaccountwart_balance) | Show WART balance of specific account |
+| `GET` | [`/account/:account/history/:beforeId`](#get-accountaccounthistorybeforeid) | Show transaction history of specific account |
+| `GET` | [`/account/richlist/:tokenspec`](#get-accountrichlisttokenspec) | Show richlist for a specific token |
+| `GET` | [`/peers/ip_count`](#get-peersip_count) | Show peer IP counts |
+| `GET` | [`/peers/banned`](#get-peersbanned) | Show banned peers |
+| `GET` | [`/peers/offenses/:page`](#get-peersoffensespage) | Show offenses of peers |
+| `GET` | [`/peers/connected/connection`](#get-peersconnectedconnection) | Show connection info of connected peers |
+| `GET` | [`/peers/connection_schedule`](#get-peersconnection_schedule) | Show connection schedule |
+| `GET` | [`/peers/unban`](#get-peersunban) | Unban all peers |
+| `GET` | [`/peers/connected`](#get-peersconnected) | Show info of connected peers |
+| `GET` | [`/peers/disconnect/:id`](#get-peersdisconnectid) | Disconnect a specific peer |
+| `GET` | [`/peers/throttled`](#get-peersthrottled) | Show throttled peers |
+| `GET` | [`/peers/transmission_hours`](#get-peerstransmission_hours) | Show transmission data by hours |
+| `GET` | [`/peers/transmission_minutes`](#get-peerstransmission_minutes) | Show transmission data by minutes |
+| `GET` | [`/chart/candles/:asset/:interval?from=...&amp;to=...&amp;n=...`](#get-chartcandlesassetinterval) | Show OHLCV candle data for a timeframe (5m, 1h, 1d) |
+| `GET` | [`/chart/trades/:asset?from=...&amp;to=...&amp;n=...`](#get-charttradesasset) | Show trade data |
+| `GET` | [`/chart/hashrate/block/:from/:to/:window`](#get-charthashrateblockfromtowindow) | Show hashrate chart by block range |
+| `GET` | [`/chart/hashrate/time/:from/:to/:interval`](#get-charthashratetimefromtointerval) | Show hashrate chart by time range |
+| `GET` | [`/tools/encode16bit/from_e8/:feeE8`](#get-toolsencode16bitfrom_e8feee8) | Round raw 64 integer to closest 16 bit representation |
+| `GET` | [`/tools/encode16bit/from_string/:string`](#get-toolsencode16bitfrom_stringstring) | Round coin amount string to closest 16 bit representation |
+| `GET` | [`/tools/parse_price/:price/:decimals`](#get-toolsparse_pricedecimals) | Parse price adjusted for asset precision |
+| `GET` | [`/tools/info`](#get-toolsinfo) | Print information about this node |
+| `GET` | [`/tools/wallet/new`](#get-toolswalletnew) | Create a new wallet |
+| `GET` | [`/tools/wallet/from_privkey/:privkey`](#get-toolswalletfrom_privkeyprivkey) | Restore wallet from a private key |
+| `GET` | [`/tools/janushash_number/:headerhex`](#get-toolsjanushash_numberheaderhex) | Show number interpretation of a header's Janushash |
+| `GET` | [`/tools/sample_verified_peers/:number`](#get-toolssample_verified_peersnumber) | List verified peers |
+| `GET` | [`/debug/header_download`](#get-debugheader_download) | Show header download status |
+| `GET` | [`/loadtest/block_request/:conn_id`](#get-loadtestblock_requestconn_id) | Load test block request |
+| `GET` | [`/loadtest/header_request/:conn_id`](#get-loadtestheader_requestconn_id) | Load test header request |
+| `GET` | [`/loadtest/disable/:conn_id`](#get-loadtestdisableconn_id) | Disable load test connection |
+| `GET` | [`/debug/fakemine`](#get-debugfakemine) | Generate fake mining data (default address) |
+| `GET` | [`/debug/rollback`](#get-debugrollback) | Rollback chain |
+| `GET` | [`/debug/fakemine/:address`](#get-debugfakemineaddress) | Generate fake mining data for address |">
 <div class="table-wrapper scrollbar overflow-hidden">
 <table class="comfortable">
 <thead>
@@ -507,6 +566,7 @@
 </tbody>
 </table>
 </div>
+</retype-table>
 <p>For now  <a href="../websocket/">WebSocket API</a> is temporarily disabled.</p>
 <h2 id="json-schemas">JSON Schemas</h2>
 <p>The Warthog node supports an automatically generated JSON Schema output of all output properties available at <code translate="no" v-pre>/debug/json_schemas</code>. This can be especially useful in connection with AI coding assistants.</p>
@@ -2921,6 +2981,11 @@ The content of the <code translate="no" v-pre>data</code> field depends on the t
 <p>Show balance of an account for a specific asset. The <code translate="no" v-pre>:account</code> parameter is the account address, and <code translate="no" v-pre>:tokenspec</code> is the token spec (e.g., <code translate="no" v-pre>asset:0e4825efffa294610d2ac376713e3bcc9b53d378e823834b64e5df01f75d3b0c</code>).</p>
 <h4 id="balance-types">Balance Types</h4>
 <p>The API returns three balance types:</p>
+<retype-table copy-text="| Type | Description |
+ |------|-------------|
+ | `total` | The total balance of the account |
+ | `locked` | Balance locked in open orders |
+ | `mempool` | Balance currently used by pending transactions in the mempool |">
 <div class="table-wrapper scrollbar overflow-hidden">
 <table class="comfortable">
 <thead>
@@ -2945,6 +3010,7 @@ The content of the <code translate="no" v-pre>data</code> field depends on the t
 </tbody>
 </table>
 </div>
+</retype-table>
 <p>Spendable amount is <code translate="no" v-pre>total - locked</code> and can be reused for new transactions. When inserting new transactions, if <code translate="no" v-pre>total - locked</code> is sufficient to cover the expenses required for the transaction but <code translate="no" v-pre>total - locked - mempool</code> is not, the system may evict lower-fee transactions from the mempool to make room for a higher-fee transaction.</p>
 <p>Example output:</p>
 <div id="balance-types-code-1" class="codeblock-wrapper"><doc-codeblock>
@@ -3717,6 +3783,18 @@ The content of the <code translate="no" v-pre>data</code> field depends on the t
  ]
 }</code></pre>
 </doc-codeblock></div>
+<retype-table copy-text="| Field | Type | Description |
+|-------|------|-------------|
+| `chain` | object | Chain state of the peer |
+| `chain.grid` | array | Header grid for chain comparison |
+| `chain.length` | integer | Chain height of the peer |
+| `chain.worksum` | number | Total work in the chain |
+| `connection` | object | Connection info |
+| `connection.ip` | string | Peer IP address |
+| `connection.port` | integer | Peer port |
+| `connection.since` | integer | Unix timestamp of connection start |
+| `leaderPriority` | object | Leader election priority |
+| `throttle` | object | Throttling state for block/header requests |">
 <div class="table-wrapper scrollbar overflow-hidden">
 <table class="comfortable">
 <thead>
@@ -3780,6 +3858,7 @@ The content of the <code translate="no" v-pre>data</code> field depends on the t
 </tbody>
 </table>
 </div>
+</retype-table>
 <h3 id="get-peersdisconnectid"><code translate="no" v-pre>GET /peers/disconnect/:id</code></h3>
 <p>Disconnect a specific peer by connection ID.</p>
 <div id="get-peersdisconnectid-code-1" class="codeblock-wrapper"><doc-codeblock>
@@ -3822,6 +3901,13 @@ The content of the <code translate="no" v-pre>data</code> field depends on the t
 <h3 id="get-chartcandlesassetinterval"><code translate="no" v-pre>GET /chart/candles/:asset/:interval</code></h3>
 <p>Show OHLCV candle data for a specific asset and interval accepting query parameters <code translate="no" v-pre>from</code>, <code translate="no" v-pre>to</code> and <code translate="no" v-pre>n</code>.</p>
 <p><strong>Parameters:</strong></p>
+<retype-table copy-text="| Parameter | Type | Description |
+|-----------|------|-------------|
+| `:asset` | integer/string | Asset ID (e.g. `7`) or hash (e.g. `0e4825efffa294610d2ac376713e3bcc9b53d378e823834b64e5df01f75d3b0c`)|
+| `:interval` | string | Timeframe: `5m` (5 minutes), `1h` (1 hour), `1d` (1 day) |
+| `from` | Unix timestamp | Start time (optional) |
+| `to` | Unix timestamp | End time (optional) |
+| `n` | integer | Limit number of results (optional, default: 100) |">
 <div class="table-wrapper scrollbar overflow-hidden">
 <table class="comfortable">
 <thead>
@@ -3860,6 +3946,7 @@ The content of the <code translate="no" v-pre>data</code> field depends on the t
 </tbody>
 </table>
 </div>
+</retype-table>
 <p><strong>Query parameter rules:</strong></p>
 <ul>
 <li>Not all three optional parameters (<code translate="no" v-pre>from</code>, <code translate="no" v-pre>to</code>, <code translate="no" v-pre>n</code>) can be specified at the same time.</li>
@@ -3890,6 +3977,12 @@ The content of the <code translate="no" v-pre>data</code> field depends on the t
 <h3 id="get-charttradesasset"><code translate="no" v-pre>GET /chart/trades/:asset</code></h3>
 <p>Show historic trade data for a specific asset accepting query parameters <code translate="no" v-pre>from</code>, <code translate="no" v-pre>to</code> and <code translate="no" v-pre>n</code>.</p>
 <p><strong>Parameters:</strong></p>
+<retype-table copy-text="| Parameter | Type | Description |
+|-----------|------|-------------|
+| `:asset` | integer/string | Asset ID (e.g. `7`) or hash (e.g. `0e4825efffa294610d2ac376713e3bcc9b53d378e823834b64e5df01f75d3b0c`) |
+| `from` | block height | Start block (optional) |
+| `to` | block height | End block (optional) |
+| `n` | integer | Limit number of results (optional, default: 100) |">
 <div class="table-wrapper scrollbar overflow-hidden">
 <table class="comfortable">
 <thead>
@@ -3923,6 +4016,7 @@ The content of the <code translate="no" v-pre>data</code> field depends on the t
 </tbody>
 </table>
 </div>
+</retype-table>
 <p><strong>Query parameter rules:</strong></p>
 <ul>
 <li>Not all three optional parameters (<code translate="no" v-pre>from</code>, <code translate="no" v-pre>to</code>, <code translate="no" v-pre>n</code>) can be specified at the same time.</li>
