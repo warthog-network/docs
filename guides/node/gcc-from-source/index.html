@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.834166342319">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.834231252783">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 4.6.0">
@@ -37,11 +37,11 @@
 
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../../resources/css/retype.css?v=4.6.0.834166342319" rel="stylesheet">
+    <link href="../../../resources/css/retype.css?v=4.6.0.834231252783" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.6.0.834166342319" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.6.0.834231252783" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../../resources/js/retype.js?v=4.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.6.0.834166342319" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.6.0.834231252783" data-turbo-eval="false" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -164,27 +164,67 @@ You can also check the gpg signature. To this end you first need to have the key
 <pre translate="no" class="language-none"><code v-pre class="language-none">curl http://ftp.gnu.org/gnu/gnu-keyring.gpg -O
 gpg --import gnu-keyring.gpg</code></pre>
 </doc-codeblock></div>
-<p>Select a recent version, download and unzip it.
+<p>Select a recent version, download and unzip it. In this guide however we will use <code translate="no" v-pre>gcc-15.2.0</code>.
 <figure class="content-center">
     <img src="/img/gcc-select.png" alt="" class="max-w-full h-auto rounded-image-rounded border-image-border border-image-border-width" />
     <figcaption class="caption"></figcaption>
 </figure>
 </p>
 <div id="installing-gcc-from-source-code-2" class="codeblock-wrapper"><doc-codeblock>
-<pre translate="no" class="language-none"><code v-pre class="language-none">tar -xf gcc-16.1.0.tar.gz 
-cd gcc-16.1.0</code></pre>
+<pre translate="no" class="language-none"><code v-pre class="language-none">tar -xf gcc-15.2.0.tar.gz 
+cd gcc-15.2.0</code></pre>
 </doc-codeblock></div>
 <p>Next we need to download the prerequisites by invoking an automated download script:</p>
 <div id="installing-gcc-from-source-code-3" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-none"><code v-pre class="language-none">./contrib/download_prerequisites</code></pre>
 </doc-codeblock></div>
-<p>After this is done we can configure the build and call <code translate="no" v-pre>make</code></p>
+<p>After this is done we can configure the build:</p>
 <div id="installing-gcc-from-source-code-4" class="codeblock-wrapper"><doc-codeblock>
-<pre translate="no" class="language-none"><code v-pre class="language-none">./configure
-make -j16</code></pre>
+<pre translate="no" class="language-none"><code v-pre class="language-none">./configure</code></pre>
 </doc-codeblock></div>
-<p>Above, the <code translate="no" v-pre>-j16</code> flags specifies that 16 jobs can run in parallel. Adapt this number to your system to maximize the parrallelism. The build takes a long time.
-After the build has succeeded you can install gcc as a privileged user.</p>
+<p>Run configure without multilib support <code translate="no" v-pre>./configure --disable-multilib</code> if you get the following error:</p>
+<div id="installing-gcc-from-source-code-5" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-none"><code v-pre class="language-none">configure: error: I suspect your system does not have 32-bit development libraries (libc and headers). If you have them, rerun configure with --enable-multilib. If you do not have them, and want to build a 64-bit-only compiler, rerun configure with --disable-multilib.</code></pre>
+</doc-codeblock></div>
+<p>After successful configuration you can compile gcc</p>
+<div id="installing-gcc-from-source-code-6" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-none"><code v-pre class="language-none">make -j16</code></pre>
+</doc-codeblock></div>
+<p>Above, the <code translate="no" v-pre>-j16</code> flags specifies that 16 jobs can run in parallel. Adapt this number to your system to maximize the parallelism. The build takes a long time.
+After the build has succeeded you can install gcc as a privileged user:</p>
+<div id="installing-gcc-from-source-code-7" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-none"><code v-pre class="language-none">sudo make install</code></pre>
+</doc-codeblock></div>
+<p>You can test whether your gcc compiler now has the newly installed version:</p>
+<div id="installing-gcc-from-source-code-8" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-none"><code v-pre class="language-none">$ gcc --version
+gcc (GCC) 15.2.0</code></pre>
+</doc-codeblock></div>
+<p>However during <code translate="no" v-pre>sudo make install</code> you will see a hint</p>
+<div id="installing-gcc-from-source-code-9" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-none"><code v-pre class="language-none">Libraries have been installed in:
+   /usr/local/lib/../lib64
+
+If you ever happen to want to link against installed libraries
+in a given directory, LIBDIR, you must either use libtool, and
+specify the full pathname of the library, or use the `-LLIBDIR'
+flag during linking and do at least one of the following:
+   - add LIBDIR to the `LD_LIBRARY_PATH' environment variable
+     during execution
+   - add LIBDIR to the `LD_RUN_PATH' environment variable
+     during linking
+   - use the `-Wl,-rpath -Wl,LIBDIR' linker flag
+   - have your system administrator add LIBDIR to `/etc/ld.so.conf'
+
+See any operating system documentation about shared libraries for
+more information, such as the ld(1) and ld.so(8) manual pages.</code></pre>
+</doc-codeblock></div>
+<p>On most systems the library path <code translate="no" v-pre>/usr/local/lib64</code> is not included in the system library search path by default. As a result your compiled programs cannot be executed (but they will compile using the new compiler). One way to add the library path using <code translate="no" v-pre>ldconfig</code>. To do this create a file <code translate="no" v-pre>/etc/ld.so.conf.d/local-lib64.conf</code> with the content</p>
+<div id="installing-gcc-from-source-code-10" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-none"><code v-pre class="language-none">/usr/local/lib64</code></pre>
+</doc-codeblock></div>
+<p>Then run <code translate="no" v-pre>sudo ldconfig</code>. This has to be done only if your system does not contain the path <code translate="no" v-pre>/usr/local/lib64</code> yet.</p>
+<p>At this point you should be able to build and run Warthog as described <a href="../compiling/#compiling">here</a>. Note that after compiler upgrade, if you already generated the build directory, you should delete it and regenerate it using <code translate="no" v-pre>meson setup build</code>.</p>
 
                 
                 <!-- Required only on API pages -->
