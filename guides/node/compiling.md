@@ -31,6 +31,10 @@ cd Warthog
 meson build
 ```
 ![](/img/get-started/05-meson-build.png)
+If you have multiple compilers installed in your system, especially after having compiled GCC from source [as described here](./gcc-from-source), if meson selects your old compiler, you can specify the C and C++ compilers with the environment variables `CC` and `CXX` respectively. For example:
+```
+CC=/usr/local/bin/gcc CXX=/usr/local/bin/c++ meson setup build
+```
 
 When you run the `meson build` command for the first time some extra dependencies will be downloaded so it might take a while.  Now we have a build directory within the Warthog directory so we `cd` into it and start compilation with `ninja`:
 ```
