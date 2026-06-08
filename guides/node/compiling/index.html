@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.834231252783">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.834240675209">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 4.6.0">
@@ -43,11 +43,11 @@
 
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../../resources/css/retype.css?v=4.6.0.834231252783" rel="stylesheet">
+    <link href="../../../resources/css/retype.css?v=4.6.0.834240675209" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.6.0.834231252783" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.6.0.834240675209" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../../resources/js/retype.js?v=4.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.6.0.834231252783" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.6.0.834240675209" data-turbo-eval="false" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -199,12 +199,16 @@ sudo apt install build-essential meson ninja-build</code></pre>
 <pre translate="no" class="language-none"><code v-pre class="language-none">cd Warthog
 meson build</code></pre>
 </doc-codeblock></div>
-<figure class="content-center">
+<p><figure class="content-center">
     <img src="../../../img/get-started/05-meson-build.png" alt="" class="max-w-full h-auto rounded-image-rounded border-image-border border-image-border-width" width="786" height="497" />
     <figcaption class="caption"></figcaption>
 </figure>
-<p>When you run the <code translate="no" v-pre>meson build</code> command for the first time some extra dependencies will be downloaded so it might take a while.  Now we have a build directory within the Warthog directory so we <code translate="no" v-pre>cd</code> into it and start compilation with <code translate="no" v-pre>ninja</code>:</p>
+If you have multiple compilers installed in your system, especially after having compiled GCC from source <a href="../gcc-from-source/">as described here</a>, if meson selects your old compiler, you can specify the C and C++ compilers with the environment variables <code translate="no" v-pre>CC</code> and <code translate="no" v-pre>CXX</code> respectively. For example:</p>
 <div id="compiling-code-2" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-none"><code v-pre class="language-none">CC=/usr/local/bin/gcc CXX=/usr/local/bin/c++ meson setup build</code></pre>
+</doc-codeblock></div>
+<p>When you run the <code translate="no" v-pre>meson build</code> command for the first time some extra dependencies will be downloaded so it might take a while.  Now we have a build directory within the Warthog directory so we <code translate="no" v-pre>cd</code> into it and start compilation with <code translate="no" v-pre>ninja</code>:</p>
+<div id="compiling-code-3" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-none"><code v-pre class="language-none">cd build
 ninja</code></pre>
 </doc-codeblock></div>
@@ -214,7 +218,7 @@ ninja</code></pre>
 </figure>
 <p>Congratulations! You now have compiled the Warthog C++ source. But wait - there is a problem: we did not enable compiler optimizations. In <code translate="no" v-pre>meson</code> compiler optimizations need to be explicitly enabled with the <code translate="no" v-pre>--buildtype=release</code> flag. Then the compiled executables and libraries will be more efficient. This is important for mining because you will get better hashrate with optimized compilation.</p>
 <p>So let&#x27;s do this again, we will go up one directory and delete the build directory again. Then we recreate it but this time with the <code translate="no" v-pre>--buildtype=release</code> option and compile again with <code translate="no" v-pre>ninja</code>:</p>
-<div id="compiling-code-3" class="codeblock-wrapper"><doc-codeblock>
+<div id="compiling-code-4" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-none"><code v-pre class="language-none">cd ..
 rm -rf build
 meson build --buildtype=release
@@ -228,7 +232,7 @@ ninja</code></pre>
 </figure>
 </p>
 <p>After compilation finished successfully we can have a look at the compiled artifacts: Warthog currently compiles a node and a wallet. They are generated in the <code translate="no" v-pre>src</code> directory within the build directory. Since the algo update miner is no longer in this main repo, you can see the available miner <a href="https://docs.warthog.network/links/#miners">here</a>. Have a look:</p>
-<div id="compiling-code-4" class="codeblock-wrapper"><doc-codeblock>
+<div id="compiling-code-5" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-none"><code v-pre class="language-none">cd src/
 ls</code></pre>
 </doc-codeblock></div>
