@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.834240675209">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.834494169102">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 4.6.0">
@@ -23,6 +23,10 @@
     <meta property="og:url" content="https://docs.warthog.network/guides/node/gcc-from-source/">
     <meta property="og:title" content="Installing GCC from source">
     <meta property="og:description" content="In case your system packages provide a GCC version that is too old (< version 11) you can install a more modern GCC version from source. This guide is for linux.">
+    <meta property="og:image" content="https://docs.warthog.network/img/gcc-select.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Installing GCC from source">
     <meta property="og:site_name" content="Warthog Network">
     <meta property="og:locale" content="en_US">
 
@@ -31,17 +35,19 @@
     <meta name="twitter:url" content="https://docs.warthog.network/guides/node/gcc-from-source/">
     <meta name="twitter:title" content="Installing GCC from source">
     <meta name="twitter:description" content="In case your system packages provide a GCC version that is too old (< version 11) you can install a more modern GCC version from source. This guide is for linux.">
+    <meta name="twitter:image" content="https://docs.warthog.network/img/gcc-select.png">
+    <meta name="twitter:image:alt" content="Installing GCC from source">
 
     <!-- Alternate Markdown -->
     <link rel="alternate" type="text/markdown" href="https://docs.warthog.network/guides/node/gcc-from-source.md">
 
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../../resources/css/retype.css?v=4.6.0.834240675209" rel="stylesheet">
+    <link href="../../../resources/css/retype.css?v=4.6.0.834494169102" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.6.0.834240675209" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.6.0.834494169102" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../../resources/js/retype.js?v=4.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.6.0.834240675209" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.6.0.834494169102" data-turbo-eval="false" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -166,7 +172,7 @@ gpg --import gnu-keyring.gpg</code></pre>
 </doc-codeblock></div>
 <p>Select a recent version, download and unzip it. In this guide however we will use <code translate="no" v-pre>gcc-15.2.0</code>.
 <figure class="content-center">
-    <img src="/img/gcc-select.png" alt="" class="max-w-full h-auto rounded-image-rounded border-image-border border-image-border-width" />
+    <img src="../../../img/gcc-select.png" alt="" class="max-w-full h-auto rounded-image-rounded border-image-border border-image-border-width" width="584" height="207" />
     <figcaption class="caption"></figcaption>
 </figure>
 </p>
