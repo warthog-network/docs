@@ -37,3 +37,5 @@ Restart=always
 [Install]
 WantedBy=multi-user.target
 ```
+
+`--enable-public` is shorthand for `--publicrpc=0.0.0.0:3001`. It exposes a filtered subset of the API on port 3001 (critical admin endpoints are not exposed). The default RPC port (3000) is full-access and should never be exposed to the internet.
