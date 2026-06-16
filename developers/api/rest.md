@@ -27,8 +27,34 @@ $./wart-node --rpc=0.0.0.0:3000
 to start the node with RPC listening on all devices on port 3000.
 
 !!!warning Warning
-The RPC endpoint should not exposed to the internet, use appropriate firewall settings.
+The default RPC endpoint (port 3000) should not be exposed to the internet, use appropriate firewall settings. For internet exposure, use `--enable-public` (shorthand for `--publicrpc=0.0.0.0:3001`) which exposes a filtered subset of the API on a separate port. See [Public RPC Mode](#public-rpc-mode) below for details.
 !!!
+
+### Public RPC Mode
+
+For running a public RPC node (e.g., for wallets, explorers), use `--enable-public`:
+
+```bash
+./wart-node --enable-public
+```
+
+This is shorthand for `--publicrpc=0.0.0.0:3001`. The long form allows custom bind address/port:
+
+```bash
+./wart-node --publicrpc=0.0.0.0:3001
+```
+
+When public mode is enabled, only safe endpoints are exposed on the public port. The default RPC port (3000) provides full access and should **never** be exposed to the internet.
+
+#### Endpoints hidden in public mode
+
+The following endpoints are NOT registered on the public port (look for `GET_PRIV`/`POST_PRIV` in `core/defi/src/node/api/hook_endpoints.hxx`):
+
+- **State modification**: `POST /chain/append`, `/debug/rollback`, `/debug/fakemine`, `/debug/fakemine/:address`, `/settings/mempool/minfee/:feeE8`, `/peers/unban`, `/peers/disconnect/:id`
+- **Information disclosure**: `/chain/grid`, `/chain/signed_snapshot`, `/peers/connected`, `/peers/throttled`, `/peers/transmission_hours`, `/peers/transmission_minutes`, `/debug/header_download`
+- **Resource exhaustion**: `/tools/wallet/new`, `/loadtest/block_request/:conn_id`, `/loadtest/header_request/:conn_id`, `/loadtest/disable/:conn_id`
+
+All other endpoints (transaction submit/lookup, chain queries, asset/DEX, account, peer info, charts, tools) are exposed in public mode.
 
 Below we assume the RPC socket is accessible at `localhost:3000`. On startup the node reports the RPC endpoint setting:
 
