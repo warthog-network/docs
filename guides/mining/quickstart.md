@@ -1,7 +1,7 @@
 ---
 title: Quick Start
 ---
-# Warthog - Mining quick start guide - Updated 2024-04-24
+# Warthog - Mining quick start guide
 
 This guide contains all needed information to start mining Warthog, on your own node (solo) or on pool.
 

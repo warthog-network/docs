@@ -1,6 +1,6 @@
 # Browser Extension Wallet  
 
-Download [here](https://github.com/warthog-network/warthog-extension/releases).  
+Download [here](https://github.com/warthog-network/browser-wallet/releases).  
 
 To begin, simply add the extension to your browser. Once installed, you can start using your wallet with ease.  
 

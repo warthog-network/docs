@@ -7,7 +7,7 @@ title: REST
 This documentation was partially generated with AI augmentation. Report inconsistencies at [github.com/warthog-network/docs/issues](https://github.com/warthog-network/docs/issues).
 !!!
 
-API for Warthog node version v0.10.3 "996c267"
+API for Warthog node version v0.10.16
 
 ## Configuration
 

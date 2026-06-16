@@ -152,22 +152,3 @@ Pool response must specify request id in the `"id"` field. Errors are reported b
 }
 ```
 
-
-01/21/2024 6:07 PM
-Every coin has its own stratum specification and I changed just very little. Basically we do not have coinbases but mining.notify looks like this:
-
-```json
-{
-  "id": null,
-  "method": "mining.notify",
-  "params": [
-    "jobId",         # jobId has to be sent back on submission
-    "prevHash",      # previous hash in block header
-    "merklePrefix",  # prefix of 
-    2,               # version
-    "nbits",         # nbits, difficulty target
-    "ntime",         # ntime, timestamp in block header
-    false            # clean? If yes, discard old jobs.
-  ]
-}
-```
