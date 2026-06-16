@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.834494169102">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.834938398428">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 4.6.0">
@@ -37,11 +37,11 @@
 
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../../resources/css/retype.css?v=4.6.0.834494169102" rel="stylesheet">
+    <link href="../../../resources/css/retype.css?v=4.6.0.834938398428" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.6.0.834494169102" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.6.0.834938398428" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../../resources/js/retype.js?v=4.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.6.0.834494169102" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.6.0.834938398428" data-turbo-eval="false" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -178,7 +178,7 @@
 <p>A matching describes the amount of liquidity that buyers and sellers spend on pool interaction and filling the other party&#x27;s limit orders, which implicitly defines an average conversion price. A Fair Batch Matching is a matching with fair pool interaction.</p>
 <p>The key mathematical result of FBM is that for any order book and liquidity pool configuration, there always exists a unique Fair Batch Matching. This means a Fair Batch Matching always exists, and that matching is the only one that can satisfy these conditions.</p>
 <p>This theorem is crucial because it allows defining a fair price and guarantees that the Fair Batch Matching algorithm implemented in Warthog always finds a well-defined result.</p>
-<p>Warthog is the first cryptocurrency project to formulate this result and also the only project to have successfully implemented an optimization algorithm for practical use. Technically interested readers can find the implementation of this matching algorithm <a href="https://github.com/warthog-network/core/tree/8ea077884bf325ab9495bd3ddebc90fa828bc051/src/shared/src/defi">here</a>. There is also a demo <a href="https://warthog.network/defi-demo">on the warthog website</a>.</p>
+<p>Warthog is the first cryptocurrency project to formulate this result and also the only project to have successfully implemented an optimization algorithm for practical use. Technically interested readers can find the implementation of this matching algorithm <a href="https://github.com/warthog-network/core/tree/defi/src/shared/src/defi">here</a>. There is also a demo <a href="https://warthog.network/defi-demo">on the warthog website</a>.</p>
 <h2 id="why-sandwich-attacks-fail">Why Sandwich Attacks Fail</h2>
 <p>In traditional DeFi, sandwich attacks work because orders are processed one at a time against the pool. Each order changes the pool state, and an attacker monitoring the mempool can see a victim&#x27;s pending order. The attacker then places one order before and one after the victim, profiting at the victim&#x27;s expense.</p>
 <p>For example, if a victim wants to buy an asset, the attacker buys first at the current pool price. The victim&#x27;s order then executes at a higher price because the attacker bought first. The attacker sells back at the higher price, keeping the profit.</p>

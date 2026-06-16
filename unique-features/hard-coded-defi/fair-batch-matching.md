@@ -42,7 +42,7 @@ The key mathematical result of FBM is that for any order book and liquidity pool
 
 This theorem is crucial because it allows defining a fair price and guarantees that the Fair Batch Matching algorithm implemented in Warthog always finds a well-defined result.
 
-Warthog is the first cryptocurrency project to formulate this result and also the only project to have successfully implemented an optimization algorithm for practical use. Technically interested readers can find the implementation of this matching algorithm [here](https://github.com/warthog-network/core/tree/8ea077884bf325ab9495bd3ddebc90fa828bc051/src/shared/src/defi). There is also a demo [on the warthog website](https://warthog.network/defi-demo).
+Warthog is the first cryptocurrency project to formulate this result and also the only project to have successfully implemented an optimization algorithm for practical use. Technically interested readers can find the implementation of this matching algorithm [here](https://github.com/warthog-network/core/tree/defi/src/shared/src/defi). There is also a demo [on the warthog website](https://warthog.network/defi-demo).
 
 ## Why Sandwich Attacks Fail
 

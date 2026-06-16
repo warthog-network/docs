@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.834494169102">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.834938398428">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 4.6.0">
@@ -12,7 +12,7 @@
     <!-- Primary Meta Tags -->
     <title>CLI</title>
     <meta name="title" content="CLI">
-    <meta name="description" content="The CLI (Command Line Interface) wallet is the most bare-bone way of interacting with Warthog. It is mainly intended as proof-of-concept and only provides the most basic features required to create addresses, check balances and send transactions.">
+    <meta name="description" content="Note: The CLI wallet described here was previously shipped with the master branch of the node. The current defi branch ships a TUI wallet (core/defi/src/tui_wallet) instead.">
 
     <!-- Canonical -->
     <link rel="canonical" href="https://docs.warthog.network/guides/wallet/cli/">
@@ -22,7 +22,7 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://docs.warthog.network/guides/wallet/cli/">
     <meta property="og:title" content="CLI">
-    <meta property="og:description" content="The CLI (Command Line Interface) wallet is the most bare-bone way of interacting with Warthog. It is mainly intended as proof-of-concept and only provides the most basic features required to create addresses, check balances and send transactions.">
+    <meta property="og:description" content="Note: The CLI wallet described here was previously shipped with the master branch of the node. The current defi branch ships a TUI wallet (core/defi/src/tui_wallet) instead.">
     <meta property="og:image" content="https://docs.warthog.network/img/get-started/10-wallet.png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
@@ -34,7 +34,7 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://docs.warthog.network/guides/wallet/cli/">
     <meta name="twitter:title" content="CLI">
-    <meta name="twitter:description" content="The CLI (Command Line Interface) wallet is the most bare-bone way of interacting with Warthog. It is mainly intended as proof-of-concept and only provides the most basic features required to create addresses, check balances and send transactions.">
+    <meta name="twitter:description" content="Note: The CLI wallet described here was previously shipped with the master branch of the node. The current defi branch ships a TUI wallet (core/defi/src/tui_wallet) instead.">
     <meta name="twitter:image" content="https://docs.warthog.network/img/get-started/10-wallet.png">
     <meta name="twitter:image:alt" content="CLI">
 
@@ -43,11 +43,11 @@
 
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../../resources/css/retype.css?v=4.6.0.834494169102" rel="stylesheet">
+    <link href="../../../resources/css/retype.css?v=4.6.0.834938398428" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.6.0.834494169102" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.6.0.834938398428" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../../resources/js/retype.js?v=4.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.6.0.834494169102" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.6.0.834938398428" data-turbo-eval="false" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -163,6 +163,23 @@
 
                 <!-- Page content  -->
 <h1 id="using-the-cli-wallet">Using the CLI wallet</h1>
+<div class="flex mb-6">
+    <div class="shrink-0 w-1.5 rounded-tl-lg rounded-bl-lg bg-callout-primary"></div>
+    <div class="flex w-full py-4 border border-l-0 rounded-tr-lg rounded-br-lg doc-callout bg-callout-base-bg border-callout-base-border" role="alert">
+        <div class="flex items-center ml-4 h-7">
+            <svg xmlns="http://www.w3.org/2000/svg" class="block text-callout-primary" width="22" height="22" viewBox="0 0 24 24" role="presentation">
+                <g fill="currentColor"><g>
+                    <path d="M12 1C5.93 1 1 5.93 1 12s4.93 11 11 11 11-4.93 11-11S18.07 1 12 1zm0 20c-4.96 0-9-4.04-9-9s4.04-9 9-9 9 4.04 9 9-4.04 9-9 9z"></path>
+                    <path d="M12 11c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1s1-.45 1-1v-4c0-.55-.45-1-1-1zM12.01 7c-.56 0-1 .45-1 1s.45 1 1 1 1-.45 1-1-.45-1-1-1z"></path>
+                    <path fill="none" d="M0 0h24v24H0z"></path>
+                </g></g>
+            </svg>
+        </div>
+        <div class="pr-5 ml-3 w-full">
+<p><strong>Note:</strong> The CLI wallet described here was previously shipped with the <code translate="no" v-pre>master</code> branch of the node. The current <code translate="no" v-pre>defi</code> branch ships a TUI wallet (<code translate="no" v-pre>core/defi/src/tui_wallet</code>) instead. The <code translate="no" v-pre>wart-wallet</code> referenced below is a separate third-party Python GTK wallet project.</p>
+        </div>
+    </div>
+</div>
 <p>The CLI (Command Line Interface) wallet is the most bare-bone way of interacting with Warthog. It is mainly intended as proof-of-concept and only provides the most basic features required to create addresses, check balances and send transactions. This wallet is shipped as part of the Warthog implementation compared to other wallets written by the community or other third parties.</p>
 <figure class="content-center">
     <img src="../../../img/get-started/10-wallet.png" alt="" class="max-w-full h-auto rounded-image-rounded border-image-border border-image-border-width" width="786" height="461" />

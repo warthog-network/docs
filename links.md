@@ -19,7 +19,6 @@
 ## Trackers
 * [Coingecko](https://www.coingecko.com/en/coins/warthog/)
 * [Coinpaprika](https://coinpaprika.com/coin/wart-warthog/)
-* [Coinstats](https://coinstats.app/coins/warthog/)
 * [hashrate.no](https://www.hashrate.no/coins/WART/)
 * [Livecoinwatch](https://www.livecoinwatch.com/price/WarthogNetwork-WART/)
 * [Miningpoolstats](https://miningpoolstats.stream/warthog/)
@@ -43,11 +42,9 @@
 
 ## Exchanges 
 
-* [Xeggex](https://xeggex.com/market/WART_USDT)
 * [CoinEx](https://www.coinex.com/en/exchange/WART-USDT)
-* [TradeOgre](https://tradeogre.com/exchange/WART-USDT)
-* [Bit.com](https://www.bit.com/spot?pair=WART-USDT)
-* [Exbitron](https://exbitron.com/trade?market=wart-usdt)
+* [Bitcointry](https://bitcointry.com/en/exchange/WART_USDT) (US traders allowed)
+* [Safetrade](https://safetrade.com/exchange/WART-USDT)
 
 ## Tutorials / Other Content
 

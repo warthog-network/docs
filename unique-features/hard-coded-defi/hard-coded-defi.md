@@ -27,4 +27,4 @@ The copy-on-write approach ensures efficiency: storage is only consumed when a c
 
 ## Registering Your Asset
 
-To add metadata for your asset, see the [Asset Registration guide](../../guides/asset-registration.md).
+To add metadata for your asset, see the [Asset Registration guide](../../guides/public-data/assets.md).

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.834494169102">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.834938398428">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 4.6.0">
@@ -12,7 +12,7 @@
     <!-- Primary Meta Tags -->
     <title>Miners</title>
     <meta name="title" content="Miners">
-    <meta name="description" content="Warthog's Janushash algorithm requires a custom condition on two hashes (SHA256t and Verushash v2.1) to be satisfied for valid blocks. Condition to solve a">
+    <meta name="description" content="Warthog's Janushash algorithm requires a custom condition on two hashes (SHA256t and Verushash v2.2) to be satisfied for valid blocks. Condition to solve a">
 
     <!-- Canonical -->
     <link rel="canonical" href="https://docs.warthog.network/developers/integration/miners/">
@@ -22,7 +22,7 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://docs.warthog.network/developers/integration/miners/">
     <meta property="og:title" content="Miners">
-    <meta property="og:description" content="Warthog's Janushash algorithm requires a custom condition on two hashes (SHA256t and Verushash v2.1) to be satisfied for valid blocks. Condition to solve a">
+    <meta property="og:description" content="Warthog's Janushash algorithm requires a custom condition on two hashes (SHA256t and Verushash v2.2) to be satisfied for valid blocks. Condition to solve a">
     <meta property="og:site_name" content="Warthog Network">
     <meta property="og:locale" content="en_US">
 
@@ -30,19 +30,19 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://docs.warthog.network/developers/integration/miners/">
     <meta name="twitter:title" content="Miners">
-    <meta name="twitter:description" content="Warthog's Janushash algorithm requires a custom condition on two hashes (SHA256t and Verushash v2.1) to be satisfied for valid blocks. Condition to solve a">
+    <meta name="twitter:description" content="Warthog's Janushash algorithm requires a custom condition on two hashes (SHA256t and Verushash v2.2) to be satisfied for valid blocks. Condition to solve a">
 
     <!-- Alternate Markdown -->
     <link rel="alternate" type="text/markdown" href="https://docs.warthog.network/developers/integration/miners.md">
 
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../../resources/css/retype.css?v=4.6.0.834494169102" rel="stylesheet">
+    <link href="../../../resources/css/retype.css?v=4.6.0.834938398428" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.6.0.834494169102" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.6.0.834938398428" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../../resources/js/retype.js?v=4.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.6.0.834494169102" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../../../resources/js/prism.js?v=4.6.0.834494169102" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.6.0.834938398428" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../../../resources/js/prism.js?v=4.6.0.834938398428" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -159,7 +159,7 @@
                 <!-- Page content  -->
 <h1 id="miner-integration">Miner Integration</h1>
 <h2 id="condition-to-mine-a-block">Condition to Mine a Block</h2>
-<p>Warthog&#x27;s Janushash algorithm requires a custom condition on two hashes (SHA256t and Verushash v2.1) to be satisfied for valid blocks.
+<p>Warthog&#x27;s Janushash algorithm requires a custom condition on two hashes (SHA256t and Verushash v2.2) to be satisfied for valid blocks.
 <div class="mb-6 px-5 py-4 flex justify-between relative border border-base-border hover:border-base-border-hover rounded transition-colors duration-150">
     <div class="flex items-center text-base-500">
         <span class="inline-flex items-center justify-center leading-none">
@@ -174,7 +174,7 @@
 </div>
 </p>
 <h2 id="mining-strategy">Mining Strategy</h2>
-<p>Optimally mining blocks requires a two-stage strategy. First SHA256t hashes have to be calculated (since SHA256t is faster than Verushash v2.1 on modern hardware), then promising candidates have to be filtered for evaluation of Verushash v2.1.</p>
+<p>Optimally mining blocks requires a two-stage strategy. First SHA256t hashes have to be calculated (since SHA256t is faster than Verushash v2.2 on modern hardware), then promising candidates have to be filtered for evaluation of Verushash v2.2.</p>
 <p>
 <div class="mb-6 px-5 py-4 flex justify-between relative border border-base-border hover:border-base-border-hover rounded transition-colors duration-150">
     <div class="flex items-center text-base-500">
@@ -205,7 +205,7 @@
 </div>
 </p>
 <h2 id="reporting-hashrate">Reporting Hashrate</h2>
-<p>Miners should report Sha256t and Verushash v2.1 measured hashrates and in addition to that they should report the Janusscore. Janusscore describes the mining efficiency (combined hashrate) and can be computed from <code translate="no" v-pre>sha256t</code> and <code translate="no" v-pre>verushash</code> hashrate variables as follows:</p>
+<p>Miners should report Sha256t and Verushash v2.2 measured hashrates and in addition to that they should report the Janusscore. Janusscore describes the mining efficiency (combined hashrate) and can be computed from <code translate="no" v-pre>sha256t</code> and <code translate="no" v-pre>verushash</code> hashrate variables as follows:</p>
 <div id="reporting-hashrate-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-cpp"><code v-pre class="language-cpp">(10.0 / 3.0) * double(sha256t) * (pow(c + double(verus) / double(sha256t), 0.3) - pow(c, 0.3));</code></pre>
 </doc-codeblock></div>

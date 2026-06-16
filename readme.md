@@ -16,6 +16,8 @@ Furthermore there are two third-party wallets:
 * [Wart-dapp](https://github.com/warthog-network/wart-dapp) (open source)
 * [wart-wallet](https://github.com/warthog-network/wart-wallet) (open source)
 
+Additionally, the project provides first-party wallets: **Wartlock** (desktop, Electron, mainnet) at https://github.com/warthog-network/Wartlock, **browser-wallet** (browser extension, *in development*, testnet) at https://github.com/warthog-network/browser-wallet, and **mobile-wallet** (React Native, *in development*, testnet) at https://github.com/warthog-network/mobile-wallet.
+
 You can join the Warthog community on [Discord](https://discord.com/invite/QMDV8bGTdQ).
 
 ## Starting a node

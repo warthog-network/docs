@@ -1,6 +1,6 @@
 # WebSocket API
 
-> **AI-Augmented Documentation** — This file was updated to match the live node API schema (`v0.10.3 "996c267"`). All examples reflect the schema structure. Report discrepancies to the maintainers.
+> **AI-Augmented Documentation** — This file was updated to match the live node API schema (`v0.10.16`). All examples reflect the schema structure. Report discrepancies to the maintainers.
 
 The WebSocket endpoint allows real-time data streams on several topics such as `chain`, `account` and `connection` related information. Subscribe with a message containing `"action": "subscribe"` and unsubscribe similarly with `"action": "unsubscribe"`, as shown below.
 
