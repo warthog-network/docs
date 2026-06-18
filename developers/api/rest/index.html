@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.834938398428">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.835102084707">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 4.6.0">
@@ -37,12 +37,12 @@
 
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../../resources/css/retype.css?v=4.6.0.834938398428" rel="stylesheet">
+    <link href="../../../resources/css/retype.css?v=4.6.0.835102084707" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.6.0.834938398428" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.6.0.835102084707" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../../resources/js/retype.js?v=4.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.6.0.834938398428" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../../../resources/js/prism.js?v=4.6.0.834938398428" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.6.0.835102084707" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../../../resources/js/prism.js?v=4.6.0.835102084707" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -200,12 +200,30 @@
         </div>
         <div class="pr-5 ml-3 w-full">
             <h5>Warning</h5>
-<p>The RPC endpoint should not exposed to the internet, use appropriate firewall settings.</p>
+<p>The default RPC endpoint (port 3000) should not be exposed to the internet, use appropriate firewall settings. For internet exposure, use <code translate="no" v-pre>--enable-public</code> (shorthand for <code translate="no" v-pre>--publicrpc=0.0.0.0:3001</code>) which exposes a filtered subset of the API on a separate port. See <doc-anchor-trigger to="#public-rpc-mode">Public RPC Mode</doc-anchor-trigger> below for details.</p>
         </div>
     </div>
 </div>
+<h3 id="public-rpc-mode">Public RPC Mode</h3>
+<p>For running a public RPC node (e.g., for wallets, explorers), use <code translate="no" v-pre>--enable-public</code>:</p>
+<div id="public-rpc-mode-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-bash"><code v-pre class="language-bash">./wart-node --enable-public</code></pre>
+</doc-codeblock></div>
+<p>This is shorthand for <code translate="no" v-pre>--publicrpc=0.0.0.0:3001</code>. The long form allows custom bind address/port:</p>
+<div id="public-rpc-mode-code-2" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-bash"><code v-pre class="language-bash">./wart-node --publicrpc=0.0.0.0:3001</code></pre>
+</doc-codeblock></div>
+<p>When public mode is enabled, only safe endpoints are exposed on the public port. The default RPC port (3000) provides full access and should <strong>never</strong> be exposed to the internet.</p>
+<h4 id="endpoints-hidden-in-public-mode">Endpoints hidden in public mode</h4>
+<p>The following endpoints are NOT registered on the public port (look for <code translate="no" v-pre>GET_PRIV</code>/<code translate="no" v-pre>POST_PRIV</code> in <code translate="no" v-pre>core/defi/src/node/api/hook_endpoints.hxx</code>):</p>
+<ul>
+<li><strong>State modification</strong>: <code translate="no" v-pre>POST /chain/append</code>, <code translate="no" v-pre>/debug/rollback</code>, <code translate="no" v-pre>/debug/fakemine</code>, <code translate="no" v-pre>/debug/fakemine/:address</code>, <code translate="no" v-pre>/settings/mempool/minfee/:feeE8</code>, <code translate="no" v-pre>/peers/unban</code>, <code translate="no" v-pre>/peers/disconnect/:id</code></li>
+<li><strong>Information disclosure</strong>: <code translate="no" v-pre>/chain/grid</code>, <code translate="no" v-pre>/chain/signed_snapshot</code>, <code translate="no" v-pre>/peers/connected</code>, <code translate="no" v-pre>/peers/throttled</code>, <code translate="no" v-pre>/peers/transmission_hours</code>, <code translate="no" v-pre>/peers/transmission_minutes</code>, <code translate="no" v-pre>/debug/header_download</code></li>
+<li><strong>Resource exhaustion</strong>: <code translate="no" v-pre>/tools/wallet/new</code>, <code translate="no" v-pre>/loadtest/block_request/:conn_id</code>, <code translate="no" v-pre>/loadtest/header_request/:conn_id</code>, <code translate="no" v-pre>/loadtest/disable/:conn_id</code></li>
+</ul>
+<p>All other endpoints (transaction submit/lookup, chain queries, asset/DEX, account, peer info, charts, tools) are exposed in public mode.</p>
 <p>Below we assume the RPC socket is accessible at <code translate="no" v-pre>localhost:3000</code>. On startup the node reports the RPC endpoint setting:</p>
-<div id="configuration-code-3" class="codeblock-wrapper"><doc-codeblock>
+<div id="endpoints-hidden-in-public-mode-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-bash"><code v-pre class="language-bash">[info] RPC endpoint is 127.0.0.1:3000.</code></pre>
 </doc-codeblock></div>
 <h2 id="overview">Overview</h2>

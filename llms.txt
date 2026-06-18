@@ -94,4 +94,4 @@
 ### Hard-Coded DeFi
 
 - [Hard-Coded DeFi](https://docs.warthog.network/unique-features/hard-coded-defi/hard-coded-defi.md): Warthog implements a novel approach to Decentralized Finance (DeFi) by hard-coding the underlying logic directly into the node instead of relying on smart contract implementations.
-- [Fair Batch Matching](https://docs.warthog.network/unique-features/hard-coded-defi/fair-batch-matching.md): Fair Batch Matching (FBM) is Warthog's defense against Sandwich and similar MEV attacks. While the full technical paper covers the mathematical details, this article explains how FBM works in plain terms.
+- [Fair Batch Matching](https://docs.warthog.network/unique-features/hard-coded-defi/fair-batch-matching.md): Warthog takes an innovative approach to DeFi in the sense that a hybrid setting of two liquidity sources (pool and order book) is considered and addressed mathematically optimally.
