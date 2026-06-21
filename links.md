@@ -24,9 +24,14 @@
 * [Miningpoolstats](https://miningpoolstats.stream/warthog/)
 
 ## Pools
+* [Miningpoolstats](https://miningpoolstats.stream/warthog/) (full list with stats)
 * [1Miner.Net](https://1Miner.net/)
 * [acc-pool](https://warthog.acc-pool.pw/)
+* [cedric-crispin](https://warthog.cedric-crispin.com)
+* [ethcore.ru](https://ethcore.ru/pool/warthogpool)
 * [Herominers](https://warthog.herominers.com/)
+* [jellyfc.com](https://warthog.jellyfc.com/#warthogpool)
+* [tazmining.ch](https://tazmining.ch/#wart1)
 * [ViporNet](https://vipor.net/mine/wart)
 * [WartPool](https://www.wartpool.io/)
 * [WoolyPooly](https://woolypooly.com/en/coin/wart)

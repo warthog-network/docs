@@ -4,6 +4,7 @@
 
 - [Welcome](https://docs.warthog.network/readme.md): Welcome
 - [Links](https://docs.warthog.network/links.md): Algorithm whitepaper
+- [AGENTS.md — Warthog Network docs](https://docs.warthog.network/agents.md): Documentation site for the Warthog Network cryptocurrency, built with Retype and published at https://docs.warthog.network. Part of a multi-repo project hub — see ../HUB.md (at the hub root) for the full sub-repo layout, public APIs, and cross-repo source-of-truth mapping.
 
 ## Guides
 
