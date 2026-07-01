@@ -101,7 +101,7 @@ Use this as a backlog for documentation work. When you add a new page, remove th
 | **Changelog / version history** | `_version_history.md` (in `_` prefix, not in nav) | The file exists but isn't published. Either promote it to a real changelog page or keep a per-release summary on `readme.md`. |
 | **License** | per-repo `LICENSE` | No top-level docs page pointing to per-repo licenses (GPL-3 for core, MIT for warthog-ts, etc.). |
 | **Team / contributors** | `whitepaper/`, GitHub | Whitepaper credits Pumbaa, Rafiki, CoinFuMasterShifu. No equivalent page on the docs site. |
-| **Press kit / brand usage** | `../brand-kit/` | `links.md` has a single link; no guidance on how to use the logo, brand colors, etc. for press / community content. |
+| **Press kit / brand usage** | `../brand-kit/` | ✅ Done — see `guides/brand.md`. |
 
 ## 10. Cross-cutting
 

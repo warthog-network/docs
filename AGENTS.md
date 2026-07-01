@@ -44,9 +44,9 @@ When editing a specific page, cross-check against the original source rather tha
 The site uses the Warthog brand. When producing new assets or touching the theme:
 
 - **Primary yellow:** `#FDB913` (Pantone `1375 C`). Logo SVG tokens are a strict subset: `st0` `#F8F8F9`, `st1` `#FDB913`, `st2` `#231F20`, `st3` `#FFFFFF`.
-- **Logos:** pick from `../brand-kit/SVGs/<Variant>/` (`Circle`, `Short`, `Stacked`, `Ticker`) and a color scheme (`Black`, `Yellow`, `White`, `BW`, `Negative`, `Negative Yellow`).
-- **Font:** Montserrat only (Bold for titles, Family for text blocks). The brand-kit provides `Fonts/Montserrat.zip`.
-- **Full reference:** `../brand-kit/Guideline/WT_Guidelines.pdf` (V01.A, 2023·2024, by BalkyBot). See HUB.md `## Brand Kit` for the full palette, SVG tokens, and naming conventions.
+- **Logos:** pick from `../brand-kit/logo/<Variant> <ColorScheme>.svg` — flat directory, no subfolders. Variants: `Full`, `Circle`, `Short`, `Stacked`, `Ticker`. Color schemes: `Black`, `Yellow`, `White` (Short/Ticker only), `BW`, `Negative`, `Negative Yellow`.
+- **Font:** Montserrat only (Bold for titles, Family for text blocks). The brand-kit provides `fonts/Montserrat.zip`.
+- **Full reference:** `../brand-kit/AGENTS.md` and `../brand-kit/README.md` (palette, logo variants, SVG tokens, naming conventions). V01.A, 2023·2024, by BalkyBot. See HUB.md `## Brand Kit` for the cross-repo summary.
 
 `retype.yml` controls the site branding (`title`, `label`, `logo`, header links, footer). If the logo, title, or footer needs updating, edit it there — not in `.retype/` (build output, gitignored).
 
@@ -90,7 +90,7 @@ Retype parses every `.md` file at the repo root and below (except those in under
 ## Folder layout
 
 Published content:
-- `guides/` — user-facing guides (mining, node setup, wallets, public-data contributions, browser-wallet integration).
+- `guides/` — user-facing guides (mining, node setup, wallets, public-data contributions, browser-wallet integration, brand & assets).
 - `developers/` — API reference (`developers/api/` for REST/WebSocket, `_agents/` for agent-style notes), integration guides (`integration/` for miners/pools/wallets), and language libraries (`libraries/`).
 - `unique-features/` — protocol-level deep dives (Janushash, hard-coded DeFi, browser nodes). These are the original-research pages; they get updated in place. FBM lives here as the canonical reference.
 - `img/` — committed image assets.
