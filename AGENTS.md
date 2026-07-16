@@ -92,7 +92,7 @@ Retype parses every `.md` file at the repo root and below (except those in under
 Published content:
 - `guides/` — user-facing guides (mining, node setup, wallets, public-data contributions, browser-wallet integration, brand & assets).
 - `developers/` — API reference (`developers/api/` for REST/WebSocket, `_agents/` for agent-style notes), integration guides (`integration/` for miners/pools/wallets), and language libraries (`libraries/`).
-- `unique-features/` — protocol-level deep dives (Janushash, hard-coded DeFi, browser nodes). These are the original-research pages; they get updated in place. FBM lives here as the canonical reference.
+- `unique-features/` — protocol-level deep dives (Janushash, Native DeFi with FBM, browser nodes). These are the original-research pages; they get updated in place. FBM lives in `hard-coded-defi/fair-batch-matching.md` as the canonical reference. `unique-features/features/Overview.md` is the landing page for the same seven categories (Fair Tokenomics, Original Code, BlitzSync, Native DeFi, Fair Batch Matching, Browser Nodes, Janushash) that the marketing site shows on [warthog.network](https://warthog.network) — see it when a user asks for the longer version of the website's "What makes us unique" blurb.
 - `img/` — committed image assets.
 - `readme.md` — landing page shown at `/`.
 - `links.md` — community/external links directory.
