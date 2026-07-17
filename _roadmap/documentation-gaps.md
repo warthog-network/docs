@@ -78,9 +78,9 @@ Use this as a backlog for documentation work. When you add a new page, remove th
 
 | Gap | Source of truth | Notes |
 |-----|-----------------|-------|
-| **Cookbook / examples** | `warthog-ts/examples/` (per HUB.md) | The `examples/` folder exists in the SDK; no docs page linking the recipes (send transaction, sign message, listen to events, integrate with React). |
-| **Other language bindings** | `warthog-ts/` | TypeScript is the only documented binding. If there are others (e.g., community Rust/Python ports), they're not listed. |
-| **SDK versioning** | HUB.md `### warthog-ts Versioning` | A page explaining the published-on-npm cadence, semver policy, and "is the latest SDK compatible with the latest node" — currently known to drift. |
+| **Cookbook / examples** | `warthog-ts/examples/`, `warthog_ex/examples/` | The `examples/` folders exist in both SDKs; no docs page linking the recipes (send transaction, sign message, listen to events, integrate with React, integrate with Phoenix). |
+| **Other language bindings** | `warthog-ts/`, `warthog_ex/` | ✅ Elixir (`warthog_ex`) now documented at `developers/libraries/elixir.md`. Future community bindings (Rust, Python, etc.) still unlisted. |
+| **SDK versioning** | HUB.md `### warthog-ts Versioning`, `### warthog_ex Versioning` | A page explaining the published-on-npm cadence, semver policy, and "is the latest SDK compatible with the latest node" — currently known to drift. |
 
 ## 8. Concepts and reference
 
