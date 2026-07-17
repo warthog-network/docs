@@ -41,6 +41,7 @@
 - [Browser Extension Wallet](https://docs.warthog.network/guides/wallet/browser-extension-wallet.md): Download here.
 - [CLI](https://docs.warthog.network/guides/wallet/cli.md): Note: The CLI wallet described here was previously shipped with the master branch of the node. The current defi branch ships a TUI wallet (core/defi/src/tui_wallet) instead.
 - [Wart Dapp](https://docs.warthog.network/guides/wallet/wart-dapp.md): Wart-dapp is a third-party desktop wallet at https://github.com/warthog-network/wart-dapp. The project also provides first-party wallets: Wartlock (desktop, Electron), browser-wallet (browser extension, in development), and mobile-wallet (React Native, in development).
+- [Brand & Assets](https://docs.warthog.network/guides/brand.md): Official logos and design guidelines for Warthog branding purposes can be found in the brand-kit repository.
 
 ## Developers
 
@@ -67,7 +68,8 @@
 
 ### Libraries
 
-- [Libraries](https://docs.warthog.network/developers/libraries.md): We are working on an official TypeScript library that greatly simplifies interaction with the Warthog ecosystem.
+- [Libraries](https://docs.warthog.network/developers/libraries.md): We provide official SDKs that simplify interaction with the Warthog ecosystem. Both target the testnet (core/defi) API and implement the full set of 7 DeFi transaction types.
+- [Elixir](https://docs.warthog.network/developers/libraries/elixir.md): Warthog provides an warthog_ex library for the Elixir/Erlang ecosystem (Phoenix, OTP, Nerves, etc.). It is the Elixir port of the TypeScript warthog-ts library and supports the full set of 7 DeFi transaction types.
 - [TypeScript](https://docs.warthog.network/developers/libraries/typescript.md): Warthog provides an easy-to-use TypeScript library called warthog-ts intended for interacting with the Warthog ecosystem. This project is hosted on GitHub and PRs are always welcome.
 
 ## Unique features
@@ -91,6 +93,10 @@
 
 - [Browser Nodes](https://docs.warthog.network/unique-features/browser-nodes/introduction.md): Browser nodes feature is techincally almost completely implemented but has lower priority for completion than the DeFi progress. This feature is not complete yet.
 - [Warthog WebRTC Communication Protocol](https://docs.warthog.network/unique-features/browser-nodes/webrtc-protocol.md): Note: Browser nodes (including WebRTC support) are on the roadmap but currently on hold. DeFi features have top priority. This document describes the WebRTC protocol design that will be implemented when browser nodes are resumed.
+
+### Features
+
+- [Features](https://docs.warthog.network/unique-features/features/overview.md): Warthog is a cryptocurrency built from scratch around a handful of decisions that set it apart from every other project in the space. The categories below are the same as on warthog.network under "What makes us unique", with the longer, deeper-dive versions of each.
 
 ### Hard-Coded DeFi
 
