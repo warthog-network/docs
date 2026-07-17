@@ -1,5 +1,5 @@
 ---
-title: TypeScript
+label: TypeScript
 ---
 
 # TypeScript Library for Warthog
