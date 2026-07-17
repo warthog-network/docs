@@ -69,8 +69,8 @@
 ### Libraries
 
 - [Libraries](https://docs.warthog.network/developers/libraries.md): We provide official SDKs that simplify interaction with the Warthog ecosystem. Both target the testnet (core/defi) API and implement the full set of 7 DeFi transaction types.
-- [Elixir](https://docs.warthog.network/developers/libraries/elixir.md): Warthog provides an warthog_ex library for the Elixir/Erlang ecosystem (Phoenix, OTP, Nerves, etc.). It is the Elixir port of the TypeScript warthog-ts library and supports the full set of 7 DeFi transaction types.
-- [TypeScript](https://docs.warthog.network/developers/libraries/typescript.md): Warthog provides an easy-to-use TypeScript library called warthog-ts intended for interacting with the Warthog ecosystem. This project is hosted on GitHub and PRs are always welcome.
+- [Elixir Library for Warthog](https://docs.warthog.network/developers/libraries/elixir.md): Warthog provides an warthog_ex library for the Elixir/Erlang ecosystem to interact with the testnet node.
+- [TypeScript Library for Warthog](https://docs.warthog.network/developers/libraries/typescript.md): Warthog provides an easy-to-use TypeScript library called warthog-ts intended for interacting with the Warthog ecosystem. This project is hosted on GitHub and PRs are always welcome.
 
 ## Unique features
 
