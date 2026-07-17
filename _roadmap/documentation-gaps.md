@@ -139,6 +139,12 @@ For completeness, the following are **already documented** in the published site
 - Libraries: TypeScript.
 - Unique features: FBM (canonical), hard-coded DeFi, Janushash + 4 analysis sub-pages, browser-nodes intro and WebRTC protocol.
 
+## Open design questions (backlog)
+
+Items deferred from the roadmap until the underlying design question is resolved. When a decision lands, move the item into `roadmap.md`.
+
+- **Dry-run matching data source**: client-side recompute vs. new node endpoint `GET /dex/preview-match`. The former ships immediately using existing endpoints (order book + pool state) and in-browser FBM; the latter requires a stateless `preview()` in `core/defi/src/shared/src/defi/uint64/matcher.hpp` and is the long-term correct answer. Revisit when the API surface is being designed.
+
 ## How to use this file
 
 1. Pick an item.
