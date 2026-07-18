@@ -364,7 +364,7 @@ For efficiency, fees are encoded as 2-byte floating-point numbers (16 bits):
 
 Only 64-bit values exactly representable in 16 bits are accepted. 
 
-The recommended way is to round on client side, see the [official client libraries](../libraries.md) for reference. For quick prototyping use these endpoints to round arbitrary values on node side:
+The recommended way is to round on client side, see the [SDKs](../SDKs.md) for reference. For quick prototyping use these endpoints to round arbitrary values on node side:
 
 - `GET /tools/encode16bit/from_e8/:feeE8` - Round from numeric value
 - `GET /tools/encode16bit/from_string/:string` - Round from string
@@ -413,5 +413,5 @@ On success, returns the transaction hash:
 
 Working code examples for generating and sending transactions in [Python3, NodeJS, and Elixir](../../integration/wallets.md).
 
-## Libraries
-[!ref](../../libraries.md)
+## SDKs
+[!ref](../../SDKs.md)

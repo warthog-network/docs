@@ -1,5 +1,5 @@
-# TypeScript Library for Warthog
-Warthog provides an easy-to-use [TypeScript library called `warthog-ts`](https://www.npmjs.com/package/warthog-ts) intended for interacting with the Warthog ecosystem. This project is [hosted on GitHub](https://github.com/warthog-network/warthog-ts) and PRs are always welcome. 
+# SDK for TypeScript
+Warthog provides an easy-to-use SDK for TypeScript called [`warthog-ts`](https://www.npmjs.com/package/warthog-ts) intended for interacting with the Warthog ecosystem.
 
 ## Installation
 ```bash

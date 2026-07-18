@@ -3584,7 +3584,7 @@ Show hashrate chart data over a time range. `:from` and `:to` are Unix timestamp
 
 ### `GET /tools/encode16bit/from_e8/:feeE8`
 
- Round raw fee integer representation (coin amount is this number divided by 10^8) to closest 16 bit representation. This is required for fee specification in the `/transaction/add` endpoint. Fee rounding is also implemented in the [official client libraries](../libraries.md).
+ Round raw fee integer representation (coin amount is this number divided by 10^8) to closest 16 bit representation. This is required for fee specification in the `/transaction/add` endpoint. Fee rounding is also implemented in the [SDKs](../SDKs.md).
 
 !!!warning Note
 The recommended way to create 16 bit encoded fee values for transaction generation is to implement the rounding method on the client side, see [Fee Encoding](./rest/create-transaction.md#fee-encoding). This tool is a fallback method for quick prototyping.

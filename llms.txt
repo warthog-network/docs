@@ -4,7 +4,6 @@
 
 - [Welcome](https://docs.warthog.network/readme.md): Welcome
 - [Links](https://docs.warthog.network/links.md): Algorithm whitepaper
-- [AGENTS.md — Warthog Network docs](https://docs.warthog.network/agents.md): Documentation site for the Warthog Network cryptocurrency, built with Retype and published at https://docs.warthog.network. Part of a multi-repo project hub — see ../HUB.md (at the hub root) for the full sub-repo layout, public APIs, and cross-repo source-of-truth mapping.
 
 ## Guides
 
@@ -49,28 +48,29 @@
 
 - [API](https://docs.warthog.network/developers/api/api.md): This documentation was partially generated with AI augmentation. Report inconsistencies at github.com/warthog-network/docs/issues.
 
-#### REST API
+#### REST
 
-- [REST](https://docs.warthog.network/developers/api/rest.md): This documentation was partially generated with AI augmentation. Report inconsistencies at github.com/warthog-network/docs/issues.
+- [REST API](https://docs.warthog.network/developers/api/rest.md): This documentation was partially generated with AI augmentation. Report inconsistencies at github.com/warthog-network/docs/issues.
 - [Transactions](https://docs.warthog.network/developers/api/rest/transactions.md): Warthog supports the following transactions, some of which are signed and can have a processed property:
 - [Create Transaction](https://docs.warthog.network/developers/api/rest/create-transaction.md): This documentation was partially generated with AI augmentation. Report inconsistencies at github.com/warthog-network/docs/issues.
 - [Mempool transactions](https://docs.warthog.network/developers/api/rest/mempool-transactions.md)
-- [WebSocket](https://docs.warthog.network/developers/api/websocket.md): AI-Augmented Documentation — This file was updated to match the live node API schema (v0.10.16). All examples reflect the schema structure. Report discrepancies to the maintainers.
+- [WebSocket API](https://docs.warthog.network/developers/api/websocket.md): AI-Augmented Documentation — This file was updated to match the live node API schema (v0.10.16). All examples reflect the schema structure. Report discrepancies to the maintainers.
 
 ### Integration
 
-#### Pool Integration
+#### Pools
 
-- [Pools](https://docs.warthog.network/developers/integration/pools/pools.md): I have written a C++ backend which support computes the hash product
+- [Pool Integration](https://docs.warthog.network/developers/integration/pools/pools.md): I have written a C++ backend which support computes the hash product
 - [Stratum Protocol](https://docs.warthog.network/developers/integration/pools/stratum.md): Messages are newline (\n) terminated json strings sent over plain TCP with optional TLS encryption. URI scheme is stratum+tcp for plain TCP and stratum+ssl
-- [Miners](https://docs.warthog.network/developers/integration/miners.md): Warthog's Janushash algorithm requires a custom condition on two hashes (SHA256t and Verushash v2.2) to be satisfied for valid blocks. Condition to solve a
-- [Wallets](https://docs.warthog.network/developers/integration/wallets.md): In this guide we demonstrate how to handle wallets and send transactions in Python 3, NodeJS and Elixir. Note that we also provide libraries.
+- [Miner Integration](https://docs.warthog.network/developers/integration/miners.md): Warthog's Janushash algorithm requires a custom condition on two hashes (SHA256t and Verushash v2.2) to be satisfied for valid blocks. Condition to solve a
+- [Wallet Integration](https://docs.warthog.network/developers/integration/wallets.md): In this guide we demonstrate how to handle wallets and send transactions in Python 3, NodeJS and Elixir. Note that we also provide SDKs.
 
-### Libraries
+### SDKs
 
-- [Libraries](https://docs.warthog.network/developers/libraries.md): We provide official SDKs that simplify interaction with the Warthog ecosystem. Both target the testnet (core/defi) API and implement the full set of 7 DeFi transaction types.
-- [Elixir Library for Warthog](https://docs.warthog.network/developers/libraries/elixir.md): Warthog provides an warthog_ex library for the Elixir/Erlang ecosystem to interact with the testnet node.
-- [TypeScript Library for Warthog](https://docs.warthog.network/developers/libraries/typescript.md): Warthog provides an easy-to-use TypeScript library called warthog-ts intended for interacting with the Warthog ecosystem. This project is hosted on GitHub and PRs are always welcome.
+- [SDKs](https://docs.warthog.network/developers/sdks.md): We provide official SDKs that simplify interaction with the Warthog ecosystem. All three target the testnet (core/defi) API and implement the full set of 7
+- [Warthog SDK for Elixir](https://docs.warthog.network/developers/sdks/elixir.md): Warthog provides an SDK for the Elixir/Erlang ecosystem called warthog_ex intended for interaction with the Warthog ecosystem.
+- [Warthog SDK for Python](https://docs.warthog.network/developers/sdks/python.md): Warthog provides a warthog_py library for the Python ecosystem (Django, FastAPI, requests, etc.). It is the Python port of the TypeScript warthog-ts library and supports the full set of 7 DeFi transaction types.
+- [Warthog SDK for TypeScript](https://docs.warthog.network/developers/sdks/typescript.md): Warthog provides an easy-to-use SDK for TypeScript called warthog-ts intended for interacting with the Warthog ecosystem.
 
 ## Unique features
 
