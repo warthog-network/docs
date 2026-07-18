@@ -1,7 +1,7 @@
 # Wart Dapp
 
 !!!
-**Wart-dapp** is a third-party desktop wallet at https://github.com/warthog-network/wart-dapp. The project also provides first-party wallets: **Wartlock** (desktop, Electron), **browser-wallet** (browser extension, *in development*), and **mobile-wallet** (React Native, *in development*). See [docs/readme.md](../readme.md) for the full list.
+**Wart-dapp** is a third-party desktop wallet at https://github.com/warthog-network/wart-dapp. The project also provides first-party wallets: **Wartlock** (desktop, Electron), **browser-wallet** (browser extension, *in development*), and **mobile-wallet** (React Native, *in development*). See [docs/readme.md](../../readme.md) for the full list.
 !!!
 
 Download [here](https://github.com/warthog-network/wart-dapp/releases).

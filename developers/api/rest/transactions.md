@@ -279,10 +279,10 @@ Block reward paid to the miner who produced the block.
 ```
 
 #### 2. Match
-Match of three DeFi liquidity sources using Warthog's custom [matching engine](/unique-features/sandwich-proof-defi/matching-engine.md): buy swap orders, sell swap orders and the liquidity pool.
+Match of three DeFi liquidity sources using Warthog's custom [matching engine](/unique-features/hard-coded-defi/fair-batch-matching.md): buy swap orders, sell swap orders and the liquidity pool.
 
 The `poolBefore`/`poolAfter` fields show the liquidity pool state before and after this match. Each entry in `buySwaps` and `sellSwaps` references the matched order via `historyId`.
-Matching uses Fair Batch Matching (see the [matching engine](/unique-features/sandwich-proof-defi/matching-engine.md)). No intrinsic ordering among matched orders exists, making the algorithm MEV-proof.
+Matching uses Fair Batch Matching (see the [matching engine](/unique-features/hard-coded-defi/fair-batch-matching.md)). No intrinsic ordering among matched orders exists, making the algorithm MEV-proof.
 
 ```json
 "data": {
