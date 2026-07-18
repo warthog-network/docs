@@ -1,5 +1,5 @@
 ---
-title: Miners
+label: Miners
 ---
 # Miner Integration
 

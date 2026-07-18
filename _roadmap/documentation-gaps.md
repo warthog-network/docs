@@ -78,9 +78,9 @@ Use this as a backlog for documentation work. When you add a new page, remove th
 
 | Gap | Source of truth | Notes |
 |-----|-----------------|-------|
-| **Cookbook / examples** | `warthog-ts/examples/`, `warthog_ex/examples/` | The `examples/` folders exist in both SDKs; no docs page linking the recipes (send transaction, sign message, listen to events, integrate with React, integrate with Phoenix). |
-| **Other language bindings** | `warthog-ts/`, `warthog_ex/` | ✅ Elixir (`warthog_ex`) now documented at `developers/libraries/elixir.md`. Future community bindings (Rust, Python, etc.) still unlisted. |
-| **SDK versioning** | HUB.md `### warthog-ts Versioning`, `### warthog_ex Versioning` | A page explaining the published-on-npm cadence, semver policy, and "is the latest SDK compatible with the latest node" — currently known to drift. |
+| **Cookbook / examples** | `warthog-ts/examples/`, `warthog_ex/examples/`, `warthog_py/examples/` | The `examples/` folders exist in all three SDKs; no docs page linking the recipes (send transaction, sign message, listen to events, integrate with React, integrate with Phoenix, integrate with Django/FastAPI). |
+| **Other language bindings** | `warthog-ts/`, `warthog_ex/`, `warthog_py/` | ✅ Elixir (`warthog_ex`) documented at `developers/libraries/elixir.md`. ✅ Python (`warthog_py`) documented at `developers/libraries/python.md`. Future community bindings (Rust, Go, etc.) still unlisted. |
+| **SDK versioning** | HUB.md `### warthog-ts Versioning`, `### warthog_ex Versioning`, `### warthog_py Versioning` | A page explaining the published-on-npm/Hex/PyPI cadence, semver policy, and "is the latest SDK compatible with the latest node" — currently known to drift. |
 
 ## 8. Concepts and reference
 

@@ -1,5 +1,5 @@
 ---
-title: WebSocket
+label: WebSocket
 ---
 # WebSocket API
 

@@ -1,6 +1,11 @@
 input: .
 output: .retype
 url: docs.warthog.network
+exclude:
+  # AGENTS.md / Agents.md files are AI-agent guidance, not user-facing docs
+  - "AGENTS.md"
+  - "**/AGENTS.md"
+  - "**/Agents.md"
 branding:
   title: Warthog Network
   label: Docs

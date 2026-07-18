@@ -1,5 +1,5 @@
 ---
-title: Pools
+label: Pools
 ---
 # Pool Integration
 

@@ -67,7 +67,7 @@ Several factual claims here can drift from the source. Check HUB.md `## Known In
 
 ## Authoring rules
 
-Retype parses every `.md` file at the repo root and below (except those in underscore-prefixed folders — see below). Conventions seen across the existing pages:
+Retype parses every `.md` file at the repo root and below, except those in underscore-prefixed folders (see below) and those listed in `retype.yml`'s `exclude` list (currently `AGENTS.md` / `**/Agents.md`, so AI-agent guidance files are never rendered). Conventions seen across the existing pages:
 
 - **Front matter** at the top of every published page. Common keys:
   - `title:` — page title shown in the sidebar.
@@ -98,11 +98,24 @@ Published content:
 - `links.md` — community/external links directory.
 - `retype.yml` — site config.
 
-Not published (Retype skips underscore-prefixed paths):
-- `_drafts/` — work-in-progress guides that haven't been promoted yet. Don't link to these from published pages.
-- `_roadmap/` — planning notes.
-- `_whitepaper.md`, `_version_history.md` — historical/reference docs kept out of the nav.
-- Files like `unique-features/janushash/Janushash.md.old` — prior revisions; don't revive content from these without checking with a maintainer.
+Not published:
+
+Two ways to keep content out of the rendered site:
+
+1. **`retype.yml` exclude list** — for files that should stay at their canonical location. Currently:
+   ```yaml
+   exclude:
+     - "AGENTS.md"
+     - "**/AGENTS.md"
+     - "**/Agents.md"
+   ```
+   This excludes AI-agent guidance files (capital A) regardless of folder. Patterns use gitignore-style globs (`?`, `*`, `**`, `!`).
+
+2. **Underscore-prefixed folders** — for content that's actively draft / should never be linked from published pages:
+   - `_drafts/` — work-in-progress guides that haven't been promoted yet.
+   - `_roadmap/` — planning notes.
+   - `_whitepaper.md`, `_version_history.md` — historical/reference docs kept out of the nav.
+   - Files like `unique-features/janushash/Janushash.md.old` — prior revisions; don't revive content from these without checking with a maintainer.
 
 ## Repository boundaries (do not confuse)
 

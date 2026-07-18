@@ -1,10 +1,11 @@
 ---
 label: Elixir
+title: Warthog SDK for Elixir
 ---
 
-# Elixir Library for Warthog
+# SDK for Elixir
 
-Warthog provides an [`warthog_ex`](https://github.com/warthog-network/warthog_ex) library for the Elixir/Erlang ecosystem to interact with the testnet node.
+Warthog provides an SDK for the Elixir/Erlang ecosystem called [`warthog_ex`](https://github.com/warthog-network/warthog_ex) intended for interaction with the Warthog ecosystem.
 
 ## Installation
 

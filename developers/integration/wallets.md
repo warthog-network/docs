@@ -1,10 +1,10 @@
 ---
-title: Wallets
+label: Wallets
 ---
 # Wallet Integration
 
 In this guide we demonstrate how to handle wallets and send transactions in Python 3, NodeJS and Elixir.
-Note that we also provide [libraries](../libraries.md).
+Note that we also provide [SDKs](../SDKs.md).
 
 ## Prerequisites
 
