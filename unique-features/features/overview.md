@@ -60,7 +60,7 @@ Warthog's Janushash is the first production **Proof of Balanced Work (PoBW)** al
 - **Favoring Gamers** — mining requirements were carefully picked to place consumer gaming PCs in the efficiency sweet spot.
 - **Democratized Mining** — mining rewards consumer hardware, not whoever can throw the most ASICs at the network.
 
-The full mathematical treatment, including ASIC-resistance arguments, the hash-product interpretation, and the public mining pool ecosystem, is on the [Janushash](janushash/Janushash.md) page. The original PoBW paper lives at [warthog.network/PoBW.pdf](https://warthog.network/PoBW.pdf) and on [GitHub](https://github.com/CoinFuMasterShifu/ProofOfBalancedWork/blob/main/PoBW.pdf).
+The full mathematical treatment, including ASIC-resistance arguments, the hash-product interpretation, and the public mining pool ecosystem, is on the [Janushash](../janushash/Janushash.md) page. The original PoBW paper lives at [warthog.network/PoBW.pdf](https://warthog.network/PoBW.pdf) and on [GitHub](https://github.com/CoinFuMasterShifu/ProofOfBalancedWork/blob/main/PoBW.pdf).
 
 ---
 
@@ -82,7 +82,7 @@ Native DeFi is **deployed on the testnet** (`core/defi` branch). The mainnet (`c
 
 Fair Batch Matching processes all swap orders and pool liquidity in a block **jointly**, assigning the same conversion price to every buy and every sell. There is no ordering dependency to exploit — sandwich attacks, front-running, and back-running become impossible by construction. The matching is unique (a Nash equilibrium) and the algorithm finds it in polynomial time.
 
-For the full mathematical treatment, see the [Fair Batch Matching algorithm](hard-coded-defi/fair-batch-matching.md) page or the [FairBatchMatching.pdf](https://github.com/CoinFuMasterShifu/FairBatchMatching/blob/main/FairBatchMatching.pdf) paper. Try it interactively at [warthog.network/defi-demo](https://warthog.network/defi-demo).
+For the full mathematical treatment, see the [Fair Batch Matching algorithm](../hard-coded-defi/fair-batch-matching.md) page or the [FairBatchMatching.pdf](https://github.com/CoinFuMasterShifu/FairBatchMatching/blob/main/FairBatchMatching.pdf) paper. Try it interactively at [warthog.network/defi-demo](https://warthog.network/defi-demo).
 
 ### Status
 
@@ -103,13 +103,13 @@ Today browser nodes connect through bridge nodes. The next step is **P2P between
 
 ### Status
 
-The browser-node engine is largely implemented and runs against bridge nodes today. The WebRTC P2P layer is on the roadmap but currently **on hold** — DeFi features have top priority. The protocol design for the future P2P layer is documented at [WebRTC Protocol](browser-nodes/webrtc-protocol.md). See the full [Browser Nodes Introduction](browser-nodes/Introduction.md) for architecture details.
+The browser-node engine is largely implemented and runs against bridge nodes today. The WebRTC P2P layer is on the roadmap but currently **on hold** — DeFi features have top priority. The protocol design for the future P2P layer is documented at [WebRTC Protocol](../browser-nodes/webrtc-protocol.md). See the full [Browser Nodes Introduction](../browser-nodes/Introduction.md) for architecture details.
 
 ---
 
 ## Where to go next
 
-- New to Warthog: [Wart-dapp (GUI wallet)](../guides/wallet/wart-dapp.md) or [Mining quick start](../guides/mining/quickstart.md).
-- DeFi: [DeFi demo](https://warthog.network/defi-demo) or [Fair Batch Matching algorithm](hard-coded-defi/fair-batch-matching.md).
-- Run a node: [Running a Warthog node](../guides/node/node.md).
+- New to Warthog: [Wart-dapp (GUI wallet)](../../guides/wallet/wart-dapp.md) or [Mining quick start](../../guides/mining/quickstart.md).
+- DeFi: [DeFi demo](https://warthog.network/defi-demo) or [Fair Batch Matching algorithm](../hard-coded-defi/fair-batch-matching.md).
+- Run a node: [Running a Warthog node](../../guides/node/node.md).
 - Looking for the math? The PoBW and FBM papers are linked from the [Whitepaper & Research](https://warthog.network#research) section of the website.

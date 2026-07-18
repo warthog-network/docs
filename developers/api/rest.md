@@ -78,11 +78,10 @@ Below we assume the RPC socket is accessible at `localhost:3000`. On startup the
 | `GET` | [`/chain/mine/:account`](#get-chainmineaccount) | Generate data required for mining |
 | `GET` | [`/chain/txcache`](#get-chaintxcache) | Show transaction cache |
 | `GET` | [`/chain/hashrate/:window`](#get-chainhashratewindow) | Show current hashrate based on latest N blocks |
-| `GET` | [`/chain/signed_snapshot`](#get-chainsigned_snapshot) | Show chain snapshot |
 | `POST` | [`/chain/append`](#post-chainappend) | Append mined block |
 | `GET` | [`/asset/complete?namePrefix=...&hashPrefix=...`](#get-assetcomplete) | Search assets by name and/or hash prefix |
 | `GET` | [`/asset/lookup/:asset`](#get-assetlookupasset) | Asset lookup (by ID or hash) |
-| `GET` | [`/dex/market/:market`](#get-dexmarketmarket) | Show market orders and liquidity pool |
+| `GET` | [`/dex/market/:asset`](#get-dexmarketasset) | Show market orders and liquidity pool |
 | `GET` | [`/account/:account/mempool`](#get-accountaccountmempool) | Show mempool transactions for account |
 | `GET` | [`/account/:account/open_orders`](#get-accountaccountopen_orders) | Show all open orders for account |
 | `GET` | [`/account/:account/open_orders/:asset`](#get-accountaccountopen_ordersasset) | Show open orders for account and specific asset |
@@ -2274,7 +2273,7 @@ Append a mined block to the chain. Takes a block payload in the request body. Re
 }
 ```
 ===
-### `GET /asset/complete?namePrefix=...&hashPrefix=...`
+### `GET /asset/complete?namePrefix=...&hashPrefix=...` {#get-assetcomplete}
 
 Search assets by name and/or hash prefix. Both query parameters are optional; if no parameter is provided, a truncated list of all assets is returned.
 
@@ -2365,7 +2364,7 @@ The order book is represented by `assetToWartSwaps` and `wartToAssetSwaps` field
 }
 ```
 
-The `match` field uses Warthog's custom sandwich-free [matching engine for sandwich-free matching](/unique-features/sandwich-proof-defi/matching-engine).
+The `match` field uses Warthog's custom sandwich-free [matching engine for sandwich-free matching](/unique-features/hard-coded-defi/fair-batch-matching.md).
 
 ==- Example output of `/dex/market/0e4825efffa294610d2ac376713e3bcc9b53d378e823834b64e5df01f75d3b0c`:
 ```json
@@ -3622,7 +3621,7 @@ Example output of `/tools/encode16bit/from_string/0.001`:
 }
 ```
 
-### `GET /tools/parse_price/:price/:decimals`
+### `GET /tools/parse_price/:price/:decimals` {#get-toolsparse_pricedecimals}
 
 Parse price adjusted for the specified number of decimals. The `doubleAdjusted` property is the human-readable representation of the parsed price.
 

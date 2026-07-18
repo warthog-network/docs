@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.837685874788">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.837706792593">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 4.6.0">
@@ -37,11 +37,11 @@
 
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../../resources/css/retype.css?v=4.6.0.837685874788" rel="stylesheet">
+    <link href="../../../resources/css/retype.css?v=4.6.0.837706792593" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.6.0.837685874788" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.6.0.837706792593" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../../resources/js/retype.js?v=4.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.6.0.837685874788" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.6.0.837706792593" data-turbo-eval="false" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -244,7 +244,7 @@
 <li><strong>Favoring Gamers</strong> — mining requirements were carefully picked to place consumer gaming PCs in the efficiency sweet spot.</li>
 <li><strong>Democratized Mining</strong> — mining rewards consumer hardware, not whoever can throw the most ASICs at the network.</li>
 </ul>
-<p>The full mathematical treatment, including ASIC-resistance arguments, the hash-product interpretation, and the public mining pool ecosystem, is on the <a href="janushash/janushash.md">Janushash</a> page. The original PoBW paper lives at <a href="https://warthog.network/PoBW.pdf">warthog.network/PoBW.pdf</a> and on <a href="https://github.com/CoinFuMasterShifu/ProofOfBalancedWork/blob/main/PoBW.pdf">GitHub</a>.</p>
+<p>The full mathematical treatment, including ASIC-resistance arguments, the hash-product interpretation, and the public mining pool ecosystem, is on the <a href="../../janushash/">Janushash</a> page. The original PoBW paper lives at <a href="https://warthog.network/PoBW.pdf">warthog.network/PoBW.pdf</a> and on <a href="https://github.com/CoinFuMasterShifu/ProofOfBalancedWork/blob/main/PoBW.pdf">GitHub</a>.</p>
 <hr>
 <h2 id="native-defi">Native DeFi</h2>
 <p>Instead of implementing DeFi on top of smart contracts, Warthog embeds the DeFi code directly into the consensus layer to open the door to unprecedented features.</p>
@@ -258,7 +258,7 @@
 <hr>
 <h2 id="fair-batch-matching">Fair Batch Matching</h2>
 <p>Fair Batch Matching processes all swap orders and pool liquidity in a block <strong>jointly</strong>, assigning the same conversion price to every buy and every sell. There is no ordering dependency to exploit — sandwich attacks, front-running, and back-running become impossible by construction. The matching is unique (a Nash equilibrium) and the algorithm finds it in polynomial time.</p>
-<p>For the full mathematical treatment, see the <a href="hard-coded-defi/fair-batch-matching.md">Fair Batch Matching algorithm</a> page or the <a href="https://github.com/CoinFuMasterShifu/FairBatchMatching/blob/main/FairBatchMatching.pdf">FairBatchMatching.pdf</a> paper. Try it interactively at <a href="https://warthog.network/defi-demo">warthog.network/defi-demo</a>.</p>
+<p>For the full mathematical treatment, see the <a href="../../hard-coded-defi/fair-batch-matching/">Fair Batch Matching algorithm</a> page or the <a href="https://github.com/CoinFuMasterShifu/FairBatchMatching/blob/main/FairBatchMatching.pdf">FairBatchMatching.pdf</a> paper. Try it interactively at <a href="https://warthog.network/defi-demo">warthog.network/defi-demo</a>.</p>
 <h3 id="status-1">Status</h3>
 <p>Fair Batch Matching is <strong>deployed on the testnet</strong> (<code translate="no" v-pre>core/defi</code> branch) alongside the rest of Native DeFi.</p>
 <hr>
@@ -272,13 +272,13 @@
 </ul>
 <p>Today browser nodes connect through bridge nodes. The next step is <strong>P2P between browsers</strong> over WebRTC, with a signaling protocol for peer discovery, NAT traversal, and handshake negotiation. When P2P ships, two tabs in the same room can sync the chain between each other — no server in the middle — turning every browser into a first-class network peer and removing the centralizing dependency on bridge nodes.</p>
 <h3 id="status-2">Status</h3>
-<p>The browser-node engine is largely implemented and runs against bridge nodes today. The WebRTC P2P layer is on the roadmap but currently <strong>on hold</strong> — DeFi features have top priority. The protocol design for the future P2P layer is documented at <a href="browser-nodes/webrtc-protocol.md">WebRTC Protocol</a>. See the full <a href="browser-nodes/introduction.md">Browser Nodes Introduction</a> for architecture details.</p>
+<p>The browser-node engine is largely implemented and runs against bridge nodes today. The WebRTC P2P layer is on the roadmap but currently <strong>on hold</strong> — DeFi features have top priority. The protocol design for the future P2P layer is documented at <a href="../../browser-nodes/webrtc-protocol/">WebRTC Protocol</a>. See the full <a href="../../browser-nodes/introduction/">Browser Nodes Introduction</a> for architecture details.</p>
 <hr>
 <h2 id="where-to-go-next">Where to go next</h2>
 <ul>
-<li>New to Warthog: <a href="../guides/wallet/wart-dapp.md">Wart-dapp (GUI wallet)</a> or <a href="../guides/mining/quickstart.md">Mining quick start</a>.</li>
-<li>DeFi: <a href="https://warthog.network/defi-demo">DeFi demo</a> or <a href="hard-coded-defi/fair-batch-matching.md">Fair Batch Matching algorithm</a>.</li>
-<li>Run a node: <a href="../guides/node/node.md">Running a Warthog node</a>.</li>
+<li>New to Warthog: <a href="../../../guides/wallet/wart-dapp/">Wart-dapp (GUI wallet)</a> or <a href="../../../guides/mining/quickstart/">Mining quick start</a>.</li>
+<li>DeFi: <a href="https://warthog.network/defi-demo">DeFi demo</a> or <a href="../../hard-coded-defi/fair-batch-matching/">Fair Batch Matching algorithm</a>.</li>
+<li>Run a node: <a href="../../../guides/node/">Running a Warthog node</a>.</li>
 <li>Looking for the math? The PoBW and FBM papers are linked from the <a href="https://warthog.network#research">Whitepaper &amp; Research</a> section of the website.</li>
 </ul>
 
