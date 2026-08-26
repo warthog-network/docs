@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.837706792593">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.841096129382">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 4.6.0">
@@ -37,11 +37,11 @@
 
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../resources/css/retype.css?v=4.6.0.837706792593" rel="stylesheet">
+    <link href="../../resources/css/retype.css?v=4.6.0.841096129382" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../resources/js/config.js?v=4.6.0.837706792593" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../resources/js/config.js?v=4.6.0.841096129382" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../resources/js/retype.js?v=4.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.6.0.837706792593" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.6.0.841096129382" data-turbo-eval="false" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -165,7 +165,7 @@
 | [Public Nodes](nodes.md) | Community-run nodes for wallet access | Run a node and add it to the list |
 | [Address Tags](addresses.md) | Labels for known WART addresses | Tag addresses you encounter |
 | [Hashrates](hashrates.md) | GPU/CPU mining performance data | Submit your hashrate |
-| [Assets](assets.md) | Metadata for tokens on the Warthog chain | Register your asset |">
+| [Assets](assets.md) | Metadata for tokens on the Warthog chain | Publish via the [asset metadata form](https://testnet-assets.warthog.network/) |">
 <div class="table-wrapper scrollbar overflow-hidden">
 <table class="comfortable">
 <thead>
@@ -194,7 +194,7 @@
 <tr>
 <td><a href="assets/">Assets</a></td>
 <td>Metadata for tokens on the Warthog chain</td>
-<td>Register your asset</td>
+<td>Publish via the <a href="https://testnet-assets.warthog.network/">asset metadata form</a></td>
 </tr>
 </tbody>
 </table>
@@ -208,9 +208,10 @@
 | [https://data.warthog.network/addresses.json](https://data.warthog.network/addresses.json) | WART address tags |
 | [https://data.warthog.network/sha256t-hashrates.json](https://data.warthog.network/sha256t-hashrates.json) | GPU hashrates |
 | [https://data.warthog.network/verushash2_2-hashrates.json](https://data.warthog.network/verushash2_2-hashrates.json) | CPU hashrates |
-| [https://data.warthog.network/assets.json](https://data.warthog.network/assets.json) | Asset list for autocompletion |
-| [https://data.warthog.network/assets/\{hash\}/info.json](https://data.warthog.network/assets/0000000000000000000000000000000000000000000000000000000000000000/info.json) | Asset metadata |
-| [https://data.warthog.network/assets/\{hash\}/image.png](https://data.warthog.network/assets/0000000000000000000000000000000000000000000000000000000000000000/image.png) | Asset logo (optional) |">
+| &lt;https://testnet-assets.warthog.network/assets.json&gt; | Asset catalog (list) |
+| &lt;https://testnet-assets.warthog.network/assets/\{hash\}/info.json&gt; | Single asset metadata |
+| &lt;https://testnet-assets.warthog.network/assets/\{hash\}/logo.png&gt; | Asset logo (250×250 PNG) |
+| &lt;https://testnet-assets.warthog.network/assets/\{hash\}/banner.png&gt; | Asset banner (600×200 PNG) |">
 <div class="table-wrapper scrollbar overflow-hidden">
 <table class="comfortable">
 <thead>
@@ -241,16 +242,20 @@
 <td>CPU hashrates</td>
 </tr>
 <tr>
-<td><a href="https://data.warthog.network/assets.json">https://data.warthog.network/assets.json</a></td>
-<td>Asset list for autocompletion</td>
+<td><a href="https://testnet-assets.warthog.network/assets.json">https://testnet-assets.warthog.network/assets.json</a></td>
+<td>Asset catalog (list)</td>
 </tr>
 <tr>
-<td><a href="https://data.warthog.network/assets/0000000000000000000000000000000000000000000000000000000000000000/info.json">https://data.warthog.network/assets/{hash}/info.json</a></td>
-<td>Asset metadata</td>
+<td><a href="https://testnet-assets.warthog.network/assets/%5C%7Bhash%5C%7D/info.json">https://testnet-assets.warthog.network/assets/\{hash\}/info.json</a></td>
+<td>Single asset metadata</td>
 </tr>
 <tr>
-<td><a href="https://data.warthog.network/assets/0000000000000000000000000000000000000000000000000000000000000000/image.png">https://data.warthog.network/assets/{hash}/image.png</a></td>
-<td>Asset logo (optional)</td>
+<td><a href="https://testnet-assets.warthog.network/assets/%5C%7Bhash%5C%7D/logo.png">https://testnet-assets.warthog.network/assets/\{hash\}/logo.png</a></td>
+<td>Asset logo (250×250 PNG)</td>
+</tr>
+<tr>
+<td><a href="https://testnet-assets.warthog.network/assets/%5C%7Bhash%5C%7D/banner.png">https://testnet-assets.warthog.network/assets/\{hash\}/banner.png</a></td>
+<td>Asset banner (600×200 PNG)</td>
 </tr>
 </tbody>
 </table>

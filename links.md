@@ -61,6 +61,12 @@
 * [Mining Guide](https://www.youtube.com/watch?v=nHa9ohcIYCE) by Son Of a Tech (in english)
 * [Brand Kit](https://github.com/warthog-network/brand-kit) by BalkyBot
 
+## Testnet
+
+* [Testnet Faucet](https://testnet-faucet.warthog.network/) — drips 0.1% of reserves per call to any testnet address
+* [Testnet Explorer](https://testnet.warthog.network/) — client-side blockchain explorer for the defi testnet
+* [Asset Metadata Form](https://testnet-assets.warthog.network/) — self-service form for publishing token metadata on the testnet
+
 **NOTE**:
 
 - If a link is missing, don't hesitate to make a PR or tell us on discord.

@@ -22,7 +22,7 @@
 
 - [Public Data](https://docs.warthog.network/guides/public-data/index.md): The public-data repository hosts public data for the Warthog community. This data is exported to API endpoints on data.warthog.network.
 - [Adding an Address Tag](https://docs.warthog.network/guides/public-data/addresses.md): Address tags help identify known WART addresses such as exchange wallets, pool payouts, and donation addresses.
-- [Registering Asset Metadata](https://docs.warthog.network/guides/public-data/assets.md): Warthog stores asset metadata off-chain in the public-data repository. This allows anyone to register information about assets on the Warthog chain.
+- [Registering Asset Metadata](https://docs.warthog.network/guides/public-data/assets.md): Warthog stores asset metadata in a database on the same VPS that hosts the asset-metadata backend — not in a GitHub repository. This keeps submission free
 - [Submitting Hashrates](https://docs.warthog.network/guides/public-data/hashrates.md): Hashrate data helps miners estimate their expected Janushash performance when choosing GPU and CPU configurations.
 - [Adding a Public Node](https://docs.warthog.network/guides/public-data/nodes.md): Running a public node helps the Warthog network by providing infrastructure for users who cannot run their own node.
 

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.837706792593">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.841096129382">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 4.6.0">
@@ -12,7 +12,7 @@
     <!-- Primary Meta Tags -->
     <title>Registering Asset Metadata</title>
     <meta name="title" content="Registering Asset Metadata">
-    <meta name="description" content="Warthog stores asset metadata off-chain in the public-data repository. This allows anyone to register information about assets on the Warthog chain.">
+    <meta name="description" content="Warthog stores asset metadata in a database on the same VPS that hosts the asset-metadata backend — not in a GitHub repository. This keeps submission free">
 
     <!-- Canonical -->
     <link rel="canonical" href="https://docs.warthog.network/guides/public-data/assets/">
@@ -22,7 +22,7 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://docs.warthog.network/guides/public-data/assets/">
     <meta property="og:title" content="Registering Asset Metadata">
-    <meta property="og:description" content="Warthog stores asset metadata off-chain in the public-data repository. This allows anyone to register information about assets on the Warthog chain.">
+    <meta property="og:description" content="Warthog stores asset metadata in a database on the same VPS that hosts the asset-metadata backend — not in a GitHub repository. This keeps submission free">
     <meta property="og:site_name" content="Warthog Network">
     <meta property="og:locale" content="en_US">
 
@@ -30,19 +30,18 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://docs.warthog.network/guides/public-data/assets/">
     <meta name="twitter:title" content="Registering Asset Metadata">
-    <meta name="twitter:description" content="Warthog stores asset metadata off-chain in the public-data repository. This allows anyone to register information about assets on the Warthog chain.">
+    <meta name="twitter:description" content="Warthog stores asset metadata in a database on the same VPS that hosts the asset-metadata backend — not in a GitHub repository. This keeps submission free">
 
     <!-- Alternate Markdown -->
     <link rel="alternate" type="text/markdown" href="https://docs.warthog.network/guides/public-data/assets.md">
 
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../../resources/css/retype.css?v=4.6.0.837706792593" rel="stylesheet">
+    <link href="../../../resources/css/retype.css?v=4.6.0.841096129382" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.6.0.837706792593" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.6.0.841096129382" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../../resources/js/retype.js?v=4.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.6.0.837706792593" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../../../resources/js/prism.js?v=4.6.0.837706792593" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.6.0.841096129382" data-turbo-eval="false" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -158,83 +157,141 @@
 
                 <!-- Page content  -->
 <h1 id="registering-asset-metadata">Registering Asset Metadata</h1>
-<p>Warthog stores asset metadata off-chain in the public-data repository. This allows anyone to register information about assets on the Warthog chain.</p>
+<p>Warthog stores asset metadata in a database on the same VPS that
+hosts the asset-metadata backend — not in a GitHub repository. This
+keeps submission free of GitHub&#x27;s content-moderation rules: the
+backend accepts any image the asset&#x27;s creator signs for, and the
+project doesn&#x27;t have to moderate third-party content to stay in good
+standing on GitHub. The supported way to publish is the self-service
+form at <a href="https://testnet-assets.warthog.network/">https://testnet-assets.warthog.network/</a>.</p>
 <h2 id="prerequisites">Prerequisites</h2>
 <ul>
-<li>You must have an <strong>asset hash</strong> from the Warthog blockchain</li>
-<li>Contact the team on <a href="https://discord.com/invite/QMDV8bGTdQ">Discord</a> to have your asset hash registered</li>
+<li>
+<p>A Warthog <strong>asset hash</strong> (64 hex chars) for a token you created on
+the defi testnet (<code translate="no" v-pre>core/defi</code> branch).</p>
+</li>
+<li>
+<p>The <strong>private key of the asset&#x27;s on-chain creator address</strong>. The
+form proves authorship by signing a one-time challenge with this
+key and recovering the signer server-side; anyone else gets
+<code translate="no" v-pre>403 not_owner</code>.</p>
+</li>
+<li>
+<p>(Optional) A 250×250 logo PNG and a 600×200 banner PNG.</p>
+</li>
 </ul>
-<h2 id="adding-your-asset">Adding Your Asset</h2>
+<h2 id="submitting-via-the-form">Submitting via the form</h2>
 <ol>
-<li>Fork the <a href="https://github.com/warthog-network/public-data">public-data repository</a></li>
-<li>Create a new directory: <code translate="no" v-pre>data/assets/{your_asset_hash}/</code></li>
-<li>Create <code translate="no" v-pre>info.json</code> with the following structure:</li>
-<li>Optionally add <code translate="no" v-pre>image.png</code> (valid PNG file)</li>
-<li>Submit a pull request to the <code translate="no" v-pre>master</code> branch</li>
+<li>
+<p>Open <a href="https://testnet-assets.warthog.network/">https://testnet-assets.warthog.network/</a>.</p>
+</li>
+<li>
+<p>Unlock a Warthog wallet in the page (saved wallet, wallet file,
+seed phrase, or private key). The private key never leaves your
+browser.</p>
+</li>
+<li>
+<p>Type or paste the 64-hex asset hash. The page looks up the
+on-chain ticker and pre-fills it.</p>
+</li>
+<li>
+<p>Fill in the long name, description, and any of the optional
+social links. Drop in a logo and (optionally) a banner. The form
+re-encodes images client-side to the exact dimensions the backend
+requires.</p>
+</li>
+<li>
+<p>Click <strong>Submit</strong>. The form fetches a one-time challenge, signs
+it, POSTs the multipart form with your signature, and the
+backend stores the metadata in its database.</p>
+</li>
 </ol>
-<h3 id="directory-structure">Directory Structure</h3>
-<div id="directory-structure-code-1" class="codeblock-wrapper"><doc-codeblock>
-<pre translate="no" class="language-none"><code v-pre class="language-none">data/assets/{asset_hash}/
-├── info.json      # Required
-└── image.png      # Optional</code></pre>
-</doc-codeblock></div>
-<h3 id="infojson-schema">info.json Schema</h3>
-<retype-table copy-text="| Field | Required | Description |
-|-------|----------|-------------|
-| `name` | Yes | Long name of the asset (e.g., &quot;Warthog&quot;) |
-| `ticker` | Yes | Short ticker symbol (max 5 characters, e.g., &quot;WART&quot;) |
-| `description` | Yes | Description of the asset |
-| `url` | No | Website URL |">
+<p>On success, the page shows the public URLs where your metadata will
+be served. Updates to existing assets use the same form — re-submit
+and the matching asset hash&#x27;s row is overwritten.</p>
+<h2 id="infojson-schema">info.json schema</h2>
+<p>The backend stores each asset as a document matching this shape:</p>
+<retype-table copy-text="| Field         | Required | Notes |
+|---------------|----------|-------|
+| `hash`        | yes      | 64 hex chars — the asset hash |
+| `ticker`      | yes      | 1–5 ASCII alphanumerics; taken from on-chain `AssetName`, **not** user-supplied |
+| `name`        | yes      | ≤ 15 chars — human-readable long name |
+| `description` | yes      | ≤ 500 chars |
+| `website`     | no       | `https://` URL, ≤ 2048 chars |
+| `telegram`    | no       | `https://` URL, ≤ 2048 chars |
+| `discord`     | no       | `https://` URL, ≤ 2048 chars |
+| `twitter`     | no       | `https://` URL, ≤ 2048 chars |">
 <div class="table-wrapper scrollbar overflow-hidden">
 <table class="comfortable">
 <thead>
 <tr>
 <th>Field</th>
 <th>Required</th>
-<th>Description</th>
+<th>Notes</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code translate="no" v-pre>name</code></td>
-<td>Yes</td>
-<td>Long name of the asset (e.g., &quot;Warthog&quot;)</td>
+<td><code translate="no" v-pre>hash</code></td>
+<td>yes</td>
+<td>64 hex chars — the asset hash</td>
 </tr>
 <tr>
 <td><code translate="no" v-pre>ticker</code></td>
-<td>Yes</td>
-<td>Short ticker symbol (max 5 characters, e.g., &quot;WART&quot;)</td>
+<td>yes</td>
+<td>1–5 ASCII alphanumerics; taken from on-chain <code translate="no" v-pre>AssetName</code>, <strong>not</strong> user-supplied</td>
+</tr>
+<tr>
+<td><code translate="no" v-pre>name</code></td>
+<td>yes</td>
+<td>≤ 15 chars — human-readable long name</td>
 </tr>
 <tr>
 <td><code translate="no" v-pre>description</code></td>
-<td>Yes</td>
-<td>Description of the asset</td>
+<td>yes</td>
+<td>≤ 500 chars</td>
 </tr>
 <tr>
-<td><code translate="no" v-pre>url</code></td>
-<td>No</td>
-<td>Website URL</td>
+<td><code translate="no" v-pre>website</code></td>
+<td>no</td>
+<td><code translate="no" v-pre>https://</code> URL, ≤ 2048 chars</td>
+</tr>
+<tr>
+<td><code translate="no" v-pre>telegram</code></td>
+<td>no</td>
+<td><code translate="no" v-pre>https://</code> URL, ≤ 2048 chars</td>
+</tr>
+<tr>
+<td><code translate="no" v-pre>discord</code></td>
+<td>no</td>
+<td><code translate="no" v-pre>https://</code> URL, ≤ 2048 chars</td>
+</tr>
+<tr>
+<td><code translate="no" v-pre>twitter</code></td>
+<td>no</td>
+<td><code translate="no" v-pre>https://</code> URL, ≤ 2048 chars</td>
 </tr>
 </tbody>
 </table>
 </div>
 </retype-table>
-<h3 id="example-infojson">Example info.json</h3>
-<div id="example-infojson-code-1" class="codeblock-wrapper"><doc-codeblock>
-<pre translate="no" class="language-json"><code v-pre class="language-json">{
-    &quot;name&quot;: &quot;Warthog&quot;,
-    &quot;ticker&quot;: &quot;WART&quot;,
-    &quot;description&quot;: &quot;WART is the native token in the Warthog ecosystem...&quot;,
-    &quot;url&quot;: &quot;https://warthog.network&quot;
-}</code></pre>
-</doc-codeblock></div>
-<h2 id="api-endpoints">API Endpoints</h2>
-<p>Once your asset is merged and deployed:</p>
+<p>Plus optional <code translate="no" v-pre>logo.png</code> (exactly 250×250 px) and <code translate="no" v-pre>banner.png</code>
+(exactly 600×200 px). All four URL fields must start with <code translate="no" v-pre>https://</code>.</p>
+<h2 id="api-programmatic-submission">API (programmatic submission)</h2>
+<p>For tooling that wants to submit metadata without going through the
+form, the API reference is shipped with the frontend at
+<a href="https://github.com/warthog-network/asset-metadata-frontend/blob/master/docs/api.md"><code translate="no" v-pre>asset-metadata-frontend/docs/api.md</code></a>.
+The wire format is a 130-char hex signature (<code translate="no" v-pre>r || s || recid</code>); see
+<a href="../../../developers/integration/wallets/">Wallet Integration</a> for the
+signing scheme.</p>
+<h2 id="catalog-endpoints">Catalog endpoints</h2>
+<p>Once submitted, your metadata is served from the catalog host:</p>
 <retype-table copy-text="| Endpoint | Description |
 |----------|-------------|
-| [https://data.warthog.network/assets.json](https://data.warthog.network/assets.json) | Asset list for autocompletion |
-| [https://data.warthog.network/assets/\{hash\}/info.json](https://data.warthog.network/assets/0000000000000000000000000000000000000000000000000000000000000000/info.json) | Asset metadata |
-| [https://data.warthog.network/assets/\{hash\}/image.png](https://data.warthog.network/assets/0000000000000000000000000000000000000000000000000000000000000000/image.png) | Asset logo (optional) |">
+| &lt;https://testnet-assets.warthog.network/assets.json&gt; | Full catalog list |
+| &lt;https://testnet-assets.warthog.network/assets/\{hash\}/info.json&gt; | Single asset metadata |
+| &lt;https://testnet-assets.warthog.network/assets/\{hash\}/logo.png&gt; | Asset logo (250×250 PNG) |
+| &lt;https://testnet-assets.warthog.network/assets/\{hash\}/banner.png&gt; | Asset banner (600×200 PNG) |">
 <div class="table-wrapper scrollbar overflow-hidden">
 <table class="comfortable">
 <thead>
@@ -245,23 +302,29 @@
 </thead>
 <tbody>
 <tr>
-<td><a href="https://data.warthog.network/assets.json">https://data.warthog.network/assets.json</a></td>
-<td>Asset list for autocompletion</td>
+<td><a href="https://testnet-assets.warthog.network/assets.json">https://testnet-assets.warthog.network/assets.json</a></td>
+<td>Full catalog list</td>
 </tr>
 <tr>
-<td><a href="https://data.warthog.network/assets/0000000000000000000000000000000000000000000000000000000000000000/info.json">https://data.warthog.network/assets/{hash}/info.json</a></td>
-<td>Asset metadata</td>
+<td><a href="https://testnet-assets.warthog.network/assets/%5C%7Bhash%5C%7D/info.json">https://testnet-assets.warthog.network/assets/\{hash\}/info.json</a></td>
+<td>Single asset metadata</td>
 </tr>
 <tr>
-<td><a href="https://data.warthog.network/assets/0000000000000000000000000000000000000000000000000000000000000000/image.png">https://data.warthog.network/assets/{hash}/image.png</a></td>
-<td>Asset logo (optional)</td>
+<td><a href="https://testnet-assets.warthog.network/assets/%5C%7Bhash%5C%7D/logo.png">https://testnet-assets.warthog.network/assets/\{hash\}/logo.png</a></td>
+<td>Asset logo (250×250 PNG)</td>
+</tr>
+<tr>
+<td><a href="https://testnet-assets.warthog.network/assets/%5C%7Bhash%5C%7D/banner.png">https://testnet-assets.warthog.network/assets/\{hash\}/banner.png</a></td>
+<td>Asset banner (600×200 PNG)</td>
 </tr>
 </tbody>
 </table>
 </div>
 </retype-table>
-<h2 id="need-help">Need Help?</h2>
-<p>Join the Warthog community on <a href="https://discord.com/invite/QMDV8bGTdQ">Discord</a> for assistance.</p>
+<h2 id="need-help">Need help?</h2>
+<p>Join the Warthog community on
+<a href="https://discord.com/invite/QMDV8bGTdQ">Discord</a> for asset-creation
+questions.</p>
 
                 
                 <!-- Required only on API pages -->
@@ -334,6 +397,6 @@
 
     <div id="retype-overlay-target"></div>
 
-        <script data-cfasync="false">window.__DOCS__ = { "title": "Asset Metadata", level: 3, icon: "file", hasPrism: true, hasInstagram: false, hasMermaid: false, hasMath: false, tocDepth: 23, "md": "/guides/public-data/assets.md" }</script>
+        <script data-cfasync="false">window.__DOCS__ = { "title": "Asset Metadata", level: 3, icon: "file", hasPrism: false, hasInstagram: false, hasMermaid: false, hasMath: false, tocDepth: 23, "md": "/guides/public-data/assets.md" }</script>
 </body>
 </html>
