@@ -64,7 +64,7 @@
 ## Testnet
 
 * [Testnet Faucet](https://testnet-faucet.warthog.network/) — drips 0.1% of reserves per call to any testnet address
-* [Testnet Explorer](https://testnet.warthog.network/) — client-side blockchain explorer for the defi testnet
+* [Testnet Explorer](https://testnet-explorer.warthog.network/) — client-side blockchain explorer for the defi testnet
 * [Asset Metadata Form](https://testnet-assets.warthog.network/) — self-service form for publishing token metadata on the testnet
 
 **NOTE**:

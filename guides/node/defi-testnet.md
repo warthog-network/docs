@@ -38,7 +38,7 @@ The testnet includes a new TUI wallet for DeFi interactions. Currently supported
 
 ## Blockchain Explorer
 
-A new blockchain explorer for the testnet is available at [testnet.warthog.network](https://testnet.warthog.network).
+A new blockchain explorer for the testnet is available at [testnet-explorer.warthog.network](https://testnet-explorer.warthog.network).
 
 Get testnet WART from the [faucet](https://testnet-faucet.warthog.network/), and publish asset metadata through the [self-service form](https://testnet-assets.warthog.network/).
 These features need a  new blockchain explorer which is actively worked on but is already in a state which could be useful for starting the testnet. 
