@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generator: Adobe Illustrator 27.8.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+
+<svg
+   version="1.1"
+   x="0px"
+   y="0px"
+   viewBox="0 0 1120 1120"
+   xml:space="preserve"
+   id="svg20"
+   width="1120"
+   height="1120"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"><defs
+     id="defs24" /><g
+     id="g17"
+     transform="translate(20,20)"><circle
+       class="st2"
+       cx="540"
+       cy="540"
+       r="560"
+       id="outer_circle"
+       style="fill:#fdb913;fill-opacity:1" /><circle
+       class="st2"
+       cx="540"
+       cy="540"
+       r="510"
+       id="inner_circle"
+       style="fill:#231f20;fill-opacity:1" /><g
+       id="warthog_silhouette"
+       style="fill:#fdb913;fill-opacity:1"><polygon
+         class="st1"
+         points="291.1,784.1 376.1,785 455.8,682.5 359,719.5 "
+         id="back_foot"
+         style="fill:#fdb913;fill-opacity:1" /><path
+         class="st1"
+         d="m 805.8,564 68.4,-14.9 19.9,-44.5 -26.5,-6.4 -69.3,-47.8 -52.8,-86.9 -22.2,6.4 -21.3,-62.3 -51,39.4 6.4,-35.5 -92.2,-16.5 30.3,26.4 -110.6,-13.6 42.4,29.9 -113.3,1.1 52.5,27 -99.4,21.8 51.8,13.1 -62.3,20.1 -1.9,0.1 -1.5,1 -44.2,14.1 18,3.5 -42.2,28.6 0.1,-0.3 -42.3,26.9 -20.1,44.8 -36.5,18.7 6.3,17.6 47.3,-13 26.5,26.7 1.9,75.5 -70.5,120 h 62.9 l 92.7,-87 121.2,-42.6 124.2,-61.8 127.6,30.4 24.8,51.2 62.6,-29.7 -30.5,-54.2 -76.4,-51.6 14.4,-7.2 z m -44.1,-134.2 10,25.5 -38.5,-17.5 z"
+         id="warthog_body"
+         style="fill:#fdb913;fill-opacity:1" /><polygon
+         class="st1"
+         points="728.4,682.5 708.5,644.4 595.2,612.9 566.8,629.2 652.1,667.7 675.4,707.9 "
+         id="front_foot"
+         style="fill:#fdb913;fill-opacity:1" /></g></g></svg>
