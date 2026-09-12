@@ -62,6 +62,11 @@ Several factual claims here can drift from the source. Check HUB.md `## Known In
 
 - Default branch is **`master`** (not `main`). Every push to `master` triggers `.github/workflows/retype-action.yml`, which builds the site and force-pushes the rendered output to a separate `retype` branch on GitHub via `retypeapp/action-github-pages` with `update-branch: true`.
 - No local build is required. If you want to preview changes locally, install Retype (`npm install retypeapp` then `npx retype start`) — Retype is a paid product, so check with the maintainer before adding a license.
+- **Local validation (free tier).** Retype has no dedicated lint command — validation runs as part of the build. Before committing non-trivial edits, run one of:
+  - `npx retype start -n` — builds + watches files, prints warnings to stdout, does not open a browser. Best for iterative editing.
+  - `npx retype build` — one-shot static build; same warnings, no server, no watch.
+  Watch for lines beginning with `WARNING:` (e.g. unresolved internal links, missing front matter, ambiguous URLs that resolve to a directory instead of a file). Fix every warning before pushing.
+  **Pro feature:** `retype build --strict` returns a non-zero exit code on any warning. Not available without a Retype Pro/Community key; see the note above.
 - The build output goes to `.retype/` (gitignored). Do not commit it.
 - The published site is configured in `retype.yml` (`url`, `branding`, `edit.repo`, header links). If you change the GitHub repo URL, branding, or nav links, edit that file.
 
@@ -148,3 +153,8 @@ There is no automated test. For non-trivial edits, verify by:
 3. Checking that all internal links resolve to files that exist (Retype renders broken links as broken nav).
 4. Confirming image paths start with `/img/` and the file actually exists at that path.
 5. Confirming any new constants (chain IDs, ports, byte sizes) match the "Key constants" section above.
+6. Run `npx retype start -n` (or `npx retype build`) and confirm zero `WARNING:` lines. Common warnings to look out for:
+   - Unresolved internal links (e.g. `./node` that resolves to a `node/` directory instead of `node.md`).
+   - Missing or malformed front matter (`---` not closing, unknown keys).
+   - Image paths under `/img/...` that don't exist on disk.
+   - Reference to a page that has been moved or deleted.
