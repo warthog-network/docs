@@ -4,15 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.842438252955">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.842547435532">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 4.6.0">
 
     <!-- Primary Meta Tags -->
-    <title>Node</title>
-    <meta name="title" content="Node">
-    <meta name="description" content="For some actions on the Warthog network (using a wallet or solo mining), you need to run an instance of the node on your computer. Currently, the pre-compiled node executable file are availabe for Windows, macOS (only arm), Linux (Ubuntu, Debian).">
+    <title>Using a Node</title>
+    <meta name="title" content="Using a Node">
+    <meta name="description" content="Warthog's node is the program that talks to other nodes on the peer-to-peer network. Once started, the node synchronises the blockchain from peers and keeps up with new blocks which are mined roughly every 20s.">
 
     <!-- Canonical -->
     <link rel="canonical" href="https://docs.warthog.network/guides/node/">
@@ -21,33 +21,35 @@
     <!-- Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://docs.warthog.network/guides/node/">
-    <meta property="og:title" content="Node">
-    <meta property="og:description" content="For some actions on the Warthog network (using a wallet or solo mining), you need to run an instance of the node on your computer. Currently, the pre-compiled node executable file are availabe for Windows, macOS (only arm), Linux (Ubuntu, Debian).">
+    <meta property="og:title" content="Using a Node">
+    <meta property="og:description" content="Warthog's node is the program that talks to other nodes on the peer-to-peer network. Once started, the node synchronises the blockchain from peers and keeps up with new blocks which are mined roughly every 20s.">
     <meta property="og:image" content="https://docs.warthog.network/img/get-started/09-node.png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
-    <meta property="og:image:alt" content="Node">
+    <meta property="og:image:alt" content="Using a Node">
     <meta property="og:site_name" content="Warthog Network">
     <meta property="og:locale" content="en_US">
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://docs.warthog.network/guides/node/">
-    <meta name="twitter:title" content="Node">
-    <meta name="twitter:description" content="For some actions on the Warthog network (using a wallet or solo mining), you need to run an instance of the node on your computer. Currently, the pre-compiled node executable file are availabe for Windows, macOS (only arm), Linux (Ubuntu, Debian).">
+    <meta name="twitter:title" content="Using a Node">
+    <meta name="twitter:description" content="Warthog's node is the program that talks to other nodes on the peer-to-peer network. Once started, the node synchronises the blockchain from peers and keeps up with new blocks which are mined roughly every 20s.">
     <meta name="twitter:image" content="https://docs.warthog.network/img/get-started/09-node.png">
-    <meta name="twitter:image:alt" content="Node">
+    <meta name="twitter:image:alt" content="Using a Node">
 
     <!-- Alternate Markdown -->
     <link rel="alternate" type="text/markdown" href="https://docs.warthog.network/guides/node/node.md">
 
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../resources/css/retype.css?v=4.6.0.842438252955" rel="stylesheet">
+    <link id="retype-favicon" rel="icon" href="../../favicon.png" />
+    <link href="../../resources/css/retype.css?v=4.6.0.842547435532" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../resources/js/config.js?v=4.6.0.842438252955" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../resources/js/config.js?v=4.6.0.842547435532" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../resources/js/retype.js?v=4.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.6.0.842438252955" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.6.0.842547435532" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../../resources/js/prism.js?v=4.6.0.842547435532" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -162,28 +164,79 @@
                 <doc-page-actions></doc-page-actions>
 
                 <!-- Page content  -->
-<h1 id="using-a-node">Using a node</h1>
-<p>For some actions on the Warthog network (using a wallet or solo mining), you need to run an instance of the node on your computer. Currently, the pre-compiled node executable file are availabe for Windows, macOS (only arm), Linux (Ubuntu, Debian). Аfter launch, node will start synchronizing the blockchain, after it is completed, it will be possible to perform operations with the wallet and start solo mining.</p>
-<h2 id="public-nodes">Public nodes</h2>
-<p>If for some reasons, you cannot use a local node, you can use existing public nodes. They can be found in the <a href="https://github.com/warthog-network/public-data">public-data repository</a> and are available via API at <a href="https://data.warthog.network/legacy-nodes.json">data.warthog.network/legacy-nodes.json</a>.</p>
-<p>You can use them to connect your wallet without installing a local node, but <strong>don&#x27;t use public nodes for solo mining</strong></p>
-<h2 id="starting-the-node">Starting the node</h2>
-<p>Download the latest version from <a href="https://github.com/warthog-network/Warthog/releases">here</a>.</p>
-<p>The node does not have external dependencies, it can be started via command line (file name deending on your platform, Linux, Windows or aarch64) :</p>
-<div id="starting-the-node-code-1" class="codeblock-wrapper"><doc-codeblock>
-<pre translate="no" class="language-none"><code v-pre class="language-none">./wart-node-linux</code></pre>
+<h1 id="using-a-node">Using a Node</h1>
+<h2 id="overview">Overview</h2>
+<p>Warthog&#x27;s node is the program that talks to other nodes on the peer-to-peer network. Once started, the node synchronises the blockchain from peers and keeps up with new blocks which are mined roughly every 20s.</p>
+<p>For interaction with the Warthog network as required by wallets, explorers and developers, nodes provide two forms of API endpoints:</p>
+<ul>
+<li>The <strong>local JSON API endpoint</strong> provides for full inspection and control and therefore should only be used in safe environments, especially it should not be exposed to the internet.</li>
+<li>The <strong>public JSON API endpoint</strong> provides a safe restricted subset of API methods for public exposure to the internet used by wallets and explorers.</li>
+</ul>
+<p>Nodes also support mining based on HTTP API or Stratum protocol without extra tools.</p>
+<h3 id="networks">Networks</h3>
+<p>There are two networks running different code:</p>
+<ul>
+<li><strong>Mainnet</strong>: current production network. The node binary from the <a href="https://github.com/warthog-network/core/tree/master"><code translate="no" v-pre>master</code></a> branch serves this. Only transfer of coins is available, no DeFi features.</li>
+<li><strong>DeFi Testnet</strong>: runs the <a href="https://github.com/warthog-network/core/tree/defi"><code translate="no" v-pre>defi</code></a> branch code. Adds token creation, the DEX, limit orders, liquidity pools, and <a href="../../unique-features/hard-coded-defi/fair-batch-matching/">Fair Batch Matching</a>. Start with <code translate="no" v-pre>--testnet</code>.</li>
+</ul>
+<p>For the testnet setup, see <a href="defi-testnet/">DeFi Testnet</a>.</p>
+<h2 id="starting-a-node">Starting a node</h2>
+<p>There are three ways to install the Warthog node:</p>
+<ol>
+<li><a href="https://github.com/warthog-network/Warthog/releases">Download pre-compiled executables</a> are the fastest way to get started. Just download and run without any dependencies.</li>
+<li><a href="compiling/">Compile from source</a> when you want a custom build, the latest unreleased code, or to contribute to the source.</li>
+<li><a href="docker/">Use Docker</a> for easy server deployments.</li>
+</ol>
+<p>Assuming you are on Linux and have either downloaded or compiled the Warthog node executable <code translate="no" v-pre>wart-node-linux</code> you can start it by typing</p>
+<div id="starting-a-node-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-bash"><code v-pre class="language-bash">./wart-node-linux</code></pre>
 </doc-codeblock></div>
+<p>If you are connected to the internet, the node will start syncing blocks with the network.</p>
 <figure class="content-center">
     <img src="../../img/get-started/09-node.png" alt="" class="max-w-full h-auto rounded-image-rounded border-image-border border-image-border-width" width="786" height="533" />
     <figcaption class="caption"></figcaption>
 </figure>
-<p>The node starts syncing. The node needs to be running and synced while we are using the wallet and miner.</p>
-<h2 id="starting-the-node-with-stratum-for-solo-mining">Starting the node with stratum for solo mining</h2>
-<p>The current miner in development is BZminer. To enable solo mining on your local node, you need to enable node stratum with this argument :</p>
-<div id="starting-the-node-with-stratum-for-solo-mining-code-1" class="codeblock-wrapper"><doc-codeblock>
-<pre translate="no" class="language-none"><code v-pre class="language-none">./wart-node-linux --stratum=0.0.0.0:3456</code></pre>
+<p>Once synchronization has finished the node will print a line similar to this:</p>
+<div id="starting-a-node-code-2" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-none"><code v-pre class="language-none">Synced in 3min 45s. (height 987654).</code></pre>
 </doc-codeblock></div>
-<p>(Use the same port on your node stratum and on bzminer, 3456 here for example)</p>
+<h2 id="running-a-public-node">Running a public node</h2>
+<p>A <strong>public node</strong> is a node that exposes its public JSON API endpoint to the internet. This helps users conveniently issue requests against the network as needed by explorers and wallets. We provide a list of <a href="https://data.warthog.network/legacy-nodes.json">public mainnet nodes</a> and <a href="https://data.warthog.network/defi-nodes.json">public testnet nodes</a>.</p>
+<p><strong>Enable the public API</strong></p>
+<p>Start the node with the <code translate="no" v-pre>--enable-public</code> flag (shorthand for <code translate="no" v-pre>--publicrpc=0.0.0.0:3001</code>):</p>
+<div id="running-a-public-node-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-bash"><code v-pre class="language-bash">./wart-node-linux --enable-public</code></pre>
+</doc-codeblock></div>
+<p>This exposes a <strong>filtered subset</strong> of the API on port <strong>3001</strong>. Critical admin endpoints (<code translate="no" v-pre>POST /chain/append</code>, peer admin, debug tools) are not exposed. The default private RPC on port 3000 is full-access and <strong>must never be exposed to the internet</strong>. Bind it to localhost (<code translate="no" v-pre>--rpc=127.0.0.1:3000</code>) or firewall it.</p>
+<p>For a persistent setup with auto-restart and a proper unit file, see <a href="systemd/">Systemd</a>. For the Docker equivalent, see <a href="docker/">Docker</a>.</p>
+<p><strong>Security checklist</strong></p>
+<ul>
+<li>Bind port 3000 to <code translate="no" v-pre>127.0.0.1</code> (or block it at the firewall). Only the port for the public API endpoint should be public.</li>
+<li>Keep the node version up to date.</li>
+<li>If you also mine, expose port 3456 only to your miner (not the open internet).</li>
+</ul>
+<p><strong>Register your node</strong></p>
+<p>The community is welcome to host more public nodes for improved network resilience. To support us in this way you need a <strong>static public IP</strong> or a stable DNS name and an opened inbound port to make the node&#x27;s public API accessible for everyone.
+Once the node is running and reachable, <a href="../public-data/nodes/">submit it to the public node list</a> or contact us in the <a href="https://discord.com/invite/QMDV8bGTdQ">Warthog Discord</a> so it appears at <code translate="no" v-pre>data.warthog.network</code>. There are two lists:</p>
+<ul>
+<li><a href="https://data.warthog.network/legacy-nodes.json"><code translate="no" v-pre>legacy-nodes.json</code></a> for mainnet (master branch).</li>
+<li><a href="https://data.warthog.network/defi-nodes.json"><code translate="no" v-pre>defi-nodes.json</code></a> for testnet (defi branch).</li>
+</ul>
+<p>A public node that is not registered is reachable but may not be discoverable to users.</p>
+<h2 id="run-your-own-node-for-solo-mining">Run your own node for solo mining</h2>
+<p><a href="https://www.bzminer.com/">BzMiner</a> supports both Warthog&#x27;s <a href="../../developers/api/rest/">REST API</a> and the <a href="../../developers/integration/pools/stratum/">Stratum protocol</a>. To use stratum, users must explicitly start the node with the <code translate="no" v-pre>--stratum</code> flag and specify the bind IP and port:</p>
+<div id="run-your-own-node-for-solo-mining-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-bash"><code v-pre class="language-bash">./wart-node-linux --stratum=0.0.0.0:3456</code></pre>
+</doc-codeblock></div>
+<p>The same port must be configured on your miner (BzMiner by default). The miner then connects to the node, requests work, and submits shares. For a quick start on mining, see <a href="../mining/quickstart/">Solo mining quickstart</a>.</p>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<p>If something does not work as expected:</p>
+<ul>
+<li><strong>Port already in use</strong>: another process is bound to 3000 / 3001 / 3456. Pick a different port with <code translate="no" v-pre>--rpc=…</code>, <code translate="no" v-pre>--publicrpc=…</code>, <code translate="no" v-pre>--stratum=…</code>.</li>
+<li><strong>Node won&#x27;t start</strong>: check the log for <code translate="no" v-pre>Cannot listen on &lt;ip:port&gt;</code>. Usually a missing <code translate="no" v-pre>--enable-public</code> (if you wanted 3001) or a permission error on a low port.</li>
+<li><strong>Public node not reachable from outside</strong>: confirm the firewall allows inbound TCP/3001 and that your cloud provider&#x27;s security group also opens it.</li>
+</ul>
+<p>Still stuck? Ask on the <a href="https://discord.com/invite/QMDV8bGTdQ">Warthog Discord</a>.</p>
 
                 
                 <!-- Required only on API pages -->
@@ -199,20 +252,20 @@
             
                 <nav id="retype-nextprev" class="print:hidden flex mt-14">
                     <div class="w-1/2">
-                        <a class="px-5 py-4 h-full flex items-center break-normal font-medium text-body-link border border-base-border hover:border-base-border-hover rounded-l-lg transition-colors duration-150 relative hover:z-5" href="../../guides/public-data/nodes/">
+                        <a class="px-5 py-4 h-full flex items-center break-normal font-medium text-body-link border border-base-border hover:border-base-border-hover rounded-l-lg transition-colors duration-150 relative hover:z-5" href="../../guides/gcc-from-source/">
                             <svg xmlns="http://www.w3.org/2000/svg" class="mr-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19 11H7.41l5.29-5.29a.996.996 0 10-1.41-1.41l-7 7a1 1 0 000 1.42l7 7a1.024 1.024 0 001.42-.01.996.996 0 000-1.41L7.41 13H19c.55 0 1-.45 1-1s-.45-1-1-1z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
                             <span>
                                 <span class="block text-xs font-normal text-base-text-muted">Previous</span>
-                                <span class="block mt-1">Public Nodes</span>
+                                <span class="block mt-1">GCC from Source</span>
                             </span>
                         </a>
                     </div>
             
                     <div class="w-1/2">
-                        <a class="px-5 py-4 -mx-px h-full flex items-center justify-end break-normal font-medium text-body-link border border-base-border hover:border-base-border-hover rounded-r-lg transition-colors duration-150 relative hover:z-5" href="../../guides/node/compiling/">
+                        <a class="px-5 py-4 -mx-px h-full flex items-center justify-end break-normal font-medium text-body-link border border-base-border hover:border-base-border-hover rounded-r-lg transition-colors duration-150 relative hover:z-5" href="../../guides/node/defi-testnet/">
                             <span>
                                 <span class="block text-xs font-normal text-right text-base-text-muted">Next</span>
-                                <span class="block mt-1">Compiling from Source</span>
+                                <span class="block mt-1">De​Fi Testnet</span>
                             </span>
                             <svg xmlns="http://www.w3.org/2000/svg" class="ml-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19.92 12.38a1 1 0 00-.22-1.09l-7-7a.996.996 0 10-1.41 1.41l5.3 5.3H5c-.55 0-1 .45-1 1s.45 1 1 1h11.59l-5.29 5.29a.996.996 0 000 1.41c.19.2.44.3.7.3s.51-.1.71-.29l7-7c.09-.09.16-.21.21-.33z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
                         </a>
@@ -256,6 +309,6 @@
 
     <div id="retype-overlay-target"></div>
 
-        <script data-cfasync="false">window.__DOCS__ = { "title": "Using a node", level: 2, icon: "file", hasPrism: false, hasInstagram: false, hasMermaid: false, hasMath: false, tocDepth: 23, "md": "/guides/node/node.md" }</script>
+        <script data-cfasync="false">window.__DOCS__ = { "title": "Node", level: 2, icon: "file", hasPrism: true, hasInstagram: false, hasMermaid: false, hasMath: false, tocDepth: 23, "md": "/guides/node/node.md" }</script>
 </body>
 </html>

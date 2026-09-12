@@ -4,15 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.842438252955">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.842547435532">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 4.6.0">
 
     <!-- Primary Meta Tags -->
-    <title>Compiling Warthog from source on Linux</title>
-    <meta name="title" content="Compiling Warthog from source on Linux">
-    <meta name="description" content="Compiling Warthog from soure is an alternative to the use precompiled binaries.">
+    <title>Compiling from Source</title>
+    <meta name="title" content="Compiling from Source">
+    <meta name="description" content="Compiling Warthog from source is an alternative to using precompiled binaries. If your compiler is too old you can follow this guide on how to install gcc from source.">
 
     <!-- Canonical -->
     <link rel="canonical" href="https://docs.warthog.network/guides/node/compiling/">
@@ -21,33 +21,34 @@
     <!-- Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://docs.warthog.network/guides/node/compiling/">
-    <meta property="og:title" content="Compiling Warthog from source on Linux">
-    <meta property="og:description" content="Compiling Warthog from soure is an alternative to the use precompiled binaries.">
+    <meta property="og:title" content="Compiling from Source">
+    <meta property="og:description" content="Compiling Warthog from source is an alternative to using precompiled binaries. If your compiler is too old you can follow this guide on how to install gcc from source.">
     <meta property="og:image" content="https://docs.warthog.network/img/get-started/01-apt-update.png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
-    <meta property="og:image:alt" content="Compiling Warthog from source on Linux">
+    <meta property="og:image:alt" content="Compiling from Source">
     <meta property="og:site_name" content="Warthog Network">
     <meta property="og:locale" content="en_US">
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://docs.warthog.network/guides/node/compiling/">
-    <meta name="twitter:title" content="Compiling Warthog from source on Linux">
-    <meta name="twitter:description" content="Compiling Warthog from soure is an alternative to the use precompiled binaries.">
+    <meta name="twitter:title" content="Compiling from Source">
+    <meta name="twitter:description" content="Compiling Warthog from source is an alternative to using precompiled binaries. If your compiler is too old you can follow this guide on how to install gcc from source.">
     <meta name="twitter:image" content="https://docs.warthog.network/img/get-started/01-apt-update.png">
-    <meta name="twitter:image:alt" content="Compiling Warthog from source on Linux">
+    <meta name="twitter:image:alt" content="Compiling from Source">
 
     <!-- Alternate Markdown -->
     <link rel="alternate" type="text/markdown" href="https://docs.warthog.network/guides/node/compiling.md">
 
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../../resources/css/retype.css?v=4.6.0.842438252955" rel="stylesheet">
+    <link id="retype-favicon" rel="icon" href="../../../favicon.png" />
+    <link href="../../../resources/css/retype.css?v=4.6.0.842547435532" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.6.0.842438252955" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.6.0.842547435532" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../../resources/js/retype.js?v=4.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.6.0.842438252955" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.6.0.842547435532" data-turbo-eval="false" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -163,7 +164,7 @@
 
                 <!-- Page content  -->
 <h1 id="compiling-warthog-from-source-on-linux">Compiling Warthog from source on Linux</h1>
-<p>Compiling Warthog from soure is an alternative to the use precompiled binaries.</p>
+<p>Compiling Warthog from source is an alternative to using precompiled binaries. If your compiler is too old you can follow <a href="../../gcc-from-source/">this guide on how to install gcc from source</a>.</p>
 <h2 id="installing-required-packages">Installing required packages</h2>
 <p>Before we can start make sure you have a recent Linux distribution. In this guide we are using Ubuntu 22.04.3 LTS. We need to update our package manager and install <code translate="no" v-pre>git</code>, <code translate="no" v-pre>build-essential</code>, <code translate="no" v-pre>meson</code> and <code translate="no" v-pre>ninja-build</code>:</p>
 <div id="installing-required-packages-code-1" class="codeblock-wrapper"><doc-codeblock>
@@ -203,7 +204,7 @@ meson build</code></pre>
     <img src="../../../img/get-started/05-meson-build.png" alt="" class="max-w-full h-auto rounded-image-rounded border-image-border border-image-border-width" width="786" height="497" />
     <figcaption class="caption"></figcaption>
 </figure>
-If you have multiple compilers installed in your system, especially after having compiled GCC from source <a href="../gcc-from-source/">as described here</a>, if meson selects your old compiler, you can specify the C and C++ compilers with the environment variables <code translate="no" v-pre>CC</code> and <code translate="no" v-pre>CXX</code> respectively. For example:</p>
+If you have multiple compilers installed in your system, especially after having compiled GCC from source <a href="../../gcc-from-source/">as described here</a>, if meson selects your old compiler, you can specify the C and C++ compilers with the environment variables <code translate="no" v-pre>CC</code> and <code translate="no" v-pre>CXX</code> respectively. For example:</p>
 <div id="compiling-code-2" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-none"><code v-pre class="language-none">CC=/usr/local/bin/gcc CXX=/usr/local/bin/c++ meson setup build</code></pre>
 </doc-codeblock></div>
@@ -240,6 +241,8 @@ ls</code></pre>
     <img src="../../../img/get-started/08-ls-compiled.png" alt="" class="max-w-full h-auto rounded-image-rounded border-image-border border-image-border-width" width="786" height="533" />
     <figcaption class="caption"></figcaption>
 </figure>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<p>If you get compilation errors it is very likely that your compiler is too old. In this case you can try to install a more recent compiler or follow <a href="../../gcc-from-source/">this guide on how to install gcc from source</a>.</p>
 
                 
                 <!-- Required only on API pages -->
@@ -255,20 +258,20 @@ ls</code></pre>
             
                 <nav id="retype-nextprev" class="print:hidden flex mt-14">
                     <div class="w-1/2">
-                        <a class="px-5 py-4 h-full flex items-center break-normal font-medium text-body-link border border-base-border hover:border-base-border-hover rounded-l-lg transition-colors duration-150 relative hover:z-5" href="../../../guides/node/">
+                        <a class="px-5 py-4 h-full flex items-center break-normal font-medium text-body-link border border-base-border hover:border-base-border-hover rounded-l-lg transition-colors duration-150 relative hover:z-5" href="../../../guides/node/defi-testnet/">
                             <svg xmlns="http://www.w3.org/2000/svg" class="mr-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19 11H7.41l5.29-5.29a.996.996 0 10-1.41-1.41l-7 7a1 1 0 000 1.42l7 7a1.024 1.024 0 001.42-.01.996.996 0 000-1.41L7.41 13H19c.55 0 1-.45 1-1s-.45-1-1-1z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
                             <span>
                                 <span class="block text-xs font-normal text-base-text-muted">Previous</span>
-                                <span class="block mt-1">Using a node</span>
+                                <span class="block mt-1">De​Fi Testnet</span>
                             </span>
                         </a>
                     </div>
             
                     <div class="w-1/2">
-                        <a class="px-5 py-4 -mx-px h-full flex items-center justify-end break-normal font-medium text-body-link border border-base-border hover:border-base-border-hover rounded-r-lg transition-colors duration-150 relative hover:z-5" href="../../../guides/node/defi-testnet/">
+                        <a class="px-5 py-4 -mx-px h-full flex items-center justify-end break-normal font-medium text-body-link border border-base-border hover:border-base-border-hover rounded-r-lg transition-colors duration-150 relative hover:z-5" href="../../../guides/node/systemd/">
                             <span>
                                 <span class="block text-xs font-normal text-right text-base-text-muted">Next</span>
-                                <span class="block mt-1">De​Fi Testnet</span>
+                                <span class="block mt-1">Systemd</span>
                             </span>
                             <svg xmlns="http://www.w3.org/2000/svg" class="ml-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19.92 12.38a1 1 0 00-.22-1.09l-7-7a.996.996 0 10-1.41 1.41l5.3 5.3H5c-.55 0-1 .45-1 1s.45 1 1 1h11.59l-5.29 5.29a.996.996 0 000 1.41c.19.2.44.3.7.3s.51-.1.71-.29l7-7c.09-.09.16-.21.21-.33z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
                         </a>

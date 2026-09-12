@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.842438252955">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.842547435532">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 4.6.0">
@@ -37,12 +37,13 @@
 
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../../resources/css/retype.css?v=4.6.0.842438252955" rel="stylesheet">
+    <link id="retype-favicon" rel="icon" href="../../../favicon.png" />
+    <link href="../../../resources/css/retype.css?v=4.6.0.842547435532" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.6.0.842438252955" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.6.0.842547435532" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../../resources/js/retype.js?v=4.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.6.0.842438252955" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../../../resources/js/prism.js?v=4.6.0.842438252955" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.6.0.842547435532" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../../../resources/js/prism.js?v=4.6.0.842547435532" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -161,11 +162,16 @@
 <p>The defi branch introduces new DeFi functionality to Warthog — including native token creation, a decentralized exchange (DEX) with limit orders, and liquidity pools. The testnet exists to validate these features before mainnet activation.</p>
 <p>This guide covers how to run a testnet node and use the new DeFi features.</p>
 <p>Here is how to run a defi testnet node:
-We need some people to set up a testnet for the defi branch. THis is the branch we have been working on for a very long time. It is now time to start the testnet phase and to observe how the new node behaves. During this process, we hope to observe and fix final bugs in the node but overall, the code seems to work well and stable. Yet more testing is necessary especially concerning the new DeFi functionality. It may happen that the testnet will be restarted if critical bugs are found that require a fresh chain.</p>
+We need some people to set up a testnet for the defi branch. This is the branch we have been working on for a very long time. It is now time to start the testnet phase and to observe how the new node behaves. During this process, we hope to observe and fix final bugs in the node but overall, the code seems to work well and is stable. Yet more testing is necessary especially concerning the new DeFi functionality. It may happen that the testnet will be restarted if critical bugs are found that require a fresh chain restart.</p>
 <h2 id="compatibility-and-defi-upgrade-on-mainnet">Compatibility and DeFi upgrade on mainnet</h2>
-<p>The defi branch code is carefully written in a way to be compatible with the current main net. This compatibility mode is the default starting mode. The idea is, once testnet was stable and the new features shall come to the main node, to specify an <strong>upgrade height</strong> where the new DeFi features become active. For now we have set this height to a very large value, effectively disabling the feature upgrade height. This means that the new node shall essentially behave like the current mainnet node except for the internals which are very different now due to a completely changed database table architecture. However from a user perspective, starting the <code translate="no" v-pre>defi</code> branch node normally without the testnet flats, it should behave like the mainnet node. This compatibility will be tested after the testnet.</p>
+<p>The defi branch code is carefully written in a way to be compatible with the current main net. This compatibility mode is the default starting mode. The idea is, once testnet was stable and the new features shall come to the main node, to specify an <strong>upgrade height</strong> where the new DeFi features become active. For now we have set this height to a very large value, effectively disabling the feature upgrade height. This means that the new node shall essentially behave like the current mainnet node except for the internals which are very different now due to a completely changed database table architecture. However from a user perspective, starting the <code translate="no" v-pre>defi</code> branch node normally without the testnet flags, it should behave like the mainnet node. This compatibility will be tested after the testnet.</p>
 <h2 id="testnet-flag">Testnet flag</h2>
 <p>When the defi branch node is started with the <code translate="no" v-pre>--testnet</code> flag, the upgrade height is ignored and the DeFi features are available from the beginning.</p>
+<p>To run the testnet via Docker:</p>
+<div id="testnet-flag-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-bash"><code v-pre class="language-bash">docker run zzjulien/warthog_node:latest --testnet</code></pre>
+</doc-codeblock></div>
+<p>For more setup options see <a href="../">Using a Node</a>.</p>
 <h2 id="mainnet-upgrade-path">Mainnet Upgrade Path</h2>
 <p>When the testnet has been battle-tested and the new features are ready for production, an <strong>upgrade height</strong> is set on mainnet. Until that height is reached, the defi branch node operates in compatibility mode — it behaves identically to the current mainnet node, so existing tools and workflows continue to work unchanged. At the upgrade height, DeFi features activate automatically. The new database architecture is invisible to users in this mode.</p>
 <h2 id="starting-a-testnet-node">Starting a Testnet Node</h2>
@@ -185,7 +191,7 @@ We need some people to set up a testnet for the defi branch. THis is the branch 
 <h2 id="blockchain-explorer">Blockchain Explorer</h2>
 <p>A new blockchain explorer for the testnet is available at <a href="https://testnet-explorer.warthog.network">testnet-explorer.warthog.network</a>.</p>
 <p>Get testnet WART from the <a href="https://testnet-faucet.warthog.network/">faucet</a>, and publish asset metadata through the <a href="https://testnet-assets.warthog.network/">self-service form</a>.
-These features need a  new blockchain explorer which is actively worked on but is already in a state which could be useful for starting the testnet.</p>
+These features need a new blockchain explorer which is actively worked on but is already in a state which could be useful for starting the testnet.</p>
 <h2 id="tui-wallet">TUI Wallet</h2>
 <p>The new defi features can be accessed with a new TUI wallet which is compiled automatically together with the <a href="https://github.com/warthog-network/core/tree/defi"><code translate="no" v-pre>defi</code> branch node in the Warthog Core Repository</a>. This wallet just an early stage proof of concept and is not hardened for security. It can be used to create new tokens, interact with pools and place buy and sell orders for non-wart tokens.</p>
 <p>Relative to the build directory the TUI wallet is located at <code translate="no" v-pre>./src/tui_wallet</code>.
@@ -238,20 +244,20 @@ Wallet Assets Requests</p>
             
                 <nav id="retype-nextprev" class="print:hidden flex mt-14">
                     <div class="w-1/2">
-                        <a class="px-5 py-4 h-full flex items-center break-normal font-medium text-body-link border border-base-border hover:border-base-border-hover rounded-l-lg transition-colors duration-150 relative hover:z-5" href="../../../guides/node/compiling/">
+                        <a class="px-5 py-4 h-full flex items-center break-normal font-medium text-body-link border border-base-border hover:border-base-border-hover rounded-l-lg transition-colors duration-150 relative hover:z-5" href="../../../guides/node/">
                             <svg xmlns="http://www.w3.org/2000/svg" class="mr-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19 11H7.41l5.29-5.29a.996.996 0 10-1.41-1.41l-7 7a1 1 0 000 1.42l7 7a1.024 1.024 0 001.42-.01.996.996 0 000-1.41L7.41 13H19c.55 0 1-.45 1-1s-.45-1-1-1z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
                             <span>
                                 <span class="block text-xs font-normal text-base-text-muted">Previous</span>
-                                <span class="block mt-1">Compiling from Source</span>
+                                <span class="block mt-1">Node</span>
                             </span>
                         </a>
                     </div>
             
                     <div class="w-1/2">
-                        <a class="px-5 py-4 -mx-px h-full flex items-center justify-end break-normal font-medium text-body-link border border-base-border hover:border-base-border-hover rounded-r-lg transition-colors duration-150 relative hover:z-5" href="../../../guides/node/docker/">
+                        <a class="px-5 py-4 -mx-px h-full flex items-center justify-end break-normal font-medium text-body-link border border-base-border hover:border-base-border-hover rounded-r-lg transition-colors duration-150 relative hover:z-5" href="../../../guides/node/compiling/">
                             <span>
                                 <span class="block text-xs font-normal text-right text-base-text-muted">Next</span>
-                                <span class="block mt-1">How to run a warthog node with docker.</span>
+                                <span class="block mt-1">Compiling from Source</span>
                             </span>
                             <svg xmlns="http://www.w3.org/2000/svg" class="ml-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19.92 12.38a1 1 0 00-.22-1.09l-7-7a.996.996 0 10-1.41 1.41l5.3 5.3H5c-.55 0-1 .45-1 1s.45 1 1 1h11.59l-5.29 5.29a.996.996 0 000 1.41c.19.2.44.3.7.3s.51-.1.71-.29l7-7c.09-.09.16-.21.21-.33z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
                         </a>
