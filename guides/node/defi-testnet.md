@@ -24,7 +24,7 @@ To run the testnet via Docker:
 docker run zzjulien/warthog_node:latest --testnet
 ```
 
-For more setup options see [Using a Node](./node).
+For more setup options see [Using a Node](./node.md).
 
 
 ## Mainnet Upgrade Path
