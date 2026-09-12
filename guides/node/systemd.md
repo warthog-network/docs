@@ -1,7 +1,9 @@
 ---
 title: Systemd
+label: Systemd
+order: 3
 ---
-# How to start a Warthog node as a systemd service 
+# How to start a Warthog node as a systemd service
 **NOTE**: This is only supported in Linux distros that use `systemctl` (Debian, Ubuntu, Mint etc.).
 * Enable auto restart when logged off (only need to do this once per machine): `$ sudo loginctl enable-linger $USER`
 * Create the directory structure: `$ mkdir -p ~/.config/systemd/$USER`
@@ -39,3 +41,5 @@ WantedBy=multi-user.target
 ```
 
 `--enable-public` is shorthand for `--publicrpc=0.0.0.0:3001`. It exposes a filtered subset of the API on port 3001 (critical admin endpoints are not exposed). The default RPC port (3000) is full-access and should never be exposed to the internet.
+
+Once your node is running on a static IP, [register it in the public node list](../public-data/nodes) so other users can find it at `data.warthog.network`.

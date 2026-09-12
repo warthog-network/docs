@@ -1,8 +1,10 @@
 ---
+title: Compiling from Source
 label: Compiling from Source
+order: 4
 ---
 # Compiling Warthog from source on Linux
-Compiling Warthog from soure is an alternative to the use precompiled binaries. 
+Compiling Warthog from source is an alternative to using precompiled binaries. If your compiler is too old you can follow [this guide on how to install gcc from source](../gcc-from-source.md).
 
 ## Installing required packages
 Before we can start make sure you have a recent Linux distribution. In this guide we are using Ubuntu 22.04.3 LTS. We need to update our package manager and install `git`, `build-essential`, `meson` and `ninja-build`:
@@ -31,7 +33,7 @@ cd Warthog
 meson build
 ```
 ![](/img/get-started/05-meson-build.png)
-If you have multiple compilers installed in your system, especially after having compiled GCC from source [as described here](./gcc-from-source), if meson selects your old compiler, you can specify the C and C++ compilers with the environment variables `CC` and `CXX` respectively. For example:
+If you have multiple compilers installed in your system, especially after having compiled GCC from source [as described here](../gcc-from-source), if meson selects your old compiler, you can specify the C and C++ compilers with the environment variables `CC` and `CXX` respectively. For example:
 ```
 CC=/usr/local/bin/gcc CXX=/usr/local/bin/c++ meson setup build
 ```
@@ -43,7 +45,7 @@ ninja
 ```
 ![](/img/get-started/06-ninja.png)
 
-Congratulations! You now have compiled the Warthog C++ source. But wait - there is a problem: we did not enable compiler optimizations. In `meson` compiler optimizations need to be explicitly enabled with the `--buildtype=release` flag. Then the compiled executables and libraries will be more efficient. This is important for mining because you will get better hashrate with optimized compilation. 
+Congratulations! You now have compiled the Warthog C++ source. But wait - there is a problem: we did not enable compiler optimizations. In `meson` compiler optimizations need to be explicitly enabled with the `--buildtype=release` flag. Then the compiled executables and libraries will be more efficient. This is important for mining because you will get better hashrate with optimized compilation.
 
 So let's do this again, we will go up one directory and delete the build directory again. Then we recreate it but this time with the `--buildtype=release` option and compile again with `ninja`:
 
@@ -64,3 +66,5 @@ ls
 ```
 ![](/img/get-started/08-ls-compiled.png)
 
+## Troubleshooting
+If you get compilation errors it is very likely that your compiler is too old. In this case you can try to install a more recent compiler or follow [this guide on how to install gcc from source](../gcc-from-source.md).

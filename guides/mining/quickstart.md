@@ -1,5 +1,6 @@
 ---
 title: Quick Start
+label: Quick Start
 ---
 # Warthog - Mining quick start guide
 

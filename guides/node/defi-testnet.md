@@ -1,5 +1,7 @@
 ---
 title: DeFi Testnet
+label: DeFi Testnet
+order: 6
 ---
 # DeFi Testnet
 
@@ -8,13 +10,21 @@ The defi branch introduces new DeFi functionality to Warthog — including nativ
 This guide covers how to run a testnet node and use the new DeFi features.
 
 Here is how to run a defi testnet node:
-We need some people to set up a testnet for the defi branch. THis is the branch we have been working on for a very long time. It is now time to start the testnet phase and to observe how the new node behaves. During this process, we hope to observe and fix final bugs in the node but overall, the code seems to work well and stable. Yet more testing is necessary especially concerning the new DeFi functionality. It may happen that the testnet will be restarted if critical bugs are found that require a fresh chain. 
+We need some people to set up a testnet for the defi branch. This is the branch we have been working on for a very long time. It is now time to start the testnet phase and to observe how the new node behaves. During this process, we hope to observe and fix final bugs in the node but overall, the code seems to work well and is stable. Yet more testing is necessary especially concerning the new DeFi functionality. It may happen that the testnet will be restarted if critical bugs are found that require a fresh chain restart.
 
 ## Compatibility and DeFi upgrade on mainnet
-The defi branch code is carefully written in a way to be compatible with the current main net. This compatibility mode is the default starting mode. The idea is, once testnet was stable and the new features shall come to the main node, to specify an **upgrade height** where the new DeFi features become active. For now we have set this height to a very large value, effectively disabling the feature upgrade height. This means that the new node shall essentially behave like the current mainnet node except for the internals which are very different now due to a completely changed database table architecture. However from a user perspective, starting the `defi` branch node normally without the testnet flats, it should behave like the mainnet node. This compatibility will be tested after the testnet.
+The defi branch code is carefully written in a way to be compatible with the current main net. This compatibility mode is the default starting mode. The idea is, once testnet was stable and the new features shall come to the main node, to specify an **upgrade height** where the new DeFi features become active. For now we have set this height to a very large value, effectively disabling the feature upgrade height. This means that the new node shall essentially behave like the current mainnet node except for the internals which are very different now due to a completely changed database table architecture. However from a user perspective, starting the `defi` branch node normally without the testnet flags, it should behave like the mainnet node. This compatibility will be tested after the testnet.
 
 ## Testnet flag
-When the defi branch node is started with the `--testnet` flag, the upgrade height is ignored and the DeFi features are available from the beginning. 
+When the defi branch node is started with the `--testnet` flag, the upgrade height is ignored and the DeFi features are available from the beginning.
+
+To run the testnet via Docker:
+
+```sh
+docker run zzjulien/warthog_node:latest --testnet
+```
+
+For more setup options see [Using a Node](./node).
 
 
 ## Mainnet Upgrade Path
@@ -29,7 +39,7 @@ Run the defi branch node with the `--testnet` flag:
 ./wart-node --testnet
 ```
 
-This ignores the upgrade height and makes DeFi features available from block 1. 
+This ignores the upgrade height and makes DeFi features available from block 1.
 
 
 
@@ -49,15 +59,16 @@ The testnet includes a new TUI wallet for DeFi interactions. Currently supported
 A new blockchain explorer for the testnet is available at [testnet-explorer.warthog.network](https://testnet-explorer.warthog.network).
 
 Get testnet WART from the [faucet](https://testnet-faucet.warthog.network/), and publish asset metadata through the [self-service form](https://testnet-assets.warthog.network/).
-These features need a  new blockchain explorer which is actively worked on but is already in a state which could be useful for starting the testnet. 
+These features need a new blockchain explorer which is actively worked on but is already in a state which could be useful for starting the testnet.
 
 
 ## TUI Wallet
 
-The new defi features can be accessed with a new TUI wallet which is compiled automatically together with the [`defi` branch node in the Warthog Core Repository](https://github.com/warthog-network/core/tree/defi). This wallet just an early stage proof of concept and is not hardened for security. It can be used to create new tokens, interact with pools and place buy and sell orders for non-wart tokens. 
+The new defi features can be accessed with a new TUI wallet which is compiled automatically together with the [`defi` branch node in the Warthog Core Repository](https://github.com/warthog-network/core/tree/defi). This wallet just an early stage proof of concept and is not hardened for security. It can be used to create new tokens, interact with pools and place buy and sell orders for non-wart tokens.
 
 Relative to the build directory the TUI wallet is located at `./src/tui_wallet`.
-Wallet Assets Requests                                                                                                                                                               
+Wallet Assets Requests
+
 ```
 ──────╴──────╶────────────────────────────────────────────────────────────────                                                                                                       
 ╭Select Asset────────────────────────────────────────────────────────────────╮                                                                                                       
