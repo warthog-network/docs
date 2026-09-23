@@ -3491,6 +3491,7 @@ Show OHLCV candle data for a specific asset and interval accepting query paramet
 - If only `to` is specified, the latest entries up to `to` are returned.
 - If `from` and `to` are specified, all entries from `from` to `to` are returned.
 - The total number of entries is limited to 200. The default value for `n` is 100.
+- The returned array is always sorted by `begin_timestamp` in ascending order (oldest first), regardless of which parameters are supplied.
 
 Returns an array of candles, where each candle is an 8-element array: `[begin_timestamp, height, open, high, low, close, base, quote]`.
 
@@ -3534,6 +3535,7 @@ Show historic trade data for a specific asset accepting query parameters `from`,
 - If only `to` is specified, the latest entries up to `to` are returned.
 - If `from` and `to` are specified, all entries from `from` to `to` are returned.
 - The total number of entries is limited to 200. The default value for `n` is 100.
+- The returned array is always sorted by block height in ascending order (oldest first), regardless of which parameters are supplied.
 
 Returns an array of trades, where each trade is a 4-element array: `[height, timestamp, base, quote]`.
 
