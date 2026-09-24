@@ -3481,21 +3481,34 @@ Show OHLCV candle data for a specific asset and interval accepting query paramet
 |-----------|------|-------------|
 | `:asset` | integer/string | Asset ID (e.g. `7`) or hash (e.g. `0e4825efffa294610d2ac376713e3bcc9b53d378e823834b64e5df01f75d3b0c`)|
 | `:interval` | string | Timeframe: `5m` (5 minutes), `1h` (1 hour), `1d` (1 day) |
-| `from` | Unix timestamp | Start time (optional) |
-| `to` | Unix timestamp | End time (optional) |
+| `from` | Unix timestamp | Inclusive start time (optional) |
+| `to` | Unix timestamp | Inclusive end time (optional) |
 | `n` | integer | Limit number of results (optional, default: 100) |
+
+**Field glossary & result structure:**
+
+Each candle entry is an 8-element array in this fixed order. Field types and meanings:
+
+| Index | Field | Type | Meaning |
+|---|---|---|---|
+| 0 | `begin_timestamp` | Unix seconds | Slot-aligned start of the candle's interval window (e.g. `…00`, `…00`, `…00:05:00` for 5-min). |
+| 1 | `height` | integer | Block height of the first trade that contributed to this window, or `0` for synthetic gap-fillers (see *Gap filling*). |
+| 2 | `open` | float | Open price (WART per 1 unit of base asset). |
+| 3 | `high` | float | High price. |
+| 4 | `low` | float | Low price. |
+| 5 | `close` | float | Close price. |
+| 6 | `base` | float | Total asset amount traded in this window. |
+| 7 | `quote` | float | Total WART amount traded in this window. |
 
 **Query parameter rules:**
 - Not all three optional parameters (`from`, `to`, `n`) can be specified at the same time.
-- If only `from` is specified, the earliest entries from `from` are returned.
-- If only `to` is specified, the latest entries up to `to` are returned.
-- If `from` and `to` are specified, all entries from `from` to `to` are returned.
-- The total number of entries is limited to 200. The default value for `n` is 100.
-- The returned array is always sorted by `begin_timestamp` in ascending order (oldest first), regardless of which parameters are supplied.
+- If only `from` is specified, the earliest entries with `begin_timestamp >= from` (**inclusive**) are returned.
+- If only `to` is specified, the latest entries with `begin_timestamp <= to` (**inclusive**) are returned.
+- If `from` and `to` are both specified, all entries between them (both **inclusive**) are returned.
+- The total number of entries is capped at **200**. The default value for `n` is 100.
+- The returned array is always sorted by `begin_timestamp` in ascending order (oldest first).
 
-Returns an array of candles, where each candle is an 8-element array: `[begin_timestamp, height, open, high, low, close, base, quote]`.
-
-Example output of `/chart/candles/7/5m`:
+**Example:**
 
 ```json
 {
@@ -3503,7 +3516,7 @@ Example output of `/chart/candles/7/5m`:
  "data": [
   [
    1772265900,          // begin timestamp of the candle
-   7,                   // height
+   7,                   // height of first trade contained
    0.09999999999999999, // open
    0.09999999999999999, // high
    0.09999999999999999, // low
@@ -3515,6 +3528,39 @@ Example output of `/chart/candles/7/5m`:
 }
 ```
 
+#### Gap filling
+
+The endpoint returns only candles with at least one trade — **non-existing slots are simply absent from the response** (no null entries, no placeholders). For assets with quiet intervals, returned arrays contain gaps (missing slot timestamps between real candles). **Last Observation Carried Forward (LOCF)** is the technique used to fill them; the code below applies it in one pass on the array.
+
+##### Carrying forward
+
+```js
+function carryForwardClose(candles, intervalSec) {
+  if (candles.length < 2) return candles;
+  const out = [candles[0]];
+  for (let i = 1; i < candles.length; i++) {
+    const prev = candles[i - 1];
+    const cur = candles[i];
+    const slots = (cur.begin - prev.begin) / intervalSec - 1;
+    for (let j = 0; j < slots; j++) {
+      out.push({
+        begin: prev.begin + (j + 1) * intervalSec,
+        open: prev.close,
+        high: prev.close,
+        low: prev.close,
+        close: prev.close,
+        base: 0,
+        quote: 0,
+      });
+    }
+    out.push(cur);
+  }
+  return out;
+}
+```
+
+For each consecutive pair `prev`, `cur` with `cur.begin - prev.begin = N * interval`, insert `N − 1` synthetic candles carrying `prev.close` forward with `base = quote = 0`.
+
 
 ### `GET /chart/trades/:asset`
 
@@ -3525,21 +3571,30 @@ Show historic trade data for a specific asset accepting query parameters `from`,
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `:asset` | integer/string | Asset ID (e.g. `7`) or hash (e.g. `0e4825efffa294610d2ac376713e3bcc9b53d378e823834b64e5df01f75d3b0c`) |
-| `from` | block height | Start block (optional) |
-| `to` | block height | End block (optional) |
+| `from` | block height | Inclusive start block (optional) |
+| `to` | block height | Inclusive end block (optional) |
 | `n` | integer | Limit number of results (optional, default: 100) |
+
+**Field glossary & result structure:**
+
+Each trade entry is a 4-element array in this fixed order. Field types and meanings:
+
+| Index | Field | Type | Meaning |
+|---|---|---|---|
+| 0 | `height` | integer | Block height containing the trade. |
+| 1 | `timestamp` | Unix seconds | Block-level timestamp. |
+| 2 | `base` | float | Total asset amount traded in the block. |
+| 3 | `quote` | float | Total WART amount traded in the block. |
 
 **Query parameter rules:**
 - Not all three optional parameters (`from`, `to`, `n`) can be specified at the same time.
-- If only `from` is specified, the earliest entries from `from` are returned.
-- If only `to` is specified, the latest entries up to `to` are returned.
-- If `from` and `to` are specified, all entries from `from` to `to` are returned.
-- The total number of entries is limited to 200. The default value for `n` is 100.
-- The returned array is always sorted by block height in ascending order (oldest first), regardless of which parameters are supplied.
+- If only `from` is specified, the earliest entries with `height >= from` (**inclusive**) are returned.
+- If only `to` is specified, the latest entries with `height <= to` (**inclusive**) are returned.
+- If `from` and `to` are both specified, all entries between them (both **inclusive**) are returned.
+- The total number of entries is capped at **200**. The default value for `n` is 100.
+- The returned array is always sorted by block height in ascending order (oldest first).
 
-Returns an array of trades, where each trade is a 4-element array: `[height, timestamp, base, quote]`.
-
-Example output of `/chart/trades/7`:
+**Example:**
 
 ```json
 {
@@ -3554,6 +3609,8 @@ Example output of `/chart/trades/7`:
  ]
 }
 ```
+
+Trades are point events keyed by block height; the endpoint never emits synthetic rows. Gaps of >1 between consecutive heights mean "this block had no trades for this asset" — leave as visual breaks or interpolate linearly between consecutive trades for line charts.
 
 ### `GET /chart/hashrate/block/:from/:to/:window`
 
