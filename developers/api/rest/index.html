@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.843232547398">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.843682699580">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 4.6.0">
@@ -38,12 +38,12 @@
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
     <link id="retype-favicon" rel="icon" href="../../../favicon.png" />
-    <link href="../../../resources/css/retype.css?v=4.6.0.843232547398" rel="stylesheet">
+    <link href="../../../resources/css/retype.css?v=4.6.0.843682699580" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.6.0.843232547398" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.6.0.843682699580" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../../resources/js/retype.js?v=4.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.6.0.843232547398" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../../../resources/js/prism.js?v=4.6.0.843232547398" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.6.0.843682699580" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../../../resources/js/prism.js?v=4.6.0.843682699580" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -2714,7 +2714,6 @@ The content of the <code translate="no" v-pre>data</code> field depends on the t
     &quot;hash&quot;: &quot;f45b1131a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b&quot;,
     &quot;height&quot;: 12345,
     &quot;id&quot;: 2,
-    &quot;latestPrice&quot;: 0.0,
     &quot;name&quot;: &quot;TOK2&quot;,
     &quot;ownerAccountId&quot;: 1,
     &quot;parentId&quot;: null,
@@ -2739,7 +2738,6 @@ The content of the <code translate="no" v-pre>data</code> field depends on the t
   &quot;hash&quot;: &quot;f45b1131a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b&quot;,
   &quot;height&quot;: 12345,
   &quot;id&quot;: 2,
-  &quot;latestPrice&quot;: 0.0,
   &quot;name&quot;: &quot;TOK2&quot;,
   &quot;ownerAccountId&quot;: 1,
   &quot;parentId&quot;: null,
@@ -3920,8 +3918,8 @@ The content of the <code translate="no" v-pre>data</code> field depends on the t
 |-----------|------|-------------|
 | `:asset` | integer/string | Asset ID (e.g. `7`) or hash (e.g. `0e4825efffa294610d2ac376713e3bcc9b53d378e823834b64e5df01f75d3b0c`)|
 | `:interval` | string | Timeframe: `5m` (5 minutes), `1h` (1 hour), `1d` (1 day) |
-| `from` | Unix timestamp | Start time (optional) |
-| `to` | Unix timestamp | End time (optional) |
+| `from` | Unix timestamp | Inclusive start time (optional) |
+| `to` | Unix timestamp | Inclusive end time (optional) |
 | `n` | integer | Limit number of results (optional, default: 100) |">
 <div class="table-wrapper scrollbar overflow-hidden">
 <table class="comfortable">
@@ -3946,12 +3944,12 @@ The content of the <code translate="no" v-pre>data</code> field depends on the t
 <tr>
 <td><code translate="no" v-pre>from</code></td>
 <td>Unix timestamp</td>
-<td>Start time (optional)</td>
+<td>Inclusive start time (optional)</td>
 </tr>
 <tr>
 <td><code translate="no" v-pre>to</code></td>
 <td>Unix timestamp</td>
-<td>End time (optional)</td>
+<td>Inclusive end time (optional)</td>
 </tr>
 <tr>
 <td><code translate="no" v-pre>n</code></td>
@@ -3962,23 +3960,98 @@ The content of the <code translate="no" v-pre>data</code> field depends on the t
 </table>
 </div>
 </retype-table>
+<p><strong>Field glossary &amp; result structure:</strong></p>
+<p>Each candle entry is an 8-element array in this fixed order. Field types and meanings:</p>
+<retype-table copy-text="| Index | Field | Type | Meaning |
+|---|---|---|---|
+| 0 | `begin_timestamp` | Unix seconds | Slot-aligned start of the candle's interval window (e.g. `…00`, `…00`, `…00:05:00` for 5-min). |
+| 1 | `height` | integer | Block height of the first trade that contributed to this window, or `0` for synthetic gap-fillers (see *Gap filling*). |
+| 2 | `open` | float | Open price (WART per 1 unit of base asset). |
+| 3 | `high` | float | High price. |
+| 4 | `low` | float | Low price. |
+| 5 | `close` | float | Close price. |
+| 6 | `base` | float | Total asset amount traded in this window. |
+| 7 | `quote` | float | Total WART amount traded in this window. |">
+<div class="table-wrapper scrollbar overflow-hidden">
+<table class="comfortable">
+<thead>
+<tr>
+<th>Index</th>
+<th>Field</th>
+<th>Type</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td><code translate="no" v-pre>begin_timestamp</code></td>
+<td>Unix seconds</td>
+<td>Slot-aligned start of the candle&#x27;s interval window (e.g. <code translate="no" v-pre>…00</code>, <code translate="no" v-pre>…00</code>, <code translate="no" v-pre>…00:05:00</code> for 5-min).</td>
+</tr>
+<tr>
+<td>1</td>
+<td><code translate="no" v-pre>height</code></td>
+<td>integer</td>
+<td>Block height of the first trade that contributed to this window, or <code translate="no" v-pre>0</code> for synthetic gap-fillers (see <em>Gap filling</em>).</td>
+</tr>
+<tr>
+<td>2</td>
+<td><code translate="no" v-pre>open</code></td>
+<td>float</td>
+<td>Open price (WART per 1 unit of base asset).</td>
+</tr>
+<tr>
+<td>3</td>
+<td><code translate="no" v-pre>high</code></td>
+<td>float</td>
+<td>High price.</td>
+</tr>
+<tr>
+<td>4</td>
+<td><code translate="no" v-pre>low</code></td>
+<td>float</td>
+<td>Low price.</td>
+</tr>
+<tr>
+<td>5</td>
+<td><code translate="no" v-pre>close</code></td>
+<td>float</td>
+<td>Close price.</td>
+</tr>
+<tr>
+<td>6</td>
+<td><code translate="no" v-pre>base</code></td>
+<td>float</td>
+<td>Total asset amount traded in this window.</td>
+</tr>
+<tr>
+<td>7</td>
+<td><code translate="no" v-pre>quote</code></td>
+<td>float</td>
+<td>Total WART amount traded in this window.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</retype-table>
 <p><strong>Query parameter rules:</strong></p>
 <ul>
 <li>Not all three optional parameters (<code translate="no" v-pre>from</code>, <code translate="no" v-pre>to</code>, <code translate="no" v-pre>n</code>) can be specified at the same time.</li>
-<li>If only <code translate="no" v-pre>from</code> is specified, the earliest entries from <code translate="no" v-pre>from</code> are returned.</li>
-<li>If only <code translate="no" v-pre>to</code> is specified, the latest entries up to <code translate="no" v-pre>to</code> are returned.</li>
-<li>If <code translate="no" v-pre>from</code> and <code translate="no" v-pre>to</code> are specified, all entries from <code translate="no" v-pre>from</code> to <code translate="no" v-pre>to</code> are returned.</li>
-<li>The total number of entries is limited to 200. The default value for <code translate="no" v-pre>n</code> is 100.</li>
+<li>If only <code translate="no" v-pre>from</code> is specified, the earliest entries with <code translate="no" v-pre>begin_timestamp &gt;= from</code> (<strong>inclusive</strong>) are returned.</li>
+<li>If only <code translate="no" v-pre>to</code> is specified, the latest entries with <code translate="no" v-pre>begin_timestamp &lt;= to</code> (<strong>inclusive</strong>) are returned.</li>
+<li>If <code translate="no" v-pre>from</code> and <code translate="no" v-pre>to</code> are both specified, all entries between them (both <strong>inclusive</strong>) are returned.</li>
+<li>The total number of entries is capped at <strong>200</strong>. The default value for <code translate="no" v-pre>n</code> is 100.</li>
+<li>The returned array is always sorted by <code translate="no" v-pre>begin_timestamp</code> in ascending order (oldest first).</li>
 </ul>
-<p>Returns an array of candles, where each candle is an 8-element array: <code translate="no" v-pre>[begin_timestamp, height, open, high, low, close, base, quote]</code>.</p>
-<p>Example output of <code translate="no" v-pre>/chart/candles/7/5m</code>:</p>
+<p><strong>Example:</strong></p>
 <div id="get-chartcandlesassetinterval-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-json"><code v-pre class="language-json">{
  &quot;code&quot;: 0,
  &quot;data&quot;: [
   [
    1772265900,          // begin timestamp of the candle
-   7,                   // height
+   7,                   // height of first trade contained
    0.09999999999999999, // open
    0.09999999999999999, // high
    0.09999999999999999, // low
@@ -3989,14 +4062,42 @@ The content of the <code translate="no" v-pre>data</code> field depends on the t
  ]
 }</code></pre>
 </doc-codeblock></div>
+<h4 id="gap-filling">Gap filling</h4>
+<p>The endpoint returns only candles with at least one trade — <strong>non-existing slots are simply absent from the response</strong> (no null entries, no placeholders). For assets with quiet intervals, returned arrays contain gaps (missing slot timestamps between real candles). <strong>Last Observation Carried Forward (LOCF)</strong> is the technique used to fill them; the code below applies it in one pass on the array.</p>
+<h5 id="carrying-forward">Carrying forward</h5>
+<div id="carrying-forward-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-javascript"><code v-pre class="language-javascript">function carryForwardClose(candles, intervalSec) {
+  if (candles.length &lt; 2) return candles;
+  const out = [candles[0]];
+  for (let i = 1; i &lt; candles.length; i++) {
+    const prev = candles[i - 1];
+    const cur = candles[i];
+    const slots = (cur.begin - prev.begin) / intervalSec - 1;
+    for (let j = 0; j &lt; slots; j++) {
+      out.push({
+        begin: prev.begin + (j + 1) * intervalSec,
+        open: prev.close,
+        high: prev.close,
+        low: prev.close,
+        close: prev.close,
+        base: 0,
+        quote: 0,
+      });
+    }
+    out.push(cur);
+  }
+  return out;
+}</code></pre>
+</doc-codeblock></div>
+<p>For each consecutive pair <code translate="no" v-pre>prev</code>, <code translate="no" v-pre>cur</code> with <code translate="no" v-pre>cur.begin - prev.begin = N * interval</code>, insert <code translate="no" v-pre>N − 1</code> synthetic candles carrying <code translate="no" v-pre>prev.close</code> forward with <code translate="no" v-pre>base = quote = 0</code>.</p>
 <h3 id="get-charttradesasset"><code translate="no" v-pre>GET /chart/trades/:asset</code></h3>
 <p>Show historic trade data for a specific asset accepting query parameters <code translate="no" v-pre>from</code>, <code translate="no" v-pre>to</code> and <code translate="no" v-pre>n</code>.</p>
 <p><strong>Parameters:</strong></p>
 <retype-table copy-text="| Parameter | Type | Description |
 |-----------|------|-------------|
 | `:asset` | integer/string | Asset ID (e.g. `7`) or hash (e.g. `0e4825efffa294610d2ac376713e3bcc9b53d378e823834b64e5df01f75d3b0c`) |
-| `from` | block height | Start block (optional) |
-| `to` | block height | End block (optional) |
+| `from` | block height | Inclusive start block (optional) |
+| `to` | block height | Inclusive end block (optional) |
 | `n` | integer | Limit number of results (optional, default: 100) |">
 <div class="table-wrapper scrollbar overflow-hidden">
 <table class="comfortable">
@@ -4016,12 +4117,12 @@ The content of the <code translate="no" v-pre>data</code> field depends on the t
 <tr>
 <td><code translate="no" v-pre>from</code></td>
 <td>block height</td>
-<td>Start block (optional)</td>
+<td>Inclusive start block (optional)</td>
 </tr>
 <tr>
 <td><code translate="no" v-pre>to</code></td>
 <td>block height</td>
-<td>End block (optional)</td>
+<td>Inclusive end block (optional)</td>
 </tr>
 <tr>
 <td><code translate="no" v-pre>n</code></td>
@@ -4032,16 +4133,63 @@ The content of the <code translate="no" v-pre>data</code> field depends on the t
 </table>
 </div>
 </retype-table>
+<p><strong>Field glossary &amp; result structure:</strong></p>
+<p>Each trade entry is a 4-element array in this fixed order. Field types and meanings:</p>
+<retype-table copy-text="| Index | Field | Type | Meaning |
+|---|---|---|---|
+| 0 | `height` | integer | Block height containing the trade. |
+| 1 | `timestamp` | Unix seconds | Block-level timestamp. |
+| 2 | `base` | float | Total asset amount traded in the block. |
+| 3 | `quote` | float | Total WART amount traded in the block. |">
+<div class="table-wrapper scrollbar overflow-hidden">
+<table class="comfortable">
+<thead>
+<tr>
+<th>Index</th>
+<th>Field</th>
+<th>Type</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td><code translate="no" v-pre>height</code></td>
+<td>integer</td>
+<td>Block height containing the trade.</td>
+</tr>
+<tr>
+<td>1</td>
+<td><code translate="no" v-pre>timestamp</code></td>
+<td>Unix seconds</td>
+<td>Block-level timestamp.</td>
+</tr>
+<tr>
+<td>2</td>
+<td><code translate="no" v-pre>base</code></td>
+<td>float</td>
+<td>Total asset amount traded in the block.</td>
+</tr>
+<tr>
+<td>3</td>
+<td><code translate="no" v-pre>quote</code></td>
+<td>float</td>
+<td>Total WART amount traded in the block.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</retype-table>
 <p><strong>Query parameter rules:</strong></p>
 <ul>
 <li>Not all three optional parameters (<code translate="no" v-pre>from</code>, <code translate="no" v-pre>to</code>, <code translate="no" v-pre>n</code>) can be specified at the same time.</li>
-<li>If only <code translate="no" v-pre>from</code> is specified, the earliest entries from <code translate="no" v-pre>from</code> are returned.</li>
-<li>If only <code translate="no" v-pre>to</code> is specified, the latest entries up to <code translate="no" v-pre>to</code> are returned.</li>
-<li>If <code translate="no" v-pre>from</code> and <code translate="no" v-pre>to</code> are specified, all entries from <code translate="no" v-pre>from</code> to <code translate="no" v-pre>to</code> are returned.</li>
-<li>The total number of entries is limited to 200. The default value for <code translate="no" v-pre>n</code> is 100.</li>
+<li>If only <code translate="no" v-pre>from</code> is specified, the earliest entries with <code translate="no" v-pre>height &gt;= from</code> (<strong>inclusive</strong>) are returned.</li>
+<li>If only <code translate="no" v-pre>to</code> is specified, the latest entries with <code translate="no" v-pre>height &lt;= to</code> (<strong>inclusive</strong>) are returned.</li>
+<li>If <code translate="no" v-pre>from</code> and <code translate="no" v-pre>to</code> are both specified, all entries between them (both <strong>inclusive</strong>) are returned.</li>
+<li>The total number of entries is capped at <strong>200</strong>. The default value for <code translate="no" v-pre>n</code> is 100.</li>
+<li>The returned array is always sorted by block height in ascending order (oldest first).</li>
 </ul>
-<p>Returns an array of trades, where each trade is a 4-element array: <code translate="no" v-pre>[height, timestamp, base, quote]</code>.</p>
-<p>Example output of <code translate="no" v-pre>/chart/trades/7</code>:</p>
+<p><strong>Example:</strong></p>
 <div id="get-charttradesasset-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-json"><code v-pre class="language-json">{
  &quot;code&quot;: 0,
@@ -4055,6 +4203,7 @@ The content of the <code translate="no" v-pre>data</code> field depends on the t
  ]
 }</code></pre>
 </doc-codeblock></div>
+<p>Trades are point events keyed by block height; the endpoint never emits synthetic rows. Gaps of &gt;1 between consecutive heights mean &quot;this block had no trades for this asset&quot; — leave as visual breaks or interpolate linearly between consecutive trades for line charts.</p>
 <h3 id="get-charthashrateblockfromtowindow"><code translate="no" v-pre>GET /chart/hashrate/block/:from/:to/:window</code></h3>
 <p>Show hashrate chart data over a block range. <code translate="no" v-pre>:from</code> and <code translate="no" v-pre>:to</code> are block heights, <code translate="no" v-pre>:window</code> is the averaging window in blocks.</p>
 <doc-panel id="example-10" collapsed>
