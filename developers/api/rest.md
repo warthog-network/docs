@@ -2371,7 +2371,7 @@ The order book is represented by `assetToWartSwaps` and `wartToAssetSwaps` field
 }
 ```
 
-The `match` field uses Warthog's custom sandwich-free [matching engine for sandwich-free matching](/unique-features/hard-coded-defi/fair-batch-matching.md).
+The `match` field uses Warthog's custom [matching engine for MEV-proof matching](/unique-features/hard-coded-defi/fair-batch-matching.md).
 
 ==- Example output of `/dex/market/0e4825efffa294610d2ac376713e3bcc9b53d378e823834b64e5df01f75d3b0c`:
 ```json

@@ -9,11 +9,11 @@
 
 ## Q2 2024
 - [x] Refactor Networking code to support multiple transports
-- [x] Research Sandwich-Proof DeFi
+- [x] Research MEV-proof DeFi
 
 ## Q3 2024
 - [x] [Research on in-browser node support in-browser nodes (unique in the crypto world)](browser_nodes.md)
-- [x] [Implement matching engine C++ code for Sandwich-Proof DeFi](https://github.com/CoinFuMasterShifu/shifu-matching)
+- [x] [Implement matching engine C++ code for MEV-proof DeFi](https://github.com/CoinFuMasterShifu/shifu-matching)
 
 ## Q4 2024
 - [x] [Listing on CoinEx](https://www.coinex.com/en/exchange/WART-USDT)
@@ -24,14 +24,14 @@
 
 ## Q1 2025
 - [x] Create [demo of custom matching engine](https://warthog.network/defi-demo/)
-- [x] Write [scientific paper about Sandwich-Proof DeFi](https://github.com/CoinFuMasterShifu/FairBatchMatching/blob/main/FairBatchMatching.pdf)
+- [x] Write [scientific paper about MEV-proof DeFi](https://github.com/CoinFuMasterShifu/FairBatchMatching/blob/main/FairBatchMatching.pdf)
 - [x] Add nice UI for Browser Nodes
 
 ## Q2 2025
 - [x] Implement light-weight DeFi
 - [x] Enable token support in testnet
 - [x] Enable Liquidity Farming in testnet
-- [x] Enable Sandwich-Proof DeFi in testnet
+- [x] Enable MEV-proof DeFi in testnet
 
 ## Q3 2025
 - [ ] Enable P2P Browser Node communication using WebRTC
@@ -56,7 +56,7 @@
 - [x] Implement light-weight DeFi on testnet
 - [x] Enable token support on testnet
 - [x] Enable liquidity farming on testnet
-- [x] Enable Sandwich-Proof DeFi on testnet
+- [x] Enable MEV-proof DeFi on testnet
 
 ### Open
 - [ ] Complete the client-explorer
