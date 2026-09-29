@@ -11,7 +11,7 @@ Warthog is a cryptocurrency built from scratch around a handful of decisions tha
 | [BlitzSync](#blitzsync) | Blocks addressed by integer branch, not hash |
 | [Janushash](#janushash-proof-of-balanced-work) | First production PoBW: GPU × CPU hash product |
 | [Native DeFi](#native-defi) | DeFi primitives embedded in the consensus layer |
-| [Fair Batch Matching](#fair-batch-matching) | Sandwich-proof DEX matching, Nash equilibrium pricing |
+| [Fair Batch Matching](#fair-batch-matching) | MEV-proof DEX matching, Nash equilibrium pricing |
 | [Browser Nodes](#browser-nodes) | Full nodes that run in any modern browser |
 
 ---
