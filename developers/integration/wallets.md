@@ -155,13 +155,15 @@ IO.puts("address: #{addr |> Base.encode16()}")
 
 ## Transaction Concepts
 
-In Warthog, transactions are pinned to a specific block on the blockchain. The height of this block is its `pinHeight`, and its hash is the `pinHash`. This information must be retrieved from the node before generating a transaction. A transaction with a `pinHeight` that is too old will be discarded.
+In Warthog, transactions are pinned to a specific block on the blockchain. The height of this block is its `pinHeight`, and its hash is the `pinHash`. This information must be retrieved from the node before generating a transaction.
 
 This serves two purposes:
 1. Users can be sure that transactions will not be pending forever.
 2. By choosing a particular `pinHeight`, users can actively control the time to live (TTL) of a pending transaction before it is discarded.
 
-Not all height values are valid `pinHeights`. They must be a multiple of 32. For convenience, the `/chain/head` endpoint provides the latest `pinHeight` value together with the corresponding block hash `pinHash`.
+A transaction's signature is based on a *chain pin*, which is a block hash and height at a multiple of 32. When included in a block, the height information is encoded as a single byte which is interpreted as negative offset times 32 with respect to the block's height floored to multiples of 32. When verifying a transaction's signature, the transaction's chain pin has to be restored, i.e. the node computes the chain pin from the block's height and the encoded offset and retrieves the block hash at that position from its own chain.
+
+Since the encoded offset can only represent 256 different positions on the grid of heights at multiples of 32, no heights before 8160 blocks from the current block's floored height (roughly 45 hours at the 20 seconds block time) can be addressed technically, and a transaction pinned below that point can no longer be included in any block. This represents an elegant way to enforce a time-to-live (TTL) for transactions. For convenience, the `/chain/head` endpoint provides the latest `pinHeight` value together with the corresponding block hash `pinHash`.
 
 ## WART Transfer Transaction
 
@@ -169,9 +171,6 @@ Transfer WART tokens to another address.
 
 +++ Python
 ```python
-##############################
-# WART Transfer Transaction
-##############################
 import requests
 import json
 baseurl = "http://localhost:3000"
@@ -179,6 +178,8 @@ baseurl = "http://localhost:3000"
 # get pinHash and pinHeight from warthog node
 head_raw = requests.get(baseurl + '/chain/head').content
 head = json.loads(head_raw)
+# the V1 API (mainnet) returns the pin fields at the top level. the V2 API
+# (DeFi node) nests them: head["data"]["chainHead"]["pinHash"] and ["pinHeight"]
 pinHash = head["data"]["pinHash"]
 pinHeight = head["data"]["pinHeight"]
 
@@ -246,6 +247,8 @@ var baseurl = "http://localhost:3000";
 
 // get pinHash and pinHeight from warthog node
 var head = JSON.parse(request("GET", baseurl + "/chain/head").body.toString());
+// the V1 API (mainnet) returns the pin fields at the top level. the V2 API
+// (DeFi node) nests them: head.data.chainHead.pinHeight and head.data.chainHead.pinHash
 var pinHeight = head.data.pinHeight;
 var pinHash = head.data.pinHash;
 
@@ -303,13 +306,12 @@ console.log("send result:", res);
 ```
 +++ Elixir
 ```elixir
-##############################
-# WART Transfer Transaction
-##############################
 baseurl = "http://localhost:3000"
 
 # get pinHash and pinHeight from warthog node
 head = HTTPoison.get!(baseurl <> "/chain/head").body |> Jason.decode!()
+# the V1 API (mainnet) returns the pin fields at the top level. the V2 API
+# (DeFi node) nests them: head["data"]["chainHead"]["pinHash"] and ["pinHeight"]
 pinHash = head["data"]["pinHash"]
 pinHeight = head["data"]["pinHeight"]
 
@@ -362,6 +364,9 @@ Transfer a specific asset or its pool's liquidity token to another address.
 # Token Transfer Transaction
 ##############################
 
+# pinHash and pinHeight come from /chain/head, see the WART Transfer example.
+# the V1 API (mainnet) returns them at the top level. the V2 API
+# (DeFi node) nests them: head["data"]["chainHead"]["pinHash"] and ["pinHeight"]
 # send parameters
 nonceId = 1  # 32 bit number, unique per pinHash and pinHeight
 isLiquidity = False  # False for asset, True for liquidity tokens
@@ -411,6 +416,9 @@ print(rep.content)
 // Token Transfer Transaction
 //////////////////////////////
 
+// pinHash and pinHeight come from /chain/head, see the WART Transfer example.
+// the V1 API (mainnet) returns them at the top level. the V2 API
+// (DeFi node) nests them: head.data.chainHead.pinHeight and head.data.chainHead.pinHash
 // send parameters
 var nonceId = 1;  // 32 bit number, unique per pinHash and pinHeight
 var isLiquidity = false;  // false for asset, true for liquidity tokens
@@ -465,6 +473,9 @@ console.log("send result:", res);
 # Token Transfer Transaction
 ##############################
 
+# pinHash and pinHeight come from /chain/head, see the WART Transfer example.
+# the V1 API (mainnet) returns them at the top level. the V2 API
+# (DeFi node) nests them: head["data"]["chainHead"]["pinHash"] and ["pinHeight"]
 # send parameters
 nonceId = 1  # 32 bit number, unique per pinHash and pinHeight
 isLiquidity = false  # false for asset, true for liquidity tokens
@@ -514,6 +525,9 @@ Create a new asset with a name, precision, and total supply.
 # Asset Creation Transaction
 ##############################
 
+# pinHash and pinHeight come from /chain/head, see the WART Transfer example.
+# the V1 API (mainnet) returns them at the top level. the V2 API
+# (DeFi node) nests them: head["data"]["chainHead"]["pinHash"] and ["pinHeight"]
 # send parameters
 nonceId = 2  # 32 bit number, unique per pinHash and pinHeight
 name = "TOK2"  # must be at most 5 characters
@@ -561,6 +575,9 @@ print(rep.content)
 // Asset Creation Transaction
 //////////////////////////////
 
+// pinHash and pinHeight come from /chain/head, see the WART Transfer example.
+// the V1 API (mainnet) returns them at the top level. the V2 API
+// (DeFi node) nests them: head.data.chainHead.pinHeight and head.data.chainHead.pinHash
 // send parameters
 var nonceId = 2;  // 32 bit number, unique per pinHash and pinHeight
 var name = "TOK2";  // must be at most 5 characters
@@ -614,6 +631,9 @@ console.log("send result:", res);
 # Asset Creation Transaction
 ##############################
 
+# pinHash and pinHeight come from /chain/head, see the WART Transfer example.
+# the V1 API (mainnet) returns them at the top level. the V2 API
+# (DeFi node) nests them: head["data"]["chainHead"]["pinHash"] and ["pinHeight"]
 # send parameters
 nonceId = 2  # 32 bit number, unique per pinHash and pinHeight
 name = "TOK2"  # must be at most 5 characters
@@ -661,6 +681,9 @@ Deposit liquidity into an asset's WART pool by providing both the asset and WART
 # Liquidity Deposit Transaction
 ##############################
 
+# pinHash and pinHeight come from /chain/head, see the WART Transfer example.
+# the V1 API (mainnet) returns them at the top level. the V2 API
+# (DeFi node) nests them: head["data"]["chainHead"]["pinHash"] and ["pinHeight"]
 # send parameters
 nonceId = 3  # 32 bit number, unique per pinHash and pinHeight
 assetHash = 'f45b113119c7f7c000234f1090d5d181ab60b8b24526f1edd2f563aa1ca329f2'
@@ -707,6 +730,9 @@ print(rep.content)
 // Liquidity Deposit Transaction
 //////////////////////////////
 
+// pinHash and pinHeight come from /chain/head, see the WART Transfer example.
+// the V1 API (mainnet) returns them at the top level. the V2 API
+// (DeFi node) nests them: head.data.chainHead.pinHeight and head.data.chainHead.pinHash
 // send parameters
 var nonceId = 3;  // 32 bit number, unique per pinHash and pinHeight
 var assetHash = "f45b113119c7f7c000234f1090d5d181ab60b8b24526f1edd2f563aa1ca329f2"
@@ -758,6 +784,9 @@ console.log("send result:", res);
 # Liquidity Deposit Transaction
 ##############################
 
+# pinHash and pinHeight come from /chain/head, see the WART Transfer example.
+# the V1 API (mainnet) returns them at the top level. the V2 API
+# (DeFi node) nests them: head["data"]["chainHead"]["pinHash"] and ["pinHeight"]
 # send parameters
 nonceId = 3  # 32 bit number, unique per pinHash and pinHeight
 assetHash = "f45b113119c7f7c000234f1090d5d181ab60b8b24526f1edd2f563aa1ca329f2"
@@ -804,6 +833,9 @@ Withdraw liquidity from an asset's WART pool by redeeming liquidity tokens.
 # Liquidity Withdrawal Transaction
 ##############################
 
+# pinHash and pinHeight come from /chain/head, see the WART Transfer example.
+# the V1 API (mainnet) returns them at the top level. the V2 API
+# (DeFi node) nests them: head["data"]["chainHead"]["pinHash"] and ["pinHeight"]
 # send parameters
 nonceId = 4  # 32 bit number, unique per pinHash and pinHeight
 assetHash = 'f45b113119c7f7c000234f1090d5d181ab60b8b24526f1edd2f563aa1ca329f2'
@@ -847,6 +879,9 @@ print(rep.content)
 // Liquidity Withdrawal Transaction
 //////////////////////////////
 
+// pinHash and pinHeight come from /chain/head, see the WART Transfer example.
+// the V1 API (mainnet) returns them at the top level. the V2 API
+// (DeFi node) nests them: head.data.chainHead.pinHeight and head.data.chainHead.pinHash
 // send parameters
 var nonceId = 4;  // 32 bit number, unique per pinHash and pinHeight
 var assetHash = "f45b113119c7f7c000234f1090d5d181ab60b8b24526f1edd2f563aa1ca329f2"
@@ -895,6 +930,9 @@ console.log("send result:", res);
 # Liquidity Withdrawal Transaction
 ##############################
 
+# pinHash and pinHeight come from /chain/head, see the WART Transfer example.
+# the V1 API (mainnet) returns them at the top level. the V2 API
+# (DeFi node) nests them: head["data"]["chainHead"]["pinHash"] and ["pinHeight"]
 # send parameters
 nonceId = 4  # 32 bit number, unique per pinHash and pinHeight
 assetHash = "f45b113119c7f7c000234f1090d5d181ab60b8b24526f1edd2f563aa1ca329f2"
@@ -938,6 +976,9 @@ Cancel a pending transaction or an existing order. You must specify the `cancelH
 # Cancelation Transaction
 ##############################
 
+# pinHash and pinHeight come from /chain/head, see the WART Transfer example.
+# the V1 API (mainnet) returns them at the top level. the V2 API
+# (DeFi node) nests them: head["data"]["chainHead"]["pinHash"] and ["pinHeight"]
 # send parameters
 nonceId = 5  # 32 bit number, unique per pinHash and pinHeight
 cancelHeight = 0  # the pinHeight of the transaction to cancel
@@ -981,6 +1022,9 @@ print(rep.content)
 // Cancelation Transaction
 //////////////////////////////
 
+// pinHash and pinHeight come from /chain/head, see the WART Transfer example.
+// the V1 API (mainnet) returns them at the top level. the V2 API
+// (DeFi node) nests them: head.data.chainHead.pinHeight and head.data.chainHead.pinHash
 // send parameters
 var nonceId = 5;  // 32 bit number, unique per pinHash and pinHeight
 var cancelHeight = 0;  // the pinHeight of the transaction to cancel
@@ -1029,6 +1073,9 @@ console.log("send result:", res);
 # Cancelation Transaction
 ##############################
 
+# pinHash and pinHeight come from /chain/head, see the WART Transfer example.
+# the V1 API (mainnet) returns them at the top level. the V2 API
+# (DeFi node) nests them: head["data"]["chainHead"]["pinHash"] and ["pinHeight"]
 # send parameters
 nonceId = 5  # 32 bit number, unique per pinHash and pinHeight
 cancelHeight = 0  # the pinHeight of the transaction to cancel
