@@ -9,9 +9,9 @@ Note that we also provide [SDKs](../SDKs.md).
 ## Prerequisites
 
 +++ Python
-We use the `pycryptodome`, `pycoin` and `requests` Python packages.
+We use the `coincurve`, `pycryptodome` and `requests` Python packages.
 +++ Node JS
-We use the `elliptic`, `node:crypto`, `sync-request` and `secp256k1` NodeJS packages.
+We use the `secp256k1`, `node:crypto` and `sync-request` NodeJS packages.
 +++ Elixir
 We use the `{:curvy, "~> 0.3.1"}`, `{:jason, "~> 1.4"}` and `{:httpoison, "~> 2.0"}` Hex packages.
 +++
@@ -27,25 +27,33 @@ Below we demonstrate how to:
 
 +++ Python
 ```python
-from ecdsa import SigningKey, SECP256k1
+from coincurve import PrivateKey
+import secrets
+
+# secp256k1 group order, a private key must be in [1, n - 1]
+ORDER = 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBAAEDCE6AF48A03BBFD25E8CD0364141
 
 ##############################
 # Handling wallets
 ##############################
 
 # generate private key
-pk = SigningKey.generate(curve=SECP256k1)
+private_key = secrets.token_bytes(32)
+while not 1 <= int.from_bytes(private_key, 'big') < ORDER:
+    private_key = secrets.token_bytes(32)
+pk = PrivateKey(private_key)
 
 # alternatively read private key
 pkhex = '966a71a98bb5d13e9116c0dffa3f1a7877e45c6f563897b96cfd5c59bf0803e0'
-pk = SigningKey.from_string(bytes.fromhex(pkhex), curve=SECP256k1)
+pk = PrivateKey(bytes.fromhex(pkhex))
+private_key = pk.secret
 
 # print private key
 print("private_key:")
-print(pk.to_string().hex())
+print(private_key.hex())
 
 # derive public key
-pubkey = pk.get_verifying_key().to_string('compressed')
+pubkey = pk.public_key.format(compressed=True)
 
 # print public key
 print("public key:")
@@ -66,32 +74,30 @@ print("address:", addr.hex())
 ```
 +++ Node JS
 ```javascript
-const elliptic = require('elliptic');
+// var, not const: the transaction examples below require secp256k1 again,
+// and redeclaring a const in the same scope is a SyntaxError.
+var secp256k1 = require('secp256k1');
 const crypto = require('node:crypto');
-const ec = new elliptic.ec('secp256k1');
 
 //////////////////////////////
 // Handling wallets
 //////////////////////////////
 
 // generate private key
-var pk = ec.genKeyPair()
+var privateKey = crypto.randomBytes(32);
+while (!secp256k1.privateKeyVerify(privateKey)) {
+  privateKey = crypto.randomBytes(32);
+}
+var pkhex = privateKey.toString("hex")
 
 // alternatively read private key
 var pkhex = '966a71a98bb5d13e9116c0dffa3f1a7877e45c6f563897b96cfd5c59bf0803e0'
-var pk = ec.keyFromPrivate(pkhex);
-
-// convert private key to hex
-pkhex = pk.getPrivate().toString("hex")
-while (pkhex.length < 64) {
-  pkhex = "0" + pkhex;
-}
 
 // print private key
 console.log("private key:", pkhex)
 
 // derive public key
-var pubKey = pk.getPublic().encodeCompressed("hex");
+var pubKey = Buffer.from(secp256k1.publicKeyCreate(Buffer.from(pkhex, "hex"), true)).toString("hex")
 
 // print public key
 console.log("public key:", pubKey)
@@ -206,20 +212,13 @@ to_sign = (
 )
 
 # create signature
-from pycoin.ecdsa.secp256k1 import secp256k1_generator
+from coincurve import PrivateKey
 from hashlib import sha256
-private_key = pk.privkey.secret_multiplier
 digest = sha256(to_sign).digest()
 
-# sign with recovery id
-(r, s, rec_id) = secp256k1_generator.sign_with_recid(private_key, int.from_bytes(digest, 'big'))
-
-# normalize to lower s
-if s > secp256k1_generator.order() / 2:
-    s = secp256k1_generator.order() - s
-    rec_id ^= 1
-
-signature65 = r.to_bytes(32, byteorder='big') + s.to_bytes(32, byteorder='big') + rec_id.to_bytes(1, byteorder='big')
+# sign with recovery id, RFC 6979 deterministic. sign_recoverable returns the
+# 65 bytes r || s || recid, and libsecp256k1 already normalizes to low-s.
+signature65 = PrivateKey(private_key).sign_recoverable(digest, hasher=None)
 
 # post transaction request to warthog node
 postdata = {
@@ -387,13 +386,10 @@ to_sign = (
     amountU64.to_bytes(8, byteorder='big')
 )
 
-# sign with recovery id
+# sign with recovery id, RFC 6979 deterministic. sign_recoverable returns the
+# 65 bytes r || s || recid, and libsecp256k1 already normalizes to low-s.
 digest = sha256(to_sign).digest()
-(r, s, rec_id) = secp256k1_generator.sign_with_recid(private_key, int.from_bytes(digest, 'big'))
-if s > secp256k1_generator.order() / 2:
-    s = secp256k1_generator.order() - s
-    rec_id ^= 1
-signature65 = r.to_bytes(32, byteorder='big') + s.to_bytes(32, byteorder='big') + rec_id.to_bytes(1, byteorder='big')
+signature65 = PrivateKey(private_key).sign_recoverable(digest, hasher=None)
 
 # post transaction request to warthog node
 postdata = {
@@ -547,13 +543,10 @@ to_sign = (
     nameBytes
 )
 
-# sign with recovery id
+# sign with recovery id, RFC 6979 deterministic. sign_recoverable returns the
+# 65 bytes r || s || recid, and libsecp256k1 already normalizes to low-s.
 digest = sha256(to_sign).digest()
-(r, s, rec_id) = secp256k1_generator.sign_with_recid(private_key, int.from_bytes(digest, 'big'))
-if s > secp256k1_generator.order() / 2:
-    s = secp256k1_generator.order() - s
-    rec_id ^= 1
-signature65 = r.to_bytes(32, byteorder='big') + s.to_bytes(32, byteorder='big') + rec_id.to_bytes(1, byteorder='big')
+signature65 = PrivateKey(private_key).sign_recoverable(digest, hasher=None)
 
 # post transaction request to warthog node
 postdata = {
@@ -702,13 +695,10 @@ to_sign = (
     quoteU64.to_bytes(8, byteorder='big')
 )
 
-# sign with recovery id
+# sign with recovery id, RFC 6979 deterministic. sign_recoverable returns the
+# 65 bytes r || s || recid, and libsecp256k1 already normalizes to low-s.
 digest = sha256(to_sign).digest()
-(r, s, rec_id) = secp256k1_generator.sign_with_recid(private_key, int.from_bytes(digest, 'big'))
-if s > secp256k1_generator.order() / 2:
-    s = secp256k1_generator.order() - s
-    rec_id ^= 1
-signature65 = r.to_bytes(32, byteorder='big') + s.to_bytes(32, byteorder='big') + rec_id.to_bytes(1, byteorder='big')
+signature65 = PrivateKey(private_key).sign_recoverable(digest, hasher=None)
 
 # post transaction request to warthog node
 postdata = {
@@ -852,13 +842,10 @@ to_sign = (
     sharesE8.to_bytes(8, byteorder='big')
 )
 
-# sign with recovery id
+# sign with recovery id, RFC 6979 deterministic. sign_recoverable returns the
+# 65 bytes r || s || recid, and libsecp256k1 already normalizes to low-s.
 digest = sha256(to_sign).digest()
-(r, s, rec_id) = secp256k1_generator.sign_with_recid(private_key, int.from_bytes(digest, 'big'))
-if s > secp256k1_generator.order() / 2:
-    s = secp256k1_generator.order() - s
-    rec_id ^= 1
-signature65 = r.to_bytes(32, byteorder='big') + s.to_bytes(32, byteorder='big') + rec_id.to_bytes(1, byteorder='big')
+signature65 = PrivateKey(private_key).sign_recoverable(digest, hasher=None)
 
 # post transaction request to warthog node
 postdata = {
@@ -995,13 +982,10 @@ to_sign = (
     cancelNonceId.to_bytes(4, byteorder='big')
 )
 
-# sign with recovery id
+# sign with recovery id, RFC 6979 deterministic. sign_recoverable returns the
+# 65 bytes r || s || recid, and libsecp256k1 already normalizes to low-s.
 digest = sha256(to_sign).digest()
-(r, s, rec_id) = secp256k1_generator.sign_with_recid(private_key, int.from_bytes(digest, 'big'))
-if s > secp256k1_generator.order() / 2:
-    s = secp256k1_generator.order() - s
-    rec_id ^= 1
-signature65 = r.to_bytes(32, byteorder='big') + s.to_bytes(32, byteorder='big') + rec_id.to_bytes(1, byteorder='big')
+signature65 = PrivateKey(private_key).sign_recoverable(digest, hasher=None)
 
 # post transaction request to warthog node
 postdata = {
