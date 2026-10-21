@@ -37,8 +37,8 @@ dependencies = [
 
 ### Requirements
 
-- Python `>= 3.9`
-- The runtime dependencies (`ecdsa`, `mnemonic`, `bip32`, `pycoin`, `pycryptodome`, `requests`) are installed automatically by `uv` along with the package.
+- Python `>= 3.10`
+- The runtime dependencies (`coincurve`, `mnemonic`, `bip32`, `pycryptodome`, `requests`) are installed automatically by `uv` along with the package.
 
 ## Features
 
@@ -46,7 +46,7 @@ dependencies = [
 - Built-in HTTP client for node communication
 - All 7 signed DeFi transaction types: `wartTransfer`, `tokenTransfer`, `assetCreation`, `cancelation`, `liquidityDeposit`, `liquidityWithdrawal`, `limitSwap`
 - Idiomatic Python API: `name(...)` raises typed exceptions, `try_name(...)` returns `None`
-- Signing uses `pycoin`'s `secp256k1_generator.sign_with_recid` with BIP-62 low-s normalization (matches the convention in the Python integration guide)
+- Signing uses `coincurve` (libsecp256k1) `sign_recoverable` with BIP-62 low-s normalization (matches the convention in the Python integration guide)
 
 ## Quick Start
 

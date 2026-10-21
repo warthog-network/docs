@@ -1967,6 +1967,8 @@ Example output:
 
 Show the current chain head and sync status.
 
+The example below is the **V2 API** shape, returned by the DeFi node (`core/defi`), which nests the chain head under `chainHead`. Mainnet (`core/master`) speaks the **V1 API** and returns the same fields flat at the top level of `data`, without the `chainHead` wrapper. `synced` is at the root of the payload in both. See [Wallet Integration](../integration/wallets.md) for both shapes and how to read the pin fields from each.
+
 Example:
 ```json
 {

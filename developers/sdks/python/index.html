@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.843984320813">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.845891411965">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 4.6.0">
@@ -38,12 +38,12 @@
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
     <link id="retype-favicon" rel="icon" href="../../../favicon.png" />
-    <link href="../../../resources/css/retype.css?v=4.6.0.843984320813" rel="stylesheet">
+    <link href="../../../resources/css/retype.css?v=4.6.0.845891411965" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.6.0.843984320813" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.6.0.845891411965" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../../resources/js/retype.js?v=4.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.6.0.843984320813" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../../../resources/js/prism.js?v=4.6.0.843984320813" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.6.0.845891411965" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../../../resources/js/prism.js?v=4.6.0.845891411965" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -187,8 +187,8 @@ dependencies = [
 </doc-codeblock></div>
 <h3 id="requirements">Requirements</h3>
 <ul>
-<li>Python <code translate="no" v-pre>&gt;= 3.9</code></li>
-<li>The runtime dependencies (<code translate="no" v-pre>ecdsa</code>, <code translate="no" v-pre>mnemonic</code>, <code translate="no" v-pre>bip32</code>, <code translate="no" v-pre>pycoin</code>, <code translate="no" v-pre>pycryptodome</code>, <code translate="no" v-pre>requests</code>) are installed automatically by <code translate="no" v-pre>uv</code> along with the package.</li>
+<li>Python <code translate="no" v-pre>&gt;= 3.10</code></li>
+<li>The runtime dependencies (<code translate="no" v-pre>coincurve</code>, <code translate="no" v-pre>mnemonic</code>, <code translate="no" v-pre>bip32</code>, <code translate="no" v-pre>pycryptodome</code>, <code translate="no" v-pre>requests</code>) are installed automatically by <code translate="no" v-pre>uv</code> along with the package.</li>
 </ul>
 <h2 id="features">Features</h2>
 <ul>
@@ -196,7 +196,7 @@ dependencies = [
 <li>Built-in HTTP client for node communication</li>
 <li>All 7 signed DeFi transaction types: <code translate="no" v-pre>wartTransfer</code>, <code translate="no" v-pre>tokenTransfer</code>, <code translate="no" v-pre>assetCreation</code>, <code translate="no" v-pre>cancelation</code>, <code translate="no" v-pre>liquidityDeposit</code>, <code translate="no" v-pre>liquidityWithdrawal</code>, <code translate="no" v-pre>limitSwap</code></li>
 <li>Idiomatic Python API: <code translate="no" v-pre>name(...)</code> raises typed exceptions, <code translate="no" v-pre>try_name(...)</code> returns <code translate="no" v-pre>None</code></li>
-<li>Signing uses <code translate="no" v-pre>pycoin</code>&#x27;s <code translate="no" v-pre>secp256k1_generator.sign_with_recid</code> with BIP-62 low-s normalization (matches the convention in the Python integration guide)</li>
+<li>Signing uses <code translate="no" v-pre>coincurve</code> (libsecp256k1) <code translate="no" v-pre>sign_recoverable</code> with BIP-62 low-s normalization (matches the convention in the Python integration guide)</li>
 </ul>
 <h2 id="quick-start">Quick Start</h2>
 <div id="quick-start-code-1" class="codeblock-wrapper"><doc-codeblock>

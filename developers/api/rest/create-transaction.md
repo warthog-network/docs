@@ -375,7 +375,7 @@ The sender's address is recovered from the ECDSA signature `signature65`. The si
 
 ### Steps
 
-1. **Get pinHash:** Call `GET /chain/head` and extract `pinHash` and `pinHeight`.
+1. **Get pinHash:** Call `GET /chain/head` and extract `pinHash` and `pinHeight` (see [Wallet Integration](../../integration/wallets.md) for the response shape).
 
 2. **Create transaction hash:** Compute SHA256 of the transaction-specific byte sequence (see each transaction type above).
 

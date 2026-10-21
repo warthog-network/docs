@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.843984320813">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.845891411965">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 4.6.0">
@@ -38,12 +38,12 @@
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
     <link id="retype-favicon" rel="icon" href="../../../favicon.png" />
-    <link href="../../../resources/css/retype.css?v=4.6.0.843984320813" rel="stylesheet">
+    <link href="../../../resources/css/retype.css?v=4.6.0.845891411965" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.6.0.843984320813" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.6.0.845891411965" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../../resources/js/retype.js?v=4.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.6.0.843984320813" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../../../resources/js/prism.js?v=4.6.0.843984320813" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.6.0.845891411965" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../../../resources/js/prism.js?v=4.6.0.845891411965" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -165,11 +165,11 @@ Note that we also provide <a href="../../sdks/">SDKs</a>.</p>
 <doc-tabs>
 <doc-tab v-cloak id="python">
 <template #title>Python</template>
-<p>We use the <code translate="no" v-pre>pycryptodome</code>, <code translate="no" v-pre>pycoin</code> and <code translate="no" v-pre>requests</code> Python packages.</p>
+<p>We use the <code translate="no" v-pre>coincurve</code>, <code translate="no" v-pre>pycryptodome</code> and <code translate="no" v-pre>requests</code> Python packages.</p>
 </doc-tab>
 <doc-tab v-cloak id="node-js">
 <template #title>Node JS</template>
-<p>We use the <code translate="no" v-pre>elliptic</code>, <code translate="no" v-pre>node:crypto</code>, <code translate="no" v-pre>sync-request</code> and <code translate="no" v-pre>secp256k1</code> NodeJS packages.</p>
+<p>We use the <code translate="no" v-pre>secp256k1</code>, <code translate="no" v-pre>node:crypto</code> and <code translate="no" v-pre>sync-request</code> NodeJS packages.</p>
 </doc-tab>
 <doc-tab v-cloak id="elixir">
 <template #title>Elixir</template>
@@ -189,25 +189,33 @@ Note that we also provide <a href="../../sdks/">SDKs</a>.</p>
 <doc-tab v-cloak id="python-1">
 <template #title>Python</template>
 <div class="codeblock-wrapper"><doc-codeblock>
-<pre translate="no" class="language-python"><code v-pre class="language-python">from ecdsa import SigningKey, SECP256k1
+<pre translate="no" class="language-python"><code v-pre class="language-python">from coincurve import PrivateKey
+import secrets
+
+# secp256k1 group order, a private key must be in [1, n - 1]
+ORDER = 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBAAEDCE6AF48A03BBFD25E8CD0364141
 
 ##############################
 # Handling wallets
 ##############################
 
 # generate private key
-pk = SigningKey.generate(curve=SECP256k1)
+private_key = secrets.token_bytes(32)
+while not 1 &lt;= int.from_bytes(private_key, 'big') &lt; ORDER:
+    private_key = secrets.token_bytes(32)
+pk = PrivateKey(private_key)
 
 # alternatively read private key
 pkhex = '966a71a98bb5d13e9116c0dffa3f1a7877e45c6f563897b96cfd5c59bf0803e0'
-pk = SigningKey.from_string(bytes.fromhex(pkhex), curve=SECP256k1)
+pk = PrivateKey(bytes.fromhex(pkhex))
+private_key = pk.secret
 
 # print private key
 print(&quot;private_key:&quot;)
-print(pk.to_string().hex())
+print(private_key.hex())
 
 # derive public key
-pubkey = pk.get_verifying_key().to_string('compressed')
+pubkey = pk.public_key.format(compressed=True)
 
 # print public key
 print(&quot;public key:&quot;)
@@ -230,32 +238,30 @@ print(&quot;address:&quot;, addr.hex())</code></pre>
 <doc-tab v-cloak id="node-js-1">
 <template #title>Node JS</template>
 <div class="codeblock-wrapper"><doc-codeblock>
-<pre translate="no" class="language-javascript"><code v-pre class="language-javascript">const elliptic = require('elliptic');
+<pre translate="no" class="language-javascript"><code v-pre class="language-javascript">// var, not const: the transaction examples below require secp256k1 again,
+// and redeclaring a const in the same scope is a SyntaxError.
+var secp256k1 = require('secp256k1');
 const crypto = require('node:crypto');
-const ec = new elliptic.ec('secp256k1');
 
 //////////////////////////////
 // Handling wallets
 //////////////////////////////
 
 // generate private key
-var pk = ec.genKeyPair()
+var privateKey = crypto.randomBytes(32);
+while (!secp256k1.privateKeyVerify(privateKey)) {
+  privateKey = crypto.randomBytes(32);
+}
+var pkhex = privateKey.toString(&quot;hex&quot;)
 
 // alternatively read private key
 var pkhex = '966a71a98bb5d13e9116c0dffa3f1a7877e45c6f563897b96cfd5c59bf0803e0'
-var pk = ec.keyFromPrivate(pkhex);
-
-// convert private key to hex
-pkhex = pk.getPrivate().toString(&quot;hex&quot;)
-while (pkhex.length &lt; 64) {
-  pkhex = &quot;0&quot; + pkhex;
-}
 
 // print private key
 console.log(&quot;private key:&quot;, pkhex)
 
 // derive public key
-var pubKey = pk.getPublic().encodeCompressed(&quot;hex&quot;);
+var pubKey = Buffer.from(secp256k1.publicKeyCreate(Buffer.from(pkhex, &quot;hex&quot;), true)).toString(&quot;hex&quot;)
 
 // print public key
 console.log(&quot;public key:&quot;, pubKey)
@@ -320,29 +326,29 @@ IO.puts(&quot;address: #{addr |&gt; Base.encode16()}&quot;)</code></pre>
 </doc-tab>
 </doc-tabs>
 <h2 id="transaction-concepts">Transaction Concepts</h2>
-<p>In Warthog, transactions are pinned to a specific block on the blockchain. The height of this block is its <code translate="no" v-pre>pinHeight</code>, and its hash is the <code translate="no" v-pre>pinHash</code>. This information must be retrieved from the node before generating a transaction. A transaction with a <code translate="no" v-pre>pinHeight</code> that is too old will be discarded.</p>
+<p>In Warthog, transactions are pinned to a specific block on the blockchain. The height of this block is its <code translate="no" v-pre>pinHeight</code>, and its hash is the <code translate="no" v-pre>pinHash</code>. This information must be retrieved from the node before generating a transaction.</p>
 <p>This serves two purposes:</p>
 <ol>
 <li>Users can be sure that transactions will not be pending forever.</li>
 <li>By choosing a particular <code translate="no" v-pre>pinHeight</code>, users can actively control the time to live (TTL) of a pending transaction before it is discarded.</li>
 </ol>
-<p>Not all height values are valid <code translate="no" v-pre>pinHeights</code>. They must be a multiple of 32. For convenience, the <code translate="no" v-pre>/chain/head</code> endpoint provides the latest <code translate="no" v-pre>pinHeight</code> value together with the corresponding block hash <code translate="no" v-pre>pinHash</code>.</p>
+<p>A transaction&#x27;s signature is based on a <em>chain pin</em>, which is a block hash and height at a multiple of 32. When included in a block, the height information is encoded as a single byte which is interpreted as negative offset times 32 with respect to the block&#x27;s height floored to multiples of 32. When verifying a transaction&#x27;s signature, the transaction&#x27;s chain pin has to be restored, i.e. the node computes the chain pin from the block&#x27;s height and the encoded offset and retrieves the block hash at that position from its own chain.</p>
+<p>Since the encoded offset can only represent 256 different positions on the grid of heights at multiples of 32, no heights before 8160 blocks from the current block&#x27;s floored height (roughly 45 hours at the 20 seconds block time) can be addressed technically, and a transaction pinned below that point can no longer be included in any block. This represents an elegant way to enforce a time-to-live (TTL) for transactions. For convenience, the <code translate="no" v-pre>/chain/head</code> endpoint provides the latest <code translate="no" v-pre>pinHeight</code> value together with the corresponding block hash <code translate="no" v-pre>pinHash</code>.</p>
 <h2 id="wart-transfer-transaction">WART Transfer Transaction</h2>
 <p>Transfer WART tokens to another address.</p>
 <doc-tabs>
 <doc-tab v-cloak id="python-2">
 <template #title>Python</template>
 <div class="codeblock-wrapper"><doc-codeblock>
-<pre translate="no" class="language-python"><code v-pre class="language-python">##############################
-# WART Transfer Transaction
-##############################
-import requests
+<pre translate="no" class="language-python"><code v-pre class="language-python">import requests
 import json
 baseurl = &quot;http://localhost:3000&quot;
 
 # get pinHash and pinHeight from warthog node
 head_raw = requests.get(baseurl + '/chain/head').content
 head = json.loads(head_raw)
+# the V1 API (mainnet) returns the pin fields at the top level. the V2 API
+# (DeFi node) nests them: head[&quot;data&quot;][&quot;chainHead&quot;][&quot;pinHash&quot;] and [&quot;pinHeight&quot;]
 pinHash = head[&quot;data&quot;][&quot;pinHash&quot;]
 pinHeight = head[&quot;data&quot;][&quot;pinHeight&quot;]
 
@@ -369,20 +375,13 @@ to_sign = (
 )
 
 # create signature
-from pycoin.ecdsa.secp256k1 import secp256k1_generator
+from coincurve import PrivateKey
 from hashlib import sha256
-private_key = pk.privkey.secret_multiplier
 digest = sha256(to_sign).digest()
 
-# sign with recovery id
-(r, s, rec_id) = secp256k1_generator.sign_with_recid(private_key, int.from_bytes(digest, 'big'))
-
-# normalize to lower s
-if s &gt; secp256k1_generator.order() / 2:
-    s = secp256k1_generator.order() - s
-    rec_id ^= 1
-
-signature65 = r.to_bytes(32, byteorder='big') + s.to_bytes(32, byteorder='big') + rec_id.to_bytes(1, byteorder='big')
+# sign with recovery id, RFC 6979 deterministic. sign_recoverable returns the
+# 65 bytes r || s || recid, and libsecp256k1 already normalizes to low-s.
+signature65 = PrivateKey(private_key).sign_recoverable(digest, hasher=None)
 
 # post transaction request to warthog node
 postdata = {
@@ -412,6 +411,8 @@ var baseurl = &quot;http://localhost:3000&quot;;
 
 // get pinHash and pinHeight from warthog node
 var head = JSON.parse(request(&quot;GET&quot;, baseurl + &quot;/chain/head&quot;).body.toString());
+// the V1 API (mainnet) returns the pin fields at the top level. the V2 API
+// (DeFi node) nests them: head.data.chainHead.pinHeight and head.data.chainHead.pinHash
 var pinHeight = head.data.pinHeight;
 var pinHash = head.data.pinHash;
 
@@ -471,13 +472,12 @@ console.log(&quot;send result:&quot;, res);</code></pre>
 <doc-tab v-cloak id="elixir-2">
 <template #title>Elixir</template>
 <div class="codeblock-wrapper"><doc-codeblock>
-<pre translate="no" class="language-elixir"><code v-pre class="language-elixir">##############################
-# WART Transfer Transaction
-##############################
-baseurl = &quot;http://localhost:3000&quot;
+<pre translate="no" class="language-elixir"><code v-pre class="language-elixir">baseurl = &quot;http://localhost:3000&quot;
 
 # get pinHash and pinHeight from warthog node
 head = HTTPoison.get!(baseurl &lt;&gt; &quot;/chain/head&quot;).body |&gt; Jason.decode!()
+# the V1 API (mainnet) returns the pin fields at the top level. the V2 API
+# (DeFi node) nests them: head[&quot;data&quot;][&quot;chainHead&quot;][&quot;pinHash&quot;] and [&quot;pinHeight&quot;]
 pinHash = head[&quot;data&quot;][&quot;pinHash&quot;]
 pinHeight = head[&quot;data&quot;][&quot;pinHeight&quot;]
 
@@ -530,6 +530,9 @@ HTTPoison.post!(baseurl &lt;&gt; &quot;/transaction/add&quot;, Jason.encode!(pos
 # Token Transfer Transaction
 ##############################
 
+# pinHash and pinHeight come from /chain/head, see the WART Transfer example.
+# the V1 API (mainnet) returns them at the top level. the V2 API
+# (DeFi node) nests them: head[&quot;data&quot;][&quot;chainHead&quot;][&quot;pinHash&quot;] and [&quot;pinHeight&quot;]
 # send parameters
 nonceId = 1  # 32 bit number, unique per pinHash and pinHeight
 isLiquidity = False  # False for asset, True for liquidity tokens
@@ -550,13 +553,10 @@ to_sign = (
     amountU64.to_bytes(8, byteorder='big')
 )
 
-# sign with recovery id
+# sign with recovery id, RFC 6979 deterministic. sign_recoverable returns the
+# 65 bytes r || s || recid, and libsecp256k1 already normalizes to low-s.
 digest = sha256(to_sign).digest()
-(r, s, rec_id) = secp256k1_generator.sign_with_recid(private_key, int.from_bytes(digest, 'big'))
-if s &gt; secp256k1_generator.order() / 2:
-    s = secp256k1_generator.order() - s
-    rec_id ^= 1
-signature65 = r.to_bytes(32, byteorder='big') + s.to_bytes(32, byteorder='big') + rec_id.to_bytes(1, byteorder='big')
+signature65 = PrivateKey(private_key).sign_recoverable(digest, hasher=None)
 
 # post transaction request to warthog node
 postdata = {
@@ -581,6 +581,9 @@ print(rep.content)</code></pre>
 // Token Transfer Transaction
 //////////////////////////////
 
+// pinHash and pinHeight come from /chain/head, see the WART Transfer example.
+// the V1 API (mainnet) returns them at the top level. the V2 API
+// (DeFi node) nests them: head.data.chainHead.pinHeight and head.data.chainHead.pinHash
 // send parameters
 var nonceId = 1;  // 32 bit number, unique per pinHash and pinHeight
 var isLiquidity = false;  // false for asset, true for liquidity tokens
@@ -637,6 +640,9 @@ console.log(&quot;send result:&quot;, res);</code></pre>
 # Token Transfer Transaction
 ##############################
 
+# pinHash and pinHeight come from /chain/head, see the WART Transfer example.
+# the V1 API (mainnet) returns them at the top level. the V2 API
+# (DeFi node) nests them: head[&quot;data&quot;][&quot;chainHead&quot;][&quot;pinHash&quot;] and [&quot;pinHeight&quot;]
 # send parameters
 nonceId = 1  # 32 bit number, unique per pinHash and pinHeight
 isLiquidity = false  # false for asset, true for liquidity tokens
@@ -686,6 +692,9 @@ HTTPoison.post!(baseurl &lt;&gt; &quot;/transaction/add&quot;, Jason.encode!(pos
 # Asset Creation Transaction
 ##############################
 
+# pinHash and pinHeight come from /chain/head, see the WART Transfer example.
+# the V1 API (mainnet) returns them at the top level. the V2 API
+# (DeFi node) nests them: head[&quot;data&quot;][&quot;chainHead&quot;][&quot;pinHash&quot;] and [&quot;pinHeight&quot;]
 # send parameters
 nonceId = 2  # 32 bit number, unique per pinHash and pinHeight
 name = &quot;TOK2&quot;  # must be at most 5 characters
@@ -705,13 +714,10 @@ to_sign = (
     nameBytes
 )
 
-# sign with recovery id
+# sign with recovery id, RFC 6979 deterministic. sign_recoverable returns the
+# 65 bytes r || s || recid, and libsecp256k1 already normalizes to low-s.
 digest = sha256(to_sign).digest()
-(r, s, rec_id) = secp256k1_generator.sign_with_recid(private_key, int.from_bytes(digest, 'big'))
-if s &gt; secp256k1_generator.order() / 2:
-    s = secp256k1_generator.order() - s
-    rec_id ^= 1
-signature65 = r.to_bytes(32, byteorder='big') + s.to_bytes(32, byteorder='big') + rec_id.to_bytes(1, byteorder='big')
+signature65 = PrivateKey(private_key).sign_recoverable(digest, hasher=None)
 
 # post transaction request to warthog node
 postdata = {
@@ -735,6 +741,9 @@ print(rep.content)</code></pre>
 // Asset Creation Transaction
 //////////////////////////////
 
+// pinHash and pinHeight come from /chain/head, see the WART Transfer example.
+// the V1 API (mainnet) returns them at the top level. the V2 API
+// (DeFi node) nests them: head.data.chainHead.pinHeight and head.data.chainHead.pinHash
 // send parameters
 var nonceId = 2;  // 32 bit number, unique per pinHash and pinHeight
 var name = &quot;TOK2&quot;;  // must be at most 5 characters
@@ -790,6 +799,9 @@ console.log(&quot;send result:&quot;, res);</code></pre>
 # Asset Creation Transaction
 ##############################
 
+# pinHash and pinHeight come from /chain/head, see the WART Transfer example.
+# the V1 API (mainnet) returns them at the top level. the V2 API
+# (DeFi node) nests them: head[&quot;data&quot;][&quot;chainHead&quot;][&quot;pinHash&quot;] and [&quot;pinHeight&quot;]
 # send parameters
 nonceId = 2  # 32 bit number, unique per pinHash and pinHeight
 name = &quot;TOK2&quot;  # must be at most 5 characters
@@ -837,6 +849,9 @@ HTTPoison.post!(baseurl &lt;&gt; &quot;/transaction/add&quot;, Jason.encode!(pos
 # Liquidity Deposit Transaction
 ##############################
 
+# pinHash and pinHeight come from /chain/head, see the WART Transfer example.
+# the V1 API (mainnet) returns them at the top level. the V2 API
+# (DeFi node) nests them: head[&quot;data&quot;][&quot;chainHead&quot;][&quot;pinHash&quot;] and [&quot;pinHeight&quot;]
 # send parameters
 nonceId = 3  # 32 bit number, unique per pinHash and pinHeight
 assetHash = 'f45b113119c7f7c000234f1090d5d181ab60b8b24526f1edd2f563aa1ca329f2'
@@ -855,13 +870,10 @@ to_sign = (
     quoteU64.to_bytes(8, byteorder='big')
 )
 
-# sign with recovery id
+# sign with recovery id, RFC 6979 deterministic. sign_recoverable returns the
+# 65 bytes r || s || recid, and libsecp256k1 already normalizes to low-s.
 digest = sha256(to_sign).digest()
-(r, s, rec_id) = secp256k1_generator.sign_with_recid(private_key, int.from_bytes(digest, 'big'))
-if s &gt; secp256k1_generator.order() / 2:
-    s = secp256k1_generator.order() - s
-    rec_id ^= 1
-signature65 = r.to_bytes(32, byteorder='big') + s.to_bytes(32, byteorder='big') + rec_id.to_bytes(1, byteorder='big')
+signature65 = PrivateKey(private_key).sign_recoverable(digest, hasher=None)
 
 # post transaction request to warthog node
 postdata = {
@@ -885,6 +897,9 @@ print(rep.content)</code></pre>
 // Liquidity Deposit Transaction
 //////////////////////////////
 
+// pinHash and pinHeight come from /chain/head, see the WART Transfer example.
+// the V1 API (mainnet) returns them at the top level. the V2 API
+// (DeFi node) nests them: head.data.chainHead.pinHeight and head.data.chainHead.pinHash
 // send parameters
 var nonceId = 3;  // 32 bit number, unique per pinHash and pinHeight
 var assetHash = &quot;f45b113119c7f7c000234f1090d5d181ab60b8b24526f1edd2f563aa1ca329f2&quot;
@@ -938,6 +953,9 @@ console.log(&quot;send result:&quot;, res);</code></pre>
 # Liquidity Deposit Transaction
 ##############################
 
+# pinHash and pinHeight come from /chain/head, see the WART Transfer example.
+# the V1 API (mainnet) returns them at the top level. the V2 API
+# (DeFi node) nests them: head[&quot;data&quot;][&quot;chainHead&quot;][&quot;pinHash&quot;] and [&quot;pinHeight&quot;]
 # send parameters
 nonceId = 3  # 32 bit number, unique per pinHash and pinHeight
 assetHash = &quot;f45b113119c7f7c000234f1090d5d181ab60b8b24526f1edd2f563aa1ca329f2&quot;
@@ -984,6 +1002,9 @@ HTTPoison.post!(baseurl &lt;&gt; &quot;/transaction/add&quot;, Jason.encode!(pos
 # Liquidity Withdrawal Transaction
 ##############################
 
+# pinHash and pinHeight come from /chain/head, see the WART Transfer example.
+# the V1 API (mainnet) returns them at the top level. the V2 API
+# (DeFi node) nests them: head[&quot;data&quot;][&quot;chainHead&quot;][&quot;pinHash&quot;] and [&quot;pinHeight&quot;]
 # send parameters
 nonceId = 4  # 32 bit number, unique per pinHash and pinHeight
 assetHash = 'f45b113119c7f7c000234f1090d5d181ab60b8b24526f1edd2f563aa1ca329f2'
@@ -1000,13 +1021,10 @@ to_sign = (
     sharesE8.to_bytes(8, byteorder='big')
 )
 
-# sign with recovery id
+# sign with recovery id, RFC 6979 deterministic. sign_recoverable returns the
+# 65 bytes r || s || recid, and libsecp256k1 already normalizes to low-s.
 digest = sha256(to_sign).digest()
-(r, s, rec_id) = secp256k1_generator.sign_with_recid(private_key, int.from_bytes(digest, 'big'))
-if s &gt; secp256k1_generator.order() / 2:
-    s = secp256k1_generator.order() - s
-    rec_id ^= 1
-signature65 = r.to_bytes(32, byteorder='big') + s.to_bytes(32, byteorder='big') + rec_id.to_bytes(1, byteorder='big')
+signature65 = PrivateKey(private_key).sign_recoverable(digest, hasher=None)
 
 # post transaction request to warthog node
 postdata = {
@@ -1029,6 +1047,9 @@ print(rep.content)</code></pre>
 // Liquidity Withdrawal Transaction
 //////////////////////////////
 
+// pinHash and pinHeight come from /chain/head, see the WART Transfer example.
+// the V1 API (mainnet) returns them at the top level. the V2 API
+// (DeFi node) nests them: head.data.chainHead.pinHeight and head.data.chainHead.pinHash
 // send parameters
 var nonceId = 4;  // 32 bit number, unique per pinHash and pinHeight
 var assetHash = &quot;f45b113119c7f7c000234f1090d5d181ab60b8b24526f1edd2f563aa1ca329f2&quot;
@@ -1079,6 +1100,9 @@ console.log(&quot;send result:&quot;, res);</code></pre>
 # Liquidity Withdrawal Transaction
 ##############################
 
+# pinHash and pinHeight come from /chain/head, see the WART Transfer example.
+# the V1 API (mainnet) returns them at the top level. the V2 API
+# (DeFi node) nests them: head[&quot;data&quot;][&quot;chainHead&quot;][&quot;pinHash&quot;] and [&quot;pinHeight&quot;]
 # send parameters
 nonceId = 4  # 32 bit number, unique per pinHash and pinHeight
 assetHash = &quot;f45b113119c7f7c000234f1090d5d181ab60b8b24526f1edd2f563aa1ca329f2&quot;
@@ -1122,6 +1146,9 @@ HTTPoison.post!(baseurl &lt;&gt; &quot;/transaction/add&quot;, Jason.encode!(pos
 # Cancelation Transaction
 ##############################
 
+# pinHash and pinHeight come from /chain/head, see the WART Transfer example.
+# the V1 API (mainnet) returns them at the top level. the V2 API
+# (DeFi node) nests them: head[&quot;data&quot;][&quot;chainHead&quot;][&quot;pinHash&quot;] and [&quot;pinHeight&quot;]
 # send parameters
 nonceId = 5  # 32 bit number, unique per pinHash and pinHeight
 cancelHeight = 0  # the pinHeight of the transaction to cancel
@@ -1138,13 +1165,10 @@ to_sign = (
     cancelNonceId.to_bytes(4, byteorder='big')
 )
 
-# sign with recovery id
+# sign with recovery id, RFC 6979 deterministic. sign_recoverable returns the
+# 65 bytes r || s || recid, and libsecp256k1 already normalizes to low-s.
 digest = sha256(to_sign).digest()
-(r, s, rec_id) = secp256k1_generator.sign_with_recid(private_key, int.from_bytes(digest, 'big'))
-if s &gt; secp256k1_generator.order() / 2:
-    s = secp256k1_generator.order() - s
-    rec_id ^= 1
-signature65 = r.to_bytes(32, byteorder='big') + s.to_bytes(32, byteorder='big') + rec_id.to_bytes(1, byteorder='big')
+signature65 = PrivateKey(private_key).sign_recoverable(digest, hasher=None)
 
 # post transaction request to warthog node
 postdata = {
@@ -1167,6 +1191,9 @@ print(rep.content)</code></pre>
 // Cancelation Transaction
 //////////////////////////////
 
+// pinHash and pinHeight come from /chain/head, see the WART Transfer example.
+// the V1 API (mainnet) returns them at the top level. the V2 API
+// (DeFi node) nests them: head.data.chainHead.pinHeight and head.data.chainHead.pinHash
 // send parameters
 var nonceId = 5;  // 32 bit number, unique per pinHash and pinHeight
 var cancelHeight = 0;  // the pinHeight of the transaction to cancel
@@ -1217,6 +1244,9 @@ console.log(&quot;send result:&quot;, res);</code></pre>
 # Cancelation Transaction
 ##############################
 
+# pinHash and pinHeight come from /chain/head, see the WART Transfer example.
+# the V1 API (mainnet) returns them at the top level. the V2 API
+# (DeFi node) nests them: head[&quot;data&quot;][&quot;chainHead&quot;][&quot;pinHash&quot;] and [&quot;pinHeight&quot;]
 # send parameters
 nonceId = 5  # 32 bit number, unique per pinHash and pinHeight
 cancelHeight = 0  # the pinHeight of the transaction to cancel

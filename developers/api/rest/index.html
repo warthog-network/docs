@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.843984320813">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.845891411965">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 4.6.0">
@@ -38,12 +38,12 @@
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
     <link id="retype-favicon" rel="icon" href="../../../favicon.png" />
-    <link href="../../../resources/css/retype.css?v=4.6.0.843984320813" rel="stylesheet">
+    <link href="../../../resources/css/retype.css?v=4.6.0.845891411965" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.6.0.843984320813" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.6.0.845891411965" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../../resources/js/retype.js?v=4.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.6.0.843984320813" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../../../resources/js/prism.js?v=4.6.0.843984320813" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.6.0.845891411965" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../../../resources/js/prism.js?v=4.6.0.845891411965" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -2404,6 +2404,7 @@ The content of the <code translate="no" v-pre>data</code> field depends on the t
 </doc-codeblock></div>
 <h3 id="get-chainhead"><code translate="no" v-pre>GET /chain/head</code></h3>
 <p>Show the current chain head and sync status.</p>
+<p>The example below is the <strong>V2 API</strong> shape, returned by the DeFi node (<code translate="no" v-pre>core/defi</code>), which nests the chain head under <code translate="no" v-pre>chainHead</code>. Mainnet (<code translate="no" v-pre>core/master</code>) speaks the <strong>V1 API</strong> and returns the same fields flat at the top level of <code translate="no" v-pre>data</code>, without the <code translate="no" v-pre>chainHead</code> wrapper. <code translate="no" v-pre>synced</code> is at the root of the payload in both. See <a href="../../integration/wallets/">Wallet Integration</a> for both shapes and how to read the pin fields from each.</p>
 <p>Example:</p>
 <div id="get-chainhead-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-json"><code v-pre class="language-json">{
