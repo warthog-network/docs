@@ -90,6 +90,24 @@ result = api.submit_transaction(tx)
 print(result["txHash"])
 ```
 
+## The nonce
+
+The nonce is a replay tag, not a counter. A transaction is identified by its
+`(account, pin height, nonce)` triple, and the only check a node makes is
+that it has not seen that triple before: a repeat is rejected with `ENONCE`,
+unless the new transaction pays a higher fee, in which case it replaces the
+old one.
+
+The nonce does not have to increase, and no node reports an account's next
+nonce, so there is nothing to fetch and nothing to keep track of. Use the
+random one:
+
+```python
+from warthog_py import NonceId
+
+nonce = NonceId.random()
+```
+
 ## Try/convention
 
 Every factory ships in two flavors following standard Python practice:

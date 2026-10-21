@@ -30,7 +30,7 @@ The following parameters are common to all transaction types:
 | `type` | string | Transaction type (see table above) |
 | `feeE8` | uint64 (optional) | Transaction fee in WART multiplied by 10^8. Must be exactly representable in 16-bit encoding. |
 | `feeStr` | string (optional) | Transaction fee as string (e.g., `"0.0001"`). Must be exactly representable in 16-bit encoding. |
-| `nonceId` | uint32 | Unique identifier for this transaction at the given `pinHeight`. |
+| `nonceId` | uint32 | Unique identifier for this transaction at the given `pinHeight`. It does not have to increase, a random value is fine, and no node reports an account's next nonce. |
 | `pinHeight` | uint32 | Block height whose hash is included in the signature. |
 | `signature65` | string (130 chars) | Hex-encoded 65-byte compact recoverable ECDSA signature. |
 

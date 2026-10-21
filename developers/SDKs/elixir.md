@@ -72,3 +72,19 @@ tx = TransactionContext.transfer_wart(ctx, account, recipient, Wart.from_e8!(100
 # 6. Submit
 {:ok, %{txHash: hash}} = WarthogApi.submit_transaction(api, tx)
 ```
+
+## The nonce
+
+The nonce is a replay tag, not a counter. A transaction is identified by its
+`(account, pin height, nonce)` triple, and the only check a node makes is
+that it has not seen that triple before: a repeat is rejected with `ENONCE`,
+unless the new transaction pays a higher fee, in which case it replaces the
+old one.
+
+The nonce does not have to increase, and no node reports an account's next
+nonce, so there is nothing to fetch and nothing to keep track of. Use the
+random one:
+
+```elixir
+nonce = NonceId.random()
+```
