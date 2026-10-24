@@ -65,9 +65,8 @@ from warthog_py import (
     Price,
     RoundedFee,
     TokenDecimals,
-    TransactionContext,
     Wart,
-    WarthogApi,
+    WarthogDeFiApi,
 )
 
 # 1. Load or generate your account
@@ -76,8 +75,8 @@ account = Account.from_private_key_hex("your-private-key-hex")
 # 2. Prepare the recipient
 recipient = Address.from_hex("0000000000000000000000000000000000000000de47c9b2")
 
-# 3. Connect to a node
-api = WarthogApi("http://127.0.0.1:3100")
+# 3. Connect to a core/defi node. This client reads the V2 /chain/head format.
+api = WarthogDeFiApi("http://127.0.0.1:3100")
 
 # 4. Fetch the chain head and build a transaction context
 ctx = api.create_transaction_context(RoundedFee.min(), NonceId.random())
