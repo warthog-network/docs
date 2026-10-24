@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.846138176600">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.846140160447">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 4.6.0">
@@ -38,12 +38,12 @@
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
     <link id="retype-favicon" rel="icon" href="../../../favicon.png" />
-    <link href="../../../resources/css/retype.css?v=4.6.0.846138176600" rel="stylesheet">
+    <link href="../../../resources/css/retype.css?v=4.6.0.846140160447" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.6.0.846138176600" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.6.0.846140160447" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../../resources/js/retype.js?v=4.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.6.0.846138176600" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../../../resources/js/prism.js?v=4.6.0.846138176600" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.6.0.846140160447" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../../../resources/js/prism.js?v=4.6.0.846140160447" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -160,7 +160,7 @@
                 <!-- Page content  -->
 <h1 id="sdk-for-python">SDK for Python</h1>
 <p>Warthog provides a <a href="https://github.com/warthog-network/warthog_py"><code translate="no" v-pre>warthog_py</code></a> library for the Python ecosystem (Django, FastAPI, requests, etc.). It is the Python port of the TypeScript <a href="../typescript/"><code translate="no" v-pre>warthog-ts</code></a> library and supports the full set of 7 DeFi transaction types.</p>
-<p>For a low-level reference of how to sign and submit transactions in Python without this library, see <a href="../../integration/wallets/">Wallet Integration</a> — the conventions used here (<code translate="no" v-pre>pycoin</code> for RFC6979 signing with low-s normalization, <code translate="no" v-pre>pycryptodome</code> for RIPEMD-160, etc.) match that guide.</p>
+<p>For a low-level reference of how to sign and submit transactions in Python without this library, see <a href="../../integration/wallets/">Wallet Integration</a> — the conventions used here (<code translate="no" v-pre>coincurve</code> for RFC6979 signing with low-s normalization, <code translate="no" v-pre>pycryptodome</code> for RIPEMD-160, etc.) match that guide.</p>
 <h2 id="installation">Installation</h2>
 <p>The package is <strong>not yet published to PyPI</strong>. Install it directly from the GitHub repository using <a href="https://docs.astral.sh/uv/">uv</a>:</p>
 <div id="installation-code-1" class="codeblock-wrapper"><doc-codeblock>
@@ -173,16 +173,10 @@ dependencies = [
     &quot;warthog_py @ git+https://github.com/warthog-network/warthog_py.git&quot;,
 ]</code></pre>
 </doc-codeblock></div>
-<h3 id="pinning-to-a-tag-or-branch">Pinning to a tag or branch</h3>
-<div id="pinning-to-a-tag-or-branch-code-1" class="codeblock-wrapper"><doc-codeblock>
-<pre translate="no" class="language-toml"><code v-pre class="language-toml"># Specific tag
-dependencies = [
-    &quot;warthog_py @ git+https://github.com/warthog-network/warthog_py.git@v0.1.0&quot;,
-]
-
-# Specific branch
-dependencies = [
-    &quot;warthog_py @ git+https://github.com/warthog-network/warthog_py.git@main&quot;,
+<h3 id="pinning-to-a-branch">Pinning to a branch</h3>
+<div id="pinning-to-a-branch-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-toml"><code v-pre class="language-toml">dependencies = [
+    &quot;warthog_py @ git+https://github.com/warthog-network/warthog_py.git@master&quot;,
 ]</code></pre>
 </doc-codeblock></div>
 <h3 id="requirements">Requirements</h3>
