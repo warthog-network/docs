@@ -7,7 +7,7 @@ title: Warthog SDK for Python
 
 Warthog provides a [`warthog_py`](https://github.com/warthog-network/warthog_py) library for the Python ecosystem (Django, FastAPI, requests, etc.). It is the Python port of the TypeScript [`warthog-ts`](typescript.md) library and supports the full set of 7 DeFi transaction types.
 
-For a low-level reference of how to sign and submit transactions in Python without this library, see [Wallet Integration](../integration/wallets.md) — the conventions used here (`pycoin` for RFC6979 signing with low-s normalization, `pycryptodome` for RIPEMD-160, etc.) match that guide.
+For a low-level reference of how to sign and submit transactions in Python without this library, see [Wallet Integration](../integration/wallets.md) — the conventions used here (`coincurve` for RFC6979 signing with low-s normalization, `pycryptodome` for RIPEMD-160, etc.) match that guide.
 
 ## Installation
 
@@ -26,17 +26,11 @@ dependencies = [
 ]
 ```
 
-### Pinning to a tag or branch
+### Pinning to a branch
 
 ```toml
-# Specific tag
 dependencies = [
-    "warthog_py @ git+https://github.com/warthog-network/warthog_py.git@v0.1.0",
-]
-
-# Specific branch
-dependencies = [
-    "warthog_py @ git+https://github.com/warthog-network/warthog_py.git@main",
+    "warthog_py @ git+https://github.com/warthog-network/warthog_py.git@master",
 ]
 ```
 

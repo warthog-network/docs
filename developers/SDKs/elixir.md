@@ -51,6 +51,7 @@ alias WarthogEx.{
   Price,
   RoundedFee,
   TokenDecimals,
+  TransactionContext,
   Wart
 }
 
@@ -67,7 +68,7 @@ api = DeFiApi.new("http://127.0.0.1:3100")
 {:ok, ctx} = DeFiApi.create_transaction_context(api, RoundedFee.min(), NonceId.random())
 
 # 5. Build and sign a WART transfer
-tx = DeFiTransactionContext.transfer_wart(ctx, account, recipient, Wart.from_e8!(100_000_000))
+tx = TransactionContext.transfer_wart(ctx, account, recipient, Wart.from_e8!(100_000_000))
 
 # 6. Submit
 {:ok, %{txHash: hash}} = DeFiApi.submit_transaction(api, tx)
