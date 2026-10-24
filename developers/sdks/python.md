@@ -60,9 +60,8 @@ from warthog_py import (
     Price,
     RoundedFee,
     TokenDecimals,
-    TransactionContext,
     Wart,
-    WarthogApi,
+    WarthogDeFiApi,
 )
 
 # 1. Load or generate your account
@@ -71,8 +70,8 @@ account = Account.from_private_key_hex("your-private-key-hex")
 # 2. Prepare the recipient
 recipient = Address.from_hex("0000000000000000000000000000000000000000de47c9b2")
 
-# 3. Connect to a node
-api = WarthogApi("http://127.0.0.1:3100")
+# 3. Connect to a core/defi node. This client reads the V2 /chain/head format.
+api = WarthogDeFiApi("http://127.0.0.1:3100")
 
 # 4. Fetch the chain head and build a transaction context
 ctx = api.create_transaction_context(RoundedFee.min(), NonceId.random())
@@ -83,6 +82,24 @@ tx = ctx.transfer_wart(account, recipient, Wart.from_e8(100_000_000))
 # 6. Submit
 result = api.submit_transaction(tx)
 print(result["txHash"])
+```
+
+## The nonce
+
+The nonce is a replay tag, not a counter. A transaction is identified by its
+`(account, pin height, nonce)` triple, and the only check a node makes is
+that it has not seen that triple before: a repeat is rejected with `ENONCE`,
+unless the new transaction pays a higher fee, in which case it replaces the
+old one.
+
+The nonce does not have to increase, and no node reports an account's next
+nonce, so there is nothing to fetch and nothing to keep track of. Use the
+random one:
+
+```python
+from warthog_py import NonceId
+
+nonce = NonceId.random()
 ```
 
 ## Try/convention

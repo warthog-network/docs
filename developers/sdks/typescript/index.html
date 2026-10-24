@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.845891411965">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.846138176600">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 4.6.0">
@@ -38,12 +38,12 @@
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
     <link id="retype-favicon" rel="icon" href="../../../favicon.png" />
-    <link href="../../../resources/css/retype.css?v=4.6.0.845891411965" rel="stylesheet">
+    <link href="../../../resources/css/retype.css?v=4.6.0.846138176600" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.6.0.845891411965" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.6.0.846138176600" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../../resources/js/retype.js?v=4.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.6.0.845891411965" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../../../resources/js/prism.js?v=4.6.0.845891411965" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.6.0.846138176600" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../../../resources/js/prism.js?v=4.6.0.846138176600" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -170,21 +170,112 @@
 <li>Built-in API client for node communication</li>
 <li>Works in Node.js, React Native, and Browsers</li>
 </ul>
+<h2 id="two-node-families">Two node families</h2>
+<p>The network runs two families of node, and they are separate APIs:</p>
+<retype-table copy-text="| | Legacy node (`core/master`, `core/dev`) | DeFi node (`core/defi`) |
+|---|---|---|
+| Client | `WarthogLegacyApi` | `WarthogDeFiApi` |
+| Chain head | flat | nested under `chainHead` |
+| Transfer amount | `amountE8` | `wartE8` |
+| Transaction types | 1, a transfer | 9 |
+| Balances | the confirmed balance | total, locked, mempool |">
+<div class="table-wrapper scrollbar overflow-hidden">
+<table class="comfortable">
+<thead>
+<tr>
+<th> </th>
+<th>Legacy node (<code translate="no" v-pre>core/master</code>, <code translate="no" v-pre>core/dev</code>)</th>
+<th>DeFi node (<code translate="no" v-pre>core/defi</code>)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Client</td>
+<td><code translate="no" v-pre>WarthogLegacyApi</code></td>
+<td><code translate="no" v-pre>WarthogDeFiApi</code></td>
+</tr>
+<tr>
+<td>Chain head</td>
+<td>flat</td>
+<td>nested under <code translate="no" v-pre>chainHead</code></td>
+</tr>
+<tr>
+<td>Transfer amount</td>
+<td><code translate="no" v-pre>amountE8</code></td>
+<td><code translate="no" v-pre>wartE8</code></td>
+</tr>
+<tr>
+<td>Transaction types</td>
+<td>1, a transfer</td>
+<td>9</td>
+</tr>
+<tr>
+<td>Balances</td>
+<td>the confirmed balance</td>
+<td>total, locked, mempool</td>
+</tr>
+</tbody>
+</table>
+</div>
+</retype-table>
+<p>Each family has its own client and its own transaction context, so the
+compiler stops you from building something the node would reject. A legacy
+context has one builder, <code translate="no" v-pre>transferWart</code>, because that node accepts nothing
+else, and it is the only one that can be sent to a legacy node.</p>
 <h2 id="quick-start">Quick Start</h2>
 <div id="quick-start-code-1" class="codeblock-wrapper"><doc-codeblock>
-<pre translate="no" class="language-typescript"><code v-pre class="language-typescript">import { Account, WarthogApi, TransactionContext } from 'warthog-ts';
+<pre translate="no" class="language-typescript"><code v-pre class="language-typescript">import { Account, NonceId, RoundedFee, Wart, WarthogDeFiApi } from 'warthog-ts';
 
-const api = new WarthogApi('http://localhost:3100');
+// 1. Connect to a node
+const api = new WarthogDeFiApi('http://localhost:3100');
 
-// Create transaction context (fetches chain head automatically)
-const context = await api.createTransactionContext(BigInt(1), nonceId);
-
-// Build and sign transaction
+// 2. Load an account
 const account = Account.fromPrivateKeyHex(privateKeyHex);
-const tx = context.wartTransfer(account, toAddress, BigInt(amount));
 
-// Submit to node
+// 3. Create a transaction context (fetches chain pin automatically)
+const context = await api.createTransactionContext(RoundedFee.min(), NonceId.random());
+
+// 4. Build and sign a transaction
+const tx = context.transferWart(account, toAddress, Wart.fromE8(100000000n)!);
+
+// 5. Submit to node
 const result = await api.submitTransaction(tx);</code></pre>
+</doc-codeblock></div>
+<h2 id="the-nonce">The nonce</h2>
+<p>The nonce is a replay tag, not a counter. A transaction is identified by its
+<code translate="no" v-pre>(account, pin height, nonce)</code> triple, and the only check a node makes is
+that it has not seen that triple before: a repeat is rejected with <code translate="no" v-pre>ENONCE</code>,
+unless the new transaction pays a higher fee, in which case it replaces the
+old one.</p>
+<p>The nonce does not have to increase, and no node reports an account&#x27;s next
+nonce, so there is nothing to fetch and nothing to keep track of. Use the
+random one:</p>
+<div id="the-nonce-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-typescript"><code v-pre class="language-typescript">import { NonceId } from 'warthog-ts';
+
+const nonce = NonceId.random();</code></pre>
+</doc-codeblock></div>
+<h2 id="balances">Balances</h2>
+<p>Each node family reports balances its own way, so each client has its own
+balance methods.</p>
+<div id="balances-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-typescript"><code v-pre class="language-typescript">// The legacy node reports one number: the confirmed balance.
+const confirmed = await new WarthogLegacyApi(url).getWartBalance(address);
+confirmed.E8;   // bigint
+
+// The DeFi node splits it three ways.
+const balance = await new WarthogDeFiApi(url).getWartBalance(address);
+balance.total.E8;      // what the account owns
+balance.locked.E8;     // locked in open limit orders
+balance.mempool.E8;    // locked by transactions in the mempool
+balance.free().E8;     // what can be spent now
+
+// Token balances are the DeFi node's alone.
+const tokenBalance = await new WarthogDeFiApi(url).getTokenBalance(address, assetHash);
+tokenBalance.name;         // token name
+tokenBalance.decimals;     // the token's TokenDecimals
+tokenBalance.total.amount; // what the account owns
+tokenBalance.free().amount; // what can be spent now</code></pre>
 </doc-codeblock></div>
 
                 

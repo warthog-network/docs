@@ -38,15 +38,15 @@ A working C toolchain may be required (the `ex_secp256k1` dependency ships prebu
 alias WarthogEx.{
   Account,
   Address,
+  DeFiApi,
+  DeFiTransactionContext,
   Funds,
   Liquidity,
   NonceId,
   Price,
   RoundedFee,
   TokenDecimals,
-  TransactionContext,
-  Wart,
-  WarthogApi
+  Wart
 }
 
 # 1. Load or generate your account
@@ -55,15 +55,31 @@ account = Account.from_private_key_hex!("your-private-key-hex")
 # 2. Prepare the recipient
 {:ok, recipient} = Address.from_hex("0000000000000000000000000000000000000000de47c9b2")
 
-# 3. Connect to a node
-api = WarthogApi.new("http://127.0.0.1:3100")
+# 3. Connect to a core/defi node. This client reads the V2 /chain/head format.
+api = DeFiApi.new("http://127.0.0.1:3100")
 
 # 4. Fetch the chain head and build a transaction context
-{:ok, ctx} = WarthogApi.create_transaction_context(api, RoundedFee.min(), NonceId.random())
+{:ok, ctx} = DeFiApi.create_transaction_context(api, RoundedFee.min(), NonceId.random())
 
 # 5. Build and sign a WART transfer
-tx = TransactionContext.transfer_wart(ctx, account, recipient, Wart.from_e8!(100_000_000))
+tx = DeFiTransactionContext.transfer_wart(ctx, account, recipient, Wart.from_e8!(100_000_000))
 
 # 6. Submit
-{:ok, %{txHash: hash}} = WarthogApi.submit_transaction(api, tx)
+{:ok, %{txHash: hash}} = DeFiApi.submit_transaction(api, tx)
+```
+
+## The nonce
+
+The nonce is a replay tag, not a counter. A transaction is identified by its
+`(account, pin height, nonce)` triple, and the only check a node makes is
+that it has not seen that triple before: a repeat is rejected with `ENONCE`,
+unless the new transaction pays a higher fee, in which case it replaces the
+old one.
+
+The nonce does not have to increase, and no node reports an account's next
+nonce, so there is nothing to fetch and nothing to keep track of. Use the
+random one:
+
+```elixir
+nonce = NonceId.random()
 ```

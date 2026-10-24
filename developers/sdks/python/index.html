@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.845891411965">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.846138176600">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 4.6.0">
@@ -38,12 +38,12 @@
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
     <link id="retype-favicon" rel="icon" href="../../../favicon.png" />
-    <link href="../../../resources/css/retype.css?v=4.6.0.845891411965" rel="stylesheet">
+    <link href="../../../resources/css/retype.css?v=4.6.0.846138176600" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.6.0.845891411965" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.6.0.846138176600" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../../resources/js/retype.js?v=4.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.6.0.845891411965" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../../../resources/js/prism.js?v=4.6.0.845891411965" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.6.0.846138176600" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../../../resources/js/prism.js?v=4.6.0.846138176600" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -209,9 +209,8 @@ dependencies = [
     Price,
     RoundedFee,
     TokenDecimals,
-    TransactionContext,
     Wart,
-    WarthogApi,
+    WarthogDeFiApi,
 )
 
 # 1. Load or generate your account
@@ -220,8 +219,8 @@ account = Account.from_private_key_hex(&quot;your-private-key-hex&quot;)
 # 2. Prepare the recipient
 recipient = Address.from_hex(&quot;0000000000000000000000000000000000000000de47c9b2&quot;)
 
-# 3. Connect to a node
-api = WarthogApi(&quot;http://127.0.0.1:3100&quot;)
+# 3. Connect to a core/defi node. This client reads the V2 /chain/head format.
+api = WarthogDeFiApi(&quot;http://127.0.0.1:3100&quot;)
 
 # 4. Fetch the chain head and build a transaction context
 ctx = api.create_transaction_context(RoundedFee.min(), NonceId.random())
@@ -232,6 +231,20 @@ tx = ctx.transfer_wart(account, recipient, Wart.from_e8(100_000_000))
 # 6. Submit
 result = api.submit_transaction(tx)
 print(result[&quot;txHash&quot;])</code></pre>
+</doc-codeblock></div>
+<h2 id="the-nonce">The nonce</h2>
+<p>The nonce is a replay tag, not a counter. A transaction is identified by its
+<code translate="no" v-pre>(account, pin height, nonce)</code> triple, and the only check a node makes is
+that it has not seen that triple before: a repeat is rejected with <code translate="no" v-pre>ENONCE</code>,
+unless the new transaction pays a higher fee, in which case it replaces the
+old one.</p>
+<p>The nonce does not have to increase, and no node reports an account&#x27;s next
+nonce, so there is nothing to fetch and nothing to keep track of. Use the
+random one:</p>
+<div id="the-nonce-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-python"><code v-pre class="language-python">from warthog_py import NonceId
+
+nonce = NonceId.random()</code></pre>
 </doc-codeblock></div>
 <h2 id="tryconvention">Try/convention</h2>
 <p>Every factory ships in two flavors following standard Python practice:</p>
