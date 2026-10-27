@@ -36,6 +36,7 @@ order: 10
 * [Herominers](https://warthog.herominers.com/)
 * [jellyfc.com](https://warthog.jellyfc.com/#warthogpool)
 * [tazmining.ch](https://tazmining.ch/#wart1)
+* [VEIN Pool](https://veinpool.fr/coin/wart) (EU, SOLO, 0 % fee)
 * [ViporNet](https://vipor.net/mine/wart)
 * [WartPool](https://www.wartpool.io/)
 * [WoolyPooly](https://woolypooly.com/en/coin/wart)
