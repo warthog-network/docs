@@ -69,6 +69,14 @@ The janushash Proof of Balanced Work algo works better with gaming PC hardware (
 - Unstable on Windows
 - Not optimized for Nvidia GPUs
 
+### DRQ Miner (Android phones)
+
+![DRQ Miner|400](mobile-mining-drq/05-mining-home.webp)
+
+- Mines Janushash on the CPU of an Android phone
+- Closed source APK, with a developer fee
+- Guide : https://docs.warthog.network/guides/mining/mobile-mining-drq/
+
 
 ## Mining on Hiveos :
 
