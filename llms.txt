@@ -24,6 +24,7 @@
 
 - [Quick Start](https://docs.warthog.network/guides/mining/quickstart.md): This guide contains all needed information to start mining Warthog, on your own node (solo) or on pool.
 - [Quick Start (French)](https://docs.warthog.network/guides/mining/quickstart/quickstart_fr.md): Ce guide contient toutes les infos nécessaires pour vous lancer immédiatement dans le minage de Warthog, en pool ou en solo.
+- [Mobile Mining with DRQ Miner](https://docs.warthog.network/guides/mining/mobile-mining-drq/index.md): This guide explains how to mine Warthog on an Android phone with DRQ Miner, a third party APK that mines Janushash (Proof of Balanced Work) using the APU of the device.
 - [Calculator](https://docs.warthog.network/guides/mining/calculator.md): A Mining calculator will help you to estimate your mining profitability, depending on your mining hardware.
 - [OpenCL Installation](https://docs.warthog.network/guides/mining/installing-opencl.md): To mine on your GPUs you need to install GPU drivers with OpenCL support.
 

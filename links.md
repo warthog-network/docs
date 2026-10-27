@@ -27,6 +27,7 @@
 * [Miningpoolstats](https://miningpoolstats.stream/warthog/) (full list with stats)
 * [1Miner.Net](https://1Miner.net/)
 * [acc-pool](https://warthog.acc-pool.pw/)
+* [BOBFarm Pool](https://wart.bobfarm.icu/) (low difficulty port for mobile miners)
 * [cedric-crispin](https://warthog.cedric-crispin.com)
 * [ethcore.ru](https://ethcore.ru/pool/warthogpool)
 * [Herominers](https://warthog.herominers.com/)
@@ -40,6 +41,7 @@
 ## Miners
 * [BzMiner](https://www.bzminer.com/) (closed source)
 * [Janusminer](https://github.com/CoinFuMasterShifu/janusminer) (open source, discontinued)
+* [DRQ Janus Miner](https://github.com/DQMining/DRQ-Janus-Miner) (unaudited, closed source mobile miner, use at your own risk)
 
 ## Wallets
 * [wart-dapp](https://github.com/warthog-network/wart-dapp) (open source, GUI)
