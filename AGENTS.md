@@ -1,6 +1,6 @@
 # AGENTS.md — Warthog Network docs
 
-Documentation site for the Warthog Network cryptocurrency, built with [Retype](https://retype.com/) and published at https://docs.warthog.network. **Part of a multi-repo project hub** — see `../HUB.md` (at the hub root) for the full sub-repo layout, public APIs, and cross-repo source-of-truth mapping.
+Documentation site for the Warthog Network cryptocurrency, built with [Retype](https://retype.com/) and published at https://docs.warthog.network. One repository in a multi-repo project; this one documents the others. Cross-repo references below use the `org/repo` form, which resolves outside this checkout.
 
 This repo is **content-only** — there is no application code, no `package.json`, no test suite, and no local linter. An agent that looks for `npm test`, `pytest`, `go build`, etc. will find nothing.
 
@@ -10,12 +10,12 @@ Warthog runs two networks with different feature sets. When documenting anything
 
 | Network | Branch | Features |
 |---------|--------|----------|
-| **Mainnet** | `core/master` | `wartTransfer` only (no DeFi) |
-| **Testnet** | `core/defi` | All 7 DeFi transaction types, Fair Batch Matching, pools, limit swaps |
+| **Mainnet** | `warthog-network/core`, branch `master` | `wartTransfer` only (no DeFi) |
+| **Testnet** | `warthog-network/core`, branch `defi` | All 7 DeFi transaction types, Fair Batch Matching, pools, limit swaps |
 
 The API surface, transaction types, and matcher logic are different on each branch. Do not import DeFi concepts (FBM, pools, `tokenTransfer`, etc.) into pages about mainnet behavior.
 
-## Key constants (must match HUB.md and source repos)
+## Key constants (must match the source repos)
 
 If a page here contradicts any of these, fix the page, not the constant.
 
@@ -32,11 +32,11 @@ If a page here contradicts any of these, fix the page, not the constant.
 
 When editing a specific page, cross-check against the original source rather than other docs pages:
 
-- **Transaction schema (7 signed DeFi types)** — `core/defi/src/shared/src/communication/create_transaction.hpp` and `developers/api/rest/transactions.md`. Common prefix: `pinHash(32) + pinHeight(4) + nonceId(4) + reserved(3) + compactFee(2)` = 45 bytes. Signed = user-created; Implicit = node-generated (reward, match).
+- **Transaction schema (7 signed DeFi types)**: `warthog-network/core` `src/shared/src/communication/create_transaction.hpp` and `developers/api/rest/transactions.md`. Common prefix: `pinHash(32) + pinHeight(4) + nonceId(4) + reserved(3) + compactFee(2)` = 45 bytes. Signed = user-created; Implicit = node-generated (reward, match).
 - **Address format** — 48 hex chars + 4-byte checksum (52 hex total).
 - **FBM (Fair Batch Matching)** — `unique-features/hard-coded-defi/fair-batch-matching.md` is itself the canonical doc; do not fork it elsewhere. FBM is the only fair matching for hybrid pool+order-book liquidity (Nash equilibrium: same conversion price, no remaining buy/sell pair).
 - **Janushash / PoBW** — `unique-features/janushash/`; live paper at https://warthog.network/PoBW.pdf.
-- **Public Data API** — `guides/public-data/index.md` must match what `data.warthog.network` actually serves. Canonical endpoint list lives in HUB.md `### Public Data API` (7 endpoints: legacy-nodes, defi-nodes, addresses, sha256t-hashrates, verushash2_2-hashrates, assets, assets/{hash}/info.json).
+- **Public Data API**: `guides/public-data/index.md` must match what `data.warthog.network` actually serves. The canonical endpoint list lives in `warthog-network/public-data` (7 endpoints: legacy-nodes, defi-nodes, addresses, sha256t-hashrates, verushash2_2-hashrates, assets, assets/{hash}/info.json).
 - **Browser-wallet integration** — `guides/browser-wallet-integration.md` references `window.warthog` with EIP-1193-style methods (`requestAccounts`, `transferWart`, `chainId`) and error codes (`4001`, `4100`, `-32603`, `-32601`); keep aligned with `warthog-network/browser-wallet`.
 
 ## Brand identity
@@ -44,19 +44,19 @@ When editing a specific page, cross-check against the original source rather tha
 The site uses the Warthog brand. When producing new assets or touching the theme:
 
 - **Primary yellow:** `#FDB913` (Pantone `1375 C`). Logo SVG tokens are a strict subset: `st0` `#F8F8F9`, `st1` `#FDB913`, `st2` `#231F20`, `st3` `#FFFFFF`.
-- **Logos:** pick from `../brand-kit/logo/<Variant> <ColorScheme>.svg` — flat directory, no subfolders. Variants: `Full`, `Circle`, `Short`, `Stacked`, `Ticker`. Color schemes: `Black`, `Yellow`, `White` (Short/Ticker only), `BW`, `Negative`, `Negative Yellow`.
+- **Logos:** pick from `warthog-network/brand-kit` `logo/<Variant> <ColorScheme>.svg`, a flat directory with no subfolders. Variants: `Full`, `Circle`, `Short`, `Stacked`, `Ticker`. Color schemes: `Black`, `Yellow`, `White` (Short/Ticker only), `BW`, `Negative`, `Negative Yellow`.
 - **Font:** Montserrat only (Bold for titles, Family for text blocks). The brand-kit provides `fonts/Montserrat.zip`.
-- **Full reference:** `../brand-kit/AGENTS.md` and `../brand-kit/README.md` (palette, logo variants, SVG tokens, naming conventions). V01.A, 2023·2024, by BalkyBot. See HUB.md `## Brand Kit` for the cross-repo summary.
+- **Full reference:** `warthog-network/brand-kit` (`AGENTS.md` and `README.md`: palette, logo variants, SVG tokens, naming conventions). V01.A, 2023·2024, by BalkyBot.
 
 `retype.yml` controls the site branding (`title`, `label`, `logo`, header links, footer). If the logo, title, or footer needs updating, edit it there — not in `.retype/` (build output, gitignored).
 
 ## Known inconsistencies to watch for
 
-Several factual claims here can drift from the source. Check HUB.md `## Known Inconsistencies` before editing:
+Several factual claims here can drift from the source. Check these before editing:
 
-- **Node URL lists** — five divergent locations across sub-repos (`warthog-ts/KNOWN_NODES`, `mobile-wallet`, `node-gui`, `public-data/legacy-nodes.csv`, `public-data/defi-nodes.csv`). `data.warthog.network` JSON is canonical for current data.
-- **Version drift** — `warthog-ts` has been ahead of `core/defi` in past releases; the published SDK version may not match the deployed node.
-- **Docker tag collision** — all three `core/*` worktrees push the same `zzzjulien/warthog_node` image.
+- **Node URL lists**: five divergent locations across sub-repos (`warthog-network/warthog-ts` `src/types/Api.ts`, `warthog-network/mobile-wallet` `constants.ts`, `warthog-network/node-gui` `src/pages/Wallet.jsx`, `warthog-network/public-data` `data/legacy-nodes.csv`, `warthog-network/public-data` `data/defi-nodes.csv`). `data.warthog.network` JSON is canonical for current data.
+- **Version drift**: `warthog-network/warthog-ts` has been ahead of `warthog-network/core` in past releases; the published SDK version may not match the deployed node.
+- **Docker tag collision**: all three branches of `warthog-network/core` push the same `zzzjulien/warthog_node` image.
 
 ## Publishing
 
@@ -90,7 +90,7 @@ Retype parses every `.md` file at the repo root and below, except those in under
 - **Images** live under `img/` and are referenced by absolute path (`/img/...`), which Retype resolves at the site root. Subfolders used today: `img/dapp/`, `img/extension/`, `img/get-started/`. Add new images to a logical subfolder, not the root.
 - **Links** to external projects (pools, exchanges, miners, wallets) go in `links.md`, not scattered through guide pages. That file is the single source of truth for community listings.
 - **Code blocks** don't need language tags, but fenced ```` ```bash ````, ```` ```javascript ````, etc. are used throughout — match the surrounding file's style.
-- **Color values in this repo** should match the brand palette (`#FDB913`, `#E9E9E9` backgrounds, etc.) — see HUB.md `## Brand Kit` for the full list.
+- **Color values in this repo** should match the brand palette (`#FDB913`, `#E9E9E9` backgrounds, etc.); see `warthog-network/brand-kit` for the full list.
 
 ## Folder layout
 
@@ -118,7 +118,7 @@ Two ways to keep content out of the rendered site:
 
 2. **Underscore-prefixed folders** — for content that's actively draft / should never be linked from published pages:
    - `_drafts/` — work-in-progress guides that haven't been promoted yet.
-   - `_roadmap/` — planning notes.
+   - `_roadmap/`: planning notes (feature roadmap and browser-node design).
    - `_whitepaper.md`, `_version_history.md` — historical/reference docs kept out of the nav.
    - Files like `unique-features/janushash/Janushash.md.old` — prior revisions; don't revive content from these without checking with a maintainer.
 
@@ -128,8 +128,8 @@ This repo **only documents** other repos. It does not host any of the following:
 
 - **Public data** (legacy-nodes, defi-nodes, addresses, hashrates, assets) — lives in `warthog-network/public-data` and is served from `data.warthog.network`. The `guides/public-data/` folder is documentation *about* that repo, not the data itself. To edit the actual data, edit that other repo (and possibly the corresponding JSON on `data.warthog.network`).
 - **Node binaries** — `warthog-network/core` (testnet: `defi` branch; mainnet: `master` branch).
-- **Wallets** — `warthog-network/browser-wallet`, `warthog-network/mobile-wallet`, `warthog-network/Wartlock`, `warthog-network/wart-wallet`, `warthog-network/wart-dapp`.
-- **Miners** — `warthog-network/janusminer` (GPU/CPU), `warthog-network/bzminer` (third-party build).
+- **Wallets**: `warthog-network/browser-wallet`, `warthog-network/mobile-wallet`, `DEMON1A/Wartlock` (third-party), `warthog-network/wart-wallet`, `warthog-network/wart-dapp`.
+- **Miners**: `CoinFuMasterShifu/janusminer` (GPU/CPU, discontinued). bzminer is closed source with no GitHub repository, reference it by name only.
 - **Explorer** — `warthog-network/client-explorer`.
 - **Website** — `warthog-network/website`.
 - **Brand assets** — `warthog-network/brand-kit` (logo SVGs, fonts, guidelines).

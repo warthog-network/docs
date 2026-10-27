@@ -13,14 +13,14 @@
 
 ## Q3 2024
 - [x] [Research on in-browser node support in-browser nodes (unique in the crypto world)](browser_nodes.md)
-- [x] [Implement matching engine C++ code for MEV-proof DeFi](https://github.com/CoinFuMasterShifu/shifu-matching)
+- [x] [Implement matching engine C++ code for MEV-proof DeFi](https://github.com/CoinFuMasterShifu/fair-batch-matching)
 
 ## Q4 2024
 - [x] [Listing on CoinEx](https://www.coinex.com/en/exchange/WART-USDT)
 - [x] [Listing on Bit.com](https://www.bit.com/spot?pair=WART-USDT)
 - [x] [New website based on Astro](https://warthog.network)
 - [x] [Support blogs on the website](https://warthog.network/news/)
-- [x] [Publish Warthog browser wallet extension](https://github.com/warthog-network/warthog-extension)
+- [x] [Publish Warthog browser wallet extension](https://github.com/warthog-network/browser-wallet)
 
 ## Q1 2025
 - [x] Create [demo of custom matching engine](https://warthog.network/defi-demo/)
